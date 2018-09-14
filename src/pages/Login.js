@@ -5,7 +5,6 @@ import styled from 'styled-components'
 import logo from '../assets/images/logo.svg'
 import couple from '../assets/images/couple.svg'
 import circlecenter from '../assets/images/circlecenterbg.svg'
-import circletopleft from '../assets/images/circletopleftbg.svg'
 
 const LoginScreen = styled.div`
   position: relative;
@@ -28,10 +27,6 @@ const BackgroundOverlay = styled.div`
   height: 100%;
 `
 
-const CircleTopLeft = styled.object`
-
-`
-
 const CircleCenter = styled.object`
   right: 0;
   position: absolute;
@@ -44,9 +39,10 @@ const Header = styled.div`
 ` 
 
 const Logo = styled.object`
-  width: 200px;
+  width: 160px;
   display: block;
   margin: auto;
+  padding-bottom: 20px;
 `
 
 const Tagline = styled.div`
@@ -105,7 +101,6 @@ export default class Login extends Component {
     return (
       <LoginScreen>
         <BackgroundOverlay>
-          <CircleTopLeft data={circletopleft}></CircleTopLeft>
           <CircleCenter data={circlecenter}></CircleCenter>
         </BackgroundOverlay>
         <LoginContent>
