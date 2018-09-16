@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, ButtonToolbar } from 'react-bootstrap';
-import { Test } from './components/Test';
+import { Test } from './components/test/Test';
 import logo from './logo.svg';
 import './App.css';
 
