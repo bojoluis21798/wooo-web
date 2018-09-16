@@ -7,6 +7,7 @@ import couple from '../assets/images/couple.svg'
 import circlecenter from '../assets/images/circlecenterbg.svg'
 import {Link} from 'react-router-dom';
 import Dashboard from './Dashboard';
+import FacebookLogin from 'react-facebook-login';
 
 const LoginScreen = styled.div`
   position: relative;
@@ -100,6 +101,11 @@ export default class Login extends Component {
     this.props.history.push("/dashboard");
   }
 
+   responseFacebook = (response) => {
+    console.log(response);
+    this.onLogin();
+  }
+
   render() {
     return (
       <LoginScreen>
@@ -113,7 +119,12 @@ export default class Login extends Component {
           </Header>
           <Couple className={styled.couple} aria-label='Couple' data={couple}></Couple>
           <LoginActionSection>
-            <LoginButton onClick={this.onLogin} className={styled.loginButton}>Login with Facebook</LoginButton>
+          <FacebookLogin
+            appId="878567238934074"
+            autoLoad={true}
+            fields="name,email,picture"
+           
+            callback={this.responseFacebook} />
             <TermsNotice>Upon logging in, you agree to our terms and conditions.</TermsNotice>
           </LoginActionSection>
         </LoginContent>
