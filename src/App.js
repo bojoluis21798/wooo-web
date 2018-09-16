@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, ButtonToolbar } from 'react-bootstrap';
+import { Test } from './components/Test';
 import logo from './logo.svg';
 import './App.css';
 
@@ -40,6 +41,7 @@ class App extends Component {
           {/* Deemphasize a button by making it look like a link while maintaining button behavior */}
           <Button bsStyle="link">Link</Button>
         </ButtonToolbar>;
+        <Test />
       </div>
     );
   }
