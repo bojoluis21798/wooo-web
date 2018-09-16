@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Grid, Col, Row } from 'react-bootstrap';
-import { Header } from '../header/header'
-import { ree } from '../../imgs/00.jpg';
+import { Header } from '../header/header';
+import { MessageHead } from '../message_head/main';
 import './main.css';
 
 export class Main extends Component {
@@ -27,21 +27,8 @@ export class Main extends Component {
                   <input type="text" class="form-control" id="usr" placeholder="Search for a message" />
                 </div>
               </div>
-              <Row>
-                <Col xs={5} md={4}>
-                  <img src={ree} class="img-circle" alt="Ree" width="100%" />
-                </Col>
-                <Col xs={7}>
-                  {/* style="margin-bottom:10px;" */}
-                  <Col xs={12}>
-                    <strong>God is Love</strong>
-                  </Col>
-                  {/* style="margin-bottom:10px;" */}
-                  <Col xs={12}>
-                    God sent you the gift of life
-                  </Col>
-                </Col>
-              </Row>
+
+              <MessageHead />
 
               <hr />
 
