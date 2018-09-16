@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Button, ButtonToolbar } from 'react-bootstrap';
-import { Test } from './components/test/Test';
+import { Main } from './components/main/main';
 import logo from './logo.svg';
 import './App.css';
 
@@ -19,29 +18,7 @@ class App extends Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
-        <ButtonToolbar>
-          {/* Standard button */}
-          <Button>Default</Button>
-
-          {/* Provides extra visual weight and identifies the primary action in a set of buttons */}
-          <Button bsStyle="primary">Primary</Button>
-
-          {/* Indicates a successful or positive action */}
-          <Button bsStyle="success">Success</Button>
-
-          {/* Contextual button for informational alert messages */}
-          <Button bsStyle="info">Info</Button>
-
-          {/* Indicates caution should be taken with this action */}
-          <Button bsStyle="warning">Warning</Button>
-
-          {/* Indicates a dangerous or potentially negative action */}
-          <Button bsStyle="danger">Danger</Button>
-
-          {/* Deemphasize a button by making it look like a link while maintaining button behavior */}
-          <Button bsStyle="link">Link</Button>
-        </ButtonToolbar>;
-        <Test />
+        <Main />
       </div>
     );
   }
