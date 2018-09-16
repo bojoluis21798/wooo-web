@@ -3,7 +3,7 @@ import { observable } from 'mobx'
 
 class UserStore {
     
-    @observable username = null
+    @observable username = "Recu"
     @observable name = null
     @observable biography = null
     @observable preference = null

@@ -5,6 +5,8 @@ import styled from 'styled-components'
 import logo from '../assets/images/logo.svg'
 import couple from '../assets/images/couple.svg'
 import circlecenter from '../assets/images/circlecenterbg.svg'
+import {Link} from 'react-router-dom';
+import Dashboard from './Dashboard';
 
 const LoginScreen = styled.div`
   position: relative;
@@ -95,6 +97,7 @@ export default class Login extends Component {
 
   onLogin = () => {
     // do your login stuff here
+    this.props.history.push("/dashboard");
   }
 
   render() {
