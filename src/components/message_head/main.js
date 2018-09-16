@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Col, Row } from 'react-bootstrap';
-import { ree } from '../../imgs/00.jpg';
+import { Col, Row, Image } from 'react-bootstrap';
+import ree from '../../imgs/00.jpg';
 import './main.css';
 
 export class MessageHead extends Component {
@@ -8,7 +8,7 @@ export class MessageHead extends Component {
     return (
       <Row>
         <Col xs={5} md={4}>
-          <img src={ree} class="img-circle" alt="Ree" width="100%" />
+          <Image src={ree} alt="Ree" width="100%" circle />
         </Col>
         <Col xs={7}>
           {/* style="margin-bottom:10px;" */}
