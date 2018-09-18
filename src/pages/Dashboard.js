@@ -1,14 +1,20 @@
-import React,{Component} from 'react';
+import React, {Component} from 'react'
+import AuthorizedLayout from '../layouts/AuthorizedLayout';
+import { inject, observer } from 'mobx-react';
 
-
-class Dashboard extends Component{
+@inject('store') @observer
+class Dashboard extends Component {
     render(){
         return (
-            <div>
-                Home Page
-            </div>
-        );
+            <AuthorizedLayout>
+                <div>
+                    <p>Hello, {this.props.store.userStore.name}</p>
+                    <p>Your email is: { this.props.store.userStore.email }</p>
+                    <img alt='Profile' src={this.props.store.userStore.profilePicture} />
+                </div>
+            </AuthorizedLayout>
+        )
     }
 }
 
-export default Dashboard;
+export default Dashboard

@@ -1,14 +1,60 @@
-
-
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import logo from '../assets/images/logo.svg'
 import couple from '../assets/images/couple.svg'
 import circlecenter from '../assets/images/circlecenterbg.svg'
-import {Link} from 'react-router-dom';
-import Dashboard from './Dashboard';
-import FacebookLogin from 'react-facebook-login';
-import {inject,observer} from 'mobx-react';
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
+import { inject, observer } from 'mobx-react'
+import { ToastContainer, toast } from 'react-toastify'
+
+@inject('store') @observer
+export default class Login extends Component {
+
+  state = {
+    errors: []
+  }
+
+  authenticateUser = ({ accessToken, email, name, picture, location, gender }) => {
+    let token = this.props.store.userStore.authenticateUser({ accessToken, email, name, picture, location, gender })
+    if(token)
+      toast.success('Successfully logged in.')
+    else 
+      toast.error('Error #1: Unexpected Login Token Error Occured')
+  }
+
+  responseFacebook = response => {
+    this.authenticateUser(response)
+  }
+
+  render() {
+    return (
+      <LoginScreen>
+        <ToastContainer />
+        <BackgroundOverlay>
+          <CircleCenter data={circlecenter}></CircleCenter>
+        </BackgroundOverlay>
+        <LoginContent>
+          <Header>
+            <Logo aria-label='Logo' data={logo}></Logo>
+            <Tagline>Same ol' online dating but the cooler way!</Tagline>
+          </Header>
+          <Couple className={styled.couple} aria-label='Couple' data={couple}></Couple>
+          <LoginActionSection>
+            <FacebookLogin
+              appId={process.env.REACT_APP_FB_APPID}
+              autoLoad
+              fields="name,email,picture,location,gender"
+              callback={this.responseFacebook} 
+              render={renderProps => (
+                <LoginButton onClick={renderProps.onClick}>Login with Facebook</LoginButton>
+              )} />
+            <TermsNotice>Upon logging in, you agree to our terms and conditions.</TermsNotice>
+          </LoginActionSection>
+        </LoginContent>
+      </LoginScreen>
+    )
+  }
+}
 
 const LoginScreen = styled.div`
   position: relative;
@@ -67,7 +113,8 @@ const Couple = styled.object`
 const LoginActionSection = styled.div``
 
 const LoginButton = styled.button`
-  font-family: 'Apercu-Medium';
+  font-family: 'Apercu';
+  font-weight: 500;
   text-transform: uppercase;
   font-size: 17px;
   color: #FFFFFF;
@@ -94,43 +141,3 @@ const TermsNotice = styled.p`
   font-size: 12px;
   color: '#969696'
 `
-@inject('store')@observer
-export default class Login extends Component {
-
-  onLogin = () => {
-    // do your login stuff here
-    this.props.history.push("/dashboard");
-  }
-
-   responseFacebook = (response) => {
-    this.props.store.token = response.accessToken;
-    console.log(this.props.store.token);
-    this.onLogin();
-  }
-
-  render() {
-    return (
-      <LoginScreen>
-        <BackgroundOverlay>
-          <CircleCenter data={circlecenter}></CircleCenter>
-        </BackgroundOverlay>
-        <LoginContent>
-          <Header>
-            <Logo aria-label='Logo' data={logo}></Logo>
-            <Tagline>Same ol' online dating but the cooler way!</Tagline>
-          </Header>
-          <Couple className={styled.couple} aria-label='Couple' data={couple}></Couple>
-          <LoginActionSection>
-          <FacebookLogin
-            appId="878567238934074"
-            autoLoad={true}
-            fields="name,email,picture"
-           
-            callback={this.responseFacebook} />
-            <TermsNotice>Upon logging in, you agree to our terms and conditions.</TermsNotice>
-          </LoginActionSection>
-        </LoginContent>
-      </LoginScreen>
-    )
-  }
-}

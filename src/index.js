@@ -6,17 +6,14 @@ import registerServiceWorker from './registerServiceWorker'
 import RootStore from './stores/RootStore'
 import { injectGlobal } from 'styled-components'
 import styledNormalize from 'styled-normalize'
-import apercufont from './assets/fonts/Apercu'
+import globalStyling from './assets/styles/main'
+import { configure } from 'mobx'
+
+configure({ enforceActions: 'observed' })
 
 injectGlobal`
     ${styledNormalize}
-    ${apercufont}
-
-    body {
-        font-family: 'Apercu';
-        margin: 0;
-        padding: 0;
-    }
+    ${globalStyling}
 `
 
 ReactDOM.render(
