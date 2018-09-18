@@ -8,6 +8,7 @@ import circlecenter from '../assets/images/circlecenterbg.svg'
 import {Link} from 'react-router-dom';
 import Dashboard from './Dashboard';
 import FacebookLogin from 'react-facebook-login';
+import {inject,observer} from 'mobx-react';
 
 const LoginScreen = styled.div`
   position: relative;
@@ -93,7 +94,7 @@ const TermsNotice = styled.p`
   font-size: 12px;
   color: '#969696'
 `
-
+@inject('store')@observer
 export default class Login extends Component {
 
   onLogin = () => {
@@ -102,7 +103,8 @@ export default class Login extends Component {
   }
 
    responseFacebook = (response) => {
-    console.log(response);
+    this.props.store.token = response.accessToken;
+    console.log(this.props.store.token);
     this.onLogin();
   }
 

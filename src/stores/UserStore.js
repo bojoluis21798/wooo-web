@@ -11,6 +11,7 @@ class UserStore {
     @observable location = null
     @observable state = null
     @observable photos = []
+    @observable token = null;
 
 }
 
