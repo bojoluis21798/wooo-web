@@ -17,11 +17,16 @@ class UserStore {
 
     @action
     async authenticateUser(authObj) {
-        let response = await axios.post(process.env.REACT_APP_API_BASEURL + 'login/', {
-            accessToken: authObj.accessToken
-        })
-        this.populateUser(response.json())
-        return response.auth_token
+        try {
+            let response = await axios.post(process.env.REACT_APP_API_BASEURL + 'login/', {
+                accessToken: authObj.accessToken
+            })
+            this.populateUser(response.data)
+            return true
+        } catch(err) {
+            return false
+        }
+        
     }
 
     @action 

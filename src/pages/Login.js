@@ -5,7 +5,8 @@ import couple from '../assets/images/couple.svg'
 import circlecenter from '../assets/images/circlecenterbg.svg'
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 import { inject, observer } from 'mobx-react'
-import { ToastContainer, toast } from 'react-toastify'
+import { ToastContainer } from 'react-toastify'
+import { Redirect } from 'react-router-dom'
 
 @inject('store') @observer
 export default class Login extends Component {
@@ -15,11 +16,7 @@ export default class Login extends Component {
   }
 
   authenticateUser = ({ accessToken, email, name, picture, location, gender }) => {
-    let token = this.props.store.userStore.authenticateUser({ accessToken, email, name, picture, location, gender })
-    if(token)
-      toast.success('Successfully logged in.')
-    else 
-      toast.error('Error #1: Unexpected Login Token Error Occured')
+    this.props.store.userStore.authenticateUser({ accessToken, email, name, picture, location, gender })
   }
 
   responseFacebook = response => {
@@ -27,7 +24,7 @@ export default class Login extends Component {
   }
 
   render() {
-    return (
+    return this.props.store.userStore.email? <Redirect to='/dashboard'></Redirect>: (
       <LoginScreen>
         <ToastContainer />
         <BackgroundOverlay>
