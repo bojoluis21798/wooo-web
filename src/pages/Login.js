@@ -1,62 +1,102 @@
-import React, { Component } from 'react'
-import styled from 'styled-components'
-import logo from '../assets/images/logo.svg'
-import couple from '../assets/images/couple.svg'
-import circlecenter from '../assets/images/circlecenterbg.svg'
-import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
-import { inject, observer } from 'mobx-react'
-import { ToastContainer } from 'react-toastify'
-import { Redirect } from 'react-router-dom'
+import React, { Component } from "react";
+import styled from "styled-components";
+import logo from "../assets/images/logo.svg";
+import couple from "../assets/images/couple.svg";
+import circlecenter from "../assets/images/circlecenterbg.svg";
+import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
+import { inject, observer } from "mobx-react";
+import { ToastContainer } from "react-toastify";
+import { Redirect } from "react-router-dom";
+import queryString from "query-string";
+import Loading from "./Loading";
 
-@inject('store') @observer
+@inject("store")
+@observer
 export default class Login extends Component {
-
   state = {
-    errors: []
-  }
+    loading: true
+  };
 
-  authenticateUser = ({ accessToken, email, name, picture, location, gender }) => {
-    this.props.store.userStore.authenticateUser({ accessToken, email, name, picture, location, gender })
-  }
+  authenticateUser = ({
+    accessToken,
+    email,
+    name,
+    picture,
+    location,
+    gender
+  }) => {
+    this.props.store.userStore.authenticateUser({
+      accessToken,
+      email,
+      name,
+      picture,
+      location,
+      gender
+    });
+  };
 
   responseFacebook = response => {
-    this.authenticateUser(response)
+    this.authenticateUser(response);
+  };
+
+  componentDidMount() {
+    this.setState({ loading: false });
+  }
+
+  componentDidUpdate() {
+    if (
+      this.props.location &&
+      this.props.location.search &&
+      queryString.parse(this.props.location.search).code
+    ) {
+      if (!this.state.loading) this.setState({ loading: true });
+    }
   }
 
   render() {
-    return this.props.store.userStore.email? <Redirect to='/dashboard'></Redirect>: (
+    return this.props.store.userStore.email ? (
+      <Redirect to="/dashboard" />
+    ) : this.state.loading ? (
+      <Loading message='Authenticating you..' />
+    ) : (
       <LoginScreen>
         <ToastContainer />
         <BackgroundOverlay>
-          <CircleCenter data={circlecenter}></CircleCenter>
+          <CircleCenter data={circlecenter} />
         </BackgroundOverlay>
         <LoginContent>
           <Header>
-            <Logo aria-label='Logo' data={logo}></Logo>
+            <Logo aria-label="Logo" data={logo} />
             <Tagline>Same ol' online dating but the cooler way!</Tagline>
           </Header>
-          <Couple className={styled.couple} aria-label='Couple' data={couple}></Couple>
+          <Couple className={styled.couple} aria-label="Couple" data={couple} />
           <LoginActionSection>
             <FacebookLogin
               appId={process.env.REACT_APP_FB_APPID}
-              autoLoad
-              fields="name,email,picture,location,gender"
-              callback={this.responseFacebook} 
+              fields="name,email,picture"
+              scope="public_profile,user_friends"
+              callback={this.responseFacebook}
+              redirectUri={`${process.env.REACT_APP_SITE}/login`}
               render={renderProps => (
-                <LoginButton onClick={renderProps.onClick}>Login with Facebook</LoginButton>
-              )} />
-            <TermsNotice>Upon logging in, you agree to our terms and conditions.</TermsNotice>
+                <LoginButton onClick={renderProps.onClick}>
+                  Login with Facebook
+                </LoginButton>
+              )}
+            />
+            <TermsNotice>
+              Upon logging in, you agree to our terms and conditions.
+            </TermsNotice>
           </LoginActionSection>
         </LoginContent>
       </LoginScreen>
-    )
+    );
   }
 }
 
 const LoginScreen = styled.div`
   position: relative;
   height: 100vh;
-`
+`;
 
 const LoginContent = styled.div`
   display: grid;
@@ -69,55 +109,55 @@ const LoginContent = styled.div`
 const BackgroundOverlay = styled.div`
   position: fixed;
   z-index: -1;
-  background-color: #F7F8FC;
+  background-color: #f7f8fc;
   width: 100%;
   height: 100%;
-`
+`;
 
 const CircleCenter = styled.object`
   right: 0;
   position: absolute;
   top: 6vh;
-`
+`;
 
 const Header = styled.div`
   width: 80vw;
   margin: auto;
-` 
+`;
 
 const Logo = styled.object`
   width: 160px;
   display: block;
   margin: auto;
   padding-bottom: 20px;
-`
+`;
 
 const Tagline = styled.div`
   width: 100%;
   font-weight: 800;
-  color: #FD3B6C;
+  color: #fd3b6c;
   font-size: 24px;
   max-width: 250px;
   margin: auto;
   text-align: center;
-`
+`;
 
 const Couple = styled.object`
   width: 100vw;
   max-width: 400px;
-`
+`;
 
-const LoginActionSection = styled.div``
+const LoginActionSection = styled.div``;
 
 const LoginButton = styled.button`
-  font-family: 'Apercu';
+  font-family: "Apercu";
   font-weight: 500;
   text-transform: uppercase;
   font-size: 17px;
-  color: #FFFFFF;
+  color: #ffffff;
   letter-spacing: 0.01px;
   text-align: center;
-  background-image: linear-gradient(-90deg, #FD3B6D 0%, #FD9351 100%);
+  background-image: linear-gradient(-90deg, #fd3b6d 0%, #fd9351 100%);
   border-radius: 29px;
   border: 0;
   padding: 12px;
@@ -125,16 +165,16 @@ const LoginButton = styled.button`
   margin: auto;
   display: block;
   margin-bottom: 5px;
-  transition: .5s all ease;
+  transition: 0.5s all ease;
 
   &:hover {
     cursor: pointer;
     background-position: 300px;
   }
-`
+`;
 
 const TermsNotice = styled.p`
   margin: auto;
   font-size: 12px;
-  color: '#969696'
-`
+  color: "#969696";
+`;
