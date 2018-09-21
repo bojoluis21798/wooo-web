@@ -1,5 +1,5 @@
 ## What this Repository is:
-This repository is website dating application that is built to be wrapped in a WebView app. This is an exercise to demonstrate technologies such as React and styled-components while it serves as a school-project.
+This repository is a web-based dating application that is built to be wrapped in a WebView component in React Native. This is an exercise to demonstrate technologies such as React and styled-components while it serves as a school-project.
 
 # How to Contribute
 
