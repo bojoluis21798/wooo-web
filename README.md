@@ -1,4 +1,7 @@
-#How to Contribute
+## What this Repository is:
+This repository is website dating application that is built to be wrapped in a WebView app. This is an exercise to demonstrate technologies such as React and styled-components while it serves as a school-project.
+
+# How to Contribute
 
 ## Installing Dependencies
 The preferred package manager for this repository is `yarn`. `yarn` is recommended due to the history of version differences in the repository. In case `npm install` runs into some problems, try `yarn install` if that sorts some things out.
