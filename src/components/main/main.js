@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Grid, Col, Row } from 'react-bootstrap';
-import { Header } from '../header/header';
+import { Header } from '../header/main';
 import { MessageHead } from '../message_head/main';
 import './main.css';
 
@@ -28,7 +28,7 @@ export class Main extends Component {
                 </div>
               </div>
 
-              <MessageHead />
+              <MessageHead /><MessageHead /><MessageHead /><MessageHead /><MessageHead />
 
               <hr />
 

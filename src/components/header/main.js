@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Col } from 'react-bootstrap';
-import './header.css';
+import '../../App.css';
+import './main.css';
 
 export class Header extends Component {
   render() {
