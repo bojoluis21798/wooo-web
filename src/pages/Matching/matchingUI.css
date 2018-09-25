@@ -1,0 +1,162 @@
+.container{
+    display: flex;
+	height:100%;
+	width: 100%;
+    flex-direction: column;
+    align-items:center;
+    justify-content: space-between;
+}
+html, body {
+    margin: 0px;
+	padding: 0px;
+	border: 0;
+    outline: 0;
+    height: 100%;
+	width: 100%;
+	background-color: black;
+}
+
+#root{
+    height: 100%;
+    width: 100%;
+}
+.App {
+    height: 100%;
+    width: 100%;
+}
+
+.backArea{
+	flex: 0.5;
+    display: flex;
+    flex-direction: row;
+    background-color:black;
+	justify-content: flex-start;
+    width: 100%;
+    padding-top: 1.5em;
+    padding-left: 2.5em;
+}
+.picArea{
+	flex: 5;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	padding: 2em;
+}
+.mainTextArea{
+	flex: 1.7;
+	width: 100%;
+	display:flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+    /* background-color:red; */
+}
+.textContainer{
+	margin-left: 2em;
+	margin-right: 2em;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-around;
+	height: 100%;
+}
+.biorow {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+}
+.buttonArea{
+	flex: 2;
+	width: 100%;
+    /* background-color:blue; */
+    display:flex;
+    justify-content: center;
+    flex-direction:row;
+}
+
+.iconStyle{
+    width:2.5em;
+    height:2.5em;
+}
+
+.imageStyle{
+    width:100%;
+    height:100%;
+    border-radius:20px;
+}
+
+.text1{
+    font-size:1.7em;
+	padding: 0.2em;
+    font-family: 'Open Sans', sans-serif;
+    color: white;
+}
+
+.text2{
+    font-size:1em;
+	padding: 0.2em;
+    font-family: 'Roboto:700', sans-serif;
+	text-align: center;
+    color: white;
+}
+
+.text3{
+    font-size:1em;
+	padding: 0.2em;
+	text-align: center;
+    font-family: 'Roboto:400', sans-serif;
+    color: white;
+}
+
+.button5 {
+    border-radius: 100%;
+    background-color: rgba(48, 48, 48, 0.904); /* Green */
+    border: none;
+    color: white;
+    padding: 1em;
+    text-align: center;
+    text-decoration: none;
+    margin:1em;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.secondContainer{
+    display:flex;
+    align-items:flex-end;
+    flex-direction:row;
+}
+
+.item1{
+align-self:center;
+
+}
+
+.item2{
+    align-self:center;
+}
+
+.item3{
+    width:50px;
+    height:100px;
+}
+
+button {
+    padding: 0;
+}
+
+.buttonBack{
+    background-color:black; /* Green */
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+}
+.white{
+    color:white;
+  }
