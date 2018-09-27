@@ -59,7 +59,7 @@ const Icon = styled.object`
 `
 const Icon2 = styled.object`
   width: 50px
-  margin-left: 20px
+  margin-left: 8px
   margin-bottom: 30px
   margin-top: 10px
 `
