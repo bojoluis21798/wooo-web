@@ -3,10 +3,10 @@ import styled from "styled-components"
 import logo from "../assets/images/logo.svg"
 import couple from "../assets/images/couple.svg"
 import circlecenter from "../assets/images/circlecenterbg.svg"
-import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props"
+// import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props"
 import { inject, observer } from "mobx-react"
 import { ToastContainer } from "react-toastify"
-import { Redirect } from "react-router-dom"
+import { Link } from "react-router-dom"
 import queryString from "query-string"
 import Loading from "./Loading"
 
@@ -35,8 +35,14 @@ export default class Login extends Component {
     })
   }
 
-  responseFacebook = response => {
-    this.authenticateUser(response)
+
+  // responseFacebook = response => {
+  //   this.authenticateUser(response)
+  // }
+
+  stateChanger() {
+    this.authenticateUser.email="weiner"
+    this.props.store.userStroe.authenticateUser.email="weiner"
   }
 
   componentDidMount() {
@@ -53,11 +59,11 @@ export default class Login extends Component {
     }
   }
 
-  onLoginButtonClick = () => this.setState({ loading: 'Authenticating you..' })
+  // onLoginButtonClick = () => this.props.setState({ loading: 'Authenticating you..' })
 
   render() {
     return this.props.store.userStore.email ? (
-      <Redirect to="/dashboard" />
+      console.log("hello")
     ) : this.state.loading ? (
       <Loading message={ this.state.loading } />
     ) : (
@@ -73,19 +79,9 @@ export default class Login extends Component {
           </Header>
           <Couple className={styled.couple} aria-label="Couple" data={couple} />
           <LoginActionSection>
-            <FacebookLogin
-              appId={process.env.REACT_APP_FB_APPID}
-              fields="name,email,picture"
-              scope="public_profile,user_friends"
-              callback={this.responseFacebook}
-              redirectUri={`${process.env.REACT_APP_SITE}/login`}
-              onClick={this.onLoginButtonClick}
-              render={renderProps => (
-                <LoginButton onClick={renderProps.onClick}>
-                  Login with Facebook
-                </LoginButton>
-              )}
-            />
+
+            <Link to="/dashboard" onClick={this.stateChanger}> TEMP SIGN UP BUTTON</Link>
+
             <TermsNotice>
               Upon logging in, you agree to our terms and conditions.
             </TermsNotice>
@@ -152,29 +148,29 @@ const Couple = styled.object`
 
 const LoginActionSection = styled.div``
 
-const LoginButton = styled.button`
-  font-family: 'Apercu';
-  font-weight: 500
-  text-transform: uppercase
-  font-size: 17px
-  color: #ffffff
-  letter-spacing: 0.01px
-  text-align: center
-  background-image: linear-gradient(-90deg, #fd3b6d 0%, #fd9351 100%);
-  border-radius: 29px
-  border: 0
-  padding: 12px
-  width: 300px
-  margin: auto
-  display: block
-  margin-bottom: 5px
-  transition: 0.5s all ease
+// const LoginButton = styled.button`
+//   font-family: 'Apercu';
+//   font-weight: 500
+//   text-transform: uppercase
+//   font-size: 17px
+//   color: #ffffff
+//   letter-spacing: 0.01px
+//   text-align: center
+//   background-image: linear-gradient(-90deg, #fd3b6d 0%, #fd9351 100%);
+//   border-radius: 29px
+//   border: 0
+//   padding: 12px
+//   width: 300px
+//   margin: auto
+//   display: block
+//   margin-bottom: 5px
+//   transition: 0.5s all ease
 
-  &:hover {
-    cursor: pointer
-    background-position: 300px
-  }
-`
+//   &:hover {
+//     cursor: pointer
+//     background-position: 300px
+//   }
+// `
 
 const TermsNotice = styled.p`
   margin: auto
