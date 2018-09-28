@@ -10,6 +10,33 @@ import { ToastContainer } from "react-toastify"
 
 @inject('store') @observer
 class Profile extends Component {
+  myfunction(){
+    console.log("Like!");
+  }
+
+  myfunction1(){
+    console.log("Ring!");
+  }
+
+  myfunction2(){
+    console.log("Hello!");
+  }
+
+  myfunction3(){
+    console.log("Weiner!");
+  }
+
+  Opposite(){
+    console.log("Girl Boy!");
+  }
+
+  Same(){
+    console.log("Girl Girl Boy Boy");
+  }
+
+  Both(){
+    console.log("Both!");
+  }
     render(){
         return (
             // <AuthorizedLayout>
@@ -17,17 +44,20 @@ class Profile extends Component {
             <ToastContainer />
             <ProfileContent>
               <Header>
-                <Icon aria-label="heart" data={heart} />
-                <Icon2 aria-label="alarm" data={alarm} />
-                <Icon2 aria-label="chat" data={chat} />
-                <Icon2 aria-label="user" data={user} />
+                {/* <Icon><img src="../assests/icons/heartfill.png" alt="my image" onclick={this.myfunction} /></Icon> */}
+                <Icon aria-label="heart" data={heart} onClick={this.myfunction} />
+                <Icon2 aria-label="alarm" data={alarm} onClick={this.myfunction1} />
+                <Icon2 aria-label="chat" data={chat} onClick={this.myfunction2} />
+                <Icon2 aria-label="user" data={user} onClick={this.myfunction3} />
                 <Tagline>Photos</Tagline>
+                <ProfileImage></ProfileImage>
                 <Tagline>Bio</Tagline>
                 <BioText type="text" name="bio" />
                 {/* <BioText /> */}
                 <Tagline>Preference</Tagline>
-                <PrefButton>Opposite</PrefButton>
-                <PrefButton>Both</PrefButton>
+                <PrefButton aria-label="Opposite" onClick={this.Opposite}>Opposite</PrefButton>
+                <PrefButton aria-label="Same" onClick={this.Same}>Same</PrefButton>
+                <PrefButton aria-label="Both" onClick={this.Both}>Both</PrefButton>
                 <Tagline>Radius</Tagline>
               </Header>
             </ProfileContent>
@@ -54,6 +84,7 @@ const Header = styled.div`
 `
 const Icon = styled.object`
   width: 40px
+  height: 40px
   margin-right: 120px
   margin-bottom: 30px
 `
@@ -73,9 +104,18 @@ const Tagline = styled.div`
   margin-bottom: 20px
   margin-top: 20px
 `
+const ProfileImage = styled.div`
+  width: 140px
+  height: 150px
+  background-color: #191919
+  border-radius: 5px
+`
 const BioText = styled.input`
-  height: 70px
+  height: 50px
   width: 100%
+  font-weight: 20
+  font-size: 12px
+  color: #ffffff
   background-color: #191919
   border-radius: 5px
   border: 0
@@ -91,7 +131,7 @@ const PrefButton = styled.button`
   border-radius: 5px
   border: 0
   padding: 12px
-  width: 100px
+  width: 90px
   margin: auto
   margin-bottom: 5px
   margin-right: 15px
@@ -100,7 +140,8 @@ const PrefButton = styled.button`
   &:hover {
     cursor: pointer
     background-position: 300px
-    background-color: #f51a63
+    background-color:  #191919
+    border: 1px solid #f51a63
   }
 `
 
