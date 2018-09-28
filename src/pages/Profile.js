@@ -7,6 +7,7 @@ import user from "../assets/icons/user.png"
 // import AuthorizedLayout from '../layouts/AuthorizedLayout';
 import { inject, observer } from 'mobx-react';
 import { ToastContainer } from "react-toastify"
+// import { ReactSlider } from "react-slider"
 
 @inject('store') @observer
 class Profile extends Component {
@@ -37,6 +38,7 @@ class Profile extends Component {
   Both(){
     console.log("Both!");
   }
+
     render(){
         return (
             // <AuthorizedLayout>
@@ -50,15 +52,24 @@ class Profile extends Component {
                 <Icon2 aria-label="chat" data={chat} onClick={this.myfunction2} />
                 <Icon2 aria-label="user" data={user} onClick={this.myfunction3} />
                 <Tagline>Photos</Tagline>
-                <ProfileImage></ProfileImage>
+                <ProfileImage>
+                  <Image></Image>
+                  <Image></Image>
+                  <Image></Image>
+                  <Image></Image>
+                </ProfileImage>
                 <Tagline>Bio</Tagline>
                 <BioText type="text" name="bio" />
+                {/* <form>
+                  <textarea value={this.state.value} onChange={this.handleChange} />
+                </form> */}
                 {/* <BioText /> */}
                 <Tagline>Preference</Tagline>
                 <PrefButton aria-label="Opposite" onClick={this.Opposite}>Opposite</PrefButton>
                 <PrefButton aria-label="Same" onClick={this.Same}>Same</PrefButton>
                 <PrefButton aria-label="Both" onClick={this.Both}>Both</PrefButton>
                 <Tagline>Radius</Tagline>
+                {/* <ReactSlider defaultValue={[0, 100]} withbars/> */}
               </Header>
             </ProfileContent>
           </ProfileScreen>
@@ -79,19 +90,18 @@ const ProfileContent = styled.div`
   z-index: 1
 `
 const Header = styled.div`
-  width: 90vw
   margin: auto
 `
 const Icon = styled.object`
   width: 40px
   height: 40px
   margin-right: 120px
-  margin-bottom: 30px
+  margin-bottom: 20px
 `
 const Icon2 = styled.object`
   width: 50px
   margin-left: 8px
-  margin-bottom: 30px
+  margin-bottom: 20px
   margin-top: 10px
 `
 const Tagline = styled.div`
@@ -109,17 +119,29 @@ const ProfileImage = styled.div`
   height: 150px
   background-color: #191919
   border-radius: 5px
+  margin: 0
+`
+const Image = styled.div`
+  width: 60px
+  height: 70px
+  background-color: #191919
+  border-radius: 5px
+  margin: 0
 `
 const BioText = styled.input`
   height: 50px
-  width: 100%
+  width: 320px
   font-weight: 20
   font-size: 12px
   color: #ffffff
   background-color: #191919
   border-radius: 5px
-  border: 0
+  border: none
   justify-items: center
+
+  textarea:focus, input:focus{
+    outline: #f51a63
+  }
 `
 const PrefButton = styled.button`
   font-weight: 100
