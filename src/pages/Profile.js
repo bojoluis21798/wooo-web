@@ -54,10 +54,13 @@ class Profile extends Component {
                 <Icon2 aria-label="user" data={user} onClick={this.myfunction3} />
                 <Tagline>Photos</Tagline>
                 <ProfileImage>
-                  <Image></Image>
-                  <Image></Image>
-                  <Image></Image>
-                  <Image></Image>
+                  <ProfileImageMain/>
+                  <ProfileImageSet>
+                    <Image id="1"/>
+                    <Image id="2"/>
+                    <Image id="3"/>
+                    <Image id="4"/>
+                  </ProfileImageSet>
                 </ProfileImage>
                 <Tagline>Bio</Tagline>
                 <BioText type="text" name="bio" />
@@ -116,18 +119,31 @@ const Tagline = styled.div`
   margin-top: 20px
 `
 const ProfileImage = styled.div`
-  width: 140px
-  height: 150px
-  background-color: #191919
+  height: 180px
+  width: 100%
   border-radius: 5px
-  margin: 0
 `
-const Image = styled.div`
-  width: 60px
-  height: 70px
+const ProfileImageMain = styled.div`
+  width: 48%
+  height: 100%
   background-color: #191919
   border-radius: 5px
-  margin: 0
+  float: left
+`
+
+const ProfileImageSet = styled.div`
+  width: 50%
+  height: 100%
+  float: right
+`
+
+const Image = styled.div`
+  width: 46%
+  height: 46%
+  background-color: #191919
+  border-radius: 5px
+  margin: 2%
+  float: right
 `
 const BioText = styled.input`
   height: 50px
