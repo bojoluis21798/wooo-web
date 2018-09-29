@@ -6,7 +6,9 @@ import { Redirect } from 'react-router-dom'
 @inject('store') @observer
 export default class AuthorizedLayout extends Component {
   
-    isAuthorized = () => this.props.store.userStore.email
+    // isAuthorized = () => this.props.store.userStore.email
+
+    isAuthorized = () => true
 
     render() {
         return this.isAuthorized()? this.props.children: (

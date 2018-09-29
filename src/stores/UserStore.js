@@ -24,7 +24,7 @@ class UserStore {
             })
 
             this.accessToken = authObj.accessToken;
-            
+
             console.log(response);
             this.populateUser(response.data)
             return true
@@ -38,7 +38,7 @@ class UserStore {
     populateUser(userAuth) {
         this.token = userAuth.token
         this.name = userAuth.name
-        this.email = "true";
+        this.email = userAuth.email;
         this.profilePicture = userAuth.profile_image
     }
 }
