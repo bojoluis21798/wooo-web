@@ -55,9 +55,7 @@ class Profile extends Component {
                 <Icon2 aria-label="alarm" data={alarm} onClick={this.myfunction1} />
                 <Icon2 aria-label="chat" data={chat} onClick={this.myfunction2} />
                 <Icon2 aria-label="user" data={user} onClick={this.myfunction3} />
-                <Tagline>Photos
-                  <Icon3 aria-label="edit" data={editP} onClick={this.myfunction3} />
-                </Tagline>
+                <Tagline>Photos</Tagline>
                 <ProfileImage>
                   <ProfileImageMain/>
                   <ProfileImageSet>
@@ -67,23 +65,16 @@ class Profile extends Component {
                     <Image4/>
                   </ProfileImageSet>
                 </ProfileImage>
-                <Tagline>Bio
-                <Icon3 aria-label="edit" data={editP} onClick={this.myfunction3} />
-                </Tagline>
+                <Tagline>Bio</Tagline>
                 <BioText type="text" name="bio" />
                 {/* <form>
                   <textarea value={this.state.value} onChange={this.handleChange} />
                 </form> */}
                 {/* <BioText /> */}
-                <Tagline>Preference
-                  <Icon3 aria-label="edit" data={editP} onClick={this.myfunction3} />
-                </Tagline>
-                <PrefButton aria-label="Opposite" onClick={this.Opposite}>Opposite</PrefButton>
-                <PrefButton aria-label="Same" onClick={this.Same}>Same</PrefButton>
-                <PrefButton aria-label="Both" onClick={this.Both}>Both</PrefButton>
-                <Tagline>Radius
-                <Icon3 aria-label="edit" data={editP} onClick={this.myfunction3} />
-                </Tagline>
+                <Tagline>Preference</Tagline>
+                  <PrefButton aria-label="Opposite" onClick={this.Opposite}>Opposite</PrefButton>
+                  <PrefButton aria-label="Same" onClick={this.Same}>Same</PrefButton>
+                  <PrefButton aria-label="Both" onClick={this.Both}>Both</PrefButton>
                 <Tagline>Radius</Tagline>
                 <Slider />
               </Header>
