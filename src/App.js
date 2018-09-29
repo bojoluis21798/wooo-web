@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import RootStore from './stores/RootStore'
 import { Provider } from 'mobx-react'
-
+// import {Loading}
 // Pages
 import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'

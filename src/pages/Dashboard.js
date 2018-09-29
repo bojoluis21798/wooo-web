@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import AuthorizedLayout from '../layouts/AuthorizedLayout';
 import { inject, observer } from 'mobx-react';
+import {Redirect} from 'react-router-dom';
 
 @inject('store') @observer
 class Dashboard extends Component {
@@ -13,6 +14,7 @@ class Dashboard extends Component {
                     <img alt='Profile' src={this.props.store.userStore.profilePicture} />
                 </div>
             </AuthorizedLayout>
+            
         )
     }
 }

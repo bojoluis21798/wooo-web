@@ -21,6 +21,7 @@ class UserStore {
             let response = await axios.post(process.env.REACT_APP_API_BASEURL + 'login/', {
                 accessToken: authObj.accessToken
             })
+            console.log(response);
             this.populateUser(response.data)
             return true
         } catch(err) {
@@ -33,7 +34,7 @@ class UserStore {
     populateUser(userAuth) {
         this.token = userAuth.token
         this.name = userAuth.name
-        this.email = userAuth.email
+        this.email = "true";
         this.profilePicture = userAuth.profile_image
     }
 }
