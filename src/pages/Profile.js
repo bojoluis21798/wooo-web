@@ -55,8 +55,8 @@ class Profile extends Component {
                 <Icon2 aria-label="alarm" data={alarm} onClick={this.myfunction1} />
                 <Icon2 aria-label="chat" data={chat} onClick={this.myfunction2} />
                 <Icon2 aria-label="user" data={user} onClick={this.myfunction3} />
-                <Tagline>Photos
-                  <Icon3 aria-label="edit" data={editP} onClick={this.myfunction3} />
+                <Tagline>
+                  Photos
                 </Tagline>
                 <ProfileImage>
                   <ProfileImageMain/>
@@ -75,16 +75,16 @@ class Profile extends Component {
                   <textarea value={this.state.value} onChange={this.handleChange} />
                 </form> */}
                 {/* <BioText /> */}
-                <Tagline>Preference
-                  <Icon3 aria-label="edit" data={editP} onClick={this.myfunction3} />
+                <Tagline>
+                  Preference
                 </Tagline>
                 <PrefButton aria-label="Opposite" onClick={this.Opposite}>Opposite</PrefButton>
                 <PrefButton aria-label="Same" onClick={this.Same}>Same</PrefButton>
                 <PrefButton aria-label="Both" onClick={this.Both}>Both</PrefButton>
-                <Tagline>Radius
-                <Icon3 aria-label="edit" data={editP} onClick={this.myfunction3} />
+                <Tagline>
+                  Radius
+                  
                 </Tagline>
-                <Tagline>Radius</Tagline>
                 <Slider />
               </Header>
             </ProfileContent>
@@ -137,62 +137,60 @@ const Tagline = styled.div`
   margin-top: 20px
 `
 const ProfileImage = styled.div`
-  height: 180px
+  height: 150px
   width: 100%
   border-radius: 5px
 `
 const ProfileImageMain = styled.div`
-  width: 48%
+  width: 49%
   height: 100%
   background-color: #191919
   border-radius: 5px
   float: left
 `
 const ProfileImageSet = styled.div`
-  width: 50%
+  width: 48%
   height: 100%
   float: right
 `
 
 const Image1 = styled.div`
-  width: 46%
-  height: 46%
+  width: 45%
+  height: 48%
   background-color: #191919
   border-radius: 5px
-  margin: 2%
-  margin-top:0
+  margin-left: 3%
   float: right
 `
 const Image2 = styled.div`
-  width: 46%
-  height: 46%
+  width: 45%
+  height: 48%
   background-color: #191919
   border-radius: 5px
-  margin: 2%
-  margin-top:0
+  margin-right: 3%
   float: right
 `
 const Image3 = styled.div`
-  width: 46%
-  height: 46%
+  width: 45%
+  height: 48%
   background-color: #191919
   border-radius: 5px
-  margin: 2%
-  margin-bottom: 0
+  margin-top: 5%
+  margin-left: 3%
   float: right
 `
 const Image4 = styled.div`
-  width: 46%
-  height: 46%
+  width: 45%
+  height: 48%
   background-color: #191919
   border-radius: 5px
-  margin: 2%
-  margin-bottom: 0
+  margin-top: 5%
+  margin-right: 3%
   float: right
 `
 const BioText = styled.input`
   height: 50px
-  width: 320px
+  width:100%
   font-weight: 20
   font-size: 12px
   color: #ffffff
