@@ -7,7 +7,8 @@ import user from "../assets/icons/user.png"
 // import AuthorizedLayout from '../layouts/AuthorizedLayout';
 import { inject, observer } from 'mobx-react';
 import { ToastContainer } from "react-toastify"
-// import { ReactSlider } from "react-slider"
+import Slider from "rc-slider"
+import 'rc-slider/assets/index.css';
 
 
 @inject('store') @observer
@@ -56,10 +57,10 @@ class Profile extends Component {
                 <ProfileImage>
                   <ProfileImageMain/>
                   <ProfileImageSet>
-                    <Image id="1"/>
-                    <Image id="2"/>
-                    <Image id="3"/>
-                    <Image id="4"/>
+                    <Image1/>
+                    <Image2/>
+                    <Image3/>
+                    <Image4/>
                   </ProfileImageSet>
                 </ProfileImage>
                 <Tagline>Bio</Tagline>
@@ -73,7 +74,7 @@ class Profile extends Component {
                 <PrefButton aria-label="Same" onClick={this.Same}>Same</PrefButton>
                 <PrefButton aria-label="Both" onClick={this.Both}>Both</PrefButton>
                 <Tagline>Radius</Tagline>
-                {/* <ReactSlider defaultValue={[0, 100]} withbars/> */}
+                <Slider />
               </Header>
             </ProfileContent>
           </ProfileScreen>
@@ -137,12 +138,40 @@ const ProfileImageSet = styled.div`
   float: right
 `
 
-const Image = styled.div`
+const Image1 = styled.div`
   width: 46%
   height: 46%
   background-color: #191919
   border-radius: 5px
   margin: 2%
+  margin-top:0
+  float: right
+`
+const Image2 = styled.div`
+  width: 46%
+  height: 46%
+  background-color: #191919
+  border-radius: 5px
+  margin: 2%
+  margin-top:0
+  float: right
+`
+const Image3 = styled.div`
+  width: 46%
+  height: 46%
+  background-color: #191919
+  border-radius: 5px
+  margin: 2%
+  margin-bottom: 0
+  float: right
+`
+const Image4 = styled.div`
+  width: 46%
+  height: 46%
+  background-color: #191919
+  border-radius: 5px
+  margin: 2%
+  margin-bottom: 0
   float: right
 `
 const BioText = styled.input`
@@ -157,7 +186,7 @@ const BioText = styled.input`
   justify-items: center
 
   textarea:focus, input:focus{
-    outline: #f51a63
+    outline: pink
   }
 `
 const PrefButton = styled.button`
