@@ -52,8 +52,9 @@ class Profile extends Component {
                 <Icon2 aria-label="alarm" data={alarm} onClick={this.myfunction1} />
                 <Icon2 aria-label="chat" data={chat} onClick={this.myfunction2} />
                 <Icon2 aria-label="user" data={user} onClick={this.myfunction3} />
-                <Icon3 aria-label="edit" data={editP} onClick={this.myfunction3} />
-                <Tagline>Photos</Tagline>
+                <Tagline>Photos
+                  <Icon3 aria-label="edit" data={editP} onClick={this.myfunction3} />
+                </Tagline>
                 <ProfileImage>
                   <ProfileImageMain/>
                   <ProfileImageSet>
@@ -63,17 +64,23 @@ class Profile extends Component {
                     <Image id="4"/>
                   </ProfileImageSet>
                 </ProfileImage>
-                <Tagline>Bio</Tagline>
+                <Tagline>Bio
+                <Icon3 aria-label="edit" data={editP} onClick={this.myfunction3} />
+                </Tagline>
                 <BioText type="text" name="bio" />
                 {/* <form>
                   <textarea value={this.state.value} onChange={this.handleChange} />
                 </form> */}
                 {/* <BioText /> */}
-                <Tagline>Preference</Tagline>
+                <Tagline>Preference
+                  <Icon3 aria-label="edit" data={editP} onClick={this.myfunction3} />
+                </Tagline>
                 <PrefButton aria-label="Opposite" onClick={this.Opposite}>Opposite</PrefButton>
                 <PrefButton aria-label="Same" onClick={this.Same}>Same</PrefButton>
                 <PrefButton aria-label="Both" onClick={this.Both}>Both</PrefButton>
-                <Tagline>Radius</Tagline>
+                <Tagline>Radius
+                <Icon3 aria-label="edit" data={editP} onClick={this.myfunction3} />
+                </Tagline>
               </Header>
             </ProfileContent>
           </ProfileScreen>
@@ -112,8 +119,7 @@ const Icon2 = styled.object`
 const Icon3 = styled.object`
   width: 18px
   display: block
-  margin-left: 310px
-  margin-bottom: 20px
+  float: right
 `
 const Tagline = styled.div`
   width: 100%
@@ -137,7 +143,6 @@ const ProfileImageMain = styled.div`
   border-radius: 5px
   float: left
 `
-
 const ProfileImageSet = styled.div`
   width: 50%
   height: 100%
