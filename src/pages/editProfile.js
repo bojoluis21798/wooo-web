@@ -4,14 +4,14 @@ import heart from "../assets/icons/heart.svg"
 import alarm from "../assets/icons/alarm.png"
 import chat from "../assets/icons/chat.png"
 import user from "../assets/icons/user.png"
-import editP from "../assets/icons/edit.png"
 // import AuthorizedLayout from '../layouts/AuthorizedLayout';
 import { inject, observer } from 'mobx-react';
 import { ToastContainer } from "react-toastify"
+// import { ReactSlider } from "react-slider"
 
 
 @inject('store') @observer
-class Profile extends Component {
+class editProfile extends Component {
   myfunction(){
     console.log("Like!");
   }
@@ -52,7 +52,6 @@ class Profile extends Component {
                 <Icon2 aria-label="alarm" data={alarm} onClick={this.myfunction1} />
                 <Icon2 aria-label="chat" data={chat} onClick={this.myfunction2} />
                 <Icon2 aria-label="user" data={user} onClick={this.myfunction3} />
-                <Icon3 aria-label="edit" data={editP} onClick={this.myfunction3} />
                 <Tagline>Photos</Tagline>
                 <ProfileImage>
                   <ProfileImageMain/>
@@ -74,6 +73,7 @@ class Profile extends Component {
                 <PrefButton aria-label="Same" onClick={this.Same}>Same</PrefButton>
                 <PrefButton aria-label="Both" onClick={this.Both}>Both</PrefButton>
                 <Tagline>Radius</Tagline>
+                {/* <ReactSlider defaultValue={[0, 100]} withbars/> */}
               </Header>
             </ProfileContent>
           </ProfileScreen>
@@ -81,7 +81,6 @@ class Profile extends Component {
         )
     }
 }
-
 const ProfileScreen = styled.div`
   position: relative
   height: 100vh
@@ -108,12 +107,6 @@ const Icon2 = styled.object`
   margin-left: 8px
   margin-bottom: 20px
   margin-top: 10px
-`
-const Icon3 = styled.object`
-  width: 18px
-  display: block
-  margin-left: 310px
-  margin-bottom: 20px
 `
 const Tagline = styled.div`
   width: 100%
@@ -191,4 +184,4 @@ const PrefButton = styled.button`
   }
 `
 
-export default Profile
+export default editProfile
