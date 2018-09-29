@@ -14,6 +14,7 @@ class UserStore {
     @observable photos = []
     @observable token = null
     @observable email = null
+    @observable accessToken = null;
 
     @action
     async authenticateUser(authObj) {
@@ -21,6 +22,9 @@ class UserStore {
             let response = await axios.post(process.env.REACT_APP_API_BASEURL + 'login/', {
                 accessToken: authObj.accessToken
             })
+
+            this.accessToken = authObj.accessToken;
+            
             console.log(response);
             this.populateUser(response.data)
             return true
