@@ -53,29 +53,26 @@ class editProfile extends Component {
                 <Icon2 aria-label="alarm" data={alarm} onClick={this.myfunction1} />
                 <Icon2 aria-label="chat" data={chat} onClick={this.myfunction2} />
                 <Icon2 aria-label="user" data={user} onClick={this.myfunction3} />
-                <Tagline>Photos</Tagline>
-                <ProfileImage>
-                  <ProfileImageMain/>
-                  <ProfileImageSet>
-                    <Image id="1" type="file" onChange={this.UploadFile}/>
-                    <Image id="2" type="file" onChange={this.UploadFile} />
-                    <Image id="3" type="file" onChange={this.UploadFile} />
-                    <Image id="4" type="file" onChange={this.UploadFile} />
-                  </ProfileImageSet>
-                </ProfileImage>
-                <Tagline>Bio</Tagline>
-                <BioText type="text" name="bio" />
-                {/* <form>
-                  <textarea value={this.state.value} onChange={this.handleChange} />
-                </form> */}
-                {/* <BioText /> */}
-                <Tagline>Preference</Tagline>
-                <PrefButton aria-label="Opposite" onClick={this.Opposite}>Opposite</PrefButton>
-                <PrefButton aria-label="Same" onClick={this.Same}>Same</PrefButton>
-                <PrefButton aria-label="Both" onClick={this.Both}>Both</PrefButton>
-                <Tagline>Radius</Tagline>
-                <Slider />
-                {/* <ReactSlider defaultValue={[0, 100]} withbars/> */}
+                <form>
+                  <Tagline>Photos</Tagline>
+                  <ProfileImage>
+                    <ProfileImageMain/>
+                    <ProfileImageSet>
+                      <Image1 type="file" onChange={this.UploadFile}/>
+                      <Image2 type="file" onChange={this.UploadFile} />
+                      <Image3 type="file" onChange={this.UploadFile} />
+                      <Image4 type="file" onChange={this.UploadFile} />
+                    </ProfileImageSet>
+                  </ProfileImage>
+                  <Tagline>Bio</Tagline>
+                  <BioText type="text" name="bio" onChange={this.handleChange} />
+                  <Tagline>Preference</Tagline>
+                  <PrefButton aria-label="Opposite" onClick={this.Opposite}>Opposite</PrefButton>
+                  <PrefButton aria-label="Same" onClick={this.Same}>Same</PrefButton>
+                  <PrefButton aria-label="Both" onClick={this.Both}>Both</PrefButton>
+                  <Tagline>Radius</Tagline>
+                  <Slider min={1} max={10} />
+                </form>
               </Header>
             </ProfileContent>
           </ProfileScreen>
@@ -139,13 +136,59 @@ const ProfileImageSet = styled.div`
   float: right
 `
 
-const Image = styled.div`
-  width: 46%
-  height: 46%
+const Image1 = styled.input`
+  width: 45%
+  height: 48%
+  background-color: #fff
+  border-radius: 5px
+  margin-left: 3%
+  float: right
+
+  &:focus {
+    outline: none !important
+    border: 1px solid #f51a63 !important
+  }
+`
+const Image2 = styled.div`
+  width: 45%
+  height: 48%
   background-color: #191919
   border-radius: 5px
-  margin: 2%
+  margin-right: 3%
   float: right
+
+  &:focus {
+    outline: none !important
+    border: 1px solid #f51a63 !important
+  }
+`
+const Image3 = styled.div`
+  width: 45%
+  height: 48%
+  background-color: #191919
+  border-radius: 5px
+  margin-top: 5%
+  margin-left: 3%
+  float: right
+
+  &:focus {
+    outline: none !important
+    border: 1px solid #f51a63 !important
+  }
+`
+const Image4 = styled.div`
+  width: 45%
+  height: 48%
+  background-color: #191919
+  border-radius: 5px
+  margin-top: 5%
+  margin-right: 3%
+  float: right
+
+  &:focus {
+    outline: none !important
+    border: 1px solid #f51a63 !important
+  }
 `
 const BioText = styled.textarea`
   height: 50px
@@ -158,6 +201,7 @@ const BioText = styled.textarea`
   border: none
   justify-items: center
   padding: 10px
+  resize: none
 
   &:focus {
     outline: none !important
