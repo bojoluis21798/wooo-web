@@ -7,7 +7,8 @@ import user from "../assets/icons/user.png"
 // import AuthorizedLayout from '../layouts/AuthorizedLayout';
 import { inject, observer } from 'mobx-react';
 import { ToastContainer } from "react-toastify"
-// import { ReactSlider } from "react-slider"
+import Slider from "rc-slider"
+import "rc-slider/assets/index.css"
 
 
 @inject('store') @observer
@@ -73,6 +74,7 @@ class editProfile extends Component {
                 <PrefButton aria-label="Same" onClick={this.Same}>Same</PrefButton>
                 <PrefButton aria-label="Both" onClick={this.Both}>Both</PrefButton>
                 <Tagline>Radius</Tagline>
+                <Slider />
                 {/* <ReactSlider defaultValue={[0, 100]} withbars/> */}
               </Header>
             </ProfileContent>
@@ -145,7 +147,7 @@ const Image = styled.div`
   margin: 2%
   float: right
 `
-const BioText = styled.input`
+const BioText = styled.textarea`
   height: 50px
   width: 320px
   font-weight: 20
@@ -155,9 +157,11 @@ const BioText = styled.input`
   border-radius: 5px
   border: none
   justify-items: center
+  padding: 10px
 
-  textarea:focus, input:focus{
-    outline: #f51a63
+  &:focus {
+    outline: none !important
+    border: 1px solid #f51a63 !important
   }
 `
 const PrefButton = styled.button`
@@ -180,6 +184,12 @@ const PrefButton = styled.button`
     cursor: pointer
     background-position: 300px
     background-color:  #191919
+    border: 1px solid #f51a63
+  }
+
+  &:focus {
+    background-position: 300px
+    background-color:  #f51a63
     border: 1px solid #f51a63
   }
 `
