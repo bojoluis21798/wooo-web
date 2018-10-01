@@ -4,16 +4,22 @@ import heart from "../assets/icons/heart.svg"
 import alarm from "../assets/icons/alarm.png"
 import chat from "../assets/icons/chat.png"
 import user from "../assets/icons/user.png"
+<<<<<<< HEAD
 import add from "../assets/icons/plus.png"
+=======
+// import editP from "../assets/icons/edit.png"
+>>>>>>> 056ba6a1f827fdbcf28d01377fff5d2eaa47aa93
 // import AuthorizedLayout from '../layouts/AuthorizedLayout';
 import { inject, observer } from 'mobx-react';
 import { ToastContainer } from "react-toastify"
 import Slider from "rc-slider"
-import "rc-slider/assets/index.css"
+import "rc-slider/assets/index.css";
+
 
 
 @inject('store') @observer
 class editProfile extends Component {
+
   myfunction(){
     console.log("Like!");
   }
@@ -55,13 +61,14 @@ class editProfile extends Component {
                 <Icon2 aria-label="chat" data={chat} onClick={this.myfunction2} />
                 <Icon2 aria-label="user" data={user} onClick={this.myfunction3} />
                 <Tagline>Photos</Tagline>
+
                 <ProfileImage>
                   <ProfileImageMain/>
                   <ProfileImageSet>
-                    <Image id="1" type="file" onChange={this.UploadFile}/>
-                    <Image id="2" type="file" onChange={this.UploadFile} />
-                    <Image id="3" type="file" onChange={this.UploadFile} />
-                    <Image id="4" type="file" onChange={this.UploadFile} />
+                    <Image1 type="file" onChange={this.UploadFile}/>
+                    <Image2 type="file" onChange={this.UploadFile} />
+                    <Image3 type="file" onChange={this.UploadFile} />
+                    <Image4 type="file" onChange={this.UploadFile} />
                   </ProfileImageSet>
                 </ProfileImage>
                 <Tagline>Bio</Tagline>
@@ -71,12 +78,11 @@ class editProfile extends Component {
                 </form> */}
                 {/* <BioText /> */}
                 <Tagline>Preference</Tagline>
-                <PrefButton aria-label="Opposite" onClick={this.Opposite}>Opposite</PrefButton>
-                <PrefButton aria-label="Same" onClick={this.Same}>Same</PrefButton>
-                <PrefButton aria-label="Both" onClick={this.Both}>Both</PrefButton>
+                  <PrefButton aria-label="Opposite" onClick={this.Opposite}>Opposite</PrefButton>
+                  <PrefButton aria-label="Same" onClick={this.Same}>Same</PrefButton>
+                  <PrefButton aria-label="Both" onClick={this.Both}>Both</PrefButton>
                 <Tagline>Radius</Tagline>
-                <Slider />
-                {/* <ReactSlider defaultValue={[0, 100]} withbars/> */}
+                <Slider min={1} max={10} defaultValue={5} />
               </Header>
             </ProfileContent>
           </ProfileScreen>
@@ -112,6 +118,11 @@ const Icon2 = styled.object`
   margin-bottom: 20px
   margin-top: 10px
 `
+// const Icon3 = styled.object`
+//   width: 18px
+//   display: block
+//   float: right
+// `
 const Tagline = styled.div`
   width: 100%
   font-weight: 500
@@ -123,35 +134,60 @@ const Tagline = styled.div`
   margin-top: 20px
 `
 const ProfileImage = styled.div`
-  height: 180px
+  height: 150px
   width: 100%
   border-radius: 5px
 `
 const ProfileImageMain = styled.div`
-  width: 48%
+  width: 49%
   height: 100%
   background-color: #191919
   border-radius: 5px
   float: left
 `
-
 const ProfileImageSet = styled.div`
-  width: 50%
+  width: 48%
   height: 100%
   float: right
 `
 
-const Image = styled.div`
-  width: 46%
-  height: 46%
+const Image1 = styled.div`
+  width: 45%
+  height: 48%
   background-color: #191919
   border-radius: 5px
-  margin: 2%
+  margin-left: 3%
+  float: right
+`
+const Image2 = styled.div`
+  width: 45%
+  height: 48%
+  background-color: #191919
+  border-radius: 5px
+  margin-right: 3%
+  float: right
+`
+const Image3 = styled.div`
+  width: 45%
+  height: 48%
+  background-color: #191919
+  border-radius: 5px
+  margin-top: 5%
+  margin-left: 3%
+  float: right
+`
+const Image4 = styled.div`
+  width: 45%
+  height: 48%
+  background-color: #191919
+  border-radius: 5px
+  margin-top: 5%
+  margin-right: 3%
   float: right
 `
 const BioText = styled.textarea`
   height: 50px
-  width: 320px
+  width:100%
   font-weight: 20
   font-size: 12px
   color: #ffffff
