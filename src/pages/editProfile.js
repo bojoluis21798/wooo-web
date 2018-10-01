@@ -9,37 +9,70 @@ import { inject, observer } from 'mobx-react';
 import { ToastContainer } from "react-toastify"
 import Slider from "rc-slider"
 import "rc-slider/assets/index.css"
+import axios from 'axios'
 
 
 @inject('store') @observer
 class editProfile extends Component {
-  myfunction(){
-    console.log("Like!");
+  constructor(props) {
+    super(props);
+    this.state ={
+      file:null
+    }
+    this.onFormSubmit = this.onFormSubmit.bind(this)
+    this.onChange = this.onChange.bind(this)
+    this.fileUpload = this.fileUpload.bind(this)
+  }
+  onFormSubmit(e){
+    e.preventDefault() // Stop form submit
+    this.fileUpload(this.state.file).then((response)=>{
+      console.log(response.data);
+      console.log("HELLO THIS SHOULD WORK!!!!")
+    })
+  }
+  onChange(e) {
+    this.setState({file:e.target.files[0]})
+  }
+  fileUpload(file){
+    const url = 'https://wooo.philsony.com/api/profiles/';
+    const formData = new FormData();
+    formData.append('file',file)
+    const config = {
+        headers: {
+            'content-type': 'multipart/form-data'
+        }
+    }
+    return  axios.post(url, formData,config)
   }
 
-  myfunction1(){
-    console.log("Ring!");
-  }
 
-  myfunction2(){
-    console.log("Hello!");
-  }
+  // myfunction(){
+  //   console.log("Like!");
+  // }
 
-  myfunction3(){
-    console.log("Weiner!");
-  }
+  // myfunction1(){
+  //   console.log("Ring!");
+  // }
 
-  Opposite(){
-    console.log("Girl Boy!");
-  }
+  // myfunction2(){
+  //   console.log("Hello!");
+  // }
 
-  Same(){
-    console.log("Girl Girl Boy Boy");
-  }
+  // myfunction3(){
+  //   console.log("Weiner!");
+  // }
 
-  Both(){
-    console.log("Both!");
-  }
+  // Opposite(){
+  //   console.log("Girl Boy!");
+  // }
+
+  // Same(){
+  //   console.log("Girl Girl Boy Boy");
+  // }
+
+  // Both(){
+  //   console.log("Both!");
+  // }
 
     render(){
         return (
@@ -53,7 +86,7 @@ class editProfile extends Component {
                 <Icon2 aria-label="alarm" data={alarm} onClick={this.myfunction1} />
                 <Icon2 aria-label="chat" data={chat} onClick={this.myfunction2} />
                 <Icon2 aria-label="user" data={user} onClick={this.myfunction3} />
-                <form>
+                <form onSubmit={this.onFormSubmit}>
                   <Tagline>Photos</Tagline>
                   <ProfileImage>
                     <ProfileImageMain/>
@@ -71,7 +104,8 @@ class editProfile extends Component {
                   <PrefButton aria-label="Same" onClick={this.Same}>Same</PrefButton>
                   <PrefButton aria-label="Both" onClick={this.Both}>Both</PrefButton>
                   <Tagline>Radius</Tagline>
-                  <Slider min={1} max={10} />
+                  <Slider min={1} max={10} />\
+                  <button type="submit">Click here</button>
                 </form>
               </Header>
             </ProfileContent>
