@@ -4,11 +4,7 @@ import heart from "../assets/icons/heart.svg"
 import alarm from "../assets/icons/alarm.png"
 import chat from "../assets/icons/chat.png"
 import user from "../assets/icons/user.png"
-<<<<<<< HEAD
 import add from "../assets/icons/plus.png"
-=======
-// import editP from "../assets/icons/edit.png"
->>>>>>> 056ba6a1f827fdbcf28d01377fff5d2eaa47aa93
 // import AuthorizedLayout from '../layouts/AuthorizedLayout';
 import { inject, observer } from 'mobx-react';
 import { ToastContainer } from "react-toastify"
@@ -72,7 +68,7 @@ class editProfile extends Component {
                   </ProfileImageSet>
                 </ProfileImage>
                 <Tagline>Bio</Tagline>
-                <BioText type="text" name="bio" />
+                <BioText type="text" name="bio"/>
                 {/* <form>
                   <textarea value={this.state.value} onChange={this.handleChange} />
                 </form> */}
@@ -195,7 +191,7 @@ const BioText = styled.textarea`
   border-radius: 5px
   border: none
   justify-items: center
-  padding: 10px
+  resize: none
 
   &:focus {
     outline: none !important
