@@ -4,7 +4,6 @@ import heart from "../assets/icons/heart.svg"
 import alarm from "../assets/icons/alarm.png"
 import chat from "../assets/icons/chat.png"
 import user from "../assets/icons/user.png"
-// import AuthorizedLayout from '../layouts/AuthorizedLayout';
 import { inject, observer } from 'mobx-react';
 import { ToastContainer } from "react-toastify"
 import Slider from "rc-slider"
@@ -36,13 +35,15 @@ class editProfile extends Component {
   fileUpload(file){
     const url = 'https://wooo.philsony.com/api/profiles/';
     const formData = new FormData();
+    const token = this.props.store.userStore.token;
     formData.append('file',file)
     const config = {
         headers: {
-            'content-type': 'multipart/form-data'
+            'content-type': 'multipart/form-data',
+            'Authorization': 'Token' + token
         }
     }
-    return  axios.post(url, formData,config)
+    return axios.post(url, formData, config)
   }
 
 
@@ -76,7 +77,6 @@ class editProfile extends Component {
 
     render(){
         return (
-            // <AuthorizedLayout>
             <ProfileScreen>
             <ToastContainer />
             <ProfileContent>
@@ -89,7 +89,8 @@ class editProfile extends Component {
                 <form onSubmit={this.onFormSubmit}>
                   <Tagline>Photos</Tagline>
                   <ProfileImage>
-                    <ProfileImageMain/>
+                    <ProfileImageMain />
+                    {/* <ProfileImageMain alt='Profile' src={this.props.store.userStore.profilePicture} />  */}
                     <ProfileImageSet>
                       <Image1 type="file" onChange={this.UploadFile}/>
                       <Image2 type="file" onChange={this.UploadFile} />
@@ -105,12 +106,11 @@ class editProfile extends Component {
                   <PrefButton aria-label="Both" onClick={this.Both}>Both</PrefButton>
                   <Tagline>Radius</Tagline>
                   <Slider min={1} max={10} />\
-                  <button type="submit">Click here</button>
+                  {/* <button type="submit">Click here</button> */}
                 </form>
               </Header>
             </ProfileContent>
           </ProfileScreen>
-            // </AuthorizedLayout>
         )
     }
 }
@@ -161,15 +161,14 @@ const ProfileImageMain = styled.div`
   height: 100%
   background-color: #191919
   border-radius: 5px
+  boder: none
   float: left
 `
-
 const ProfileImageSet = styled.div`
   width: 50%
   height: 100%
   float: right
 `
-
 const Image1 = styled.input`
   width: 45%
   height: 48%
