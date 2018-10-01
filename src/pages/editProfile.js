@@ -147,7 +147,7 @@ const ProfileImageSet = styled.div`
   float: right
 `
 
-const Image1 = styled.div`
+const Image1 = styled.input`
   width: 45%
   height: 48%
   background-color: #191919

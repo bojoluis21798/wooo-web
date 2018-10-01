@@ -1,0 +1,5 @@
+axios image upload ref
+
+https://gist.github.com/AshikNesin/e44b1950f6a24cfcd85330ffc1713513
+
+https://github.com/Zeshiba/CS3301-ChannelClass/blob/front-end/mvp/src/components/CreateCourse.vue
