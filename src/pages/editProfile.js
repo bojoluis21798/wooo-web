@@ -4,14 +4,18 @@ import heart from "../assets/icons/heart.svg"
 import alarm from "../assets/icons/alarm.png"
 import chat from "../assets/icons/chat.png"
 import user from "../assets/icons/user.png"
+// import editP from "../assets/icons/edit.png"
 // import AuthorizedLayout from '../layouts/AuthorizedLayout';
 import { inject, observer } from 'mobx-react';
 import { ToastContainer } from "react-toastify"
-// import { ReactSlider } from "react-slider"
+import Slider from "rc-slider"
+import 'rc-slider/assets/index.css';
+
 
 
 @inject('store') @observer
 class editProfile extends Component {
+
   myfunction(){
     console.log("Like!");
   }
@@ -53,13 +57,14 @@ class editProfile extends Component {
                 <Icon2 aria-label="chat" data={chat} onClick={this.myfunction2} />
                 <Icon2 aria-label="user" data={user} onClick={this.myfunction3} />
                 <Tagline>Photos</Tagline>
+
                 <ProfileImage>
                   <ProfileImageMain/>
                   <ProfileImageSet>
-                    <Image id="1"/>
-                    <Image id="2"/>
-                    <Image id="3"/>
-                    <Image id="4"/>
+                    <Image1/>
+                    <Image2/>
+                    <Image3/>
+                    <Image4/>
                   </ProfileImageSet>
                 </ProfileImage>
                 <Tagline>Bio</Tagline>
@@ -69,11 +74,11 @@ class editProfile extends Component {
                 </form> */}
                 {/* <BioText /> */}
                 <Tagline>Preference</Tagline>
-                <PrefButton aria-label="Opposite" onClick={this.Opposite}>Opposite</PrefButton>
-                <PrefButton aria-label="Same" onClick={this.Same}>Same</PrefButton>
-                <PrefButton aria-label="Both" onClick={this.Both}>Both</PrefButton>
+                  <PrefButton aria-label="Opposite" onClick={this.Opposite}>Opposite</PrefButton>
+                  <PrefButton aria-label="Same" onClick={this.Same}>Same</PrefButton>
+                  <PrefButton aria-label="Both" onClick={this.Both}>Both</PrefButton>
                 <Tagline>Radius</Tagline>
-                {/* <ReactSlider defaultValue={[0, 100]} withbars/> */}
+                <Slider min={1} max={10} defaultValue={5} />
               </Header>
             </ProfileContent>
           </ProfileScreen>
@@ -81,6 +86,7 @@ class editProfile extends Component {
         )
     }
 }
+
 const ProfileScreen = styled.div`
   position: relative
   height: 100vh
@@ -108,6 +114,11 @@ const Icon2 = styled.object`
   margin-bottom: 20px
   margin-top: 10px
 `
+// const Icon3 = styled.object`
+//   width: 18px
+//   display: block
+//   float: right
+// `
 const Tagline = styled.div`
   width: 100%
   font-weight: 500
@@ -119,35 +130,60 @@ const Tagline = styled.div`
   margin-top: 20px
 `
 const ProfileImage = styled.div`
-  height: 180px
+  height: 150px
   width: 100%
   border-radius: 5px
 `
 const ProfileImageMain = styled.div`
-  width: 48%
+  width: 49%
   height: 100%
   background-color: #191919
   border-radius: 5px
   float: left
 `
-
 const ProfileImageSet = styled.div`
-  width: 50%
+  width: 48%
   height: 100%
   float: right
 `
 
-const Image = styled.div`
-  width: 46%
-  height: 46%
+const Image1 = styled.div`
+  width: 45%
+  height: 48%
   background-color: #191919
   border-radius: 5px
-  margin: 2%
+  margin-left: 3%
+  float: right
+`
+const Image2 = styled.div`
+  width: 45%
+  height: 48%
+  background-color: #191919
+  border-radius: 5px
+  margin-right: 3%
+  float: right
+`
+const Image3 = styled.div`
+  width: 45%
+  height: 48%
+  background-color: #191919
+  border-radius: 5px
+  margin-top: 5%
+  margin-left: 3%
+  float: right
+`
+const Image4 = styled.div`
+  width: 45%
+  height: 48%
+  background-color: #191919
+  border-radius: 5px
+  margin-top: 5%
+  margin-right: 3%
   float: right
 `
 const BioText = styled.input`
   height: 50px
-  width: 320px
+  width:100%
   font-weight: 20
   font-size: 12px
   color: #ffffff
@@ -155,9 +191,10 @@ const BioText = styled.input`
   border-radius: 5px
   border: none
   justify-items: center
+  word-wrap: break-word
 
   textarea:focus, input:focus{
-    outline: #f51a63
+    border-color: pink
   }
 `
 const PrefButton = styled.button`

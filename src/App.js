@@ -7,7 +7,6 @@ import { Provider } from 'mobx-react'
 import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
 import Loading from './pages/Loading'
-import Profile from './pages/Profile'
 import editProfile from './pages/editProfile'
 
 class App extends Component {
@@ -24,7 +23,6 @@ class App extends Component {
           <Switch>
             <Route exact path='/login' component={Login} />
             <Route path='/dashboard' component={Dashboard}/>
-            <Route path='/profile' component={Profile}/>
             <Route path='/editprofile' component={editProfile}/>
             <Route path='/loading' component={Loading} />
             <Route path='*' component={Dashboard} />
