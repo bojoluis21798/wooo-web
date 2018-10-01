@@ -9,7 +9,7 @@ import user from "../assets/icons/user.png"
 import { inject, observer } from 'mobx-react';
 import { ToastContainer } from "react-toastify"
 import Slider from "rc-slider"
-import 'rc-slider/assets/index.css';
+import "rc-slider/assets/index.css";
 
 
 
@@ -181,7 +181,7 @@ const Image4 = styled.div`
   margin-right: 3%
   float: right
 `
-const BioText = styled.input`
+const BioText = styled.textarea`
   height: 50px
   width:100%
   font-weight: 20
@@ -191,10 +191,11 @@ const BioText = styled.input`
   border-radius: 5px
   border: none
   justify-items: center
-  word-wrap: break-word
+  padding: 10px
 
-  textarea:focus, input:focus{
-    border-color: pink
+  &:focus {
+    outline: none !important
+    border: 1px solid #f51a63 !important
   }
 `
 const PrefButton = styled.button`
@@ -217,6 +218,12 @@ const PrefButton = styled.button`
     cursor: pointer
     background-position: 300px
     background-color:  #191919
+    border: 1px solid #f51a63
+  }
+
+  &:focus {
+    background-position: 300px
+    background-color:  #f51a63
     border: 1px solid #f51a63
   }
 `
