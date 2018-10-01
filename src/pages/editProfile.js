@@ -4,6 +4,7 @@ import heart from "../assets/icons/heart.svg"
 import alarm from "../assets/icons/alarm.png"
 import chat from "../assets/icons/chat.png"
 import user from "../assets/icons/user.png"
+import add from "../assets/icons/plus.png"
 // import AuthorizedLayout from '../layouts/AuthorizedLayout';
 import { inject, observer } from 'mobx-react';
 import { ToastContainer } from "react-toastify"
@@ -57,10 +58,10 @@ class editProfile extends Component {
                 <ProfileImage>
                   <ProfileImageMain/>
                   <ProfileImageSet>
-                    <Image id="1"/>
-                    <Image id="2"/>
-                    <Image id="3"/>
-                    <Image id="4"/>
+                    <Image id="1" type="file" onChange={this.UploadFile}/>
+                    <Image id="2" type="file" onChange={this.UploadFile} />
+                    <Image id="3" type="file" onChange={this.UploadFile} />
+                    <Image id="4" type="file" onChange={this.UploadFile} />
                   </ProfileImageSet>
                 </ProfileImage>
                 <Tagline>Bio</Tagline>
@@ -83,6 +84,7 @@ class editProfile extends Component {
         )
     }
 }
+
 const ProfileScreen = styled.div`
   position: relative
   height: 100vh
