@@ -132,11 +132,13 @@ const Header = styled.div`
 const Icon = styled.object`
   width: 40px
   height: 40px
+  margin: auto
   margin-right: 120px
   margin-bottom: 20px
 `
 const Icon2 = styled.object`
   width: 50px
+  margin: auto
   margin-left: 8px
   margin-bottom: 20px
   margin-top: 10px
@@ -185,6 +187,7 @@ const Image1 = styled.input`
   height: 48%
   background-color: #fff
   border-radius: 5px
+  margin: auto
   margin-left: 3%
   float: right
 
@@ -204,6 +207,7 @@ const Image2 = styled.div`
   height: 48%
   background-color: #191919
   border-radius: 5px
+  margin: auto
   margin-right: 3%
   float: right
 
@@ -223,6 +227,7 @@ const Image3 = styled.div`
   height: 48%
   background-color: #191919
   border-radius: 5px
+  margin: auto
   margin-top: 5%
   margin-left: 3%
   float: right
@@ -243,6 +248,7 @@ const Image4 = styled.div`
   height: 48%
   background-color: #191919
   border-radius: 5px
+  margin: auto
   margin-top: 5%
   margin-right: 3%
   float: right
@@ -259,8 +265,12 @@ const Image4 = styled.div`
   }
 `
 const BioText = styled.textarea`
-  height: 50px
-  width: 320px
+  height: 90px
+  max-height: 150px
+  min-height: 90px
+  width: 100%
+  max-width: 335px
+  min-width: 335px
   font-weight: 20
   font-size: 12px
   color: #ffffff
@@ -268,8 +278,10 @@ const BioText = styled.textarea`
   border-radius: 5px
   border: none
   justify-items: center
-  padding: 10px
-  resize: none
+  padding-top: 7px
+  padding-bottom: 7px
+  overflow: hidden
+  resize: hidden
 
   &:focus {
     outline: none !important
