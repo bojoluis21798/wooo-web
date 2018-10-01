@@ -163,6 +163,17 @@ const ProfileImageMain = styled.div`
   border-radius: 5px
   boder: none
   float: left
+
+  &:hover {
+    cursor: pointer
+    background-position: 300px
+    background-color:  #191919
+    border: 1px solid #f51a63
+  }
+  &:focus {
+    outline: none !important
+    border: 1px solid #f51a63 !important
+  }
 `
 const ProfileImageSet = styled.div`
   width: 50%
@@ -177,6 +188,12 @@ const Image1 = styled.input`
   margin-left: 3%
   float: right
 
+  &:hover {
+    cursor: pointer
+    background-position: 300px
+    background-color:  #191919
+    border: 1px solid #f51a63
+  }
   &:focus {
     outline: none !important
     border: 1px solid #f51a63 !important
@@ -190,6 +207,12 @@ const Image2 = styled.div`
   margin-right: 3%
   float: right
 
+  &:hover {
+    cursor: pointer
+    background-position: 300px
+    background-color:  #191919
+    border: 1px solid #f51a63
+  }
   &:focus {
     outline: none !important
     border: 1px solid #f51a63 !important
@@ -204,6 +227,12 @@ const Image3 = styled.div`
   margin-left: 3%
   float: right
 
+  &:hover {
+    cursor: pointer
+    background-position: 300px
+    background-color:  #191919
+    border: 1px solid #f51a63
+  }
   &:focus {
     outline: none !important
     border: 1px solid #f51a63 !important
@@ -218,6 +247,12 @@ const Image4 = styled.div`
   margin-right: 3%
   float: right
 
+  &:hover {
+    cursor: pointer
+    background-position: 300px
+    background-color:  #191919
+    border: 1px solid #f51a63
+  }
   &:focus {
     outline: none !important
     border: 1px solid #f51a63 !important
