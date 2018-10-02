@@ -43,7 +43,8 @@ class editProfile extends Component {
     const config = {
         headers: {
             'content-type': 'multipart/form-data',
-            'Authorization': 'Token' + token
+            Authorization: 'Token ' + token,
+            
         }
     }
     return axios.post(url, formData, config)
@@ -54,34 +55,6 @@ class editProfile extends Component {
       pictures: this.state.pictures.concat(picture)
     })
   }
-
-  // myfunction(){
-  //   console.log("Like!");
-  // }
-
-  // myfunction1(){
-  //   console.log("Ring!");
-  // }
-
-  // myfunction2(){
-  //   console.log("Hello!");
-  // }
-
-  // myfunction3(){
-  //   console.log("Weiner!");
-  // }
-
-  // Opposite(){
-  //   console.log("Girl Boy!");
-  // }
-
-  // Same(){
-  //   console.log("Girl Girl Boy Boy");
-  // }
-
-  // Both(){
-  //   console.log("Both!");
-  // }
 
     render(){
         return (
@@ -128,7 +101,8 @@ const ProfileScreen = styled.div`
   position: relative
   height: 100vh
   background-color: #111111
-  overflow: hidden
+  overflow: auto
+  overflow-x: hidden
 `
 const ProfileContent = styled.div`
   display: grid
