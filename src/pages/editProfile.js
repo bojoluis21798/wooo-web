@@ -121,7 +121,8 @@ class editProfile extends Component {
                           withPreview={true} 
                           withIcon={false} 
                           withLabel={false} 
-                          onChange={this.onDrop}/>
+                          onChange={this.onDrop}
+                        />
                       </ImageUpBox>
                       <Image2 id="image2" type="file" onChange={this.UploadFile} />
                       <Image3 id="image3" type="file" onChange={this.UploadFile} />
@@ -129,12 +130,20 @@ class editProfile extends Component {
                     </ProfileImageSet>
                   </ProfileImage>
                   <Tagline>Bio</Tagline>
-                  <BioText id="bio" name="bio" value={this.state.value} placeholder="Talk about yourself..... (Likes, Interests, etc.)" onChange={this.handleChange} />
+                  <BioText 
+                    id="bio" 
+                    name="bio" 
+                    value={this.state.value} 
+                    placeholder="Talk about yourself..... (Likes, Interests, etc.)" 
+                    onChange={this.handleChange} 
+                  />
                   <Tagline>Preference</Tagline>
                   <PrefButton id="opposite" aria-label="Opposite" onClick={this.handleOpposite}>Opposite</PrefButton>
                   <PrefButton id="same" aria-label="Same" onClick={this.handleSame}>Same</PrefButton>
                   <PrefButton id="both" aria-label="Both" onClick={this.handleBoth}>Both</PrefButton>
                   <Tagline>Radius</Tagline>
+                  <RadiusNum>{this.state.radius} Km</RadiusNum>
+                  <br/>
                   <Slider id="radius" min={1} max={10} value={this.state.radius} onChange={this.handleSlider} />
                   <button type="submit">Click here</button>
                   <button value="submit" type="submit">Click here</button>
@@ -188,6 +197,13 @@ const Tagline = styled.div`
   margin-bottom: 20px
   margin-top: 20px
 `
+const RadiusNum = styled.div`
+  color: #f3f3f3
+  font-size:13px
+  float: right
+
+`
+
 const ProfileImage = styled.div`
   height: 180px
   width: 100%
