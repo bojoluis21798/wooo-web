@@ -19,25 +19,37 @@ class editProfile extends Component {
     this.state ={
       file:null,
       pictures: [],
-      bioTxt:''
+      value: 'Write about yoursel!...(Likes, Dislikes, Interests)'
     }
-    this.onFormSubmit = this.onFormSubmit.bind(this)
+    // this.onFormSubmit = this.onFormSubmit.bind(this)
+    // this.onfileChange = this.onChange.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
     this.fileUpload = this.fileUpload.bind(this)
     this.onDrop = this.onDrop.bind(this)
   }
-  
-  handleChange = (e) => {
-    this.setState({
-      value: e
-    });
+  // onFormSubmit(e){
+  //   e.preventDefault() // Stop form submit
+  //   this.fileUpload(this.state.file).then((response)=>{
+  //     this.state.pictures
+  //     console.log(response.data);
+  //     console.log("HELLO THIS SHOULD WORK!!!!")
+  //   })
+  // }
+  handleSubmit(event){
+    alert('You filled out your bio: ' + this.state.value)
+    event.preventDefault();
+    console.log(this.state.value)
   }
-  onFormSubmit(e){
-    e.preventDefault() // Stop form submit
-    console.log(this.state)
-    this.fileUpload(this.state.bioTxt).then((response)=>{
-      console.log(response.data);
-    })
+
+  handleChange(event){
+    this.setState({value: event.target.value})
   }
+
+  // onfileChange(e) {
+  //   this.setState({file:e.target.files[0]})
+  // }
+
   fileUpload(file){
     console.log(file)
     const url = 'https://wooo.philsony.com/api/profiles/';
@@ -71,29 +83,24 @@ class editProfile extends Component {
                 <Icon2 id="notification" aria-label="alarm" data={alarm} onClick={this.myfunction1} />
                 <Icon2 id="chat" aria-label="chat" data={chat} onClick={this.myfunction2} />
                 <Icon2 id="profile" aria-label="user" data={user} onClick={this.myfunction3} />
-                <form onSubmit={this.onFormSubmit} method="POST">
+                <form onSubmit={this.handleSubmit}>
                   <Tagline>Photos</Tagline>
                   <ProfileImage>
-                    <ProfileImageMain id="profilePic"/>
-                    {/* <ProfileImageMain alt='Profile' src={this.props.store.userStore.profilePicture} />  */}
+                    {/* <ProfileImageMain id="profilePic"/> */}
+                    {/* <imageContainer> */}
+                      <ProfileImageMain alt='Profile' src={this.props.store.userStore.profilePicture} />
+                    {/* </imageContainer>  */}
                     <ProfileImageSet>
-                      <Image1>
-                        <ImageUploader imgExtension={['.jpg', '.gif', '.png']} id="image1" withPreview={true} withIcon={false} withLabel={false} onChange={this.onDrop}/>
-                      </Image1>
-                      
+                      <ImageUpBox>
+                        <ImageUploader imgExtension={['.jpg', '.gif', '.png']} id="image1" singleImage={true} withPreview={true} withIcon={false} withLabel={false} onChange={this.onDrop}/>
+                      </ImageUpBox>
                       <Image2 id="image2" type="file" onChange={this.UploadFile} />
                       <Image3 id="image3" type="file" onChange={this.UploadFile} />
                       <Image4 id="image4" type="file" onChange={this.UploadFile} />
                     </ProfileImageSet>
                   </ProfileImage>
                   <Tagline>Bio</Tagline>
-                  <BioText 
-                    id="bio" 
-                    type="text" 
-                    name="bio" 
-                    placeholder="Write about yourself....(Likes, Dislikes, Interest)" 
-                    onChange={this.handleChange}
-                    />
+                  <BioText id="bio" name="bio" value={this.state.value} onChange={this.handleChange} />
                   <Tagline>Preference</Tagline>
                   <PrefButton id="opposite" aria-label="Opposite" onClick={this.Opposite}>Opposite</PrefButton>
                   <PrefButton id="same" aria-label="Same" onClick={this.Same}>Same</PrefButton>
@@ -101,6 +108,7 @@ class editProfile extends Component {
                   <Tagline>Radius</Tagline>
                   <Slider id="radius" min={1} max={10} />
                   <button type="submit">Click here</button>
+                  <button value="submit" type="submit">Click here</button>
                 </form>
               </Header>
             </ProfileContent>
@@ -154,15 +162,18 @@ const Tagline = styled.div`
 const ProfileImage = styled.div`
   height: 180px
   width: 100%
-  border-radius: 5px
+  max-width: 170px
+  display: flex 
 `
-const ProfileImageMain = styled.div`
-  width: 48%
+const ProfileImageMain = styled.img`
+  width: 100%
+  max-width: 140px
   height: 100%
-  background-color: #191919
+  max-height: 145px
   border-radius: 5px
   boder: none
   float: left
+  margin-right: 5px
 
   &:hover {
     cursor: pointer
@@ -176,51 +187,16 @@ const ProfileImageMain = styled.div`
   }
 `
 const ProfileImageSet = styled.div`
-  width: 50%
+  width: 100%
   height: 100%
+  max-height: 145px
   float: right
 `
-// const ImageUploader = styled.button`
-//   width: 45%
-//   height: 48%
-//   background-color: #fff
-//   border-radius: 5px
-//   margin: auto
-//   margin-left: 3%
-//   float: right
 
-//   &:hover {
-//     cursor: pointer
-//     background-position: 300px
-//     background-color:  #191919
-//     border: 1px solid #f51a63
-//   }
-//   &:focus {
-//     outline: none !important
-//     border: 1px solid #f51a63 !important
-//   }
-// `
 
-const Image1 = styled.div`
-  width: 45%
-  height: 48%
-  background-color: #191919
-  border-radius: 5px
-  margin: auto
-  margin-top: 5%
-  margin-left: 3%
-  float: right
+const ImageUpBox = styled.div`
 
-  &:hover {
-    cursor: pointer
-    background-position: 300px
-    background-color:  #191919
-    border: 1px solid #f51a63
-  }
-  &:focus {
-    outline: none !important
-    border: 1px solid #f51a63 !important
-  }
+
 `
 const Image2 = styled.div`
   width: 45%
