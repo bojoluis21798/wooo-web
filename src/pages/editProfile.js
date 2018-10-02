@@ -9,6 +9,7 @@ import { ToastContainer } from "react-toastify"
 import Slider from "rc-slider"
 import "rc-slider/assets/index.css"
 import axios from 'axios'
+import ImageUploader from 'react-images-upload'
 
 
 @inject('store') @observer
@@ -16,11 +17,13 @@ class editProfile extends Component {
   constructor(props) {
     super(props);
     this.state ={
-      file:null
+      file:null,
+      pictures: []
     }
     this.onFormSubmit = this.onFormSubmit.bind(this)
     this.onChange = this.onChange.bind(this)
     this.fileUpload = this.fileUpload.bind(this)
+    this.onDrop = this.onDrop.bind(this)
   }
   onFormSubmit(e){
     e.preventDefault() // Stop form submit
@@ -46,6 +49,11 @@ class editProfile extends Component {
     return axios.post(url, formData, config)
   }
 
+  onDrop(picture) {
+    this.setState({
+      pictures: this.state.pictures.concat(picture)
+    })
+  }
 
   // myfunction(){
   //   console.log("Like!");
@@ -82,30 +90,32 @@ class editProfile extends Component {
             <ProfileContent>
               <Header>
                 {/* <Icon><img src="../assests/icons/heartfill.png" alt="my image" onclick={this.myfunction} /></Icon> */}
-                <Icon aria-label="heart" data={heart} onClick={this.myfunction} />
-                <Icon2 aria-label="alarm" data={alarm} onClick={this.myfunction1} />
-                <Icon2 aria-label="chat" data={chat} onClick={this.myfunction2} />
-                <Icon2 aria-label="user" data={user} onClick={this.myfunction3} />
+                <Icon id="matching" aria-label="heart" data={heart} onClick={this.myfunction} />
+                <Icon2 id="notification" aria-label="alarm" data={alarm} onClick={this.myfunction1} />
+                <Icon2 id="chat" aria-label="chat" data={chat} onClick={this.myfunction2} />
+                <Icon2 id="profile" aria-label="user" data={user} onClick={this.myfunction3} />
                 <form onSubmit={this.onFormSubmit}>
                   <Tagline>Photos</Tagline>
                   <ProfileImage>
-                    <ProfileImageMain />
+                    <ProfileImageMain id="profilePic"/>
                     {/* <ProfileImageMain alt='Profile' src={this.props.store.userStore.profilePicture} />  */}
                     <ProfileImageSet>
-                      <Image1 type="file" onChange={this.UploadFile}/>
-                      <Image2 type="file" onChange={this.UploadFile} />
-                      <Image3 type="file" onChange={this.UploadFile} />
-                      <Image4 type="file" onChange={this.UploadFile} />
+                      <ImageUpBox>
+                        <ImageUploader imgExtension={['.jpg', '.gif', '.png']} id="image1" withPreview={true} withIcon={false} withLabel={false} onChange={this.onDrop}/>
+                      </ImageUpBox>
+                      <Image2 id="image2" type="file" onChange={this.UploadFile} />
+                      <Image3 id="image3" type="file" onChange={this.UploadFile} />
+                      <Image4 id="image4" type="file" onChange={this.UploadFile} />
                     </ProfileImageSet>
                   </ProfileImage>
                   <Tagline>Bio</Tagline>
-                  <BioText type="text" name="bio" onChange={this.handleChange} />
+                  <BioText id="bio" type="text" name="bio" onChange={this.handleChange} />
                   <Tagline>Preference</Tagline>
-                  <PrefButton aria-label="Opposite" onClick={this.Opposite}>Opposite</PrefButton>
-                  <PrefButton aria-label="Same" onClick={this.Same}>Same</PrefButton>
-                  <PrefButton aria-label="Both" onClick={this.Both}>Both</PrefButton>
+                  <PrefButton id="opposite" aria-label="Opposite" onClick={this.Opposite}>Opposite</PrefButton>
+                  <PrefButton id="same" aria-label="Same" onClick={this.Same}>Same</PrefButton>
+                  <PrefButton id="both" aria-label="Both" onClick={this.Both}>Both</PrefButton>
                   <Tagline>Radius</Tagline>
-                  <Slider min={1} max={10} />\
+                  <Slider id="radius" min={1} max={10} />
                   {/* <button type="submit">Click here</button> */}
                 </form>
               </Header>
@@ -118,6 +128,7 @@ const ProfileScreen = styled.div`
   position: relative
   height: 100vh
   background-color: #111111
+  overflow: hidden
 `
 const ProfileContent = styled.div`
   display: grid
@@ -128,6 +139,8 @@ const ProfileContent = styled.div`
 `
 const Header = styled.div`
   margin: auto
+  min-width:30%
+  height:100vh
 `
 const Icon = styled.object`
   width: 40px
@@ -182,26 +195,29 @@ const ProfileImageSet = styled.div`
   height: 100%
   float: right
 `
-const Image1 = styled.input`
-  width: 45%
-  height: 48%
-  background-color: #fff
-  border-radius: 5px
-  margin: auto
-  margin-left: 3%
-  float: right
+const ImageUpBox = styled.div`
 
-  &:hover {
-    cursor: pointer
-    background-position: 300px
-    background-color:  #191919
-    border: 1px solid #f51a63
-  }
-  &:focus {
-    outline: none !important
-    border: 1px solid #f51a63 !important
-  }
 `
+// const ImageUploader = styled.button`
+//   width: 45%
+//   height: 48%
+//   background-color: #fff
+//   border-radius: 5px
+//   margin: auto
+//   margin-left: 3%
+//   float: right
+
+//   &:hover {
+//     cursor: pointer
+//     background-position: 300px
+//     background-color:  #191919
+//     border: 1px solid #f51a63
+//   }
+//   &:focus {
+//     outline: none !important
+//     border: 1px solid #f51a63 !important
+//   }
+// `
 const Image2 = styled.div`
   width: 45%
   height: 48%
