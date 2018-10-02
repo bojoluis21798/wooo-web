@@ -18,24 +18,28 @@ class editProfile extends Component {
     super(props);
     this.state ={
       file:null,
-      pictures: []
+      pictures: [],
+      bioTxt:''
     }
     this.onFormSubmit = this.onFormSubmit.bind(this)
-    this.onChange = this.onChange.bind(this)
     this.fileUpload = this.fileUpload.bind(this)
     this.onDrop = this.onDrop.bind(this)
   }
+  
+  handleChange = (e) => {
+    this.setState({
+      value: e
+    });
+  }
   onFormSubmit(e){
     e.preventDefault() // Stop form submit
-    this.fileUpload(this.state.file).then((response)=>{
+    console.log(this.state)
+    this.fileUpload(this.state.bioTxt).then((response)=>{
       console.log(response.data);
-      console.log("HELLO THIS SHOULD WORK!!!!")
     })
   }
-  onChange(e) {
-    this.setState({file:e.target.files[0]})
-  }
   fileUpload(file){
+    console.log(file)
     const url = 'https://wooo.philsony.com/api/profiles/';
     const formData = new FormData();
     const token = this.props.store.userStore.token;
@@ -67,29 +71,36 @@ class editProfile extends Component {
                 <Icon2 id="notification" aria-label="alarm" data={alarm} onClick={this.myfunction1} />
                 <Icon2 id="chat" aria-label="chat" data={chat} onClick={this.myfunction2} />
                 <Icon2 id="profile" aria-label="user" data={user} onClick={this.myfunction3} />
-                <form onSubmit={this.onFormSubmit}>
+                <form onSubmit={this.onFormSubmit} method="POST">
                   <Tagline>Photos</Tagline>
                   <ProfileImage>
                     <ProfileImageMain id="profilePic"/>
                     {/* <ProfileImageMain alt='Profile' src={this.props.store.userStore.profilePicture} />  */}
                     <ProfileImageSet>
-                      <ImageUpBox>
+                      <Image1>
                         <ImageUploader imgExtension={['.jpg', '.gif', '.png']} id="image1" withPreview={true} withIcon={false} withLabel={false} onChange={this.onDrop}/>
-                      </ImageUpBox>
+                      </Image1>
+                      
                       <Image2 id="image2" type="file" onChange={this.UploadFile} />
                       <Image3 id="image3" type="file" onChange={this.UploadFile} />
                       <Image4 id="image4" type="file" onChange={this.UploadFile} />
                     </ProfileImageSet>
                   </ProfileImage>
                   <Tagline>Bio</Tagline>
-                  <BioText id="bio" type="text" name="bio" onChange={this.handleChange} />
+                  <BioText 
+                    id="bio" 
+                    type="text" 
+                    name="bio" 
+                    placeholder="Write about yourself....(Likes, Dislikes, Interest)" 
+                    onChange={this.handleChange}
+                    />
                   <Tagline>Preference</Tagline>
                   <PrefButton id="opposite" aria-label="Opposite" onClick={this.Opposite}>Opposite</PrefButton>
                   <PrefButton id="same" aria-label="Same" onClick={this.Same}>Same</PrefButton>
                   <PrefButton id="both" aria-label="Both" onClick={this.Both}>Both</PrefButton>
                   <Tagline>Radius</Tagline>
                   <Slider id="radius" min={1} max={10} />
-                  {/* <button type="submit">Click here</button> */}
+                  <button type="submit">Click here</button>
                 </form>
               </Header>
             </ProfileContent>
@@ -169,9 +180,6 @@ const ProfileImageSet = styled.div`
   height: 100%
   float: right
 `
-const ImageUpBox = styled.div`
-
-`
 // const ImageUploader = styled.button`
 //   width: 45%
 //   height: 48%
@@ -192,6 +200,28 @@ const ImageUpBox = styled.div`
 //     border: 1px solid #f51a63 !important
 //   }
 // `
+
+const Image1 = styled.div`
+  width: 45%
+  height: 48%
+  background-color: #191919
+  border-radius: 5px
+  margin: auto
+  margin-top: 5%
+  margin-left: 3%
+  float: right
+
+  &:hover {
+    cursor: pointer
+    background-position: 300px
+    background-color:  #191919
+    border: 1px solid #f51a63
+  }
+  &:focus {
+    outline: none !important
+    border: 1px solid #f51a63 !important
+  }
+`
 const Image2 = styled.div`
   width: 45%
   height: 48%
