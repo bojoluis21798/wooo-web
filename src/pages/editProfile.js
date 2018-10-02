@@ -139,7 +139,7 @@ class editProfile extends Component {
                   <RadiusNum>{this.state.radius} Km</RadiusNum>
                   <br/>
                   <Slider id="radius" min={1} max={10} value={this.state.radius} onChange={this.handleSlider} />
-                  <button type="submit">Click here</button>
+                  <br/>
                   <button value="submit" type="submit">Click here</button>
                 </form>
               </Header>
