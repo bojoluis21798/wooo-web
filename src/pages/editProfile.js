@@ -28,6 +28,7 @@ class editProfile extends Component {
   onFormSubmit(e){
     e.preventDefault() // Stop form submit
     this.fileUpload(this.state.file).then((response)=>{
+      this.state.pictures
       console.log(response.data);
       console.log("HELLO THIS SHOULD WORK!!!!")
     })
@@ -70,11 +71,13 @@ class editProfile extends Component {
                 <form onSubmit={this.onFormSubmit}>
                   <Tagline>Photos</Tagline>
                   <ProfileImage>
-                    <ProfileImageMain id="profilePic"/>
-                    {/* <ProfileImageMain alt='Profile' src={this.props.store.userStore.profilePicture} />  */}
+                    {/* <ProfileImageMain id="profilePic"/> */}
+                    {/* <imageContainer> */}
+                      <ProfileImageMain alt='Profile' src={this.props.store.userStore.profilePicture} />
+                    {/* </imageContainer>  */}
                     <ProfileImageSet>
                       <ImageUpBox>
-                        <ImageUploader imgExtension={['.jpg', '.gif', '.png']} id="image1" withPreview={true} withIcon={false} withLabel={false} onChange={this.onDrop}/>
+                        <ImageUploader imgExtension={['.jpg', '.gif', '.png']} id="image1" singleImage={true} withPreview={true} withIcon={false} withLabel={false} onChange={this.onDrop}/>
                       </ImageUpBox>
                       <Image2 id="image2" type="file" onChange={this.UploadFile} />
                       <Image3 id="image3" type="file" onChange={this.UploadFile} />
@@ -143,12 +146,10 @@ const Tagline = styled.div`
 const ProfileImage = styled.div`
   height: 180px
   width: 100%
-  border-radius: 5px
 `
-const ProfileImageMain = styled.div`
+const ProfileImageMain = styled.img`
   width: 48%
   height: 100%
-  background-color: #191919
   border-radius: 5px
   boder: none
   float: left
