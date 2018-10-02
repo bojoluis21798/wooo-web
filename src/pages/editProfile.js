@@ -18,24 +18,37 @@ class editProfile extends Component {
     super(props);
     this.state ={
       file:null,
-      pictures: []
+      pictures: [],
+      value: 'Write about yoursel!...(Likes, Dislikes, Interests)'
     }
-    this.onFormSubmit = this.onFormSubmit.bind(this)
-    this.onChange = this.onChange.bind(this)
+    // this.onFormSubmit = this.onFormSubmit.bind(this)
+    // this.onfileChange = this.onChange.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
     this.fileUpload = this.fileUpload.bind(this)
     this.onDrop = this.onDrop.bind(this)
   }
-  onFormSubmit(e){
-    e.preventDefault() // Stop form submit
-    this.fileUpload(this.state.file).then((response)=>{
-      this.state.pictures
-      console.log(response.data);
-      console.log("HELLO THIS SHOULD WORK!!!!")
-    })
+  // onFormSubmit(e){
+  //   e.preventDefault() // Stop form submit
+  //   this.fileUpload(this.state.file).then((response)=>{
+  //     this.state.pictures
+  //     console.log(response.data);
+  //     console.log("HELLO THIS SHOULD WORK!!!!")
+  //   })
+  // }
+  handleSubmit(event){
+    alert('You filled out your bio: ' + this.state.value)
+    event.preventDefault();
+    console.log(this.state.value)
   }
-  onChange(e) {
-    this.setState({file:e.target.files[0]})
+
+  handleChange(event){
+    this.setState({value: event.target.value})
   }
+
+  // onfileChange(e) {
+  //   this.setState({file:e.target.files[0]})
+  // }
   fileUpload(file){
     const url = 'https://wooo.philsony.com/api/profiles/';
     const formData = new FormData();
@@ -68,7 +81,7 @@ class editProfile extends Component {
                 <Icon2 id="notification" aria-label="alarm" data={alarm} onClick={this.myfunction1} />
                 <Icon2 id="chat" aria-label="chat" data={chat} onClick={this.myfunction2} />
                 <Icon2 id="profile" aria-label="user" data={user} onClick={this.myfunction3} />
-                <form onSubmit={this.onFormSubmit}>
+                <form onSubmit={this.handleSubmit}>
                   <Tagline>Photos</Tagline>
                   <ProfileImage>
                     {/* <ProfileImageMain id="profilePic"/> */}
@@ -85,14 +98,14 @@ class editProfile extends Component {
                     </ProfileImageSet>
                   </ProfileImage>
                   <Tagline>Bio</Tagline>
-                  <BioText id="bio" type="text" name="bio" onChange={this.handleChange} />
+                  <BioText id="bio" name="bio" value={this.state.value} onChange={this.handleChange} />
                   <Tagline>Preference</Tagline>
                   <PrefButton id="opposite" aria-label="Opposite" onClick={this.Opposite}>Opposite</PrefButton>
                   <PrefButton id="same" aria-label="Same" onClick={this.Same}>Same</PrefButton>
                   <PrefButton id="both" aria-label="Both" onClick={this.Both}>Both</PrefButton>
                   <Tagline>Radius</Tagline>
                   <Slider id="radius" min={1} max={10} />
-                  {/* <button type="submit">Click here</button> */}
+                  <button value="submit" type="submit">Click here</button>
                 </form>
               </Header>
             </ProfileContent>
