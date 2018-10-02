@@ -20,10 +20,12 @@ class editProfile extends Component {
       file:null,
       pictures: [],
       value: '',
-      pref:0
+      pref:0,
+      radius:1
     }
     // this.onFormSubmit = this.onFormSubmit.bind(this)
     // this.onfileChange = this.onChange.bind(this)
+    this.handleSlider = this.handleSlider.bind(this)
     this.handleOpposite = this.handleOpposite.bind(this)
     this.handleSame = this.handleSame.bind(this)
     this.handleBoth = this.handleBoth.bind(this)
@@ -41,10 +43,14 @@ class editProfile extends Component {
   //   })
   // }
   handleSubmit(event){
-    alert('You filled out your bio: ' + this.state.value)
     event.preventDefault();
     console.log(this.state.value)
     console.log(this.state.pref)
+    console.log(this.state.radius)
+  }
+
+  handleSlider(value) {
+    this.setState({radius: value})
   }
 
   handleOpposite() {
@@ -129,7 +135,7 @@ class editProfile extends Component {
                   <PrefButton id="same" aria-label="Same" onClick={this.handleSame}>Same</PrefButton>
                   <PrefButton id="both" aria-label="Both" onClick={this.handleBoth}>Both</PrefButton>
                   <Tagline>Radius</Tagline>
-                  <Slider id="radius" min={1} max={10} />
+                  <Slider id="radius" min={1} max={10} value={this.state.radius} onChange={this.handleSlider} />
                   <button type="submit">Click here</button>
                   <button value="submit" type="submit">Click here</button>
                 </form>
