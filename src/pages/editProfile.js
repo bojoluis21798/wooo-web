@@ -17,7 +17,6 @@ class editProfile extends Component {
   constructor(props) {
     super(props);
     this.state ={
-      file:null,
       pictures: [],
       value: '',
       pref:0,
@@ -31,7 +30,6 @@ class editProfile extends Component {
     this.handleBoth = this.handleBoth.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
-    this.fileUpload = this.fileUpload.bind(this)
     this.onDrop = this.onDrop.bind(this)
   }
   // onFormSubmit(e){
@@ -47,6 +45,16 @@ class editProfile extends Component {
     console.log(this.state.value)
     console.log(this.state.pref)
     console.log(this.state.radius)
+    console.log("Axios --POST")
+    axios.post('https://wooo.philsony.com/api/profiles/1/', {
+      bio:this.state.value,
+      pref:this.state.pref,
+      rad:this.state.radius
+    })
+    .then(response => {
+      console.log(response);
+      console.log("POST was Successful!");
+    })
   }
 
   handleSlider(value) {
@@ -72,22 +80,8 @@ class editProfile extends Component {
   // onfileChange(e) {
   //   this.setState({file:e.target.files[0]})
   // }
-
-  fileUpload(file){
-    console.log(file)
-    const url = 'https://wooo.philsony.com/api/profiles/';
-    const formData = new FormData();
-    const token = this.props.store.userStore.token;
-    formData.append('file',file)
-    const config = {
-        headers: {
-            'content-type': 'multipart/form-data',
-            Authorization: 'Token ' + token,
-            
-        }
-    }
-    return axios.post(url, formData, config)
-  }
+  // 'https://wooo.philsony.com/api/profiles/'
+  
 
   onDrop(picture) {
     this.setState({
