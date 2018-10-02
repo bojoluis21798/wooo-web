@@ -146,13 +146,18 @@ const Tagline = styled.div`
 const ProfileImage = styled.div`
   height: 180px
   width: 100%
+  max-width: 170px
+  display: flex 
 `
 const ProfileImageMain = styled.img`
-  width: 48%
+  width: 100%
+  max-width: 140px
   height: 100%
+  max-height: 145px
   border-radius: 5px
   boder: none
   float: left
+  margin-right: 5px
 
   &:hover {
     cursor: pointer
@@ -166,33 +171,14 @@ const ProfileImageMain = styled.img`
   }
 `
 const ProfileImageSet = styled.div`
-  width: 50%
+  width: 100%
   height: 100%
+  max-height: 145px
   float: right
 `
 const ImageUpBox = styled.div`
 
 `
-// const ImageUploader = styled.button`
-//   width: 45%
-//   height: 48%
-//   background-color: #fff
-//   border-radius: 5px
-//   margin: auto
-//   margin-left: 3%
-//   float: right
-
-//   &:hover {
-//     cursor: pointer
-//     background-position: 300px
-//     background-color:  #191919
-//     border: 1px solid #f51a63
-//   }
-//   &:focus {
-//     outline: none !important
-//     border: 1px solid #f51a63 !important
-//   }
-// `
 const Image2 = styled.div`
   width: 45%
   height: 48%
