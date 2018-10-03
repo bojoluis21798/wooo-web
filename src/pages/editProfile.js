@@ -19,7 +19,7 @@ class editProfile extends Component {
     this.state ={
       file:null,
       pictures: [],
-      value: 'Write about yoursel!...(Likes, Dislikes, Interests)'
+      value: 'Write about yourself!...(Likes, Dislikes, Interests)'
     }
     // this.onFormSubmit = this.onFormSubmit.bind(this)
     // this.onfileChange = this.onChange.bind(this)
@@ -28,14 +28,7 @@ class editProfile extends Component {
     this.fileUpload = this.fileUpload.bind(this)
     this.onDrop = this.onDrop.bind(this)
   }
-  // onFormSubmit(e){
-  //   e.preventDefault() // Stop form submit
-  //   this.fileUpload(this.state.file).then((response)=>{
-  //     this.state.pictures
-  //     console.log(response.data);
-  //     console.log("HELLO THIS SHOULD WORK!!!!")
-  //   })
-  // }
+  
   handleSubmit(event){
     alert('You filled out your bio: ' + this.state.value)
     event.preventDefault();
@@ -46,9 +39,6 @@ class editProfile extends Component {
     this.setState({value: event.target.value})
   }
 
-  // onfileChange(e) {
-  //   this.setState({file:e.target.files[0]})
-  // }
   fileUpload(file){
     const url = 'https://wooo.philsony.com/api/profiles/';
     const formData = new FormData();
@@ -72,8 +62,8 @@ class editProfile extends Component {
 
     render(){
         return (
-            <ProfileScreen>
-            <ToastContainer />
+          <ProfileScreen>
+          <ToastContainer />
             <ProfileContent>
               <Header>
                 {/* <Icon><img src="../assests/icons/heartfill.png" alt="my image" onclick={this.myfunction} /></Icon> */}
