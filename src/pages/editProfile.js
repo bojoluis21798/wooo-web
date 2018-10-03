@@ -140,7 +140,33 @@ class editProfile extends Component {
                   <Tagline>Radius</Tagline>
                   <RadiusNum>{this.state.radius} Km</RadiusNum>
                   <br/>
-                  <Slider id="radius" min={1} max={10} value={this.state.radius} onChange={this.handleSlider} />
+                  <Slider 
+                    id="radius" 
+                    min={1} 
+                    max={10} 
+                    trackStyle="
+                      height: 2px;
+                      border-radius: 6px;
+                      background-color: #f51a63"
+                    railStyle="
+                      max-width: 335px;
+                      background-color: #5b5b5b;
+                      height: 2px;
+                      border-radius: 6px"
+                    handleStyle="
+                      margin-top: -3.5px;
+                      width: 10px;
+                      height: 10px;
+                      background-color: #f51a63"
+                    activeDotStyle="border-color: #f51a63"
+                    dotStyle="bottom: -2px;
+                      margin-left: -4px;
+                      width: 8px;
+                      height: 8px;
+                      border: 2px solid #e9e9e9;
+                      background-color: #f51a63"
+                    value={this.state.radius} 
+                    onChange={this.handleSlider} />
                   <br/>
                   <button value="submit" type="submit">Click here</button>
                 </form>
@@ -197,7 +223,6 @@ const RadiusNum = styled.div`
   color: #f3f3f3
   font-size:13px
   float: right
-
 `
 
 const ProfileImage = styled.div`
