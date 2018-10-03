@@ -17,22 +17,53 @@ class editProfile extends Component {
   constructor(props) {
     super(props);
     this.state ={
-      file:null,
       pictures: [],
-      value: 'Write about yourself!...(Likes, Dislikes, Interests)'
+      value: '',
+      pref:0,
+      radius:1
     }
     // this.onFormSubmit = this.onFormSubmit.bind(this)
     // this.onfileChange = this.onChange.bind(this)
+    this.handleSlider = this.handleSlider.bind(this)
+    this.handleOpposite = this.handleOpposite.bind(this)
+    this.handleSame = this.handleSame.bind(this)
+    this.handleBoth = this.handleBoth.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
-    this.fileUpload = this.fileUpload.bind(this)
     this.onDrop = this.onDrop.bind(this)
   }
   
   handleSubmit(event){
-    alert('You filled out your bio: ' + this.state.value)
     event.preventDefault();
     console.log(this.state.value)
+    console.log(this.state.pref)
+    console.log(this.state.radius)
+    console.log("Axios --POST")
+    axios.post('https://wooo.philsony.com/api/profiles/1/', {
+      bio:this.state.value,
+      pref:this.state.pref,
+      rad:this.state.radius
+    })
+    .then(response => {
+      console.log(response);
+      console.log("POST was Successful!");
+    })
+  }
+
+  handleSlider(value) {
+    this.setState({radius: value})
+  }
+
+  handleOpposite() {
+    this.setState({pref: 0})
+  }
+
+  handleSame() {
+    this.setState({pref: 1})
+  }
+
+  handleBoth() {
+    this.setState({pref: 2})
   }
 
   handleChange(event){
@@ -53,7 +84,7 @@ class editProfile extends Component {
     }
     return axios.post(url, formData, config)
   }
-
+ 
   onDrop(picture) {
     this.setState({
       pictures: this.state.pictures.concat(picture)
@@ -80,7 +111,14 @@ class editProfile extends Component {
                     {/* </imageContainer>  */}
                     <ProfileImageSet>
                       <ImageUpBox>
-                        <ImageUploader imgExtension={['.jpg', '.gif', '.png']} id="image1" singleImage={true} withPreview={true} withIcon={false} withLabel={false} onChange={this.onDrop}/>
+                        <ImageUploader 
+                          imgExtension={['.jpg', '.gif', '.png']} 
+                          id="image1" singleImage={true} 
+                          withPreview={true} 
+                          withIcon={false} 
+                          withLabel={false} 
+                          onChange={this.onDrop}
+                        />
                       </ImageUpBox>
                       <Image2 id="image2" type="file" onChange={this.UploadFile} />
                       <Image3 id="image3" type="file" onChange={this.UploadFile} />
@@ -88,13 +126,22 @@ class editProfile extends Component {
                     </ProfileImageSet>
                   </ProfileImage>
                   <Tagline>Bio</Tagline>
-                  <BioText id="bio" name="bio" value={this.state.value} onChange={this.handleChange} />
+                  <BioText 
+                    id="bio" 
+                    name="bio" 
+                    value={this.state.value} 
+                    placeholder="Talk about yourself..... (Likes, Interests, etc.)" 
+                    onChange={this.handleChange} 
+                  />
                   <Tagline>Preference</Tagline>
-                  <PrefButton id="opposite" aria-label="Opposite" onClick={this.Opposite}>Opposite</PrefButton>
-                  <PrefButton id="same" aria-label="Same" onClick={this.Same}>Same</PrefButton>
-                  <PrefButton id="both" aria-label="Both" onClick={this.Both}>Both</PrefButton>
+                  <PrefButton id="opposite" aria-label="Opposite" onClick={this.handleOpposite}>Opposite</PrefButton>
+                  <PrefButton id="same" aria-label="Same" onClick={this.handleSame}>Same</PrefButton>
+                  <PrefButton id="both" aria-label="Both" onClick={this.handleBoth}>Both</PrefButton>
                   <Tagline>Radius</Tagline>
-                  <Slider id="radius" min={1} max={10} />
+                  <RadiusNum>{this.state.radius} Km</RadiusNum>
+                  <br/>
+                  <Slider id="radius" min={1} max={10} value={this.state.radius} onChange={this.handleSlider} />
+                  <br/>
                   <button value="submit" type="submit">Click here</button>
                 </form>
               </Header>
@@ -146,6 +193,13 @@ const Tagline = styled.div`
   margin-bottom: 20px
   margin-top: 20px
 `
+const RadiusNum = styled.div`
+  color: #f3f3f3
+  font-size:13px
+  float: right
+
+`
+
 const ProfileImage = styled.div`
   height: 180px
   width: 100%
@@ -179,7 +233,10 @@ const ProfileImageSet = styled.div`
   max-height: 145px
   float: right
 `
+
+
 const ImageUpBox = styled.div`
+
 
 `
 const Image2 = styled.div`
