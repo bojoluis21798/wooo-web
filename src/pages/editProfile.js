@@ -33,8 +33,13 @@ class editProfile extends Component {
     this.onDrop = this.onDrop.bind(this)
   }
   
+  componentDidMount(){
+
+  }
+
   handleSubmit(event){
     event.preventDefault();
+    console.log(this.state.pictures)
     console.log(this.state.value)
     console.log(this.state.pref)
     console.log(this.state.radius)
@@ -110,16 +115,15 @@ class editProfile extends Component {
                       <ProfileImageMain alt='Profile' src={this.props.store.userStore.profilePicture} />
                     {/* </imageContainer>  */}
                     <ProfileImageSet>
-                      <ImageUpBox>
-                        <ImageUploader 
+                        {/*<ImageUploader 
                           imgExtension={['.jpg', '.gif', '.png']} 
                           id="image1" singleImage={true} 
                           withPreview={true} 
                           withIcon={false} 
                           withLabel={false} 
                           onChange={this.onDrop}
-                        />
-                      </ImageUpBox>
+                        />*/}
+                      <Image1 id="image1" type="file" onChange={this.UploadFile} />
                       <Image2 id="image2" type="file" onChange={this.UploadFile} />
                       <Image3 id="image3" type="file" onChange={this.UploadFile} />
                       <Image4 id="image4" type="file" onChange={this.UploadFile} />
@@ -144,26 +148,37 @@ class editProfile extends Component {
                     id="radius" 
                     min={1} 
                     max={10} 
-                    trackStyle=[{height: 2px;
-                      border-radius: 6px;
-                      background-color: #f51a63;}]
-                    railStyle="
-                      max-width: 335px;
-                      background-color: #5b5b5b;
-                      height: 2px;
-                      border-radius: 6px"
-                    handleStyle="
-                      margin-top: -3.5px;
-                      width: 10px;
-                      height: 10px;
-                      background-color: #f51a63"
-                    activeDotStyle="border-color: #f51a63"
-                    dotStyle="bottom: -2px;
-                      margin-left: -4px;
-                      width: 8px;
-                      height: 8px;
-                      border: 2px solid #e9e9e9;
-                      background-color: #f51a63"
+                    trackStyle={{
+                      height: 2,
+                      borderRadius: 6,
+                      backgroundColor: "#f51a63",
+                    }}
+                    railStyle={{
+                      width: 335,
+                      backgroundColor: "#5b5b5b",
+                      height: 2,
+                      borderRadius: 6,
+                    }}
+                    handleStyle={{
+                      marginTop: -3.5,
+                      width: 10,
+                      height: 10,
+                      backgroundColor: "#f51a63",
+                      borderColor: "#f51a63",
+                    }}
+                    activeDotStyle={{ 
+                      borderColor: "#f51a63",
+                      border:2,
+                    }}
+                    dotStyle={{
+                      bottom: -2,
+                      marginLeft: -4,
+                      width: 8,
+                      height: 8,
+                      border: 2, 
+                      borderColor: "#e9e9e9",
+                      backgroundColor: "#f51a63"
+                    }}
                     value={this.state.radius} 
                     onChange={this.handleSlider} />
                   <br/>
@@ -263,6 +278,28 @@ const ImageUpBox = styled.div`
 
 
 `
+const Image1 = styled.div`
+  width: 45%
+  height: 48%
+  background-color: #191919
+  border-radius: 5px
+  margin: auto
+  margin-top: 5%
+  margin-left: 3%
+  float: right
+
+  &:hover {
+    cursor: pointer
+    background-position: 300px
+    background-color:  #191919
+    border: 1px solid #f51a63
+  }
+  &:focus {
+    outline: none !important
+    border: 1px solid #f51a63 !important
+  }
+`
+
 const Image2 = styled.div`
   width: 45%
   height: 48%
