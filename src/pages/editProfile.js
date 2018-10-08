@@ -75,20 +75,6 @@ class editProfile extends Component {
     this.setState({value: event.target.value})
   }
 
-  fileUpload(file){
-    const url = 'https://wooo.philsony.com/api/profiles/';
-    const formData = new FormData();
-    const token = this.props.store.userStore.token;
-    formData.append('file',file)
-    const config = {
-        headers: {
-            'content-type': 'multipart/form-data',
-            Authorization: 'Token ' + token,
-            
-        }
-    }
-    return axios.post(url, formData, config)
-  }
  
   onDrop(picture) {
     this.setState({
