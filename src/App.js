@@ -5,10 +5,9 @@ import { Provider } from "mobx-react";
 // import {Loading}
 // Pages
 import Login from "./pages/Login";
-import Dashboard from "./pages/editProfile";
+import EditProfile from "./pages/editProfile";
 import Loading from "./pages/Loading";
 import Matching from './pages/matchingUI';
-
 class App extends Component {
   state = { loading: true };
 
@@ -24,7 +23,7 @@ class App extends Component {
         <Router>
           <Switch>
             <Route exact path="/login" component={Login} />
-            <Route path="/dashboard" component={Dashboard} />
+            <Route path="/editProfile" component={EditProfile} />
             <Route path="/matching" component={Matching}/>
             <Route path="/loading" component={Loading} />
             <Route path="*" component={Login} />

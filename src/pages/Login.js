@@ -36,7 +36,6 @@ export default class Login extends Component {
   }
 
   responseFacebook = response => {
-    // console.log(response);
     this.authenticateUser(response)
   }
 
@@ -58,7 +57,7 @@ export default class Login extends Component {
 
   render() {
     return this.props.store.userStore.email ? (
-      <Redirect to="/dashboard" />
+      <Redirect to="/editProfile" />
     ) : this.state.loading ? (
       <Loading message={ this.state.loading } />
     ) : (

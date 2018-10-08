@@ -8,10 +8,13 @@ import dog from '../assets/images/dog.jpeg';
 import dog2 from '../assets/images/dog2.jpg';
 import dog3 from '../assets/images/dog3.jpg';
 import heart from '../assets/images/heart-outline.png';
-import {Link} from 'react-router-dom';
-import styled, {css} from 'styled-components';
+
+import styled, {css,keyframes}from 'styled-components';
 import left from '../assets/images/left.png';
 import right from '../assets/images/right.png';
+import Notifications, {notify} from 'react-notify-toast';
+import Loading from './Loading';
+import axios from 'axios';
 
 const Container = styled.div`
     display: flex;
@@ -183,6 +186,8 @@ const Arrow = styled.button`
     border-width: 0px;
 `;
 
+
+
 class FooterArea extends Component {
     constructor(props){
         super(props);
@@ -190,6 +195,7 @@ class FooterArea extends Component {
 
     render(){
         return (
+            
             <ButtonArea>
                 <Item>
                     <ButtonActions onClick = {this.props.handleDislike}>
@@ -229,6 +235,7 @@ class Matching extends Component{
         super(props);
 
         this.state = {
+            hasPayload : false,
             people: [
                 {
                     name: "Rico",
@@ -256,6 +263,7 @@ class Matching extends Component{
             imgIdx: 0,
         };
 
+        
         this.nextPerson = this.nextPerson.bind(this);
         this.handleDislike = this.handleDislike.bind(this);
         this.handleLike = this.handleLike.bind(this);
@@ -268,6 +276,14 @@ class Matching extends Component{
     componentDidMount(){
         /*this.changeSmth();*/
 
+        axios.get("https://wooo.philsony.com/api/matching").then(
+            res=>{
+                console.log(res);
+            }
+        );
+        setTimeout(() => {
+            this.setState({hasPayload:true});
+        }, 5000);
     }
 
     nextPerson(){
@@ -286,6 +302,7 @@ class Matching extends Component{
     }
 
     handleLike(){
+        notify.show('Toasty!');
         this.nextPerson();
     }
 
@@ -333,8 +350,15 @@ class Matching extends Component{
         let currentPerson = state.people[0];
         let imgIdx = state.imgIdx;
         console.log(imgIdx);
+
+        if(!this.state.hasPayload){
+
+            
+            return <Loading message="Finding Gorls"/>
+        }
         return (
             <Container>
+                <Notifications/>
                 <HeaderArea
                     eventHandle = {this.handleCloseProfile}
                     type = {state.viewProfile ? "exit" : "back"}/>

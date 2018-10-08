@@ -8,12 +8,10 @@ export default class AuthorizedLayout extends Component {
   
     // isAuthorized = () => this.props.store.userStore.email
 
-    isAuthorized = () => true
-
-
+    isAuthorized = () =>true
     render() {
         return this.isAuthorized()? this.props.children: (
-            <Redirect to='/login'></Redirect>
+            <Redirect to='/editProfile'/>
         )
     }
 }
