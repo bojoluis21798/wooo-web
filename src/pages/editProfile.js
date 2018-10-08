@@ -9,6 +9,7 @@ import { ToastContainer } from "react-toastify"
 import Slider from "rc-slider"
 import "rc-slider/assets/index.css"
 import axios from 'axios'
+import ImageUploader from 'react-images-upload'
 
 
 @inject('store') @observer
@@ -16,7 +17,10 @@ class editProfile extends Component {
   constructor(props) {
     super(props);
     this.state ={
-      file:null
+      pictures: [],
+      value: '',
+      pref:0,
+      radius:1
     }
     this.onFormSubmit = this.onFormSubmit.bind(this)
     this.onChange = this.onChange.bind(this)
@@ -58,68 +62,153 @@ class editProfile extends Component {
     }
     return axios.put(url+this.props.store.userStore.id, formData, config)
   }
+    // this.onFormSubmit = this.onFormSubmit.bind(this)
+    // this.onfileChange = this.onChange.bind(this)
+    this.handleSlider = this.handleSlider.bind(this)
+    this.handleOpposite = this.handleOpposite.bind(this)
+    this.handleSame = this.handleSame.bind(this)
+    this.handleBoth = this.handleBoth.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.onDrop = this.onDrop.bind(this)
+  }
+  
+  componentDidMount(){
 
+  }
 
-  // myfunction(){
-  //   console.log("Like!");
-  // }
+  handleSubmit(event){
+    event.preventDefault();
+    console.log(this.state.pictures)
+    console.log(this.state.value)
+    console.log(this.state.pref)
+    console.log(this.state.radius)
+    console.log("Axios --POST")
+    axios.post('https://wooo.philsony.com/api/profiles/1/', {
+      bio:this.state.value,
+      pref:this.state.pref,
+      rad:this.state.radius
+    })
+    .then(response => {
+      console.log(response);
+      console.log("POST was Successful!");
+    })
+  }
 
-  // myfunction1(){
-  //   console.log("Ring!");
-  // }
+  handleSlider(value) {
+    this.setState({radius: value})
+  }
 
-  // myfunction2(){
-  //   console.log("Hello!");
-  // }
+  handleOpposite() {
+    this.setState({pref: 0})
+  }
 
-  // myfunction3(){
-  //   console.log("Weiner!");
-  // }
+  handleSame() {
+    this.setState({pref: 1})
+  }
 
-  // Opposite(){
-  //   console.log("Girl Boy!");
-  // }
+  handleBoth() {
+    this.setState({pref: 2})
+  }
 
-  // Same(){
-  //   console.log("Girl Girl Boy Boy");
-  // }
+  handleChange(event){
+    this.setState({value: event.target.value})
+  }
 
-  // Both(){
-  //   console.log("Both!");
-  // }
+ 
+  onDrop(picture) {
+    this.setState({
+      pictures: this.state.pictures.concat(picture)
+    })
+  }
 
     render(){
         return (
-            <ProfileScreen>
-            <ToastContainer />
+          <ProfileScreen>
+          <ToastContainer />
             <ProfileContent>
               <Header>
                 {/* <Icon><img src="../assests/icons/heartfill.png" alt="my image" onclick={this.myfunction} /></Icon> */}
-                <Icon aria-label="heart" data={heart} onClick={this.myfunction} />
-                <Icon2 aria-label="alarm" data={alarm} onClick={this.myfunction1} />
-                <Icon2 aria-label="chat" data={chat} onClick={this.myfunction2} />
-                <Icon2 aria-label="user" data={user} onClick={this.myfunction3} />
-                <form onSubmit={this.onFormSubmit}>
+                <Icon id="matching" aria-label="heart" data={heart} onClick={this.myfunction} />
+                <Icon2 id="notification" aria-label="alarm" data={alarm} onClick={this.myfunction1} />
+                <Icon2 id="chat" aria-label="chat" data={chat} onClick={this.myfunction2} />
+                <Icon2 id="profile" aria-label="user" data={user} onClick={this.myfunction3} />
+                <form onSubmit={this.handleSubmit}>
                   <Tagline>Photos</Tagline>
                   <ProfileImage>
-                    <ProfileImageMain />
-                    {/* <ProfileImageMain alt='Profile' src={this.props.store.userStore.profilePicture} />  */}
+                    {/* <ProfileImageMain id="profilePic"/> */}
+                    {/* <imageContainer> */}
+                      <ProfileImageMain alt='Profile' src={this.props.store.userStore.profilePicture} />
+                    {/* </imageContainer>  */}
                     <ProfileImageSet>
-                      <Image1 type="file" onChange={this.UploadFile}/>
-                      <Image2 type="file" onChange={this.UploadFile} />
-                      <Image3 type="file" onChange={this.UploadFile} />
-                      <Image4 type="file" onChange={this.UploadFile} />
+                        {/*<ImageUploader 
+                          imgExtension={['.jpg', '.gif', '.png']} 
+                          id="image1" singleImage={true} 
+                          withPreview={true} 
+                          withIcon={false} 
+                          withLabel={false} 
+                          onChange={this.onDrop}
+                        />*/}
+                      <Image1 id="image1" type="file" onChange={this.UploadFile} />
+                      <Image2 id="image2" type="file" onChange={this.UploadFile} />
+                      <Image3 id="image3" type="file" onChange={this.UploadFile} />
+                      <Image4 id="image4" type="file" onChange={this.UploadFile} />
                     </ProfileImageSet>
                   </ProfileImage>
                   <Tagline>Bio</Tagline>
-                  <BioText type="text" name="bio" onChange={this.handleChange} />
+                  <BioText 
+                    id="bio" 
+                    name="bio" 
+                    value={this.state.value} 
+                    placeholder="Talk about yourself..... (Likes, Interests, etc.)" 
+                    onChange={this.handleChange} 
+                  />
                   <Tagline>Preference</Tagline>
-                  <PrefButton aria-label="Opposite" onClick={this.Opposite}>Opposite</PrefButton>
-                  <PrefButton aria-label="Same" onClick={this.Same}>Same</PrefButton>
-                  <PrefButton aria-label="Both" onClick={this.Both}>Both</PrefButton>
+                  <PrefButton id="opposite" aria-label="Opposite" onClick={this.handleOpposite}>Opposite</PrefButton>
+                  <PrefButton id="same" aria-label="Same" onClick={this.handleSame}>Same</PrefButton>
+                  <PrefButton id="both" aria-label="Both" onClick={this.handleBoth}>Both</PrefButton>
                   <Tagline>Radius</Tagline>
-                  <Slider min={1} max={10} />\
-                  {/* <button type="submit">Click here</button> */}
+                  <RadiusNum>{this.state.radius} Km</RadiusNum>
+                  <br/>
+                  <Slider 
+                    id="radius" 
+                    min={1} 
+                    max={10} 
+                    trackStyle={{
+                      height: 2,
+                      borderRadius: 6,
+                      backgroundColor: "#f51a63",
+                    }}
+                    railStyle={{
+                      width: 335,
+                      backgroundColor: "#5b5b5b",
+                      height: 2,
+                      borderRadius: 6,
+                    }}
+                    handleStyle={{
+                      marginTop: -3.5,
+                      width: 10,
+                      height: 10,
+                      backgroundColor: "#f51a63",
+                      borderColor: "#f51a63",
+                    }}
+                    activeDotStyle={{ 
+                      borderColor: "#f51a63",
+                      border:2,
+                    }}
+                    dotStyle={{
+                      bottom: -2,
+                      marginLeft: -4,
+                      width: 8,
+                      height: 8,
+                      border: 2, 
+                      borderColor: "#e9e9e9",
+                      backgroundColor: "#f51a63"
+                    }}
+                    value={this.state.radius} 
+                    onChange={this.handleSlider} />
+                  <br/>
+                  <button value="submit" type="submit">Click here</button>
                 </form>
               </Header>
             </ProfileContent>
@@ -131,6 +220,8 @@ const ProfileScreen = styled.div`
   position: relative
   height: 100vh
   background-color: #111111
+  overflow: auto
+  overflow-x: hidden
 `
 const ProfileContent = styled.div`
   display: grid
@@ -141,6 +232,8 @@ const ProfileContent = styled.div`
 `
 const Header = styled.div`
   margin: auto
+  min-width:30%
+  height:100vh
 `
 const Icon = styled.object`
   width: 40px
@@ -166,18 +259,27 @@ const Tagline = styled.div`
   margin-bottom: 20px
   margin-top: 20px
 `
+const RadiusNum = styled.div`
+  color: #f3f3f3
+  font-size:13px
+  float: right
+`
+
 const ProfileImage = styled.div`
   height: 180px
   width: 100%
-  border-radius: 5px
+  max-width: 170px
+  display: flex 
 `
-const ProfileImageMain = styled.div`
-  width: 48%
+const ProfileImageMain = styled.img`
+  width: 100%
+  max-width: 140px
   height: 100%
-  background-color: #191919
+  max-height: 145px
   border-radius: 5px
   boder: none
   float: left
+  margin-right: 5px
 
   &:hover {
     cursor: pointer
@@ -191,16 +293,24 @@ const ProfileImageMain = styled.div`
   }
 `
 const ProfileImageSet = styled.div`
-  width: 50%
+  width: 100%
   height: 100%
+  max-height: 145px
   float: right
 `
-const Image1 = styled.input`
+
+
+const ImageUpBox = styled.div`
+
+
+`
+const Image1 = styled.div`
   width: 45%
   height: 48%
-  background-color: #fff
+  background-color: #191919
   border-radius: 5px
   margin: auto
+  margin-top: 5%
   margin-left: 3%
   float: right
 
@@ -215,6 +325,7 @@ const Image1 = styled.input`
     border: 1px solid #f51a63 !important
   }
 `
+
 const Image2 = styled.div`
   width: 45%
   height: 48%

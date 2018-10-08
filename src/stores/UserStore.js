@@ -36,9 +36,9 @@ class UserStore {
 
     @action 
     populateUser(userAuth) {
-        this.token = userAuth.token
+        this.token = userAuth.auth_token
         this.name = userAuth.name
-        this.email = "true";
+        this.email = "true"
         this.profilePicture = userAuth.profile_image
     }
 }
