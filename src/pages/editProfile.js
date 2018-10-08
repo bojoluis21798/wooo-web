@@ -144,10 +144,9 @@ class editProfile extends Component {
                     id="radius" 
                     min={1} 
                     max={10} 
-                    trackStyle="
-                      height: 2px;
+                    trackStyle=[{height: 2px;
                       border-radius: 6px;
-                      background-color: #f51a63"
+                      background-color: #f51a63;}]
                     railStyle="
                       max-width: 335px;
                       background-color: #5b5b5b;
