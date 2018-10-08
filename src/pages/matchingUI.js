@@ -18,6 +18,7 @@ import axios from 'axios';
 
 const Container = styled.div`
     display: flex;
+    position: absolute;
     float: left;
     height:100%;
     width: 100%;
@@ -51,6 +52,7 @@ const TopButton = styled.button`
     display: inline-block;
     cursor: pointer;
     margin: 3vh;
+    padding: 0vh;
 `;
 
 const Icon = styled.img`
@@ -60,12 +62,11 @@ const Icon = styled.img`
 
 const Profile = styled.div`
     display: flex;
+    width: 100%;
     flex-basis: min-content;
     justify-content: space-between;
     align-items: center;
     flex-direction: column;
-    margin-left: 3vh;
-    margin-right: 3vh;
 `;
 
 const PicArea = styled.div`
@@ -99,8 +100,7 @@ const TextContainer = styled.div`
 
 const BioRow = styled.div`
     display: flex;
-    padding-top: 3.5vh;
-    padding-bottom: 3.5vh;
+    padding: 2.5vh;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
@@ -159,6 +159,7 @@ const ButtonArea = styled.div`
     justify-content: center;
     display:flex;
     flex-direction:row;
+    background-color: black;
 `;
 
 const Item = styled.div`
@@ -186,8 +187,6 @@ const Arrow = styled.button`
     border-width: 0px;
 `;
 
-
-
 class FooterArea extends Component {
     constructor(props){
         super(props);
@@ -195,7 +194,6 @@ class FooterArea extends Component {
 
     render(){
         return (
-            
             <ButtonArea>
                 <Item>
                     <ButtonActions onClick = {this.props.handleDislike}>
@@ -263,7 +261,7 @@ class Matching extends Component{
             imgIdx: 0,
         };
 
-        
+
         this.nextPerson = this.nextPerson.bind(this);
         this.handleDislike = this.handleDislike.bind(this);
         this.handleLike = this.handleLike.bind(this);
@@ -353,7 +351,7 @@ class Matching extends Component{
 
         if(!this.state.hasPayload){
 
-            
+
             return <Loading message="Finding Gorls"/>
         }
         return (
@@ -392,12 +390,10 @@ class Matching extends Component{
                         </TextContainer>
                     </MainTextArea>
                 </Profile>
-            {!state.viewProfile &&
                 <FooterArea
                     handleLike = {this.handleLike}
                     handleDislike = {this.handleDislike}
                 />
-            }
             </Container>
         );
     }
