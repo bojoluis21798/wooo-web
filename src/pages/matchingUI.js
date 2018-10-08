@@ -109,7 +109,7 @@ const BioRow = styled.div`
 const TextDiv = styled.div`
     text-align:center;
     color: white;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Apercu', sans-serif;
     ${
         props => {
             switch(props.level){
