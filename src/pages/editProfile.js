@@ -33,7 +33,7 @@ class editProfile extends Component {
     this.setState({file:e.target.files[0]})
   }
   fileUpload(file){
-    const url = 'https://wooo.philsony.com/api/profiles/';
+    const url = 'https://127.0.0.1:8000/api/profiles/';
     const formData = new FormData();
     const token = this.props.store.userStore.token;
     formData.append('file',file)
@@ -44,6 +44,19 @@ class editProfile extends Component {
         }
     }
     return axios.post(url, formData, config)
+  }
+  fileUpdate(file){
+    const url = 'https://127.0.0.1:8000/api/profiles/';
+    const formData = new FormData();
+    const token = this.props.store.userStore.token;
+    formData.append('file',file)
+    const config = {
+        headers: {
+            'content-type': 'multipart/form-data',
+            'Authorization': 'Token' + token
+        }
+    }
+    return axios.put(url+this.props.store.userStore.id, formData, config)
   }
 
 
