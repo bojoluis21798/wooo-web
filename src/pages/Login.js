@@ -6,7 +6,7 @@ import circlecenter from "../assets/images/circlecenterbg.svg"
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props"
 import { inject, observer } from "mobx-react"
 import { ToastContainer } from "react-toastify"
-import { Redirect } from "react-router-dom"
+import { Redirect, Link } from "react-router-dom"
 import queryString from "query-string"
 import Loading from "./Loading"
 
@@ -74,7 +74,7 @@ export default class Login extends Component {
           </Header>
           <Couple className={styled.couple} aria-label="Couple" data={couple} />
           <LoginActionSection>
-            <FacebookLogin
+            {/*<FacebookLogin
               appId={process.env.REACT_APP_FB_APPID}
               fields="name,email,picture"
               scope="public_profile,user_friends"
@@ -87,6 +87,10 @@ export default class Login extends Component {
                 </LoginButton>
               )}
             />
+            */}
+            
+            <Link to="/dashboard">Login</Link>
+
             <TermsNotice>
               Upon logging in, you agree to our terms and conditions.
             </TermsNotice>
@@ -96,6 +100,7 @@ export default class Login extends Component {
     )
   }
 }
+
 
 const LoginScreen = styled.div`
   position: relative
