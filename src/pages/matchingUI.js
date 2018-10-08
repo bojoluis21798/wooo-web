@@ -390,10 +390,12 @@ class Matching extends Component{
                         </TextContainer>
                     </MainTextArea>
                 </Profile>
-                <FooterArea
-                    handleLike = {this.handleLike}
-                    handleDislike = {this.handleDislike}
-                />
+                {!state.viewProfile &&
+                    <FooterArea
+                        handleLike = {this.handleLike}
+                        handleDislike = {this.handleDislike}
+                    />
+            }
             </Container>
         );
     }
