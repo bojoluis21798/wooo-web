@@ -131,7 +131,6 @@ class editProfile extends Component {
                 {/* <Icon id="matching" aria-label="heart" data={heart} onClick={this.myfunction}/> */}
                 {/* <form onSubmit={this.handleSubmit}> */}
                   <Tagline>Photos</Tagline>
-                  <form>
                   <ProfileImage>
                     {/* <ProfileImageMain id="profilePic"/> */}
                     {/* <imageContainer> */}
@@ -146,7 +145,6 @@ class editProfile extends Component {
                       <Image4 type="button"/>
                     </ProfileImageSet> */}
                   </ProfileImage>
-                  </form>
                   <Tagline>Bio</Tagline>
                   <BioText
                     id="bio"
@@ -277,11 +275,8 @@ const RadiusNum = styled.div`
   font-size:13px;
   float: right;
 `;
-const ProfileImage = styled.div`
-  height: 100%;
-  max-height: 200px;
+const ProfileImage = styled.div`s
   width: 100%;
-  max-width: 200px;
   display: flex;
 `;
 const ProfileImageMain = styled.img`
