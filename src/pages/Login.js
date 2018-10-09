@@ -87,9 +87,15 @@ export default class Login extends Component {
                 </LoginButton>
               )}
             />
+<<<<<<< HEAD
+           
+            
+            {/* <Link to="/dashboard">Login</Link> */}
+=======
             
             
             {/*<Link to="/dashboard">Login</Link>*/}
+>>>>>>> aa2781fc02e0225692b7a303727d3e4a20af3255
 
             <TermsNotice>
               Upon logging in, you agree to our terms and conditions.

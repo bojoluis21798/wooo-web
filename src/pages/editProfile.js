@@ -4,15 +4,17 @@ import heart from "../assets/icons/heart.svg"
 import alarm from "../assets/icons/alarm.png"
 import chat from "../assets/icons/chat.png"
 import user from "../assets/icons/user.png"
-import { inject, observer } from 'mobx-react';
+import { inject, observer } from 'mobx-react'
 import { ToastContainer } from "react-toastify"
 import Slider from "rc-slider"
 import "rc-slider/assets/index.css"
 import axios from 'axios'
-// import ImageUploader from 'react-images-upload'
+import ImageUploader from 'react-images-upload'
+import SexOptions from './SexOptions'
 
 
 @inject('store') @observer
+
 class editProfile extends Component {
   constructor(props) {
     super(props);
@@ -28,8 +30,8 @@ class editProfile extends Component {
     this.handleSlider = this.handleSlider.bind(this)
     this.handleMale = this.handleMale.bind(this)
     this.handleFemale = this.handleFemale.bind(this)
-    this.handleBoth = this.handleBoth.bind(this)
-    this.handleChange = this.handleChange.bind(this)
+    this.handleOthers = this.handleOthers.bind(this)
+    this.handleChangeBio = this.handleChangeBio.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.onDrop = this.onDrop.bind(this)
   
@@ -65,8 +67,8 @@ class editProfile extends Component {
 
   handleSubmit(event){
     event.preventDefault();
-    console.log(this.state.pictures)
-    console.log(this.state.value)
+    console.log(this.state.photos)
+    console.log(this.state.bio)
     console.log(this.state.pref)
     console.log(this.state.radius)
     const token = this.props.store.userStore.token;
@@ -122,7 +124,7 @@ class editProfile extends Component {
     this.setState({pref: 1})
   }
 
-  handleBoth() {
+  handleOthers() {
     this.setState({pref: 2})
   }
 
@@ -131,14 +133,14 @@ class editProfile extends Component {
     this.props.store.userStore.biography = event.target.value
   }
 
- 
-  onDrop(picture) {
+  onDrop(photo) {
     this.setState({
-      pictures: this.state.pictures.concat(picture)
+      photos: this.state.photos.concat(photo)
     })
   }
 
     render(){
+      console.log("Radius: " + this.props.store.userStore.radius)
         return (
           <ProfileScreen>
           <ToastContainer />
@@ -165,32 +167,43 @@ class editProfile extends Component {
                           withLabel={false} 
                           onChange={this.onDrop}
                         />*/}
-                      <Image1 id="image1" type="file" onChange={this.UploadFile} />
-                      <Image2 id="image2" type="file" onChange={this.UploadFile} />
-                      <Image3 id="image3" type="file" onChange={this.UploadFile} />
-                      <Image4 id="image4" type="file" onChange={this.UploadFile} />
+                      <Image1 id="image1" 
+                              type="file" 
+                              src={this.props.store.userStore.photos} 
+                              onChange={this.UploadFile} />
+                      <Image2 id="image2" 
+                              type="file" 
+                              src={this.props.store.userStore.photos} 
+                              onChange={this.UploadFile} />
+                      <Image3 id="image3" 
+                              type="file" 
+                              src={this.props.store.userStore.photos} 
+                              onChange={this.UploadFile} />
+                      <Image4 id="image4" 
+                              type="file" 
+                              src={this.props.store.userStore.photos} 
+                              onChange={this.UploadFile} />
                     </ProfileImageSet>
                   </ProfileImage>
                   <Tagline>Bio</Tagline>
                   <BioText 
                     id="bio" 
                     name="bio" 
-
                     value={this.state.bio} 
-                    placeholder="Talk about yourself..... (Likes, Interests, etc.)" 
-                    onChange={this.handleChange} 
+                    placeholder={this.props.store.userStore.biography}
+                    onChange={this.handleChangeBio} 
                   />
                   <Tagline>Preference</Tagline>
-                  <PrefButton id="Male" aria-label="Male" onClick={this.handleMale}>Male</PrefButton>
-                  <PrefButton id="Female" aria-label="Female" onClick={this.handleFemale}>Female</PrefButton>
-                  <PrefButton id="both" aria-label="Both" onClick={this.handleBoth}>Both</PrefButton>
+                  {/* {PrefButton} */}
+                  <SexOptions choice={this.props.store.userStore.sexual_preference}/>
                   <Tagline>Radius</Tagline>
-                  <RadiusNum>{this.state.radius} Km</RadiusNum>
+                  <RadiusNum>{this.props.store.userStore.radius} Km</RadiusNum>
                   <br/>
                   <Slider 
                     id="radius" 
                     min={1} 
                     max={10} 
+                    // defaultValue={this.props.store.userStore.radius}
                     trackStyle={{
                       height: 2,
                       borderRadius: 6,
@@ -222,7 +235,7 @@ class editProfile extends Component {
                       borderColor: "#e9e9e9",
                       backgroundColor: "#f51a63"
                     }}
-                    value={this.state.radius} 
+                    value={this.props.store.userStore.radius} 
                     onChange={this.handleSlider} />
                   <br/>
                   <button value="submit" type="submit">Click here</button>
@@ -426,34 +439,39 @@ const BioText = styled.textarea`
     border: 1px solid #f51a63 !important
   }
 `
-const PrefButton = styled.button`
-  font-weight: 100
-  font-size: 15px
-  color: #ffffff
-  background-color: #191919
-  letter-spacing: 0.01px
-  text-align: center
-  border-radius: 5px
-  border: 0
-  padding: 12px
-  width: 90px
-  margin: auto
-  margin-bottom: 5px
-  margin-right: 15px
-  transition: 0.5s all ease
+// const PrefButton = styled.button`
+//   font-weight: 100
+//   font-size: 15px
+//   color: #ffffff
+//   background-color: #191919
+//   letter-spacing: 0.01px
+//   text-align: center
+//   border-radius: 5px
+//   border: 0
+//   padding: 12px
+//   width: 90px
+//   margin: auto
+//   margin-bottom: 5px
+//   margin-right: 15px
+//   transition: 0.5s all ease
 
-  &:hover {
-    cursor: pointer
-    background-position: 300px
-    background-color:  #191919
-    border: 1px solid #f51a63
-  }
+//   &:hover {
+//     cursor: pointer
+//     background-position: 300px
+//     background-color:  #191919
+//     border: 1px solid #f51a63
+//   }
 
-  &:focus {
-    background-position: 300px
-    background-color:  #f51a63
-    border: 1px solid #f51a63
-  }
-`
+//   &:focus {
+//     background-position: 300px
+//     background-color:  #f51a63
+//     border: 1px solid #f51a63
+//   }
+
+//   &:active {
+//     background-position: 300px
+//     background-color:  #f51a63
+//     border: 1px solid #f51a63
+//   }
 
 export default editProfile
