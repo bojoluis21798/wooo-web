@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/editProfile";
 import Loading from "./pages/Loading";
 
+
 class App extends Component {
   state = { loading: true };
 

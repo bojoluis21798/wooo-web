@@ -40,6 +40,9 @@ class UserStore {
         this.name = userAuth.name
         this.email = "true"
         this.profilePicture = userAuth.profile_image
+        this.biography = userAuth.biography
+        this.radius = userAuth.search_radius
+        this.preference = userAuth.sexual_preference
     }
 }
 
