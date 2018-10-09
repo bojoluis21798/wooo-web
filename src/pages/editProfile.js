@@ -229,10 +229,11 @@ class editProfile extends Component {
 
 const ProfileContent = styled.div`
   justify-items: center;
-  height: 100vh;
+  min-height: 100vh;
   z-index: 1;
   padding-left: 20px;
   padding-right: 20px;
+  padding-bottom: 50px;
 `;
 const Header = styled.div`
 margin: auto;
