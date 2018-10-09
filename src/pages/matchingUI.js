@@ -387,7 +387,7 @@ class Matching extends Component{
         });
     }
     render(){
-        const store = this.props.store;
+        const store = this.props.store.userStore;
 
         // const list = store.arr.map(num=>{
         //     return <li>{num}</li>
