@@ -356,7 +356,7 @@ class Matching extends Component{
             return <Loading message="Finding Gorls"/>
         }
         return (
-            <AuthorizedLayout>
+            <AuthorizedLayout noheaders={true}>
                 <Container>
                     <Notifications/>
                     <HeaderArea
