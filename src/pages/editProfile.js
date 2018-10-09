@@ -21,7 +21,6 @@ import {Link,Redirect} from 'react-router-dom';
 @inject('store') @observer
 
 class editProfile extends Component {
-
   onFormSubmit = (e) =>{
     e.preventDefault() // Stop form submit
     this.fileUpload(this.state.file).then((response)=>{
@@ -45,7 +44,6 @@ class editProfile extends Component {
   //   }
   //   return axios.post(url, formData, config)
   // }
-
   componentDidMount(){
     console.log(this.props.store.userStore)
   }
@@ -73,7 +71,6 @@ class editProfile extends Component {
 
     })
   }
-
   handleMale = (e) => {
     const store = this.props.store.userStore;
 
@@ -99,13 +96,11 @@ class editProfile extends Component {
     const store = this.props.store.userStore;
 
     store.setRadius(radius);
-
     this.handleSubmit(null)
   }
 
 
   handleChangeBio = (e) => {
-
     const store = this.props.store.userStore;
 
     store.setBio(e.target.value);
@@ -116,7 +111,6 @@ class editProfile extends Component {
       photos: this.state.photos.concat(photo)
     })
   }
-
 
   myfunction = ()=>{
     this.props.history.push('/matching');
@@ -438,7 +432,6 @@ const PrefButtonMale = styled.button`
   margin-bottom: 5px;
   margin-right: 15px;
   transition: 0.5s all ease;
-
 
   &:hover {
     cursor: pointer;

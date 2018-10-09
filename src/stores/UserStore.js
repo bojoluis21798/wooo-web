@@ -1,5 +1,5 @@
 
-import { observable, action } from 'mobx'
+import { observable, action,computed } from 'mobx'
 import axios from 'axios'
 
 class UserStore {
@@ -25,7 +25,7 @@ class UserStore {
                 accessToken: authObj.accessToken
             })
 
-            this.accessToken = authObj.auth_token;
+            
             
             console.log(response);
             this.populateUser(response.data)
@@ -61,6 +61,38 @@ class UserStore {
     @action
     setPreference(prefs){
         this.preference = prefs;
+    }
+
+    @action insertToken(authObj){
+        // this.accessToken = authObj.accessToken;
+        this.accessToken = authObj.auth_token;
+    }
+    @action 
+    populateUser(userAuth) {
+        console.log(userAuth.profile_id);
+        this.profile_id= userAuth.profile_id;
+        console.log(this.profile_id);
+        this.token = userAuth.auth_token
+        this.name = userAuth.name
+        this.email = true;
+        this.profilePicture = userAuth.profile_image
+    }
+
+    @action
+    setProspects(prospects){
+        this.prospects = prospects;
+        console.log(this.prospects);
+    }
+
+    @action
+    nextProspect(){
+        if(this.prospects.length > 1){
+            this.prospects.splice(0,1);
+        }
+    }
+
+    @computed get currentProspect(){
+        return this.prospects[0];
     }
 }
 

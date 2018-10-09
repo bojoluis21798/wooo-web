@@ -295,30 +295,59 @@ class Matching extends Component{
     }
 
     componentDidMount(){
-        /*this.changeSmth();*/
+         /*this.changeSmth();*/
 
-        axios.get("https://wooo.philsony.com/api/matching/").then(
-            res=>{
-                console.log(res);
-            }
-        );
-        setTimeout(() => {
-            this.setState({hasPayload:true});
-        }, 5000);
+         const store = this.props.store.userStore;
+
+         console.log("FML");
+         console.log(store.profile_id);
+         axios.get("https://wooo.philsony.com/api/matching",{
+             params:{
+                 profile_id:store.profile_id
+             }
+         }).then(
+             res=>{
+                 console.log(res);
+                 console.log(store);
+                 store.setProspects(res.data);
+                //  this.setState({prospects:store.prospects});
+                 this.setState({hasPayload:true});
+                 
+             }
+         );
     }
 
     nextPerson(){
-        if(this.state.people.length > 1){
-            this.setState(prev =>
-                {
-                    prev.people.splice(0,1);
-                    return {people: prev.people};
-                }
-            );
-        }
+        // if(this.state.people.length > 1){
+        //     this.setState(prev =>
+        //         {
+        //             prev.people.splice(0,1);
+        //             return {people: prev.people};
+        //         }
+        //     );
+        // }
+
+        const store = this.props.store.userStore;
+
+        store.nextProspect();
     }
 
     handleDislike(){
+        const store = this.props.store.userStore;
+        const config ={
+            headers:{
+                Authorization:'Token '+ store.token
+            }
+        }
+        notify.show('Toasty!');
+        console.log(store.token);
+        axios.post("https://wooo.philsony.com/api/matching/",{
+                profile_id:store.profile_id,
+                match_id:1,
+                status:1
+        },config).then(res=>{
+            console.log(res);
+        });
         this.nextPerson();
     }
 
@@ -388,34 +417,34 @@ class Matching extends Component{
                         eventHandle = {this.handleCloseProfile}
                         type = {state.viewProfile ? "exit" : "back"}/>
                     <Profile onClick = {this.handleViewProfile}>
-                        <PicSlide>
-                            {state.viewProfile &&
-                                <Arrow
-                                    onClick = {e => this.handlePreviousPic(currentPerson.img.length, e)}
-                                    direction = "left"
-                                />
-                            }
-                            <PicArea>
-                                <ImageStyle src={currentPerson.img[imgIdx]} />
-                            </PicArea>
-                            {state.viewProfile &&
-                                <Arrow
-                                    onClick = {e => this.handleNextPic(currentPerson.img.length, e)}
-                                    direction = "right"
-                                />
-                            }
-                        </PicSlide>
-                        <MainTextArea>
-                            <TextContainer>
-                                <BioRow>
-                                    <TextDiv level = "1">{currentPerson.name}, {currentPerson.age}</TextDiv>
-                                    <TextDiv level= "2">{currentPerson.location}</TextDiv>
-                                </BioRow>
-                                <BioRow>
-                                    <TextDiv level = "3">{currentPerson.bio}</TextDiv>
-                                </BioRow>
-                            </TextContainer>
-                        </MainTextArea>
+                    <PicSlide>
+                        {state.viewProfile &&
+                            <Arrow
+                                onClick = {e => this.handlePreviousPic(currentPerson.img.length, e)}
+                                direction = "left"
+                            />
+                        }
+                        <PicArea>
+                            <ImageStyle src={store.currentProspect.profile_image?store.currentProspect.profile_image:currentPerson.img[imgIdx]} />
+                        </PicArea>
+                        {state.viewProfile &&
+                            <Arrow
+                                onClick = {e => this.handleNextPic(currentPerson.img.length, e)}
+                                direction = "right"
+                            />
+                        }
+                    </PicSlide>
+                    <MainTextArea>
+                        <TextContainer>
+                            <BioRow>
+                                <TextDiv level = "1">{store.currentProspect.user.first_name?store.currentProspect.user.first_name:currentPerson.name}, {store.currentProspect.age?store.currentProspect.age:currentPerson.age}</TextDiv>
+                                <TextDiv level= "2">{currentPerson.location}</TextDiv>
+                            </BioRow>
+                            <BioRow>
+                                <TextDiv level = "3">{store.currentProspect.bio?store.currentProspect.bio:currentPerson.bio}</TextDiv>
+                            </BioRow>
+                        </TextContainer>
+                    </MainTextArea>
                     </Profile>
                     <FooterArea
                         handleLike = {this.handleLike}
