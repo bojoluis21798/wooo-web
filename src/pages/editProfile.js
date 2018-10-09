@@ -128,6 +128,13 @@ class editProfile extends Component {
   }
 
     render(){
+      const token = this.props.store.userStore.token;
+      const config = {
+        headers: {
+            // 'content-type': 'multipart/form-data',
+            Authorization: 'Token ' + token
+        }
+    }
       const ProfileURL = 'https://wooo.philsony.com/api/profiles/'+this.props.store.userStore.profile_id+'/'
         return (
           <ProfileScreen>
@@ -156,8 +163,9 @@ class editProfile extends Component {
                           onChange={this.onDrop}
                         />*/}
                       <ImageUploader 
+                        headers={config}
                         url={ProfileURL}
-                        optimisticPreviews 
+                        optimisticPreviews={true} 
                         multiple={false}
                         onLoadEnd={(err) => {
                             if (err) {
@@ -166,18 +174,36 @@ class editProfile extends Component {
                         }}
                         // src={this.props.store.userStore.photos} 
                         />
-                      <Image2 id="image2" 
-                              type="button" 
-                              src={this.props.store.userStore.photos} 
-                              onChange={this.UploadFile} />
-                      <Image3 id="image3" 
-                              type="button" 
-                              src={this.props.store.userStore.photos} 
-                              onChange={this.UploadFile} />
-                      <Image4 id="image4" 
-                              type="button" 
-                              src={this.props.store.userStore.photos} 
-                              onChange={this.UploadFile} />
+                      <Image2 
+                        headers={config}
+                        url={ProfileURL}
+                        optimisticPreviews={true} 
+                        multiple={false}
+                        onLoadEnd={(err) => {
+                            if (err) {
+                              console.error(err);
+                            }
+                        }} />
+                      <Image3 
+                        headers={config}
+                        url={ProfileURL}
+                        optimisticPreviews={true} 
+                        multiple={false}
+                        onLoadEnd={(err) => {
+                            if (err) {
+                              console.error(err);
+                            }
+                        }} />
+                      <Image4 
+                        headers={config}
+                        url={ProfileURL}
+                        optimisticPreviews={true} 
+                        multiple={false}
+                        onLoadEnd={(err) => {
+                            if (err) {
+                              console.error(err);
+                            }
+                        }} />
                     </ProfileImageSet>
                   </ProfileImage>
                   <Tagline>Bio</Tagline>
