@@ -350,7 +350,6 @@ class Matching extends Component{
                 Authorization:'Token '+ store.token
             }
         }
-        notify.show('Toasty!');
         console.log("LIKE STARTS HERE");
         console.log(store.profile_id);
         console.log(store.token);
@@ -359,7 +358,7 @@ class Matching extends Component{
                 profile_id:store.profile_id,
                 match_id:store.currentProspect.id,
                 status:0
-        }).then(res=>{
+        },config).then(res=>{
             console.log(res);
         });
         this.nextPerson();
@@ -383,6 +382,9 @@ class Matching extends Component{
                 status:1
         },config).then(res=>{
             console.log(res);
+            if(res.match_exists){
+                notify.show("You Matched!");
+            }
         });
         this.nextPerson();
     }
