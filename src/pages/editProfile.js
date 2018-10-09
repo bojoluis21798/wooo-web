@@ -9,7 +9,7 @@ import { ToastContainer } from "react-toastify"
 import Slider from "rc-slider"
 import "rc-slider/assets/index.css"
 import axios from 'axios'
-import ImageUploader from 'react-images-upload'
+// import ImageUploader from 'react-images-upload'
 
 
 @inject('store') @observer
@@ -262,7 +262,6 @@ const RadiusNum = styled.div`
 const ProfileImage = styled.div`
   height: 180px
   width: 100%
-  max-width: 170px
   display: flex 
 `
 const ProfileImageMain = styled.img`
@@ -304,7 +303,6 @@ const Image1 = styled.div`
   background-color: #191919
   border-radius: 5px
   margin: auto
-  margin-top: 5%
   margin-left: 3%
   float: right
 
