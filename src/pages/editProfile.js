@@ -238,7 +238,6 @@ const ProfileContent = styled.div`
 const Header = styled.div`
 margin: auto;
   min-width:30%;
-  height:100vh;
 `;
 
 const Button = styled.button`
