@@ -189,6 +189,12 @@ const Arrow = styled.button`
     border-width: 0px;
 `;
 
+const NoMatch = styled.p`
+    font-size: 9vh;
+    font-family: Apercu;
+    font-weight: 700;
+`;
+
 class FooterArea extends Component {
     constructor(props){
         super(props);
@@ -283,6 +289,7 @@ class Matching extends Component{
             ],
             viewProfile: false,
             imgIdx: 0,
+            noProspects: false,
         };
 
 
@@ -310,10 +317,13 @@ class Matching extends Component{
              res=>{
                  console.log(res);
                  console.log(store);
+                 if(res.length != 0){
+                    this.setState({noProspects: true})
+                 }
                  store.setProspects(res.data);
                 //  this.setState({prospects:store.prospects});
                  this.setState({hasPayload:true});
-                 
+
              }
          );
     }
@@ -417,40 +427,49 @@ class Matching extends Component{
                     <HeaderArea
                         eventHandle = {this.handleCloseProfile}
                         type = {state.viewProfile ? "exit" : "back"}/>
-                    <Profile onClick = {this.handleViewProfile}>
-                    <PicSlide>
-                        {state.viewProfile &&
-                            <Arrow
-                                onClick = {e => this.handlePreviousPic(currentPerson.img.length, e)}
-                                direction = "left"
-                            />
-                        }
-                        <PicArea>
-                            <ImageStyle src={store.currentProspect.profile_image?store.currentProspect.profile_image:currentPerson.img[imgIdx]} />
-                        </PicArea>
-                        {state.viewProfile &&
-                            <Arrow
-                                onClick = {e => this.handleNextPic(currentPerson.img.length, e)}
-                                direction = "right"
-                            />
-                        }
-                    </PicSlide>
-                    <MainTextArea>
-                        <TextContainer>
-                            <BioRow>
-                                <TextDiv level = "1">{store.currentProspect.user.first_name?store.currentProspect.user.first_name:currentPerson.name}, {store.currentProspect.age?store.currentProspect.age:currentPerson.age}</TextDiv>
-                                <TextDiv level= "2">{currentPerson.location}</TextDiv>
-                            </BioRow>
-                            <BioRow>
-                                <TextDiv level = "3">{store.currentProspect.bio?store.currentProspect.bio:currentPerson.bio}</TextDiv>
-                            </BioRow>
-                        </TextContainer>
-                    </MainTextArea>
-                    </Profile>
-                    <FooterArea
-                        handleLike = {this.handleLike}
-                        handleDislike = {this.handleDislike}
-                    />
+                    {this.state.noProspects ?
+                        <NoMatch>
+                            No Match
+                        </NoMatch>
+                        :
+                        <Profile onClick = {this.handleViewProfile}>
+                        <PicSlide>
+                            {state.viewProfile &&
+                                <Arrow
+                                    onClick = {e => this.handlePreviousPic(currentPerson.img.length, e)}
+                                    direction = "left"
+                                />
+                            }
+                            <PicArea>
+                                <ImageStyle src={store.currentProspect.profile_image?store.currentProspect.profile_image:currentPerson.img[imgIdx]} />
+                            </PicArea>
+                            {state.viewProfile &&
+                                <Arrow
+                                    onClick = {e => this.handleNextPic(currentPerson.img.length, e)}
+                                    direction = "right"
+                                />
+                            }
+                        </PicSlide>
+                        <MainTextArea>
+                            <TextContainer>
+                                <BioRow>
+                                    <TextDiv level = "1">{store.currentProspect.user.first_name?store.currentProspect.user.first_name:currentPerson.name}, {store.currentProspect.age?store.currentProspect.age:currentPerson.age}</TextDiv>
+                                    <TextDiv level= "2">{currentPerson.location}</TextDiv>
+                                </BioRow>
+                                <BioRow>
+                                    <TextDiv level = "3">{store.currentProspect.bio?store.currentProspect.bio:currentPerson.bio}</TextDiv>
+                                </BioRow>
+                            </TextContainer>
+                        </MainTextArea>
+                        </Profile>
+                    }
+                    {
+                        !state.noProspects &&
+                        <FooterArea
+                            handleLike = {this.handleLike}
+                            handleDislike = {this.handleDislike}
+                        />
+                    }
                 </Container>
             </AuthorizedLayout>
         );
