@@ -9,6 +9,7 @@ import { ToastContainer } from "react-toastify"
 import Slider from "rc-slider"
 import "rc-slider/assets/index.css"
 import axios from 'axios'
+import AuthorizedLayout from '../layouts/AuthorizedLayout';
 
 import ImageUploader from 'react-images-uploader'
 import 'react-images-uploader/styles.css'
@@ -130,16 +131,17 @@ class editProfile extends Component {
     render(){
       const ProfileURL = 'https://wooo.philsony.com/api/profiles/'+this.props.store.userStore.profile_id+'/'
         return (
+          <AuthorizedLayout>
           <ProfileScreen>
           <ToastContainer />
             <ProfileContent>
               <Header>
-                {/* <Icon><img src="../assests/icons/heartfill.png" alt="my image" onclick={this.myfunction} /></Icon> */}
+                {/* <Icon><img src="../assests/icons/heartfill.png" alt="my image" onclick={this.myfunction} /></Icon> 
                 <Icon id="matching" aria-label="heart" data={heart} onClick={this.myfunction} />
                 <Icon2 id="notification" aria-label="alarm" data={alarm} onClick={this.myfunction1} />
                 <Icon2 id="chat" aria-label="chat" data={chat} onClick={this.myfunction2} />
                 <Icon2 id="profile" aria-label="user" data={user} onClick={this.myfunction3} />
-                {/* <form onSubmit={this.handleSubmit}> */}
+                <form onSubmit={this.handleSubmit}> */}
                   <Tagline>Photos</Tagline>
                   <ProfileImage>
                     {/* <ProfileImageMain id="profilePic"/> */}
@@ -257,6 +259,7 @@ class editProfile extends Component {
               </Header>
             </ProfileContent>
           </ProfileScreen>
+          </AuthorizedLayout>
         )
     }
 }
