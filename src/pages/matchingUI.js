@@ -425,7 +425,7 @@ class Matching extends Component{
                             />
                         }
                         <PicArea>
-                            <ImageStyle src={store.currentProspect.profilePicture?store.currentProspect.profilePicture:currentPerson.img[imgIdx]} />
+                            <ImageStyle src={store.currentProspect.profile_image?store.currentProspect.profile_image:currentPerson.img[imgIdx]} />
                         </PicArea>
                         {state.viewProfile &&
                             <Arrow
