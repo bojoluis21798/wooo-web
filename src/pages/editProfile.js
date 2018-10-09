@@ -18,9 +18,9 @@ class editProfile extends Component {
     super(props);
     this.state ={
       pictures: [],
-      value: '',
-      pref:0,
-      radius:1
+      bio: this.props.store.userStore.biography,
+      pref:this.props.store.userStore.Preference,
+      radius:this.props.store.userStore.radius
     }
     this.onFormSubmit = this.onFormSubmit.bind(this)
     this.onChange = this.onChange.bind(this)
@@ -61,7 +61,6 @@ class editProfile extends Component {
   
   componentDidMount(){
     console.log(this.props.store.userStore.token)
-    console.log(this.props.store.userStore.profile_id)
   }
 
   handleSubmit(event){
@@ -79,15 +78,37 @@ class editProfile extends Component {
     }
     console.log("Axios --POST")
     axios.put('https://wooo.philsony.com/api/profiles/'+this.props.store.userStore.profile_id+'/', {
-      bio:this.state.value,
+      bio:this.props.store.userStore.biography,
       sexual_preference:this.state.pref,
       search_radius:this.state.radius
     },config)
     .then(response => {
       console.log(response);
       console.log("PuT was Successful!");
+
     })
   }
+
+  // componentWillUnmount() {
+  //   const token = this.props.store.userStore.token;
+  //   const config = {
+  //       headers: {
+  //           // 'content-type': 'multipart/form-data',
+  //           Authorization: 'Token ' + token
+  //       }
+  //   }
+  //   console.log("Axios --POST")
+  //   axios.put('https://wooo.philsony.com/api/profiles/'+this.props.store.userStore.profile_id+'/', {
+  //     bio:this.state.value,
+  //     sexual_preference:this.state.pref,
+  //     search_radius:this.state.radius
+  //   },config)
+  //   .then(response => {
+  //     console.log(response);
+  //     console.log("PuT was Successful!");
+
+  //   })
+  // }
 
   handleSlider(value) {
     this.setState({radius: value})
@@ -106,7 +127,8 @@ class editProfile extends Component {
   }
 
   handleChange(event){
-    this.setState({value: event.target.value})
+    this.setState({bio: event.target.value})
+    this.props.store.userStore.biography = event.target.value
   }
 
  
@@ -153,7 +175,8 @@ class editProfile extends Component {
                   <BioText 
                     id="bio" 
                     name="bio" 
-                    value={this.state.value} 
+
+                    value={this.state.bio} 
                     placeholder="Talk about yourself..... (Likes, Interests, etc.)" 
                     onChange={this.handleChange} 
                   />

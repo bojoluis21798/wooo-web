@@ -1,4 +1,4 @@
-
+    
 import { observable, action } from 'mobx'
 import axios from 'axios'
 
@@ -42,6 +42,7 @@ class UserStore {
         this.email = "true"
         this.profilePicture = userAuth.profile_image
         this.profile_id = userAuth.profile_id
+        this.biography = userAuth.biography
     }
 }
 
