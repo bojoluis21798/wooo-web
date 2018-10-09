@@ -292,31 +292,31 @@ const RadiusNum = styled.div`
   color: #f3f3f3;
   font-size:13px;
   float: right;
-`
+`;
 const ProfileImage = styled.div`
   width: 100%;
   display: flex; 
-`
+`;
 const ProfileImageMain = styled.img`
   width: 100%;
   max-width: 280px;
   height: 100%;
   max-height: 290px;
   border-radius: 15px;
-  boder: none
-  margin: auto
+  boder: none;
+  margin: auto;
 
   &:hover {
-    cursor: pointer
-    background-position: 300px
-    background-color:  #191919
-    border: 1px solid #f51a63
-  }
+    cursor: pointer;
+    background-position: 300px;
+    background-color:  #191919;
+    border: 1px solid #f51a63;
+  };
   &:focus {
-    outline: none !important
-    border: 1px solid #f51a63 !important
+    outline: none !important;
+    border: 1px solid #f51a63 !important;
   }
-`
+`;
 // width: 100%;
 //   max-width: 140px;
 //   height: 100%;
@@ -336,11 +336,11 @@ const ProfileImageMain = styled.img`
 //     border: 1px solid #f51a63 !important
 //   }
 const ProfileImageSet = styled.div`
-  width: 100%
-  height: 100%
-  max-height: 145px
-  float: right
-`
+  width: 100%;
+  height: 100%;
+  max-height: 145px;
+  float: right;
+`;
 // const Image1 = styled.button`
 //   width: 45%
 //   height: 48%
@@ -431,160 +431,160 @@ const ProfileImageSet = styled.div`
 //   }
 // `
 const BioText = styled.textarea`
-  height: 90px
-  max-height: 150px
-  min-height: 90px
-  width: 100%
-  max-width: 335px
-  min-width: 335px
-  font-weight: 20
-  font-size: 12px
-  color: #ffffff
-  background-color: #191919
-  border-radius: 5px
-  border: none
-  justify-items: center
-  padding-top: 7px
-  padding-bottom: 7px
-  overflow: hidden
-  resize: hidden
+  height: 90px;
+  max-height: 150px;
+  min-height: 90px;
+  width: 100%;
+  max-width: 335px;
+  min-width: 335px;
+  font-weight: 20;
+  font-size: 12px;
+  color: #ffffff;
+  background-color: #191919;
+  border-radius: 5px;
+  border: none;
+  justify-items: center;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  overflow: hidden;
+  resize: hidden;
 
   &:focus {
-    outline: none !important
-    border: 1px solid #f51a63 !important
+    outline: none !important;
+    border: 1px solid #f51a63 !important;
   }
-`
+`;
 const PrefButtonMale = styled.button`
-  font-weight: 100
-  font-size: 15px
-  color: #ffffff
-  background-color: #191919
-  letter-spacing: 0.01px
-  text-align: center
-  border-radius: 5px
-  border: 0
-  padding: 12px
-  width: 90px
-  margin: auto
-  margin-bottom: 5px
-  margin-right: 15px
-  transition: 0.5s all ease
+  font-weight: 100;
+  font-size: 15px;
+  color: #ffffff;
+  background-color: #191919;
+  letter-spacing: 0.01px;
+  text-align: center;
+  border-radius: 5px;
+  border: 0;
+  padding: 12px;
+  width: 90px;
+  margin: auto;
+  margin-bottom: 5px;
+  margin-right: 15px;
+  transition: 0.5s all ease;
 
   &:hover {
-    cursor: pointer
-    background-position: 300px
-    background-color:  #191919
-    border: 1px solid #f51a63
+    cursor: pointer;
+    background-position: 300px;
+    background-color:  #191919;
+    border: 1px solid #f51a63;
   }
 
   &:focus {
-    background-position: 300px
-    background-color:  #f51a63
-    border: 1px solid #f51a63
+    background-position: 300px;
+    background-color:  #f51a63;
+    border: 1px solid #f51a63;
   }
 
   &:active {
-    background-position: 300px
-    background-color:  #f51a63
-    border: 1px solid #f51a63
+    background-position: 300px;
+    background-color:  #f51a63;
+    border: 1px solid #f51a63;
   }
 
   ${
     props => props.active && 
         css`
-          background-position: 300px
-          background-color:  #f51a63
-          border: 1px solid #f51a63
+          background-position: 300px;
+          background-color:  #f51a63;
+          border: 1px solid #f51a63;
         `
   }
-`
+`;
 const PrefButtonFemale = styled.button`
-  font-weight: 100
-  font-size: 15px
-  color: #ffffff
-  background-color: #191919
-  letter-spacing: 0.01px
-  text-align: center
-  border-radius: 5px
-  border: 0
-  padding: 12px
-  width: 90px
-  margin: auto
-  margin-bottom: 5px
-  margin-right: 15px
-  transition: 0.5s all ease
+  font-weight: 100;
+  font-size: 15px;
+  color: #ffffff;
+  background-color: #191919;
+  letter-spacing: 0.01px;
+  text-align: center;
+  border-radius: 5px;
+  border: 0;
+  padding: 12px;
+  width: 90px;
+  margin: auto;
+  margin-bottom: 5px;
+  margin-right: 15px;
+  transition: 0.5s all ease;
 
   &:hover {
-    cursor: pointer
-    background-position: 300px
-    background-color:  #191919
-    border: 1px solid #f51a63
+    cursor: pointer;
+    background-position: 300px;
+    background-color:  #191919;
+    border: 1px solid #f51a63;
   }
 
   &:focus {
-    background-position: 300px
-    background-color:  #f51a63
-    border: 1px solid #f51a63
+    background-position: 300px;
+    background-color:  #f51a63;
+    border: 1px solid #f51a63;
   }
 
   &:active {
-    background-position: 300px
-    background-color:  #f51a63
-    border: 1px solid #f51a63
+    background-position: 300px;
+    background-color:  #f51a63;
+    border: 1px solid #f51a63;
   }
 
   ${
     props => props.active && 
         css`
-          background-position: 300px
-          background-color:  #f51a63
-          border: 1px solid #f51a63
+          background-position: 300px;
+          background-color:  #f51a63;
+          border: 1px solid #f51a63;
         `
   }
-`
+`;
 const PrefButtonOthers = styled.button`
-  font-weight: 100
-  font-size: 15px
-  color: #ffffff
-  background-color: #191919
-  letter-spacing: 0.01px
-  text-align: center
-  border-radius: 5px
-  border: 0
-  padding: 12px
-  width: 90px
-  margin: auto
-  margin-bottom: 5px
-  margin-right: 15px
-  transition: 0.5s all ease
+  font-weight: 100;
+  font-size: 15px;
+  color: #ffffff;
+  background-color: #191919;
+  letter-spacing: 0.01px;
+  text-align: center;
+  border-radius: 5px;
+  border: 0;
+  padding: 12px;
+  width: 90px;
+  margin: auto;
+  margin-bottom: 5px;
+  margin-right: 15px;
+  transition: 0.5s all ease;
 
   &:hover {
-    cursor: pointer
-    background-position: 300px
-    background-color:  #191919
-    border: 1px solid #f51a63
+    cursor: pointer;
+    background-position: 300px;
+    background-color:  #191919;
+    border: 1px solid #f51a63;
   }
 
   &:focus {
-    background-position: 300px
-    background-color:  #f51a63
-    border: 1px solid #f51a63
+    background-position: 300px;
+    background-color:  #f51a63;
+    border: 1px solid #f51a63;
   }
 
   &:active {
-    background-position: 300px
-    background-color:  #f51a63
-    border: 1px solid #f51a63
+    background-position: 300px;
+    background-color:  #f51a63;
+    border: 1px solid #f51a63;
   }
 
   ${
     props => props.active && 
         css`
-          background-position: 300px
-          background-color:  #f51a63
-          border: 1px solid #f51a63
+          background-position: 300px;
+          background-color:  #f51a63;
+          border: 1px solid #f51a63;
         `
   }
-`
+`;
 
 export default editProfile
