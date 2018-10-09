@@ -19,6 +19,7 @@ class UserStore {
     @action
     async authenticateUser(authObj) {
         try {
+            console.log("GOT IN");
             let response = await axios.post(process.env.REACT_APP_API_BASEURL + 'login/', {
                 accessToken: authObj.accessToken
             })
@@ -38,7 +39,7 @@ class UserStore {
     populateUser(userAuth) {
         this.token = userAuth.auth_token
         this.name = userAuth.name
-        this.email = "true"
+        this.email = true;
         this.profilePicture = userAuth.profile_image
     }
 }

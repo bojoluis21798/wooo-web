@@ -10,7 +10,7 @@ import Slider from "rc-slider"
 import "rc-slider/assets/index.css"
 import axios from 'axios'
 import ImageUploader from 'react-images-upload'
-
+import {Link,Redirect} from 'react-router-dom';
 
 @inject('store') @observer
 class editProfile extends Component {
@@ -91,6 +91,10 @@ class editProfile extends Component {
     })
   }
 
+  
+  myfunction = ()=>{
+    this.props.history.push('/matching');
+  }
     render(){
         return (
           <ProfileScreen>
@@ -98,7 +102,8 @@ class editProfile extends Component {
             <ProfileContent>
               <Header>
                 {/* <Icon><img src="../assests/icons/heartfill.png" alt="my image" onclick={this.myfunction} /></Icon> */}
-                <Icon id="matching" aria-label="heart" data={heart} onClick={this.myfunction} />
+                <Button onClick={this.myfunction}><Icon src={heart}/></Button>
+                {/* <Icon id="matching" aria-label="heart" data={heart} onClick={this.myfunction}/> */}
                 <Icon2 id="notification" aria-label="alarm" data={alarm} onClick={this.myfunction1} />
                 <Icon2 id="chat" aria-label="chat" data={chat} onClick={this.myfunction2} />
                 <Icon2 id="profile" aria-label="user" data={user} onClick={this.myfunction3} />
@@ -176,6 +181,7 @@ class editProfile extends Component {
         )
     }
 }
+
 const ProfileScreen = styled.div`
   position: relative
   height: 100vh
@@ -195,11 +201,16 @@ const Header = styled.div`
   min-width:30%
   height:100vh
 `
-const Icon = styled.object`
-  width: 40px
-  height: 40px
-  margin: auto
+
+const Button = styled.button`
+  width:40px;
+  height:40px;
   margin-right: 120px
+  background-image:heart
+`
+const Icon = styled.img`
+  width: 4vh
+  height: 4vh
   margin-bottom: 20px
 `
 const Icon2 = styled.object`
