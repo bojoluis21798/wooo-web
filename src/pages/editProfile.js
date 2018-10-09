@@ -21,7 +21,7 @@ import {Link,Redirect} from 'react-router-dom';
 @inject('store') @observer
 
 class editProfile extends Component {
- 
+
   onFormSubmit = (e) =>{
     e.preventDefault() // Stop form submit
     this.fileUpload(this.state.file).then((response)=>{
@@ -45,7 +45,7 @@ class editProfile extends Component {
   //   }
   //   return axios.post(url, formData, config)
   // }
-    
+
   componentDidMount(){
     console.log(this.props.store.userStore)
   }
@@ -73,7 +73,7 @@ class editProfile extends Component {
 
     })
   }
-  
+
   handleMale = (e) => {
     const store = this.props.store.userStore;
 
@@ -99,13 +99,13 @@ class editProfile extends Component {
     const store = this.props.store.userStore;
 
     store.setRadius(radius);
-    
+
     this.handleSubmit(null)
   }
 
 
   handleChangeBio = (e) => {
-    
+
     const store = this.props.store.userStore;
 
     store.setBio(e.target.value);
@@ -117,7 +117,7 @@ class editProfile extends Component {
     })
   }
 
-  
+
   myfunction = ()=>{
     this.props.history.push('/matching');
   }
@@ -148,41 +148,41 @@ class editProfile extends Component {
                   </ProfileImage>
                   </form>
                   <Tagline>Bio</Tagline>
-                  <BioText 
-                    id="bio" 
-                    name="bio" 
+                  <BioText
+                    id="bio"
+                    name="bio"
                     value={this.props.store.userStore.biography}
-                    onChange={this.handleChangeBio} 
+                    onChange={this.handleChangeBio}
                     onBlur={this.handleSubmit}
                   />
                   <Tagline>Preference</Tagline>
                   {/* {PrefButton} */}
                   {/* <SexOptions choice={this.props.store.userStore.sexual_preference}/> */}
-                  <PrefButtonMale id="male" 
-                      aria-label="Male" 
-                      value= "0" 
-                      onClick={this.handleMale} 
-                      active = {this.props.store.userStore.preference === 0}    
+                  <PrefButtonMale id="male"
+                      aria-label="Male"
+                      value= "0"
+                      onClick={this.handleMale}
+                      active = {this.props.store.userStore.preference === 0}
                   >Male</PrefButtonMale>
-                  <PrefButtonFemale id="female" 
-                      aria-label="Female" 
+                  <PrefButtonFemale id="female"
+                      aria-label="Female"
                       value= "1"
-                      onClick={this.handleFemale} 
+                      onClick={this.handleFemale}
                       active = {this.props.store.userStore.preference === 1}
                   >Female</PrefButtonFemale>
-                  <PrefButtonOthers id="other" 
-                      aria-label="Others" 
+                  <PrefButtonOthers id="other"
+                      aria-label="Others"
                       value="2"
-                      onClick={this.handleOthers} 
+                      onClick={this.handleOthers}
                       active = {this.props.store.userStore.preference === 2}
                   >Others</PrefButtonOthers>
                   <Tagline>Radius</Tagline>
                   <RadiusNum>{this.props.store.userStore.radius} Km</RadiusNum>
                   <br/>
-                  <Slider 
-                    id="radius" 
-                    min={1} 
-                    max={10} 
+                  <Slider
+                    id="radius"
+                    min={1}
+                    max={10}
                     // defaultValue={this.props.store.userStore.radius}
                     trackStyle={{
                       height: 2,
@@ -202,7 +202,7 @@ class editProfile extends Component {
                       backgroundColor: "#f51a63",
                       borderColor: "#f51a63",
                     }}
-                    activeDotStyle={{ 
+                    activeDotStyle={{
                       borderColor: "#f51a63",
                       border:2,
                     }}
@@ -211,11 +211,11 @@ class editProfile extends Component {
                       marginLeft: -4,
                       width: 8,
                       height: 8,
-                      border: 2, 
+                      border: 2,
                       borderColor: "#e9e9e9",
                       backgroundColor: "#f51a63"
                     }}
-                    value={this.props.store.userStore.radius} 
+                    value={this.props.store.userStore.radius}
                     onChange={this.handleSlider} />
                   <br/>
                   {/* <button value="submit" type="submit">Click here</button> */}
@@ -266,7 +266,7 @@ const Icon2 = styled.object`
 const Tagline = styled.div`
   width: 100%;
   font-weight: 500;
-  color: #f3f3f3; 
+  color: #f3f3f3;
   font-size: 18px;
   max-width: 250px;
   display: block;
@@ -280,7 +280,7 @@ const RadiusNum = styled.div`
 `;
 const ProfileImage = styled.div`
   width: 100%;
-  display: flex; 
+  display: flex;
 `;
 const ProfileImageMain = styled.img`
   width: 100%;
@@ -448,20 +448,8 @@ const PrefButtonMale = styled.button`
     border: 1px solid #f51a63;
   }
 
-  &:focus {
-    background-position: 300px;
-    background-color:  #f51a63;
-    border: 1px solid #f51a63;
-  }
-
-  &:active {
-    background-position: 300px;
-    background-color:  #f51a63;
-    border: 1px solid #f51a63;
-  }
-
   ${
-    props => props.active && 
+    props => props.active &&
         css`
           background-position: 300px;
           background-color:  #f51a63;
@@ -493,18 +481,8 @@ const PrefButtonFemale = styled.button`
     box-sizing: border-box;
   }
 
-  &:focus {
-    background-color:  #f51a63;
-    border: 1px solid #f51a63;
-  }
-
-  &:active {
-    background-color:  #f51a63;
-    border: 1px solid #f51a63;
-  }
-
   ${
-    props => props.active && 
+    props => props.active &&
         css`
           background-position: 300px;
           background-color:  #f51a63;
@@ -536,20 +514,8 @@ const PrefButtonOthers = styled.button`
     border: 1px solid #f51a63;
   }
 
-  &:focus {
-    background-position: 300px;
-    background-color:  #f51a63;
-    border: 1px solid #f51a63;
-  }
-
-  &:active {
-    background-position: 300px;
-    background-color:  #f51a63;
-    border: 1px solid #f51a63;
-  }
-
   ${
-    props => props.active && 
+    props => props.active &&
         css`
           background-position: 300px;
           background-color:  #f51a63;
