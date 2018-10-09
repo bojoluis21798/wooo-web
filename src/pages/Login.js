@@ -36,7 +36,6 @@ export default class Login extends Component {
   }
 
   responseFacebook = response => {
-    // console.log(response);
     this.authenticateUser(response)
   }
 

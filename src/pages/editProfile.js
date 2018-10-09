@@ -10,13 +10,12 @@ import Slider from "rc-slider"
 import "rc-slider/assets/index.css"
 import axios from 'axios'
 
-// import ImageUploader1 from 'react-images-uploader'
+// import 1 from 'react-images-uploader'
 // import ImageUploader2 from 'react-images-uploader'
 // import ImageUploader3 from 'react-images-uploader'
 // import ImageUploader4 from 'react-images-uploader'
 // import 'react-images-uploader/styles.css'
-import 'react-images-uploader/font.css'
-// import SexOptions from './SexOptions'
+import {Link,Redirect} from 'react-router-dom';
 
 @inject('store') @observer
 
@@ -117,6 +116,10 @@ class editProfile extends Component {
     })
   }
 
+  
+  myfunction = ()=>{
+    this.props.history.push('/matching');
+  }
     render(){
         return (
           <ProfileScreen>
@@ -124,7 +127,8 @@ class editProfile extends Component {
             <ProfileContent>
               <Header>
                 {/* <Icon><img src="../assests/icons/heartfill.png" alt="my image" onclick={this.myfunction} /></Icon> */}
-                <Icon id="matching" aria-label="heart" data={heart} onClick={this.myfunction} />
+                <Button onClick={this.myfunction}><Icon src={heart}/></Button>
+                {/* <Icon id="matching" aria-label="heart" data={heart} onClick={this.myfunction}/> */}
                 <Icon2 id="notification" aria-label="alarm" data={alarm} onClick={this.myfunction1} />
                 <Icon2 id="chat" aria-label="chat" data={chat} onClick={this.myfunction2} />
                 <Icon2 id="profile" aria-label="user" data={user} onClick={this.myfunction3} />
@@ -225,6 +229,7 @@ class editProfile extends Component {
         )
     }
 }
+
 const ProfileScreen = styled.div`
   position: relative;
   height: 100vh;
@@ -240,9 +245,18 @@ const ProfileContent = styled.div`
   z-index: 1;
 `;
 const Header = styled.div`
-  margin: auto;
+margin: auto;
+  min-width:30%
   height:100vh;
 `;
+
+const Button = styled.button`
+  width:40px;
+  height:40px;
+  margin-right: 120px
+  background-image:heart
+`;
+
 const Icon = styled.object`
   width: 40px;
   height: 40px;
@@ -250,6 +264,7 @@ const Icon = styled.object`
   margin-right: 120px;
   margin-bottom: 20px;
 `;
+
 const Icon2 = styled.object`
   width: 50px;
   margin: auto;
