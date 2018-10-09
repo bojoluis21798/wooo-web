@@ -2022,7 +2022,7 @@ create-hmac@^1.1.0, create-hmac@^1.1.2, create-hmac@^1.1.4:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-create-react-class@^15.6.0:
+create-react-class@^15.5.2, create-react-class@^15.6.0:
   version "15.6.3"
   resolved "https://registry.yarnpkg.com/create-react-class/-/create-react-class-15.6.3.tgz#2d73237fb3f970ae6ebe011a9e66f46dbca80036"
   integrity sha512-M+/3Q6E6DLO6Yx3OwrWjwHBnvfXXYA7W+dFjt/ZDBemHO1DDZhsalX/NUtnTYclN6GfnBDRh4qRHjcDHmlJBJg==
@@ -6794,6 +6794,14 @@ react-progress-button-for-images-uploader@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/react-progress-button-for-images-uploader/-/react-progress-button-for-images-uploader-5.0.1.tgz#ebff430529889f9d92c92460d3e371c2dd68a4f1"
   integrity sha512-9HRDRsRHC+81EPkVuWfu1MPJauBMnYK/9c13h1uk4vcWteEX2ugk3RlpTzUyUhg/9qRjIVIztA0YEkThL2h/Qw==
+
+react-progress-button@^5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/react-progress-button/-/react-progress-button-5.1.0.tgz#87d7538dd392d2e22a4dfb573285b1f77a6595c0"
+  integrity sha512-JbMwEYr16xuB+l4LiDbNYi2zQGxcq4SWXuyi6AUjx34KSIUS6/v3c1lp9oH/klG+amfkMPG63Ogvn4w3ovo0AA==
+  dependencies:
+    create-react-class "^15.5.2"
+    prop-types "^15.5.8"
 
 react-proxy@^3.0.0-alpha.0:
   version "3.0.0-alpha.1"

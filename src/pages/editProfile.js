@@ -10,7 +10,7 @@ import Slider from "rc-slider"
 import "rc-slider/assets/index.css"
 import axios from 'axios'
 
-import ImageUploader from 'react-images-upload'
+import ImageUploader from 'react-images-uploader'
 import 'react-images-uploader/styles.css'
 import 'react-images-uploader/font.css'
 // import SexOptions from './SexOptions'
@@ -128,6 +128,7 @@ class editProfile extends Component {
   }
 
     render(){
+      const ProfileURL = 'https://wooo.philsony.com/api/profiles/'+this.props.store.userStore.profile_id+'/'
         return (
           <ProfileScreen>
           <ToastContainer />
@@ -154,8 +155,8 @@ class editProfile extends Component {
                           withLabel={false} 
                           onChange={this.onDrop}
                         />*/}
-                      <Image1 
-                        url="https://wooo.philsony.com/api/profiles/'+this.props.store.userStore.profile_id+'/'"
+                      <ImageUploader 
+                        url={ProfileURL}
                         optimisticPreviews 
                         multiple={false}
                         onLoadEnd={(err) => {
@@ -186,6 +187,7 @@ class editProfile extends Component {
                     value={this.props.store.userStore.biography}
                     onChange={this.handleChangeBio} 
                     onBlur={this.handleSubmit}
+                    borderColor="#f51a63"
                   />
                   <Tagline>Preference</Tagline>
                   {/* {PrefButton} */}
