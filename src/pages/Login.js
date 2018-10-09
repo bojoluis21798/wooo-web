@@ -74,7 +74,7 @@ export default class Login extends Component {
           </Header>
           <Couple className={styled.couple} aria-label="Couple" data={couple} />
           <LoginActionSection>
-            {/*<FacebookLogin
+            <FacebookLogin
               appId={process.env.REACT_APP_FB_APPID}
               fields="name,email,picture"
               scope="public_profile,user_friends"
@@ -87,9 +87,9 @@ export default class Login extends Component {
                 </LoginButton>
               )}
             />
-            */}
             
-            <Link to="/dashboard">Login</Link>
+            
+            {/*<Link to="/dashboard">Login</Link>*/}
 
             <TermsNotice>
               Upon logging in, you agree to our terms and conditions.

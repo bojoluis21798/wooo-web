@@ -25,6 +25,14 @@ class editProfile extends Component {
     this.onFormSubmit = this.onFormSubmit.bind(this)
     this.onChange = this.onChange.bind(this)
     this.fileUpload = this.fileUpload.bind(this)
+    this.handleSlider = this.handleSlider.bind(this)
+    this.handleOpposite = this.handleOpposite.bind(this)
+    this.handleSame = this.handleSame.bind(this)
+    this.handleBoth = this.handleBoth.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.onDrop = this.onDrop.bind(this)
+  
   }
   onFormSubmit(e){
     e.preventDefault() // Stop form submit
@@ -37,7 +45,7 @@ class editProfile extends Component {
     this.setState({file:e.target.files[0]})
   }
   fileUpload(file){
-    const url = 'https://127.0.0.1:8000/api/profiles/';
+    const url = 'https://wooo.philsony.com/api/profiles/';
     const formData = new FormData();
     const token = this.props.store.userStore.token;
     formData.append('file',file)
@@ -49,32 +57,11 @@ class editProfile extends Component {
     }
     return axios.post(url, formData, config)
   }
-  fileUpdate(file){
-    const url = 'https://127.0.0.1:8000/api/profiles/';
-    const formData = new FormData();
-    const token = this.props.store.userStore.token;
-    formData.append('file',file)
-    const config = {
-        headers: {
-            'content-type': 'multipart/form-data',
-            'Authorization': 'Token' + token
-        }
-    }
-    return axios.put(url+this.props.store.userStore.id, formData, config)
-  }
-    // this.onFormSubmit = this.onFormSubmit.bind(this)
-    // this.onfileChange = this.onChange.bind(this)
-    this.handleSlider = this.handleSlider.bind(this)
-    this.handleOpposite = this.handleOpposite.bind(this)
-    this.handleSame = this.handleSame.bind(this)
-    this.handleBoth = this.handleBoth.bind(this)
-    this.handleChange = this.handleChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
-    this.onDrop = this.onDrop.bind(this)
-  }
+    
   
   componentDidMount(){
-
+    console.log(this.props.store.userStore.token)
+    console.log(this.props.store.userStore.profile_id)
   }
 
   handleSubmit(event){
@@ -83,15 +70,22 @@ class editProfile extends Component {
     console.log(this.state.value)
     console.log(this.state.pref)
     console.log(this.state.radius)
+    const token = this.props.store.userStore.token;
+    const config = {
+        headers: {
+            // 'content-type': 'multipart/form-data',
+            Authorization: 'Token ' + token
+        }
+    }
     console.log("Axios --POST")
-    axios.post('https://wooo.philsony.com/api/profiles/1/', {
+    axios.put('https://wooo.philsony.com/api/profiles/'+this.props.store.userStore.profile_id+'/', {
       bio:this.state.value,
-      pref:this.state.pref,
-      rad:this.state.radius
-    })
+      sexual_preference:this.state.pref,
+      search_radius:this.state.radius
+    },config)
     .then(response => {
       console.log(response);
-      console.log("POST was Successful!");
+      console.log("PuT was Successful!");
     })
   }
 

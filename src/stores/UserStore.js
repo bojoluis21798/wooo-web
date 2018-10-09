@@ -14,7 +14,8 @@ class UserStore {
     @observable photos = []
     @observable token = null
     @observable email = null
-    @observable accessToken = null;
+    @observable accessToken = null
+    @observable profile_id = null;
 
     @action
     async authenticateUser(authObj) {
@@ -40,6 +41,7 @@ class UserStore {
         this.name = userAuth.name
         this.email = "true"
         this.profilePicture = userAuth.profile_image
+        this.profile_id = userAuth.profile_id
     }
 }
 
