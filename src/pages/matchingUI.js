@@ -351,19 +351,39 @@ class Matching extends Component{
             }
         }
         notify.show('Toasty!');
+        console.log("LIKE STARTS HERE");
+        console.log(store.profile_id);
         console.log(store.token);
+        console.log(store.currentProspect.id);
         axios.post("https://wooo.philsony.com/api/matching/",{
                 profile_id:store.profile_id,
-                match_id:1,
-                status:1
-        },config).then(res=>{
+                match_id:store.currentProspect.id,
+                status:0
+        }).then(res=>{
             console.log(res);
         });
         this.nextPerson();
     }
 
     handleLike(){
+        const store = this.props.store.userStore;
+        const config ={
+            headers:{
+                Authorization:'Token '+ store.token
+            }
+        }
         notify.show('Toasty!');
+        console.log("LIKE STARTS HERE");
+        console.log(store.profile_id);
+        console.log(store.token);
+        console.log(store.currentProspect.id);
+        axios.post("https://wooo.philsony.com/api/matching/",{
+                profile_id:store.profile_id,
+                match_id:store.currentProspect.id,
+                status:1
+        },config).then(res=>{
+            console.log(res);
+        });
         this.nextPerson();
     }
 
