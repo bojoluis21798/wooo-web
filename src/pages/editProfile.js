@@ -102,12 +102,12 @@ class editProfile extends Component {
     this.handleSubmit(e)
   }
 
-  handleSlider = (e) => {
+  handleSlider = (radius) => {
     const store = this.props.store.userStore;
 
-    store.setRadius(e.target.value);
+    store.setRadius(radius);
     
-    this.handleSubmit(e)
+    this.handleSubmit(null)
   }
 
 
