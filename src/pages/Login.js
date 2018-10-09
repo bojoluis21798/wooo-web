@@ -99,87 +99,87 @@ export default class Login extends Component {
 
 
 const LoginScreen = styled.div`
-  position: relative
-  height: 100vh
+  position: relative;
+  height: 100vh;
 `
 
 const LoginContent = styled.div`
-  display: grid
-  justify-items: center
-  grid-template-rows: 2fr 3fr 1fr
-  height: 100vh
-  z-index: 1
+  display: grid;
+  justify-items: center;
+  grid-template-rows: 2fr 3fr 1fr;
+  height: 100vh;
+  z-index: 1;
 `
 
 const BackgroundOverlay = styled.div`
-  position: fixed
-  z-index: -1
-  background-color: #f7f8fc
-  width: 100%
-  height: 100%
+  position: fixed;
+  z-index: -1;
+  background-color: #f7f8fc;
+  width: 100%;
+  height: 100%;
 `
 
 const CircleCenter = styled.object`
-  right: 0
-  position: absolute
-  top: 6vh
+  right: 0;
+  position: absolute;
+  top: 6vh;
 `
 
 const Header = styled.div`
-  width: 80vw
-  margin: auto
+  width: 80vw;
+  margin: auto;
 `
 
 const Logo = styled.object`
-  width: 160px
-  display: block
-  margin: auto
-  padding-bottom: 20px
+  width: 160px;
+  display: block;
+  margin: auto;
+  padding-bottom: 20px;
 `
 
 const Tagline = styled.div`
-  width: 100%
-  font-weight: 800
-  color: #fd3b6c
-  font-size: 24px
-  max-width: 250px
-  margin: auto
-  text-align: center
+  width: 100%;
+  font-weight: 800;
+  color: #fd3b6c;
+  font-size: 24px;
+  max-width: 250px;
+  margin: auto;
+  text-align: center;
 `
 
 const Couple = styled.object`
-  width: 100vw
-  max-width: 400px
+  width: 100vw;
+  max-width: 400px;
 `
 
 const LoginActionSection = styled.div``
 
 const LoginButton = styled.button`
-  font-family: 'Apercu';
-  font-weight: 500
-  text-transform: uppercase
-  font-size: 17px
-  color: #ffffff
-  letter-spacing: 0.01px
-  text-align: center
-  background-image: linear-gradient(-90deg, #fd3b6d 0%, #fd9351 100%);
-  border-radius: 29px
-  border: 0
-  padding: 12px
-  width: 300px
-  margin: auto
-  display: block
-  margin-bottom: 5px
-  transition: 0.5s all ease
+  font-family: 'Apercu';;
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: 17px;
+  color: #ffffff;
+  letter-spacing: 0.01px;
+  text-align: center;
+  background-image: linear-gradient(-90deg, #fd3b6d 0%, #fd9351 100%);;
+  border-radius: 29px;
+  border: 0;
+  padding: 12px;
+  width: 300px;
+  margin: auto;
+  display: block;
+  margin-bottom: 5px;
+  transition: 0.5s all ease;
 
   &:hover {
-    cursor: pointer
-    background-position: 300px
+    cursor: pointer;
+    background-position: 300px;
   }
 `
 
 const TermsNotice = styled.p`
-  margin: auto
-  font-size: 12px
-  color: "#969696"
+  margin: auto;
+  font-size: 12px;
+  color: "#969696";
 `
