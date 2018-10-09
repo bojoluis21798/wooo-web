@@ -294,28 +294,20 @@ const RadiusNum = styled.div`
   float: right;
 `;
 const ProfileImage = styled.div`
+  height: 100%;
+  min-height: 200px;
   width: 100%;
+  min-width: 200px;
   display: flex; 
 `;
 const ProfileImageMain = styled.img`
   width: 100%;
-  max-width: 280px;
+  max-width: 200px;
   height: 100%;
-  max-height: 290px;
+  max-height: 200px;
   border-radius: 15px;
   boder: none;
   margin: auto;
-
-  &:hover {
-    cursor: pointer;
-    background-position: 300px;
-    background-color:  #191919;
-    border: 1px solid #f51a63;
-  };
-  &:focus {
-    outline: none !important;
-    border: 1px solid #f51a63 !important;
-  }
 `;
 // width: 100%;
 //   max-width: 140px;
