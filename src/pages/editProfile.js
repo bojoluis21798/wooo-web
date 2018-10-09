@@ -9,31 +9,18 @@ import { ToastContainer } from "react-toastify"
 import Slider from "rc-slider"
 import "rc-slider/assets/index.css"
 import axios from 'axios'
+import AuthorizedLayout from '../layouts/AuthorizedLayout'
 
-// import ImageUploader1 from 'react-images-uploader'
+// import 1 from 'react-images-uploader'
 // import ImageUploader2 from 'react-images-uploader'
 // import ImageUploader3 from 'react-images-uploader'
 // import ImageUploader4 from 'react-images-uploader'
 // import 'react-images-uploader/styles.css'
-import 'react-images-uploader/font.css'
-// import SexOptions from './SexOptions'
+import {Link,Redirect} from 'react-router-dom';
 
 @inject('store') @observer
 
 class editProfile extends Component {
-  constructor(props) {
-    super(props);
-    // this.onFormSubmit = this.onFormSubmit.bind(this)
-    // this.onChange = this.onChange.bind(this)
-    // this.fileUpload = this.fileUpload.bind(this)
-    // this.handleSlider = this.handleSlider.bind(this)
-    // this.handleMale = this.handleMale.bind(this)
-    // this.handleFemale = this.handleFemale.bind(this)
-    // this.handleOthers = this.handleOthers.bind(this)
-    // this.handleChangeBio = this.handleChangeBio.bind(this)
-    // this.handleSubmit = this.handleSubmit.bind(this)
-    // this.onDrop = this.onDrop.bind(this)
-  }
 
   onFormSubmit = (e) =>{
     e.preventDefault() // Stop form submit
@@ -58,7 +45,7 @@ class editProfile extends Component {
   //   }
   //   return axios.post(url, formData, config)
   // }
-    
+
   componentDidMount(){
     console.log(this.props.store.userStore)
   }
@@ -86,7 +73,7 @@ class editProfile extends Component {
 
     })
   }
-  
+
   handleMale = (e) => {
     const store = this.props.store.userStore;
 
@@ -112,13 +99,13 @@ class editProfile extends Component {
     const store = this.props.store.userStore;
 
     store.setRadius(radius);
-    
+
     this.handleSubmit(null)
   }
 
 
   handleChangeBio = (e) => {
-    
+
     const store = this.props.store.userStore;
 
     store.setBio(e.target.value);
@@ -130,25 +117,18 @@ class editProfile extends Component {
     })
   }
 
+
+  myfunction = ()=>{
+    this.props.history.push('/matching');
+  }
     render(){
-      const token = this.props.store.userStore.token;
-      const config = {
-        headers: {
-            // 'content-type': 'multipart/form-data',
-            Authorization: 'Token ' + token
-        }
-    }
-      const ProfileURL = 'https://wooo.philsony.com/api/profiles/'+this.props.store.userStore.profile_id+'/'
         return (
-          <ProfileScreen>
+          <AuthorizedLayout>
           <ToastContainer />
             <ProfileContent>
               <Header>
                 {/* <Icon><img src="../assests/icons/heartfill.png" alt="my image" onclick={this.myfunction} /></Icon> */}
-                <Icon id="matching" aria-label="heart" data={heart} onClick={this.myfunction} />
-                <Icon2 id="notification" aria-label="alarm" data={alarm} onClick={this.myfunction1} />
-                <Icon2 id="chat" aria-label="chat" data={chat} onClick={this.myfunction2} />
-                <Icon2 id="profile" aria-label="user" data={user} onClick={this.myfunction3} />
+                {/* <Icon id="matching" aria-label="heart" data={heart} onClick={this.myfunction}/> */}
                 {/* <form onSubmit={this.handleSubmit}> */}
                   <Tagline>Photos</Tagline>
                   <form>
@@ -168,41 +148,41 @@ class editProfile extends Component {
                   </ProfileImage>
                   </form>
                   <Tagline>Bio</Tagline>
-                  <BioText 
-                    id="bio" 
-                    name="bio" 
+                  <BioText
+                    id="bio"
+                    name="bio"
                     value={this.props.store.userStore.biography}
-                    onChange={this.handleChangeBio} 
+                    onChange={this.handleChangeBio}
                     onBlur={this.handleSubmit}
                   />
                   <Tagline>Preference</Tagline>
                   {/* {PrefButton} */}
                   {/* <SexOptions choice={this.props.store.userStore.sexual_preference}/> */}
-                  <PrefButtonMale id="male" 
-                      aria-label="Male" 
-                      value= "0" 
-                      onClick={this.handleMale} 
-                      active = {this.props.store.userStore.preference === 0}    
+                  <PrefButtonMale id="male"
+                      aria-label="Male"
+                      value= "0"
+                      onClick={this.handleMale}
+                      active = {this.props.store.userStore.preference === 0}
                   >Male</PrefButtonMale>
-                  <PrefButtonFemale id="female" 
-                      aria-label="Female" 
+                  <PrefButtonFemale id="female"
+                      aria-label="Female"
                       value= "1"
-                      onClick={this.handleFemale} 
+                      onClick={this.handleFemale}
                       active = {this.props.store.userStore.preference === 1}
                   >Female</PrefButtonFemale>
-                  <PrefButtonOthers id="other" 
-                      aria-label="Others" 
+                  <PrefButtonOthers id="other"
+                      aria-label="Others"
                       value="2"
-                      onClick={this.handleOthers} 
+                      onClick={this.handleOthers}
                       active = {this.props.store.userStore.preference === 2}
                   >Others</PrefButtonOthers>
                   <Tagline>Radius</Tagline>
                   <RadiusNum>{this.props.store.userStore.radius} Km</RadiusNum>
                   <br/>
-                  <Slider 
-                    id="radius" 
-                    min={1} 
-                    max={10} 
+                  <Slider
+                    id="radius"
+                    min={1}
+                    max={10}
                     // defaultValue={this.props.store.userStore.radius}
                     trackStyle={{
                       height: 2,
@@ -210,7 +190,7 @@ class editProfile extends Component {
                       backgroundColor: "#f51a63",
                     }}
                     railStyle={{
-                      width: 335,
+                      width: "100%",
                       backgroundColor: "#5b5b5b",
                       height: 2,
                       borderRadius: 6,
@@ -222,7 +202,7 @@ class editProfile extends Component {
                       backgroundColor: "#f51a63",
                       borderColor: "#f51a63",
                     }}
-                    activeDotStyle={{ 
+                    activeDotStyle={{
                       borderColor: "#f51a63",
                       border:2,
                     }}
@@ -231,39 +211,42 @@ class editProfile extends Component {
                       marginLeft: -4,
                       width: 8,
                       height: 8,
-                      border: 2, 
+                      border: 2,
                       borderColor: "#e9e9e9",
                       backgroundColor: "#f51a63"
                     }}
-                    value={this.props.store.userStore.radius} 
+                    value={this.props.store.userStore.radius}
                     onChange={this.handleSlider} />
                   <br/>
                   {/* <button value="submit" type="submit">Click here</button> */}
                 {/* </form> */}
               </Header>
             </ProfileContent>
-          </ProfileScreen>
+          </AuthorizedLayout>
         )
     }
 }
-const ProfileScreen = styled.div`
-  position: relative;
-  height: 100vh;
-  background-color: #111111;
-  overflow: auto;
-  overflow-x: hidden;
-`;
+
 const ProfileContent = styled.div`
-  display: grid;
   justify-items: center;
-  grid-template-rows: 2fr 3fr 1fr;
-  height: 100vh;
+  min-height: 100vh;
   z-index: 1;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 50px;
 `;
 const Header = styled.div`
-  margin: auto;
-  height:100vh;
+margin: auto;
+  min-width:30%;
 `;
+
+const Button = styled.button`
+  width:40px;
+  height:40px;
+  margin-right: 120px
+  background-image:heart
+`;
+
 const Icon = styled.object`
   width: 40px;
   height: 40px;
@@ -271,6 +254,7 @@ const Icon = styled.object`
   margin-right: 120px;
   margin-bottom: 20px;
 `;
+
 const Icon2 = styled.object`
   width: 50px;
   margin: auto;
@@ -281,7 +265,7 @@ const Icon2 = styled.object`
 const Tagline = styled.div`
   width: 100%;
   font-weight: 500;
-  color: #f3f3f3; 
+  color: #f3f3f3;
   font-size: 18px;
   max-width: 250px;
   display: block;
@@ -295,18 +279,18 @@ const RadiusNum = styled.div`
 `;
 const ProfileImage = styled.div`
   height: 100%;
-  min-height: 200px;
-  width: 100%;
-  min-width: 200px;
-  display: flex; 
-`;
-const ProfileImageMain = styled.img`
+  max-height: 200px;
   width: 100%;
   max-width: 200px;
+  display: flex;
+`;
+const ProfileImageMain = styled.img`
   height: 100%;
   max-height: 200px;
+  width: 100%;
+  max-width: 200px;
   border-radius: 15px;
-  boder: none;
+  border: none;
   margin: auto;
 `;
 // width: 100%;
@@ -327,12 +311,12 @@ const ProfileImageMain = styled.img`
 //     outline: none !important
 //     border: 1px solid #f51a63 !important
 //   }
-const ProfileImageSet = styled.div`
-  width: 100%;
-  height: 100%;
-  max-height: 145px;
-  float: right;
-`;
+// const ProfileImageSet = styled.div`
+//   width: 100%;
+//   height: 100%;
+//   max-height: 145px;
+//   float: right;
+// `;
 // const Image1 = styled.button`
 //   width: 45%
 //   height: 48%
@@ -427,17 +411,15 @@ const BioText = styled.textarea`
   max-height: 150px;
   min-height: 90px;
   width: 100%;
-  max-width: 335px;
   min-width: 335px;
   font-weight: 20;
-  font-size: 12px;
+  font-size: 16px;
+  padding: 15px;
   color: #ffffff;
   background-color: #191919;
   border-radius: 5px;
   border: none;
   justify-items: center;
-  padding-top: 7px;
-  padding-bottom: 7px;
   overflow: hidden;
   resize: hidden;
 
@@ -461,28 +443,10 @@ const PrefButtonMale = styled.button`
   margin-bottom: 5px;
   margin-right: 15px;
   transition: 0.5s all ease;
-
-  &:hover {
-    cursor: pointer;
-    background-position: 300px;
-    background-color:  #191919;
-    border: 1px solid #f51a63;
-  }
-
-  &:focus {
-    background-position: 300px;
-    background-color:  #f51a63;
-    border: 1px solid #f51a63;
-  }
-
-  &:active {
-    background-position: 300px;
-    background-color:  #f51a63;
-    border: 1px solid #f51a63;
-  }
+  cursor: pointer;
 
   ${
-    props => props.active && 
+    props => props.active &&
         css`
           background-position: 300px;
           background-color:  #f51a63;
@@ -505,28 +469,11 @@ const PrefButtonFemale = styled.button`
   margin-bottom: 5px;
   margin-right: 15px;
   transition: 0.5s all ease;
-
-  &:hover {
-    cursor: pointer;
-    background-position: 300px;
-    background-color:  #191919;
-    border: 1px solid #f51a63;
-  }
-
-  &:focus {
-    background-position: 300px;
-    background-color:  #f51a63;
-    border: 1px solid #f51a63;
-  }
-
-  &:active {
-    background-position: 300px;
-    background-color:  #f51a63;
-    border: 1px solid #f51a63;
-  }
+  box-sizing: border-box;
+  cursor: pointer;
 
   ${
-    props => props.active && 
+    props => props.active &&
         css`
           background-position: 300px;
           background-color:  #f51a63;
@@ -549,28 +496,11 @@ const PrefButtonOthers = styled.button`
   margin-bottom: 5px;
   margin-right: 15px;
   transition: 0.5s all ease;
-
-  &:hover {
-    cursor: pointer;
-    background-position: 300px;
-    background-color:  #191919;
-    border: 1px solid #f51a63;
-  }
-
-  &:focus {
-    background-position: 300px;
-    background-color:  #f51a63;
-    border: 1px solid #f51a63;
-  }
-
-  &:active {
-    background-position: 300px;
-    background-color:  #f51a63;
-    border: 1px solid #f51a63;
-  }
+  box-sizing: border-box;
+  cursor: pointer;
 
   ${
-    props => props.active && 
+    props => props.active &&
         css`
           background-position: 300px;
           background-color:  #f51a63;
