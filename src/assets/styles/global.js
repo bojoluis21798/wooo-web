@@ -1,5 +1,8 @@
 
 export default `
+    * {
+        transition: 1s all;
+    }
     body {
         font-family: 'Apercu';
         margin: 0;
@@ -9,5 +12,8 @@ export default `
         outline: 0;
         border: none;
         -moz-outline-style: none;
+    }
+    button, input, textarea {
+        box-sizing: border-box;
     }
 `
