@@ -278,12 +278,17 @@ const RadiusNum = styled.div`
   float: right;
 `;
 const ProfileImage = styled.div`
+  height: 100%;
+  max-height: 200px;
   width: 100%;
+  max-width: 200px;
   display: flex;
 `;
 const ProfileImageMain = styled.img`
-  width: 100%;
   height: 100%;
+  max-height: 200px;
+  width: 100%;
+  max-width: 200px;
   border-radius: 15px;
   border: none;
   margin: auto;
