@@ -21,20 +21,7 @@ import 'react-images-uploader/font.css'
 @inject('store') @observer
 
 class editProfile extends Component {
-  constructor(props) {
-    super(props);
-    // this.onFormSubmit = this.onFormSubmit.bind(this)
-    // this.onChange = this.onChange.bind(this)
-    // this.fileUpload = this.fileUpload.bind(this)
-    // this.handleSlider = this.handleSlider.bind(this)
-    // this.handleMale = this.handleMale.bind(this)
-    // this.handleFemale = this.handleFemale.bind(this)
-    // this.handleOthers = this.handleOthers.bind(this)
-    // this.handleChangeBio = this.handleChangeBio.bind(this)
-    // this.handleSubmit = this.handleSubmit.bind(this)
-    // this.onDrop = this.onDrop.bind(this)
-  }
-
+ 
   onFormSubmit = (e) =>{
     e.preventDefault() // Stop form submit
     this.fileUpload(this.state.file).then((response)=>{
@@ -131,14 +118,6 @@ class editProfile extends Component {
   }
 
     render(){
-      const token = this.props.store.userStore.token;
-      const config = {
-        headers: {
-            // 'content-type': 'multipart/form-data',
-            Authorization: 'Token ' + token
-        }
-    }
-      const ProfileURL = 'https://wooo.philsony.com/api/profiles/'+this.props.store.userStore.profile_id+'/'
         return (
           <ProfileScreen>
           <ToastContainer />
@@ -335,12 +314,12 @@ const ProfileImageMain = styled.img`
 //     outline: none !important
 //     border: 1px solid #f51a63 !important
 //   }
-const ProfileImageSet = styled.div`
-  width: 100%;
-  height: 100%;
-  max-height: 145px;
-  float: right;
-`;
+// const ProfileImageSet = styled.div`
+//   width: 100%;
+//   height: 100%;
+//   max-height: 145px;
+//   float: right;
+// `;
 // const Image1 = styled.button`
 //   width: 45%
 //   height: 48%
