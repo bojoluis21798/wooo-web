@@ -24,8 +24,9 @@ class editProfile extends Component {
       pref: 0,
       radius: 1
     }
-    // this.onFormSubmit = this.onFormSubmit.bind(this)
-    // this.onfileChange = this.onChange.bind(this)
+    this.onFormSubmit = this.onFormSubmit.bind(this)
+    this.onChange = this.onChange.bind(this)
+    this.fileUpload = this.fileUpload.bind(this)
     this.handleSlider = this.handleSlider.bind(this)
     this.handleMale = this.handleMale.bind(this)
     this.handleFemale = this.handleFemale.bind(this)
@@ -33,10 +34,36 @@ class editProfile extends Component {
     this.handleChangeBio = this.handleChangeBio.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.onDrop = this.onDrop.bind(this)
+  
   }
-
+  onFormSubmit(e){
+    e.preventDefault() // Stop form submit
+    this.fileUpload(this.state.file).then((response)=>{
+      console.log(response.data);
+      console.log("HELLO THIS SHOULD WORK!!!!")
+    })
+  }
+  onChange(e) {
+    this.setState({file:e.target.files[0]})
+  }
+  fileUpload(file){
+    const url = 'https://wooo.philsony.com/api/profiles/';
+    const formData = new FormData();
+    const token = this.props.store.userStore.token;
+    formData.append('file',file)
+    const config = {
+        headers: {
+            'content-type': 'multipart/form-data',
+            'Authorization': 'Token' + token
+        }
+    }
+    return axios.post(url, formData, config)
+  }
+    
+  
   componentDidMount(){
-
+    console.log(this.props.store.userStore.token)
+    console.log(this.props.store.userStore.profile_id)
   }
 
   handleSubmit(event){
@@ -45,15 +72,22 @@ class editProfile extends Component {
     console.log(this.state.bio)
     console.log(this.state.pref)
     console.log(this.state.radius)
+    const token = this.props.store.userStore.token;
+    const config = {
+        headers: {
+            // 'content-type': 'multipart/form-data',
+            Authorization: 'Token ' + token
+        }
+    }
     console.log("Axios --POST")
-    axios.post('https://wooo.philsony.com/api/profiles/1/', {
-      bio:this.state.bio,
-      pref:this.state.pref,
-      rad:this.state.radius
-    })
+    axios.put('https://wooo.philsony.com/api/profiles/'+this.props.store.userStore.profile_id+'/', {
+      bio:this.state.value,
+      sexual_preference:this.state.pref,
+      search_radius:this.state.radius
+    },config)
     .then(response => {
       console.log(response);
-      console.log("POST was Successful!");
+      console.log("PuT was Successful!");
     })
   }
   
@@ -206,7 +240,6 @@ const ProfileContent = styled.div`
 `
 const Header = styled.div`
   margin: auto
-  min-width:30%
   height:100vh
 `
 const Icon = styled.object`
@@ -242,7 +275,6 @@ const RadiusNum = styled.div`
 const ProfileImage = styled.div`
   height: 180px
   width: 100%
-  max-width: 170px
   display: flex 
 `
 const ProfileImageMain = styled.img`
@@ -284,7 +316,6 @@ const Image1 = styled.div`
   background-color: #191919
   border-radius: 5px
   margin: auto
-  margin-top: 5%
   margin-left: 3%
   float: right
 
