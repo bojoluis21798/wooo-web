@@ -24,8 +24,12 @@ class UserStore {
                 accessToken: authObj.accessToken
             })
 
+<<<<<<< HEAD
             this.accessToken = authObj.accessToken;
 
+=======
+            this.accessToken = authObj.auth_token;
+>>>>>>> master
             
             console.log(response);
             this.populateUser(response.data)
