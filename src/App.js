@@ -9,6 +9,7 @@ import Dashboard from "./pages/Dashboard";
 import EditProfile from "./pages/editProfile";
 import Loading from "./pages/Loading";
 
+
 class App extends Component {
   state = { loading: true };
 
