@@ -84,7 +84,7 @@ class UserStore {
     @action
     setProspects(prospects){
         this.prospects = prospects;
-        console.log(this.prospects[0].profilePicture);
+       
     }
 
     @action
