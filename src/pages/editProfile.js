@@ -9,7 +9,11 @@ import { ToastContainer } from "react-toastify"
 import Slider from "rc-slider"
 import "rc-slider/assets/index.css"
 import axios from 'axios'
-// import ImageUploader from 'react-images-upload'
+
+import ImageUploader from 'react-images-upload'
+import 'react-images-uploader/styles.css'
+import 'react-images-uploader/font.css'
+// import SexOptions from './SexOptions'
 
 @inject('store') @observer
 
@@ -52,7 +56,6 @@ class editProfile extends Component {
   //   return axios.post(url, formData, config)
   // }
     
-  
   componentDidMount(){
     console.log(this.props.store.userStore)
   }
@@ -151,20 +154,27 @@ class editProfile extends Component {
                           withLabel={false} 
                           onChange={this.onDrop}
                         />*/}
-                      <Image1 id="image1" 
-                              type="file" 
-                              src={this.props.store.userStore.photos} 
-                              onChange={this.UploadFile} />
+                      <Image1 
+                        url="https://wooo.philsony.com/api/profiles/'+this.props.store.userStore.profile_id+'/'"
+                        optimisticPreviews 
+                        multiple={false}
+                        onLoadEnd={(err) => {
+                            if (err) {
+                              console.error(err);
+                            }
+                        }}
+                        // src={this.props.store.userStore.photos} 
+                        />
                       <Image2 id="image2" 
-                              type="file" 
+                              type="button" 
                               src={this.props.store.userStore.photos} 
                               onChange={this.UploadFile} />
                       <Image3 id="image3" 
-                              type="file" 
+                              type="button" 
                               src={this.props.store.userStore.photos} 
                               onChange={this.UploadFile} />
                       <Image4 id="image4" 
-                              type="file" 
+                              type="button" 
                               src={this.props.store.userStore.photos} 
                               onChange={this.UploadFile} />
                     </ProfileImageSet>
@@ -249,64 +259,63 @@ class editProfile extends Component {
     }
 }
 const ProfileScreen = styled.div`
-  position: relative
-  height: 100vh
-  background-color: #111111
-  overflow: auto
-  overflow-x: hidden
-`
+  position: relative;
+  height: 100vh;
+  background-color: #111111;
+  overflow: auto;
+  overflow-x: hidden;
+`;
 const ProfileContent = styled.div`
-  display: grid
-  justify-items: center
-  grid-template-rows: 2fr 3fr 1fr
-  height: 100vh
-  z-index: 1
-`
+  display: grid;
+  justify-items: center;
+  grid-template-rows: 2fr 3fr 1fr;
+  height: 100vh;
+  z-index: 1;
+`;
 const Header = styled.div`
-  margin: auto
-  height:100vh
-`
+  margin: auto;
+  height:100vh;
+`;
 const Icon = styled.object`
-  width: 40px
-  height: 40px
-  margin: auto
-  margin-right: 120px
-  margin-bottom: 20px
-`
+  width: 40px;
+  height: 40px;
+  margin: auto;
+  margin-right: 120px;
+  margin-bottom: 20px;
+`;
 const Icon2 = styled.object`
-  width: 50px
-  margin: auto
-  margin-left: 8px
-  margin-bottom: 20px
-  margin-top: 10px
-`
+  width: 50px;
+  margin: auto;
+  margin-left: 8px;
+  margin-bottom: 20px;
+  margin-top: 10px;
+`;
 const Tagline = styled.div`
-  width: 100%
-  font-weight: 500
-  color: #f3f3f3    
-  font-size: 18px
-  max-width: 250px
-  display: block
-  margin-bottom: 20px
-  margin-top: 20px
-`
+  width: 100%;
+  font-weight: 500;
+  color: #f3f3f3; 
+  font-size: 18px;
+  max-width: 250px;
+  display: block;
+  margin-bottom: 20px;
+  margin-top: 20px;
+`;
 const RadiusNum = styled.div`
-  color: #f3f3f3
-  font-size:13px
-  float: right
+  color: #f3f3f3;
+  font-size:13px;
+  float: right;
 `
-
 const ProfileImage = styled.div`
-  height: 180px
-  width: 100%
-  display: flex 
+  height: 180px;
+  width: 100%;
+  display: flex; 
 `
 const ProfileImageMain = styled.img`
-  width: 100%
-  max-width: 140px
-  height: 100%
-  max-height: 145px
-  border-radius: 5px
+  width: 100%;
+  max-width: 140px;
+  height: 100%;
+  max-height: 145px;
+  border-radius: 5px;
   boder: none
   float: left
   margin-right: 5px
