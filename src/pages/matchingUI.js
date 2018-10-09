@@ -372,7 +372,7 @@ class Matching extends Component{
                 Authorization:'Token '+ store.token
             }
         }
-        notify.show('Toasty!', "success", 4000);
+        //notify.show('Toasty!', "success", 4000);
         console.log("LIKE STARTS HERE");
         console.log(store.profile_id);
         console.log(store.token);
@@ -383,10 +383,12 @@ class Matching extends Component{
                 status:1
         },config).then(res=>{
             console.log(res);
-            if(res.match_exists){
-                notify.show('You matched!', "success", 4000);
+            console.log("Match Exists: "+res.match_exists)
+            let matchExists = res.match_exists != undefined;
+            if(matchExists){
+                notify.show("You matched!", "success", 4000);
             }
-        });
+        })
         this.nextPerson();
     }
 
