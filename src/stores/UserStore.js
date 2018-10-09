@@ -16,6 +16,7 @@ class UserStore {
     @observable email = null
     @observable accessToken = null
     @observable profile_id = null;
+    @observable prospects = []
 
     @action
     async authenticateUser(authObj) {
@@ -29,6 +30,7 @@ class UserStore {
             
             console.log(response);
             this.populateUser(response.data)
+            this.insertToken(authObj);
             return true
         } catch(err) {
             return false
@@ -38,6 +40,7 @@ class UserStore {
 
     @action 
     populateUser(userAuth) {
+        console.log("NO ERROR HERE");
         this.token = userAuth.auth_token
         this.name = userAuth.name
         this.email = true;
@@ -67,16 +70,16 @@ class UserStore {
         // this.accessToken = authObj.accessToken;
         this.accessToken = authObj.auth_token;
     }
-    @action 
-    populateUser(userAuth) {
-        console.log(userAuth.profile_id);
-        this.profile_id= userAuth.profile_id;
-        console.log(this.profile_id);
-        this.token = userAuth.auth_token
-        this.name = userAuth.name
-        this.email = true;
-        this.profilePicture = userAuth.profile_image
-    }
+    // @action 
+    // populateUser(userAuth) {
+    //     console.log(userAuth.profile_id);
+    //     this.profile_id= userAuth.profile_id;
+    //     console.log(this.profile_id);
+    //     this.token = userAuth.auth_token
+    //     this.name = userAuth.name
+    //     this.email = true;
+    //     this.profilePicture = userAuth.profile_image
+    // }
 
     @action
     setProspects(prospects){
