@@ -9,10 +9,12 @@ import { ToastContainer } from "react-toastify"
 import Slider from "rc-slider"
 import "rc-slider/assets/index.css"
 import axios from 'axios'
-import AuthorizedLayout from '../layouts/AuthorizedLayout';
 
-import ImageUploader from 'react-images-uploader'
-import 'react-images-uploader/styles.css'
+// import ImageUploader1 from 'react-images-uploader'
+// import ImageUploader2 from 'react-images-uploader'
+// import ImageUploader3 from 'react-images-uploader'
+// import ImageUploader4 from 'react-images-uploader'
+// import 'react-images-uploader/styles.css'
 import 'react-images-uploader/font.css'
 // import SexOptions from './SexOptions'
 
@@ -138,76 +140,33 @@ class editProfile extends Component {
     }
       const ProfileURL = 'https://wooo.philsony.com/api/profiles/'+this.props.store.userStore.profile_id+'/'
         return (
-          <AuthorizedLayout>
           <ProfileScreen>
           <ToastContainer />
             <ProfileContent>
               <Header>
-                {/* <Icon><img src="../assests/icons/heartfill.png" alt="my image" onclick={this.myfunction} /></Icon> 
+                {/* <Icon><img src="../assests/icons/heartfill.png" alt="my image" onclick={this.myfunction} /></Icon> */}
                 <Icon id="matching" aria-label="heart" data={heart} onClick={this.myfunction} />
                 <Icon2 id="notification" aria-label="alarm" data={alarm} onClick={this.myfunction1} />
                 <Icon2 id="chat" aria-label="chat" data={chat} onClick={this.myfunction2} />
                 <Icon2 id="profile" aria-label="user" data={user} onClick={this.myfunction3} />
-                <form onSubmit={this.handleSubmit}> */}
+                {/* <form onSubmit={this.handleSubmit}> */}
                   <Tagline>Photos</Tagline>
+                  <form>
                   <ProfileImage>
                     {/* <ProfileImageMain id="profilePic"/> */}
                     {/* <imageContainer> */}
                       <ProfileImageMain alt='Profile' src={this.props.store.userStore.profilePicture} />
                     {/* </imageContainer>  */}
-                    <ProfileImageSet>
-                        {/*<ImageUploader 
-                          imgExtension={['.jpg', '.gif', '.png']} 
-                          id="image1" singleImage={true} 
-                          withPreview={true} 
-                          withIcon={false} 
-                          withLabel={false} 
-                          onChange={this.onDrop}
-                        />*/}
-                      <ImageUploader 
-                        headers={config}
-                        url={ProfileURL}
-                        optimisticPreviews={true} 
-                        multiple={false}
-                        onLoadEnd={(err) => {
-                            if (err) {
-                              console.error(err);
-                            }
-                        }}
-                        // src={this.props.store.userStore.photos} 
-                        />
-                      <Image2 
-                        headers={config}
-                        url={ProfileURL}
-                        optimisticPreviews={true} 
-                        multiple={false}
-                        onLoadEnd={(err) => {
-                            if (err) {
-                              console.error(err);
-                            }
-                        }} />
-                      <Image3 
-                        headers={config}
-                        url={ProfileURL}
-                        optimisticPreviews={true} 
-                        multiple={false}
-                        onLoadEnd={(err) => {
-                            if (err) {
-                              console.error(err);
-                            }
-                        }} />
-                      <Image4 
-                        headers={config}
-                        url={ProfileURL}
-                        optimisticPreviews={true} 
-                        multiple={false}
-                        onLoadEnd={(err) => {
-                            if (err) {
-                              console.error(err);
-                            }
-                        }} />
-                    </ProfileImageSet>
+                    {/* <ProfileImageSet>
+                      <Image1 type="button">
+                        <imgUp type="file" />
+                      </Image1>
+                      <Image2 type="button"/>
+                      <Image3 type="button"/>
+                      <Image4 type="button"/>
+                    </ProfileImageSet> */}
                   </ProfileImage>
+                  </form>
                   <Tagline>Bio</Tagline>
                   <BioText 
                     id="bio" 
@@ -215,7 +174,6 @@ class editProfile extends Component {
                     value={this.props.store.userStore.biography}
                     onChange={this.handleChangeBio} 
                     onBlur={this.handleSubmit}
-                    borderColor="#f51a63"
                   />
                   <Tagline>Preference</Tagline>
                   {/* {PrefButton} */}
@@ -285,7 +243,6 @@ class editProfile extends Component {
               </Header>
             </ProfileContent>
           </ProfileScreen>
-          </AuthorizedLayout>
         )
     }
 }
@@ -337,19 +294,17 @@ const RadiusNum = styled.div`
   float: right;
 `
 const ProfileImage = styled.div`
-  height: 180px;
   width: 100%;
   display: flex; 
 `
 const ProfileImageMain = styled.img`
   width: 100%;
-  max-width: 140px;
+  max-width: 280px;
   height: 100%;
-  max-height: 145px;
-  border-radius: 5px;
+  max-height: 290px;
+  border-radius: 15px;
   boder: none
-  float: left
-  margin-right: 5px
+  margin: auto
 
   &:hover {
     cursor: pointer
@@ -362,95 +317,119 @@ const ProfileImageMain = styled.img`
     border: 1px solid #f51a63 !important
   }
 `
+// width: 100%;
+//   max-width: 140px;
+//   height: 100%;
+//   max-height: 145px;
+//   border-radius: 20px;
+//   boder: none
+//   margin: auto
+
+//   &:hover {
+//     cursor: pointer
+//     background-position: 300px
+//     background-color:  #191919
+//     border: 1px solid #f51a63
+//   }
+//   &:focus {
+//     outline: none !important
+//     border: 1px solid #f51a63 !important
+//   }
 const ProfileImageSet = styled.div`
   width: 100%
   height: 100%
   max-height: 145px
   float: right
 `
-const Image1 = styled.div`
-  width: 45%
-  height: 48%
-  background-color: #191919
-  border-radius: 5px
-  margin: auto
-  margin-left: 3%
-  float: right
+// const Image1 = styled.button`
+//   width: 45%
+//   height: 48%
+//   background-color: #191919
+//   border-color: #191919
+//   border-radius: 5px
+//   margin: auto
+//   margin-left: 3%
+//   float: right
 
-  &:hover {
-    cursor: pointer
-    background-position: 300px
-    background-color:  #191919
-    border: 1px solid #f51a63
-  }
-  &:focus {
-    outline: none !important
-    border: 1px solid #f51a63 !important
-  }
-`
+//   &:hover {
+//     cursor: pointer
+//     background-position: 300px
+//     background-color:  #191919
+//     border: 1px solid #f51a63
+//   }
+//   &:focus {
+//     outline: none !important
+//     border: 1px solid #f51a63 !important
+//   }
+// `
+// const imgUp = styled.input`
+//   display: none
+// `
+// const Image2 = styled.button`
+//   width: 45%
+//   height: 48%
+//   background-color: #191919
+//   border-color: #191919
+//   border-radius: 5px
+//   margin: auto
+//   margin-right: 3%
+//   float: right
 
-const Image2 = styled.div`
-  width: 45%
-  height: 48%
-  background-color: #191919
-  border-radius: 5px
-  margin: auto
-  margin-right: 3%
-  float: right
+//   &:hover {
+//     cursor: pointer
+//     background-position: 300px
+//     background-color:  #191919
+//     border: 1px solid #f51a63
+//   }
+//   &:focus {
+//     outline: none !important
+//     border: 1px solid #f51a63 !important
+//   }
+// `
+// const Image3 = styled.button`
+//   width: 45%
+//   height: 48%
+//   background-color: #191919
+//   border-color: #191919
+//   border-radius: 5px
+//   margin: auto
+//   margin-top: 5%
+//   margin-left: 3%
+//   float: right
 
-  &:hover {
-    cursor: pointer
-    background-position: 300px
-    background-color:  #191919
-    border: 1px solid #f51a63
-  }
-  &:focus {
-    outline: none !important
-    border: 1px solid #f51a63 !important
-  }
-`
-const Image3 = styled.div`
-  width: 45%
-  height: 48%
-  background-color: #191919
-  border-radius: 5px
-  margin: auto
-  margin-top: 5%
-  margin-left: 3%
-  float: right
+//   &:hover {
+//     cursor: pointer
+//     background-position: 300px
+//     background-color:  #191919
+//     border: 1px solid #f51a63
+//   }
+//   &:focus {
+//     outline: none !important
+//     border: 1px solid #f51a63 !important
+//   }
+// `
+// const Image4 = styled.button`
+//   width: 45%
+//   height: 48%
+//   background-color: #191919
+//   border-color: #191919
+//   border-radius: 5px
+//   margin: auto
+//   margin-top: 5%
+//   margin-right: 3%
+//   float: right
 
-  &:hover {
-    cursor: pointer
-    background-position: 300px
-    background-color:  #191919
-    border: 1px solid #f51a63
-  }
-  &:focus {
-    outline: none !important
-    border: 1px solid #f51a63 !important
-  }
-`
-const Image4 = styled.div`
-  width: 45%
-  height: 48%
-  background-color: #191919
-  border-radius: 5px
-  margin: auto
-  margin-top: 5%
-  margin-right: 3%
-  float: right
-
-  &:hover {
-    cursor: pointer
-    background-position: 300px
-    background-color:  #191919
-    border: 1px solid #f51a63
-  }
-  &:focus {
-    outline: none !important
-    border: 1px solid #f51a63 !important
-  }
-`
+//   &:hover {
+//     cursor: pointer
+//     background-position: 300px
+//     background-color:  #191919
+//     border: 1px solid #f51a63
+//   }
+//   &:focus {
+//     outline: none !important
+//     border: 1px solid #f51a63 !important
+//   }
+// `
 const BioText = styled.textarea`
   height: 90px
   max-height: 150px
