@@ -15,6 +15,7 @@ import right from '../assets/images/right.png';
 import Notifications, {notify} from 'react-notify-toast';
 import Loading from './Loading';
 import axios from 'axios';
+import AuthorizedLayout from '../layouts/AuthorizedLayout';
 
 const Container = styled.div`
     display: flex;
@@ -355,46 +356,48 @@ class Matching extends Component{
             return <Loading message="Finding Gorls"/>
         }
         return (
-            <Container>
-                <Notifications/>
-                <HeaderArea
-                    eventHandle = {this.handleCloseProfile}
-                    type = {state.viewProfile ? "exit" : "back"}/>
-                <Profile onClick = {this.handleViewProfile}>
-                    <PicSlide>
-                        {state.viewProfile &&
-                            <Arrow
-                                onClick = {e => this.handlePreviousPic(currentPerson.img.length, e)}
-                                direction = "left"
-                            />
-                        }
-                        <PicArea>
-                            <ImageStyle src={currentPerson.img[imgIdx]} />
-                        </PicArea>
-                        {state.viewProfile &&
-                            <Arrow
-                                onClick = {e => this.handleNextPic(currentPerson.img.length, e)}
-                                direction = "right"
-                            />
-                        }
-                    </PicSlide>
-                    <MainTextArea>
-                        <TextContainer>
-                            <BioRow>
-                                <TextDiv level = "1">{currentPerson.name}, {currentPerson.age}</TextDiv>
-                                <TextDiv level= "2">{currentPerson.location}</TextDiv>
-                            </BioRow>
-                            <BioRow>
-                                <TextDiv level = "3">{currentPerson.bio}</TextDiv>
-                            </BioRow>
-                        </TextContainer>
-                    </MainTextArea>
-                </Profile>
-                <FooterArea
-                    handleLike = {this.handleLike}
-                    handleDislike = {this.handleDislike}
-                />
-            </Container>
+            <AuthorizedLayout>
+                <Container>
+                    <Notifications/>
+                    <HeaderArea
+                        eventHandle = {this.handleCloseProfile}
+                        type = {state.viewProfile ? "exit" : "back"}/>
+                    <Profile onClick = {this.handleViewProfile}>
+                        <PicSlide>
+                            {state.viewProfile &&
+                                <Arrow
+                                    onClick = {e => this.handlePreviousPic(currentPerson.img.length, e)}
+                                    direction = "left"
+                                />
+                            }
+                            <PicArea>
+                                <ImageStyle src={currentPerson.img[imgIdx]} />
+                            </PicArea>
+                            {state.viewProfile &&
+                                <Arrow
+                                    onClick = {e => this.handleNextPic(currentPerson.img.length, e)}
+                                    direction = "right"
+                                />
+                            }
+                        </PicSlide>
+                        <MainTextArea>
+                            <TextContainer>
+                                <BioRow>
+                                    <TextDiv level = "1">{currentPerson.name}, {currentPerson.age}</TextDiv>
+                                    <TextDiv level= "2">{currentPerson.location}</TextDiv>
+                                </BioRow>
+                                <BioRow>
+                                    <TextDiv level = "3">{currentPerson.bio}</TextDiv>
+                                </BioRow>
+                            </TextContainer>
+                        </MainTextArea>
+                    </Profile>
+                    <FooterArea
+                        handleLike = {this.handleLike}
+                        handleDislike = {this.handleDislike}
+                    />
+                </Container>
+            </AuthorizedLayout>
         );
     }
 
