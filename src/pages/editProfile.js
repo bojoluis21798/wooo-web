@@ -9,6 +9,7 @@ import { ToastContainer } from "react-toastify"
 import Slider from "rc-slider"
 import "rc-slider/assets/index.css"
 import axios from 'axios'
+import AuthorizedLayout from '../layouts/AuthorizedLayout'
 
 // import 1 from 'react-images-uploader'
 // import ImageUploader2 from 'react-images-uploader'
@@ -122,16 +123,12 @@ class editProfile extends Component {
   }
     render(){
         return (
-          <ProfileScreen>
+          <AuthorizedLayout>
           <ToastContainer />
             <ProfileContent>
               <Header>
                 {/* <Icon><img src="../assests/icons/heartfill.png" alt="my image" onclick={this.myfunction} /></Icon> */}
-                <Button onClick={this.myfunction}><Icon src={heart}/></Button>
                 {/* <Icon id="matching" aria-label="heart" data={heart} onClick={this.myfunction}/> */}
-                <Icon2 id="notification" aria-label="alarm" data={alarm} onClick={this.myfunction1} />
-                <Icon2 id="chat" aria-label="chat" data={chat} onClick={this.myfunction2} />
-                <Icon2 id="profile" aria-label="user" data={user} onClick={this.myfunction3} />
                 {/* <form onSubmit={this.handleSubmit}> */}
                   <Tagline>Photos</Tagline>
                   <form>
@@ -193,7 +190,7 @@ class editProfile extends Component {
                       backgroundColor: "#f51a63",
                     }}
                     railStyle={{
-                      width: 335,
+                      width: "100%",
                       backgroundColor: "#5b5b5b",
                       height: 2,
                       borderRadius: 6,
@@ -225,28 +222,21 @@ class editProfile extends Component {
                 {/* </form> */}
               </Header>
             </ProfileContent>
-          </ProfileScreen>
+          </AuthorizedLayout>
         )
     }
 }
 
-const ProfileScreen = styled.div`
-  position: relative;
-  height: 100vh;
-  background-color: #111111;
-  overflow: auto;
-  overflow-x: hidden;
-`;
 const ProfileContent = styled.div`
-  display: grid;
   justify-items: center;
-  grid-template-rows: 2fr 3fr 1fr;
   height: 100vh;
   z-index: 1;
+  padding-left: 20px;
+  padding-right: 20px;
 `;
 const Header = styled.div`
 margin: auto;
-  min-width:30%
+  min-width:30%;
   height:100vh;
 `;
 
@@ -293,23 +283,10 @@ const ProfileImage = styled.div`
 `;
 const ProfileImageMain = styled.img`
   width: 100%;
-  max-width: 280px;
   height: 100%;
-  max-height: 290px;
   border-radius: 15px;
-  boder: none;
+  border: none;
   margin: auto;
-
-  &:hover {
-    cursor: pointer;
-    background-position: 300px;
-    background-color:  #191919;
-    border: 1px solid #f51a63;
-  };
-  &:focus {
-    outline: none !important;
-    border: 1px solid #f51a63 !important;
-  }
 `;
 // width: 100%;
 //   max-width: 140px;
@@ -429,17 +406,15 @@ const BioText = styled.textarea`
   max-height: 150px;
   min-height: 90px;
   width: 100%;
-  max-width: 335px;
   min-width: 335px;
   font-weight: 20;
-  font-size: 12px;
+  font-size: 16px;
+  padding: 15px;
   color: #ffffff;
   background-color: #191919;
   border-radius: 5px;
   border: none;
   justify-items: center;
-  padding-top: 7px;
-  padding-bottom: 7px;
   overflow: hidden;
   resize: hidden;
 
@@ -463,6 +438,7 @@ const PrefButtonMale = styled.button`
   margin-bottom: 5px;
   margin-right: 15px;
   transition: 0.5s all ease;
+
 
   &:hover {
     cursor: pointer;
@@ -507,22 +483,21 @@ const PrefButtonFemale = styled.button`
   margin-bottom: 5px;
   margin-right: 15px;
   transition: 0.5s all ease;
+  box-sizing: border-box;
 
   &:hover {
     cursor: pointer;
-    background-position: 300px;
     background-color:  #191919;
     border: 1px solid #f51a63;
+    box-sizing: border-box;
   }
 
   &:focus {
-    background-position: 300px;
     background-color:  #f51a63;
     border: 1px solid #f51a63;
   }
 
   &:active {
-    background-position: 300px;
     background-color:  #f51a63;
     border: 1px solid #f51a63;
   }
@@ -551,6 +526,7 @@ const PrefButtonOthers = styled.button`
   margin-bottom: 5px;
   margin-right: 15px;
   transition: 0.5s all ease;
+  box-sizing: border-box;
 
   &:hover {
     cursor: pointer;
