@@ -16,7 +16,7 @@ import Notifications, {notify} from 'react-notify-toast';
 import Loading from './Loading';
 import axios from 'axios';
 import AuthorizedLayout from '../layouts/AuthorizedLayout';
-
+//
 const Container = styled.div`
     display: flex;
     position: absolute;
