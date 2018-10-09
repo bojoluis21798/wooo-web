@@ -57,7 +57,7 @@ export default class Login extends Component {
 
   render() {
     return this.props.store.userStore.email ? (
-      <Redirect to="/editProfile" />
+      <Redirect to="/dashboard" />
     ) : this.state.loading ? (
       <Loading message={ this.state.loading } />
     ) : (
