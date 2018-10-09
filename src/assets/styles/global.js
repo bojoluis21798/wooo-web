@@ -1,8 +1,5 @@
 
 export default `
-    * {
-        transition: 1s all;
-    }
     body {
         font-family: 'Apercu';
         margin: 0;

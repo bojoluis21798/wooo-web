@@ -21,6 +21,7 @@ import {Link,Redirect} from 'react-router-dom';
 @inject('store') @observer
 
 class editProfile extends Component {
+
   onFormSubmit = (e) =>{
     e.preventDefault() // Stop form submit
     this.fileUpload(this.state.file).then((response)=>{
@@ -44,6 +45,7 @@ class editProfile extends Component {
   //   }
   //   return axios.post(url, formData, config)
   // }
+
   componentDidMount(){
     console.log(this.props.store.userStore)
   }
@@ -71,6 +73,7 @@ class editProfile extends Component {
 
     })
   }
+
   handleMale = (e) => {
     const store = this.props.store.userStore;
 
@@ -96,11 +99,13 @@ class editProfile extends Component {
     const store = this.props.store.userStore;
 
     store.setRadius(radius);
+
     this.handleSubmit(null)
   }
 
 
   handleChangeBio = (e) => {
+
     const store = this.props.store.userStore;
 
     store.setBio(e.target.value);
@@ -111,6 +116,7 @@ class editProfile extends Component {
       photos: this.state.photos.concat(photo)
     })
   }
+
 
   myfunction = ()=>{
     this.props.history.push('/matching');
@@ -125,7 +131,6 @@ class editProfile extends Component {
                 {/* <Icon id="matching" aria-label="heart" data={heart} onClick={this.myfunction}/> */}
                 {/* <form onSubmit={this.handleSubmit}> */}
                   <Tagline>Photos</Tagline>
-                  <form>
                   <ProfileImage>
                     {/* <ProfileImageMain id="profilePic"/> */}
                     {/* <imageContainer> */}
@@ -140,7 +145,6 @@ class editProfile extends Component {
                       <Image4 type="button"/>
                     </ProfileImageSet> */}
                   </ProfileImage>
-                  </form>
                   <Tagline>Bio</Tagline>
                   <BioText
                     id="bio"
@@ -276,8 +280,10 @@ const ProfileImage = styled.div`
   display: flex;
 `;
 const ProfileImageMain = styled.img`
-  width: 100%;
   height: 100%;
+  max-height: 200px;
+  width: 100%;
+  max-width: 200px;
   border-radius: 15px;
   border: none;
   margin: auto;
@@ -432,13 +438,7 @@ const PrefButtonMale = styled.button`
   margin-bottom: 5px;
   margin-right: 15px;
   transition: 0.5s all ease;
-
-  &:hover {
-    cursor: pointer;
-    background-position: 300px;
-    background-color:  #191919;
-    border: 1px solid #f51a63;
-  }
+  cursor: pointer;
 
   ${
     props => props.active &&
@@ -465,13 +465,7 @@ const PrefButtonFemale = styled.button`
   margin-right: 15px;
   transition: 0.5s all ease;
   box-sizing: border-box;
-
-  &:hover {
-    cursor: pointer;
-    background-color:  #191919;
-    border: 1px solid #f51a63;
-    box-sizing: border-box;
-  }
+  cursor: pointer;
 
   ${
     props => props.active &&
@@ -498,13 +492,7 @@ const PrefButtonOthers = styled.button`
   margin-right: 15px;
   transition: 0.5s all ease;
   box-sizing: border-box;
-
-  &:hover {
-    cursor: pointer;
-    background-position: 300px;
-    background-color:  #191919;
-    border: 1px solid #f51a63;
-  }
+  cursor: pointer;
 
   ${
     props => props.active &&
