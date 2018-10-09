@@ -439,14 +439,7 @@ const PrefButtonMale = styled.button`
   margin-bottom: 5px;
   margin-right: 15px;
   transition: 0.5s all ease;
-
-
-  &:hover {
-    cursor: pointer;
-    background-position: 300px;
-    background-color:  #191919;
-    border: 1px solid #f51a63;
-  }
+  cursor: pointer;
 
   ${
     props => props.active &&
@@ -473,13 +466,7 @@ const PrefButtonFemale = styled.button`
   margin-right: 15px;
   transition: 0.5s all ease;
   box-sizing: border-box;
-
-  &:hover {
-    cursor: pointer;
-    background-color:  #191919;
-    border: 1px solid #f51a63;
-    box-sizing: border-box;
-  }
+  cursor: pointer;
 
   ${
     props => props.active &&
@@ -506,13 +493,7 @@ const PrefButtonOthers = styled.button`
   margin-right: 15px;
   transition: 0.5s all ease;
   box-sizing: border-box;
-
-  &:hover {
-    cursor: pointer;
-    background-position: 300px;
-    background-color:  #191919;
-    border: 1px solid #f51a63;
-  }
+  cursor: pointer;
 
   ${
     props => props.active &&
