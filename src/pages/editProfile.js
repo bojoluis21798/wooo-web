@@ -116,7 +116,6 @@ class editProfile extends Component {
     const store = this.props.store.userStore;
 
     store.setBio(e.target.value);
-    this.handleSubmit(e)
   }
 
   onDrop = (photo) => {
@@ -176,6 +175,7 @@ class editProfile extends Component {
                     name="bio" 
                     value={this.props.store.userStore.biography}
                     onChange={this.handleChangeBio} 
+                    onBlur={this.handleSubmit}
                   />
                   <Tagline>Preference</Tagline>
                   {/* {PrefButton} */}
