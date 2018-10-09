@@ -275,7 +275,7 @@ const RadiusNum = styled.div`
   font-size:13px;
   float: right;
 `;
-const ProfileImage = styled.div`s
+const ProfileImage = styled.div`
   width: 100%;
   display: flex;
 `;
