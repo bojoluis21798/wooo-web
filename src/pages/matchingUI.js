@@ -16,6 +16,7 @@ import Notifications, {notify} from 'react-notify-toast';
 import Loading from './Loading';
 import axios from 'axios';
 import AuthorizedLayout from '../layouts/AuthorizedLayout';
+import {Link,Redirect} from 'react-router-dom';
 //
 const Container = styled.div`
     display: flex;
@@ -211,19 +212,41 @@ class FooterArea extends Component {
     }
 }
 
+
 class HeaderArea extends Component {
     constructor(props){
         super(props);
     }
 
+    goBack = () =>{
+        console.log("WTF");
+       return <Redirect to='/dashboard'/>
+    }
+
     render(){
-        return(
-            <BackArea type = {this.props.type}>
-                <TopButton onClick = {this.props.eventHandle}>
-                    <Icon src={this.props.type == "back" ? back : close}/>
-                </TopButton>
-            </BackArea>
-        );
+
+        if(this.props.type=='back'){
+            return(
+
+                <BackArea type = {this.props.type} >
+                 <Link to='/edit-profile'>
+                    <TopButton onClick = {this.props.eventHandle}>
+                        <Icon src={this.props.type == "back" ? back : close}/>
+                    </TopButton>
+                 </Link>
+                </BackArea>
+
+            );
+        }else{
+            return(
+                <BackArea type = {this.props.type} >
+                    <TopButton onClick = {this.props.eventHandle}>
+                        <Icon src={this.props.type == "back" ? back : close}/>
+                    </TopButton>
+                </BackArea>
+            );
+        }
+
     }
 }
 
@@ -275,7 +298,7 @@ class Matching extends Component{
     componentDidMount(){
         /*this.changeSmth();*/
 
-        axios.get("https://wooo.philsony.com/api/matching").then(
+        axios.get("https://wooo.philsony.com/api/matching/").then(
             res=>{
                 console.log(res);
             }
@@ -312,10 +335,15 @@ class Matching extends Component{
     }
 
     handleCloseProfile(){
-        this.setState({
-            viewProfile: false,
-            imgIdx: 0,
-        });
+
+
+
+            this.setState({
+                viewProfile: false,
+                imgIdx: 0,
+            });
+
+
     }
 
     handleNextPic(imgLength){
@@ -351,8 +379,6 @@ class Matching extends Component{
         console.log(imgIdx);
 
         if(!this.state.hasPayload){
-
-
             return <Loading message="Finding Gorls"/>
         }
         return (
