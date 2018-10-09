@@ -317,7 +317,7 @@ class Matching extends Component{
              res=>{
                  console.log(res);
                  console.log(store);
-                 if(res.length != 0){
+                 if(res.length == 0){
                     this.setState({noProspects: true})
                  }
                  store.setProspects(res.data);
