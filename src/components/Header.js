@@ -15,23 +15,23 @@ export default class Header extends Component {
       <HeaderContainer>
         <Icon>
             <Link to='/matching'>
-                <object data={heartSvg} aria-label='Heart icon' />
+                <img src={heartSvg} alt='Heart icon' />
             </Link>
         </Icon>
         <Gutter></Gutter>
         <Icon>
             <Link to='/notifications'>
-                <object data={bellSvg} aria-label='Bell icon' />
+                <img src={bellSvg} alt='Bell icon' />
             </Link>
         </Icon>
         <Icon>
             <Link to='/messages'>
-                <object data={messageSvg} aria-label='Message icon' />
+                <img src={messageSvg} alt='Message icon' />
             </Link>
         </Icon>
         <Icon>
             <Link to='/edit-profile'>
-                <object data={userSvg} aria-label='User icon' />
+                <img src={userSvg} alt='User icon' />
             </Link>
         </Icon>
       </HeaderContainer>
@@ -45,6 +45,7 @@ const Icon = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 100%;
 `
 
 const HeaderContainer = styled.div`
