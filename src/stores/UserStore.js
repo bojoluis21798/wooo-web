@@ -46,6 +46,21 @@ class UserStore {
         this.preference = userAuth.sexual_preference
         this.profile_id = userAuth.profile_id
     }
+
+    @action
+    setBio(bio){
+        this.biography = bio;
+    }
+
+    @action
+    setRadius(radius){
+        this.radius = radius;
+    }
+
+    @action
+    setPreference(prefs){
+        this.preference = prefs;
+    }
 }
 
 export default UserStore

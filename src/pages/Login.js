@@ -87,7 +87,6 @@ export default class Login extends Component {
                 </LoginButton>
               )}
             />
-
             <TermsNotice>
               Upon logging in, you agree to our terms and conditions.
             </TermsNotice>

@@ -10,69 +10,57 @@ import Slider from "rc-slider"
 import "rc-slider/assets/index.css"
 import axios from 'axios'
 // import ImageUploader from 'react-images-upload'
-// import SexOptions from './SexOptions'
-
 
 @inject('store') @observer
 
 class editProfile extends Component {
   constructor(props) {
     super(props);
-    this.state ={
-      photos: [],
-      bio: this.props.store.userStore.biography,
-      pref: this.props.store.userStore.preference,
-      radius: this.props.store.userStore.radius
-    }
-    this.onFormSubmit = this.onFormSubmit.bind(this)
-    this.onChange = this.onChange.bind(this)
-    this.fileUpload = this.fileUpload.bind(this)
-    this.handleSlider = this.handleSlider.bind(this)
-    this.handleMale = this.handleMale.bind(this)
-    this.handleFemale = this.handleFemale.bind(this)
-    this.handleOthers = this.handleOthers.bind(this)
-    this.handleChangeBio = this.handleChangeBio.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
-    this.onDrop = this.onDrop.bind(this)
-  
+    // this.onFormSubmit = this.onFormSubmit.bind(this)
+    // this.onChange = this.onChange.bind(this)
+    // this.fileUpload = this.fileUpload.bind(this)
+    // this.handleSlider = this.handleSlider.bind(this)
+    // this.handleMale = this.handleMale.bind(this)
+    // this.handleFemale = this.handleFemale.bind(this)
+    // this.handleOthers = this.handleOthers.bind(this)
+    // this.handleChangeBio = this.handleChangeBio.bind(this)
+    // this.handleSubmit = this.handleSubmit.bind(this)
+    // this.onDrop = this.onDrop.bind(this)
   }
-  onFormSubmit(e){
+
+  onFormSubmit = (e) =>{
     e.preventDefault() // Stop form submit
     this.fileUpload(this.state.file).then((response)=>{
       console.log(response.data);
       console.log("HELLO THIS SHOULD WORK!!!!")
     })
   }
-  onChange(e) {
+  onChange = (e) => {
     this.setState({file:e.target.files[0]})
   }
-  fileUpload(file){
-    const url = 'https://wooo.philsony.com/api/profiles/';
-    const formData = new FormData();
-    const token = this.props.store.userStore.token;
-    formData.append('file',file)
-    const config = {
-        headers: {
-            'content-type': 'multipart/form-data',
-            'Authorization': 'Token' + token
-        }
-    }
-    return axios.post(url, formData, config)
-  }
+  // fileUpload(file){
+  //   const url = 'https://wooo.philsony.com/api/profiles/';
+  //   const formData = new FormData();
+  //   const token = this.props.store.userStore.token;
+  //   formData.append('file',file)
+  //   const config = {
+  //       headers: {
+  //           'content-type': 'multipart/form-data',
+  //           'Authorization': 'Token' + token
+  //       }
+  //   }
+  //   return axios.post(url, formData, config)
+  // }
     
   
   componentDidMount(){
-    console.log(this.props.store.userStore.token)
+    console.log(this.props.store.userStore)
   }
 
-  handleSubmit(e = null){
+  handleSubmit = (e = null) => {
     if (e != null){
       e.preventDefault();
     }
-    console.log(this.state.photos)
-    console.log(this.state.bio)
-    console.log(this.state.pref)
-    console.log(this.state.radius)
     const token = this.props.store.userStore.token;
     const config = {
         headers: {
@@ -83,8 +71,8 @@ class editProfile extends Component {
     console.log("Axios --POST")
     axios.put('https://wooo.philsony.com/api/profiles/'+this.props.store.userStore.profile_id+'/', {
       bio:this.props.store.userStore.biography,
-      sexual_preference:this.state.pref,
-      search_radius:this.state.radius
+      sexual_preference:this.props.store.userStore.preference,
+      search_radius:this.props.store.userStore.radius
     },config)
     .then(response => {
       console.log(response);
@@ -93,42 +81,51 @@ class editProfile extends Component {
     })
   }
   
-  handleSlider(radius) {
-    this.setState({radius: radius})
-    this.handleSubmit(null)
-  }
+  handleMale = (e) => {
+    const store = this.props.store.userStore;
 
-  handleMale(e) {
-    this.setState({pref: 0})
+    store.setPreference(0)
     this.handleSubmit(e)
   }
 
-  handleFemale(e) {
-    this.setState({pref: 1})
+  handleFemale = (e) => {
+    const store = this.props.store.userStore;
+
+    store.setPreference(1)
     this.handleSubmit(e)
   }
 
-  handleOthers(e) {
-    this.setState({pref: 2})
+  handleOthers = (e) => {
+    const store = this.props.store.userStore;
+
+    store.setPreference(2)
     this.handleSubmit(e)
   }
 
-  handleChangeBio(e){
-    console.log("Bio:"+e.target.value)
-    this.setState({bio: e.target.value})
-    console.log("After setState: "+this.state.bio)
+  handleSlider = (e) => {
+    const store = this.props.store.userStore;
+
+    store.setRadius(e.target.value);
+    
     this.handleSubmit(e)
   }
 
-  onDrop(photo) {
+
+  handleChangeBio = (e) => {
+    
+    const store = this.props.store.userStore;
+
+    store.setBio(e.target.value);
+    this.handleSubmit(e)
+  }
+
+  onDrop = (photo) => {
     this.setState({
       photos: this.state.photos.concat(photo)
     })
   }
 
     render(){
-      console.log("Preference: " +this.state.pref)
-      console.log("Radius: " + this.state.radius)
         return (
           <ProfileScreen>
           <ToastContainer />
@@ -177,7 +174,7 @@ class editProfile extends Component {
                   <BioText 
                     id="bio" 
                     name="bio" 
-                    value={this.state.bio} 
+                    value={this.props.store.userStore.biography}
                     onChange={this.handleChangeBio} 
                   />
                   <Tagline>Preference</Tagline>
@@ -187,22 +184,22 @@ class editProfile extends Component {
                       aria-label="Male" 
                       value= "0" 
                       onClick={this.handleMale} 
-                      active = {this.state.pref === 0}    
+                      active = {this.props.store.userStore.preference === 0}    
                   >Male</PrefButtonMale>
                   <PrefButtonFemale id="female" 
                       aria-label="Female" 
                       value= "1"
                       onClick={this.handleFemale} 
-                      active = {this.state.pref === 1}
+                      active = {this.props.store.userStore.preference === 1}
                   >Female</PrefButtonFemale>
                   <PrefButtonOthers id="other" 
                       aria-label="Others" 
                       value="2"
                       onClick={this.handleOthers} 
-                      active = {this.state.pref === 2}
+                      active = {this.props.store.userStore.preference === 2}
                   >Others</PrefButtonOthers>
                   <Tagline>Radius</Tagline>
-                  <RadiusNum>{this.state.radius} Km</RadiusNum>
+                  <RadiusNum>{this.props.store.userStore.radius} Km</RadiusNum>
                   <br/>
                   <Slider 
                     id="radius" 
@@ -240,7 +237,7 @@ class editProfile extends Component {
                       borderColor: "#e9e9e9",
                       backgroundColor: "#f51a63"
                     }}
-                    value={this.state.radius} 
+                    value={this.props.store.userStore.radius} 
                     onChange={this.handleSlider} />
                   <br/>
                   {/* <button value="submit" type="submit">Click here</button> */}
@@ -331,10 +328,6 @@ const ProfileImageSet = styled.div`
   max-height: 145px
   float: right
 `
-
-
-// const ImageUpBox = styled.div`
-// `
 const Image1 = styled.div`
   width: 45%
   height: 48%
