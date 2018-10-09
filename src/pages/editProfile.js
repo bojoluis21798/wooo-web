@@ -26,8 +26,8 @@ class editProfile extends Component {
     this.onChange = this.onChange.bind(this)
     this.fileUpload = this.fileUpload.bind(this)
     this.handleSlider = this.handleSlider.bind(this)
-    this.handleOpposite = this.handleOpposite.bind(this)
-    this.handleSame = this.handleSame.bind(this)
+    this.handleMale = this.handleMale.bind(this)
+    this.handleFemale = this.handleFemale.bind(this)
     this.handleBoth = this.handleBoth.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -93,11 +93,11 @@ class editProfile extends Component {
     this.setState({radius: value})
   }
 
-  handleOpposite() {
+  handleMale() {
     this.setState({pref: 0})
   }
 
-  handleSame() {
+  handleFemale() {
     this.setState({pref: 1})
   }
 
@@ -158,8 +158,8 @@ class editProfile extends Component {
                     onChange={this.handleChange} 
                   />
                   <Tagline>Preference</Tagline>
-                  <PrefButton id="opposite" aria-label="Opposite" onClick={this.handleOpposite}>Opposite</PrefButton>
-                  <PrefButton id="same" aria-label="Same" onClick={this.handleSame}>Same</PrefButton>
+                  <PrefButton id="Male" aria-label="Male" onClick={this.handleMale}>Male</PrefButton>
+                  <PrefButton id="Female" aria-label="Female" onClick={this.handleFemale}>Female</PrefButton>
                   <PrefButton id="both" aria-label="Both" onClick={this.handleBoth}>Both</PrefButton>
                   <Tagline>Radius</Tagline>
                   <RadiusNum>{this.state.radius} Km</RadiusNum>
@@ -226,7 +226,6 @@ const ProfileContent = styled.div`
 `
 const Header = styled.div`
   margin: auto
-  min-width:30%
   height:100vh
 `
 const Icon = styled.object`
