@@ -1,6 +1,7 @@
 
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 // Icons
 import heartSvg from '../assets/images/heart.svg'
@@ -13,17 +14,25 @@ export default class Header extends Component {
     return (
       <HeaderContainer>
         <Icon>
-            <object data={heartSvg} aria-label='Heart icon' />
+            <Link to='/matching'>
+                <object data={heartSvg} aria-label='Heart icon' />
+            </Link>
         </Icon>
         <Gutter></Gutter>
         <Icon>
-            <object data={bellSvg} aria-label='Bell icon' />
+            <Link to='/notifications'>
+                <object data={bellSvg} aria-label='Bell icon' />
+            </Link>
         </Icon>
         <Icon>
-            <object data={messageSvg} aria-label='Message icon' />
+            <Link to='/messages'>
+                <object data={messageSvg} aria-label='Message icon' />
+            </Link>
         </Icon>
         <Icon>
-            <object data={userSvg} aria-label='User icon' />
+            <Link to='/edit-profile'>
+                <object data={userSvg} aria-label='User icon' />
+            </Link>
         </Icon>
       </HeaderContainer>
     )
