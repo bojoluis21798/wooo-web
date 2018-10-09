@@ -8,13 +8,13 @@ import Header from '../components/Header'
 @inject('store') @observer
 export default class AuthorizedLayout extends Component {
   
-    isAuthorized = () => this.props.store.userStore.auth_token
+    isAuthorized = () => true //this.props.store.userStore.auth_token
 
     render() {
         return !this.isAuthorized()? 
             <Redirect to='/login'></Redirect>
             : <AuthorizedContent>
-                <Header />
+                { !this.props.noheaders? (<Header />): '' }
                 <ContentContainer>
                     { this.props.children }
                 </ContentContainer>
