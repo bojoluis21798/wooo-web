@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
 import styled, {css} from "styled-components"
-import heart from "../assets/icons/heart.svg"
-import alarm from "../assets/icons/alarm.png"
-import chat from "../assets/icons/chat.png"
-import user from "../assets/icons/user.png"
+// import heart from "../assets/icons/heart.svg"
+// import alarm from "../assets/icons/alarm.png"
+// import chat from "../assets/icons/chat.png"
+// import user from "../assets/icons/user.png"
 import { inject, observer } from 'mobx-react'
 import { ToastContainer } from "react-toastify"
 import Slider from "rc-slider"
@@ -16,7 +16,7 @@ import AuthorizedLayout from '../layouts/AuthorizedLayout'
 // import ImageUploader3 from 'react-images-uploader'
 // import ImageUploader4 from 'react-images-uploader'
 // import 'react-images-uploader/styles.css'
-import {Link,Redirect} from 'react-router-dom';
+// import {Link,Redirect} from 'react-router-dom';
 
 @inject('store') @observer
 
@@ -50,6 +50,8 @@ class editProfile extends Component {
     console.log(this.props.store.userStore)
   }
 
+  
+
   handleSubmit = (e = null) => {
     if (e != null){
       e.preventDefault();
@@ -73,6 +75,10 @@ class editProfile extends Component {
 
     })
   }
+  handleImage = (file) => {
+    this.click()
+  }
+
 
   handleMale = (e) => {
     const store = this.props.store.userStore;
@@ -126,7 +132,7 @@ class editProfile extends Component {
           <AuthorizedLayout>
           <ToastContainer />
             <ProfileContent>
-              <Header>
+              {/*<Header>*/}
                 {/* <Icon><img src="../assests/icons/heartfill.png" alt="my image" onclick={this.myfunction} /></Icon> */}
                 {/* <Icon id="matching" aria-label="heart" data={heart} onClick={this.myfunction}/> */}
                 {/* <form onSubmit={this.handleSubmit}> */}
@@ -137,14 +143,14 @@ class editProfile extends Component {
                     {/* <imageContainer> */}
                       <ProfileImageMain alt='Profile' src={this.props.store.userStore.profilePicture} />
                     {/* </imageContainer>  */}
-                    {/* <ProfileImageSet>
-                      <Image1 type="button">
+                    <ProfileImageSet>
+                      <Image1 type="button" onClick={this.handleImage}>
                         <imgUp type="file" />
                       </Image1>
-                      <Image2 type="button"/>
+                      {/*<Image2 type="button"/>
                       <Image3 type="button"/>
-                      <Image4 type="button"/>
-                    </ProfileImageSet> */}
+                      <Image4 type="button"/>*/}
+                    </ProfileImageSet> 
                   </ProfileImage>
                   </form>
                   <Tagline>Bio</Tagline>
@@ -220,7 +226,7 @@ class editProfile extends Component {
                   <br/>
                   {/* <button value="submit" type="submit">Click here</button> */}
                 {/* </form> */}
-              </Header>
+              {/*</Header>*/}
             </ProfileContent>
           </AuthorizedLayout>
         )
@@ -235,33 +241,34 @@ const ProfileContent = styled.div`
   padding-right: 20px;
   padding-bottom: 50px;
 `;
-const Header = styled.div`
-margin: auto;
-  min-width:30%;
-`;
+// const Header = styled.div`
+// margin: auto;
+//   min-width:30%;
+// `;
 
-const Button = styled.button`
-  width:40px;
-  height:40px;
-  margin-right: 120px
-  background-image:heart
-`;
+// const Button = styled.button`
+//   width:40px;
+//   height:40px;
+//   margin-right: 120px
+//   background-image:heart
+// `;
 
-const Icon = styled.object`
-  width: 40px;
-  height: 40px;
-  margin: auto;
-  margin-right: 120px;
-  margin-bottom: 20px;
-`;
+// const Icon = styled.object`
+//   width: 40px;
+//   height: 40px;
+//   margin: auto;
+//   margin-right: 120px;
+//   margin-bottom: 20px;
+// `;
 
-const Icon2 = styled.object`
-  width: 50px;
-  margin: auto;
-  margin-left: 8px;
-  margin-bottom: 20px;
-  margin-top: 10px;
-`;
+// const Icon2 = styled.object`
+//   width: 50px;
+//   margin: auto;
+//   margin-left: 8px;
+//   margin-bottom: 20px;
+//   margin-top: 10px;
+// `;
+
 const Tagline = styled.div`
   width: 100%;
   font-weight: 500;
@@ -311,33 +318,33 @@ const ProfileImageMain = styled.img`
 //     outline: none !important
 //     border: 1px solid #f51a63 !important
 //   }
-// const ProfileImageSet = styled.div`
-//   width: 100%;
-//   height: 100%;
-//   max-height: 145px;
-//   float: right;
-// `;
-// const Image1 = styled.button`
-//   width: 45%
-//   height: 48%
-//   background-color: #191919
-//   border-color: #191919
-//   border-radius: 5px
-//   margin: auto
-//   margin-left: 3%
-//   float: right
+const ProfileImageSet = styled.div`
+  width: 100%;
+  height: 100%;
+  max-height: 145px;
+  float: right;
+`;
+const Image1 = styled.button`
+  width: 45px
+  height: 48px
+  background-color: #191919
+  border-color: #191919
+  border-radius: 5px
+  margin: auto
+  margin-left: 3%
+  float: right
 
-//   &:hover {
-//     cursor: pointer
-//     background-position: 300px
-//     background-color:  #191919
-//     border: 1px solid #f51a63
-//   }
-//   &:focus {
-//     outline: none !important
-//     border: 1px solid #f51a63 !important
-//   }
-// `
+  &:hover {
+    cursor: pointer
+    background-position: 300px
+    background-color:  #191919
+    border: 1px solid #f51a63
+  }
+  &:focus {
+    outline: none !important
+    border: 1px solid #f51a63 !important
+  }
+`
 // const imgUp = styled.input`
 //   display: none
 // `
