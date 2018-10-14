@@ -47,7 +47,7 @@ class editProfile extends Component {
   // }
 
   componentDidMount(){
-    console.log(this.props.store.userStore)
+    console.log("BEGINNING OF PROFILE")
   }
 
   
@@ -76,7 +76,8 @@ class editProfile extends Component {
     })
   }
   handleImage = (file) => {
-    this.click()
+    this.refs.fileUploader.click();
+    console.log(file)
   }
 
 
@@ -137,15 +138,15 @@ class editProfile extends Component {
                 {/* <Icon id="matching" aria-label="heart" data={heart} onClick={this.myfunction}/> */}
                 {/* <form onSubmit={this.handleSubmit}> */}
                   <Tagline>Photos</Tagline>
-                  <form>
+                  <form onSubmit={this.handleSubmit}>
                   <ProfileImage>
                     {/* <ProfileImageMain id="profilePic"/> */}
                     {/* <imageContainer> */}
                       <ProfileImageMain alt='Profile' src={this.props.store.userStore.profilePicture} />
                     {/* </imageContainer>  */}
                     <ProfileImageSet>
-                      <Image1 type="button" onClick={this.handleImage}>
-                        <imgUp type="file" />
+                      <Image1 type="button" onClick={this.handleImage.bind(this)}>
+                        <input type="file" ref="fileUploader" style={{display:"none"}}/>
                       </Image1>
                       {/*<Image2 type="button"/>
                       <Image3 type="button"/>
@@ -515,3 +516,5 @@ const PrefButtonOthers = styled.button`
         `
   }
 `;
+
+export default editProfile;
