@@ -63,7 +63,7 @@ class editProfile extends Component {
             Authorization: 'Token ' + token
         }
     }
-    console.log(e)
+    // console.log(e)
     console.log("Axios --POST")
     axios.put('https://wooo.philsony.com/api/profiles/'+this.props.store.userStore.profile_id+'/', {
       bio:this.props.store.userStore.biography,
@@ -78,13 +78,12 @@ class editProfile extends Component {
     })
   }
   handleImage = (file) => {
+    console.log("This is Handle Image")
     console.log(file)
-    // const store = this.props.store.userStore
+    const store = this.props.store.userStore
 
-    // store.setPicOne(e)
-    // this.handleSubmit()
-
-    // ``This is supposed to save the first supporting photo in the MobX``
+    store.setPicOne(file)
+    this.handleSubmit()
   }
 
 
@@ -145,22 +144,22 @@ class editProfile extends Component {
                 {/* <Icon id="matching" aria-label="heart" data={heart} onClick={this.myfunction}/> */}
                 {/* <form onSubmit={this.handleSubmit}> */}
                   <Tagline>Photos</Tagline>
-                  <form onSubmit={this.handleSubmit}>
+                 {/* <form onSubmit={this.handleImage}>*/}
                   <ProfileImage>
                     {/* <ProfileImageMain id="profilePic"/> */}
                     {/* <imageContainer> */}
                       <ProfileImageMain alt='Profile' src={this.props.store.userStore.profilePicture} />
                     {/* </imageContainer>  */}
                     <ProfileImageSet>
-                      <Image1 type="button" onClick={(e) =>{this.refs.fileUploader.click();}} onChange={this.handleImage}>
-                        <input type="file" ref="fileUploader" style={{display:"none"}} />
+                      <Image1 type="button" onClick={(e) =>{this.refs.fileUploader.click();}} >
+                        <input type="file" ref="fileUploader" style={{display:"none"}} onChange={this.handleImage}/>
                       </Image1>
                       {/*<Image2 type="button"/>
                       <Image3 type="button"/>
                       <Image4 type="button"/>*/}
                     </ProfileImageSet> 
                   </ProfileImage>
-                  </form>
+                  {/*</form>*/}
                   <Tagline>Bio</Tagline>
                   <BioText
                     id="bio"

@@ -69,7 +69,7 @@ class UserStore {
     @action
     setPicOne(p1){
         this.photos[0] = p1;
-        console.log(p1)
+        console.log(this.photos[0])
     }
 
     @action insertToken(authObj){
