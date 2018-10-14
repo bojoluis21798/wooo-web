@@ -63,11 +63,13 @@ class editProfile extends Component {
             Authorization: 'Token ' + token
         }
     }
+    console.log(e)
     console.log("Axios --POST")
     axios.put('https://wooo.philsony.com/api/profiles/'+this.props.store.userStore.profile_id+'/', {
       bio:this.props.store.userStore.biography,
       sexual_preference:this.props.store.userStore.preference,
-      search_radius:this.props.store.userStore.radius
+      search_radius:this.props.store.userStore.radius,
+      supporting_pic_1: this.props.store.userStore.photos[0]
     },config)
     .then(response => {
       console.log(response);
@@ -76,8 +78,13 @@ class editProfile extends Component {
     })
   }
   handleImage = (file) => {
-    this.refs.fileUploader.click();
     console.log(file)
+    // const store = this.props.store.userStore
+
+    // store.setPicOne(e)
+    // this.handleSubmit()
+
+    // ``This is supposed to save the first supporting photo in the MobX``
   }
 
 
@@ -145,8 +152,8 @@ class editProfile extends Component {
                       <ProfileImageMain alt='Profile' src={this.props.store.userStore.profilePicture} />
                     {/* </imageContainer>  */}
                     <ProfileImageSet>
-                      <Image1 type="button" onClick={this.handleImage.bind(this)}>
-                        <input type="file" ref="fileUploader" style={{display:"none"}}/>
+                      <Image1 type="button" onClick={(e) =>{this.refs.fileUploader.click();}} onChange={this.handleImage}>
+                        <input type="file" ref="fileUploader" style={{display:"none"}} />
                       </Image1>
                       {/*<Image2 type="button"/>
                       <Image3 type="button"/>

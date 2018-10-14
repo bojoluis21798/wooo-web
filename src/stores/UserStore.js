@@ -66,6 +66,12 @@ class UserStore {
         this.preference = prefs;
     }
 
+    @action
+    setPicOne(p1){
+        this.photos[0] = p1;
+        console.log(p1)
+    }
+
     @action insertToken(authObj){
         // this.accessToken = authObj.accessToken;
         this.accessToken = authObj.auth_token;
