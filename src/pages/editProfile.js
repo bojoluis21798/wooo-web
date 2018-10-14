@@ -515,5 +515,3 @@ const PrefButtonOthers = styled.button`
         `
   }
 `;
-
-export default editProfile

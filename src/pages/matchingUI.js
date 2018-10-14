@@ -189,6 +189,12 @@ const Arrow = styled.button`
     border-width: 0px;
 `;
 
+const NoMatch = styled.p`
+    font-size: 9vh;
+    font-family: Apercu;
+    font-weight: 700;
+`;
+
 class FooterArea extends Component {
     constructor(props){
         super(props);
@@ -283,6 +289,7 @@ class Matching extends Component{
             ],
             viewProfile: false,
             imgIdx: 0,
+            noProspects: false,
         };
 
 
@@ -296,35 +303,92 @@ class Matching extends Component{
     }
 
     componentDidMount(){
-        /*this.changeSmth();*/
+         /*this.changeSmth();*/
 
-        axios.get("https://wooo.philsony.com/api/matching/").then(
-            res=>{
-                console.log(res);
-            }
-        );
-        setTimeout(() => {
-            this.setState({hasPayload:true});
-        }, 5000);
+         const store = this.props.store.userStore;
+
+         console.log("FML");
+         console.log(store.profile_id);
+         axios.get("https://wooo.philsony.com/api/matching",{
+             params:{
+                 profile_id:store.profile_id
+             }
+         }).then(
+             res=>{
+                 console.log(res);
+                 console.log(store);
+                 if(res.data.length == 0){
+                    this.setState({noProspects: true})
+                 }else{
+                    store.setProspects(res.data);
+                 }
+                //  this.setState({prospects:store.prospects});
+                 this.setState({hasPayload:true});
+
+             }
+         );
     }
 
     nextPerson(){
-        if(this.state.people.length > 1){
-            this.setState(prev =>
-                {
-                    prev.people.splice(0,1);
-                    return {people: prev.people};
-                }
-            );
-        }
+        // if(this.state.people.length > 1){
+        //     this.setState(prev =>
+        //         {
+        //             prev.people.splice(0,1);
+        //             return {people: prev.people};
+        //         }
+        //     );
+        // }
+
+        const store = this.props.store.userStore;
+
+        store.nextProspect();
     }
 
     handleDislike(){
+        const store = this.props.store.userStore;
+        const config ={
+            headers:{
+                Authorization:'Token '+ store.token
+            }
+        }
+        console.log("LIKE STARTS HERE");
+        console.log(store.profile_id);
+        console.log(store.token);
+        console.log(store.currentProspect.id);
+        axios.post("https://wooo.philsony.com/api/matching/",{
+                profile_id:store.profile_id,
+                match_id:store.currentProspect.id,
+                status:0
+        },config).then(res=>{
+            console.log(res);
+        });
         this.nextPerson();
     }
 
     handleLike(){
-        notify.show('Toasty!');
+        const store = this.props.store.userStore;
+        const config ={
+            headers:{
+                Authorization:'Token '+ store.token
+            }
+        }
+        //notify.show('Toasty!', "success", 4000);
+        console.log("LIKE STARTS HERE");
+        console.log(store.profile_id);
+        console.log(store.token);
+        console.log(store.currentProspect.id);
+        axios.post("https://wooo.philsony.com/api/matching/",{
+                profile_id:store.profile_id,
+                match_id:store.currentProspect.id,
+                status:1
+        },config).then(res=>{
+            console.log(res);
+            console.log("Match Exists: "+res.match_exists)
+            let matchExists = res.match_exists != undefined;
+            if(matchExists){
+                notify.show("You matched!", "success", 4000);
+            }
+        })
         this.nextPerson();
     }
 
@@ -359,7 +423,7 @@ class Matching extends Component{
         });
     }
     render(){
-        const store = this.props.store;
+        const store = this.props.store.userStore;
 
         // const list = store.arr.map(num=>{
         //     return <li>{num}</li>
@@ -388,7 +452,12 @@ class Matching extends Component{
                     <HeaderArea
                         eventHandle = {this.handleCloseProfile}
                         type = {state.viewProfile ? "exit" : "back"}/>
-                    <Profile onClick = {this.handleViewProfile}>
+                    {this.state.noProspects ?
+                        <NoMatch>
+                            No Match
+                        </NoMatch>
+                        :
+                        <Profile onClick = {this.handleViewProfile}>
                         <PicSlide>
                             {state.viewProfile &&
                                 <Arrow
@@ -397,7 +466,7 @@ class Matching extends Component{
                                 />
                             }
                             <PicArea>
-                                <ImageStyle src={currentPerson.img[imgIdx]} />
+                                <ImageStyle src={store.currentProspect.profile_image?store.currentProspect.profile_image:currentPerson.img[imgIdx]} />
                             </PicArea>
                             {state.viewProfile &&
                                 <Arrow
@@ -409,19 +478,23 @@ class Matching extends Component{
                         <MainTextArea>
                             <TextContainer>
                                 <BioRow>
-                                    <TextDiv level = "1">{currentPerson.name}, {currentPerson.age}</TextDiv>
+                                    <TextDiv level = "1">{store.currentProspect.user.first_name?store.currentProspect.user.first_name:currentPerson.name}, {store.currentProspect.age?store.currentProspect.age:currentPerson.age}</TextDiv>
                                     <TextDiv level= "2">{currentPerson.location}</TextDiv>
                                 </BioRow>
                                 <BioRow>
-                                    <TextDiv level = "3">{currentPerson.bio}</TextDiv>
+                                    <TextDiv level = "3">{store.currentProspect.bio?store.currentProspect.bio:currentPerson.bio}</TextDiv>
                                 </BioRow>
                             </TextContainer>
                         </MainTextArea>
-                    </Profile>
-                    <FooterArea
-                        handleLike = {this.handleLike}
-                        handleDislike = {this.handleDislike}
-                    />
+                        </Profile>
+                    }
+                    {
+                        !state.noProspects &&
+                        <FooterArea
+                            handleLike = {this.handleLike}
+                            handleDislike = {this.handleDislike}
+                        />
+                    }
                 </Container>
             </AuthorizedLayout>
         );
