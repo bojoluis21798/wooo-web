@@ -6,7 +6,9 @@
   overflow: auto;
   overflow-x: hidden;
   color: white;
-  /* font-family: 'Apercu'; */
+  padding-left:5%;
+  padding-right:5%;
+  font-family: 'Apercu';
 }
 
 .App-logo {

@@ -1,43 +1,56 @@
 import React, { Component } from 'react';
-import { Grid, Col, Row } from 'react-bootstrap';
 import { MessageHead } from '../message_head/main';
 import './main.css';
+import _ from 'lodash';
+
+const roomData = [{
+    img: "00.jpg",
+    name: "Sausage Cate",
+    message: "You! Yes, you! You wanna see some powerful dank memes?",
+  },{
+    img: "01.jpg",
+    name: "Shepherd Frog",
+    message: "Bork! Bork! Mofo",
+  },{
+    img: "02.jpg",
+    name: "Multi Insect",
+    message: "Godbless America and all its citizens!",
+}];
 
 export class Messages extends Component {
+  state = {
+    roomData,
+  };
+
+  VoteItems = () => {
+    const posts= this.state.roomData;
+    const items = [];
+
+    _.mapKeys(posts, (data, index) => {
+      items.push(<div>
+        <MessageHead
+          {...data}
+          id={(index)}
+        /><hr/></div>,
+      );
+    });
+
+    return items;
+  };
 
   render() {
     return (
-      <Grid>
-        {/* style="line-height:1em" */}
-        <br />
-        <Row className="center">
-          <Col>
-            {/* style="border:1px solid black; margin-top:10px" */}
-            <Col xs={10} md={8} lg={6}>
-              {/*  style="margin: 10px" */}
-              <div>
-                {/* style="margin-bottom:10px;" */}
-                <div className="tag">
-                  <h2><strong>Messages</strong></h2>
-                </div>
-                <div>
-                  <div className="form-group">
-                    {/* style = "background-color: #F3EFEE" */}
-                    <input type="text" className="form-control input" id="usr" placeholder="Search for a message"/>
-                  </div>
-                </div>
-
-                <MessageHead roomID="1"/>
-                <hr />
-                <MessageHead roomID="2"/>
-                <hr />
-                <MessageHead roomID="3"/>
-
-              </div>
-            </Col>
-          </Col>
-        </Row>
-      </Grid>
+      <div>
+        <div className="tag">
+          <h2><strong>Messages</strong></h2>
+        </div>
+        <div className="search">
+          <input type="text" className="form-control" id="usr" placeholder="Search for a message"/>
+        </div>
+        <div>
+          {this.VoteItems()}
+        </div>
+      </div>
     );
   }
 }

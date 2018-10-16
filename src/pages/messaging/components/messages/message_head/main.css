@@ -1,7 +1,25 @@
-.tag{
-    text-align: left;
+img{
+    max-width: 100%;
+    height: auto;
+    border-radius: 50%;
 }
 
 .link {
     color: white !important;
+}
+
+.content{
+    display: flex;
+    align-items: center;
+
+}
+
+.details{
+    padding-left: 5%;
+    padding-right: 5%;
+    text-align: left;
+}
+
+.name{
+    font-size: 1.5em;
 }
