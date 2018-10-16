@@ -139,41 +139,25 @@ class editProfile extends Component {
           <AuthorizedLayout>
           <ToastContainer />
             <ProfileContent>
-<<<<<<< HEAD
-              <Header>
-=======
               {/*<Header>*/}
                 {/* <Icon><img src="../assests/icons/heartfill.png" alt="my image" onclick={this.myfunction} /></Icon> */}
                 {/* <Icon id="matching" aria-label="heart" data={heart} onClick={this.myfunction}/> */}
->>>>>>> c76add577ad052b50e00507ffddeef59153b3226
                 {/* <form onSubmit={this.handleSubmit}> */}
                   <Tagline>Photos</Tagline>
                  {/* <form onSubmit={this.handleImage}>*/}
                   <ProfileImage>
                     <ProfileImageMain id="profilePic"/>
-                    <imageContainer>
+                    {/* <imageContainer> */}
                       <ProfileImageMain alt='Profile' src={this.props.store.userStore.profilePicture} />
-<<<<<<< HEAD
-                    </imageContainer> 
-                    <ProfileImageSet>
-                      <Image1 type="button">
-                        <imgUp type="file" />
-=======
                     {/* </imageContainer>  */}
                     <ProfileImageSet>
                       <Image1 type="button" onClick={(e) =>{this.refs.fileUploader.click();}} >
                         <input type="file" ref="fileUploader" style={{display:"none"}} onChange={this.handleImage}/>
->>>>>>> c76add577ad052b50e00507ffddeef59153b3226
                       </Image1>
                       {/*<Image2 type="button"/>
                       <Image3 type="button"/>
-<<<<<<< HEAD
-                      <Image4 type="button"/>
-                    </ProfileImageSet>
-=======
                       <Image4 type="button"/>*/}
                     </ProfileImageSet> 
->>>>>>> c76add577ad052b50e00507ffddeef59153b3226
                   </ProfileImage>
                   {/*</form>*/}
                   <Tagline>Bio</Tagline>
@@ -244,13 +228,9 @@ class editProfile extends Component {
                     value={this.props.store.userStore.radius}
                     onChange={this.handleSlider} />
                   <br/>
-<<<<<<< HEAD
-              </Header>
-=======
                   {/* <button value="submit" type="submit">Click here</button> */}
                 {/* </form> */}
               {/*</Header>*/}
->>>>>>> c76add577ad052b50e00507ffddeef59153b3226
             </ProfileContent>
           </AuthorizedLayout>
         )
@@ -332,16 +312,6 @@ const ProfileImageMain = styled.img`
     border: 1px solid #f51a63 !important
   }
 `;
-<<<<<<< HEAD
-// height: 100%;
-//   max-height: 200px;
-//   width: 100%;
-//   max-width: 200px;
-//   border-radius: 15px;
-//   border: none;
-//   margin: auto;
-
-=======
 // width: 100%;
 //   max-width: 140px;
 //   height: 100%;
@@ -360,7 +330,6 @@ const ProfileImageMain = styled.img`
 //     outline: none !important
 //     border: 1px solid #f51a63 !important
 //   }
->>>>>>> c76add577ad052b50e00507ffddeef59153b3226
 const ProfileImageSet = styled.div`
   width: 100%;
   height: 100%;
@@ -368,13 +337,8 @@ const ProfileImageSet = styled.div`
   float: right;
 `;
 const Image1 = styled.button`
-<<<<<<< HEAD
-  width: 45%
-  height: 48%
-=======
   width: 45px
   height: 48px
->>>>>>> c76add577ad052b50e00507ffddeef59153b3226
   background-color: #191919
   border-color: #191919
   border-radius: 5px
@@ -392,77 +356,7 @@ const Image1 = styled.button`
     outline: none !important
     border: 1px solid #f51a63 !important
   }
-`
-<<<<<<< HEAD
-const imgUp = styled.input`
-  display: none
-`
-const Image2 = styled.button`
-  width: 45%
-  height: 48%
-  background-color: #191919
-  border-color: #191919
-  border-radius: 5px
-  margin: auto
-  margin-right: 3%
-  float: right
-
-  &:hover {
-    cursor: pointer
-    background-position: 300px
-    background-color:  #191919
-    border: 1px solid #f51a63
-  }
-  &:focus {
-    outline: none !important
-    border: 1px solid #f51a63 !important
-  }
-`
-const Image3 = styled.button`
-  width: 45%
-  height: 48%
-  background-color: #191919
-  border-color: #191919
-  border-radius: 5px
-  margin: auto
-  margin-top: 5%
-  margin-left: 3%
-  float: right
-
-  &:hover {
-    cursor: pointer
-    background-position: 300px
-    background-color:  #191919
-    border: 1px solid #f51a63
-  }
-  &:focus {
-    outline: none !important
-    border: 1px solid #f51a63 !important
-  }
-`
-const Image4 = styled.button`
-  width: 45%
-  height: 48%
-  background-color: #191919
-  border-color: #191919
-  border-radius: 5px
-  margin: auto
-  margin-top: 5%
-  margin-right: 3%
-  float: right
-
-  &:hover {
-    cursor: pointer
-    background-position: 300px
-    background-color:  #191919
-    border: 1px solid #f51a63
-  }
-  &:focus {
-    outline: none !important
-    border: 1px solid #f51a63 !important
-  }
-`
-=======
+`;
 // const imgUp = styled.input`
 //   display: none
 // `
@@ -531,7 +425,6 @@ const Image4 = styled.button`
 //     border: 1px solid #f51a63 !important
 //   }
 // `
->>>>>>> c76add577ad052b50e00507ffddeef59153b3226
 const BioText = styled.textarea`
   height: 90px;
   max-height: 150px;
