@@ -1,5 +1,5 @@
 
-import { observable, action } from 'mobx'
+import { observable, action,computed } from 'mobx'
 import axios from 'axios'
 
 class UserStore {
@@ -16,6 +16,7 @@ class UserStore {
     @observable email = null
     @observable accessToken = null
     @observable profile_id = null;
+    @observable prospects = []
 
     @action
     async authenticateUser(authObj) {
@@ -25,10 +26,11 @@ class UserStore {
                 accessToken: authObj.accessToken
             })
 
-            this.accessToken = authObj.auth_token;
+            
             
             console.log(response);
             this.populateUser(response.data)
+            this.insertToken(authObj);
             return true
         } catch(err) {
             return false
@@ -38,6 +40,7 @@ class UserStore {
 
     @action 
     populateUser(userAuth) {
+        console.log("NO ERROR HERE");
         this.token = userAuth.auth_token
         this.name = userAuth.name
         this.email = true;
@@ -61,6 +64,43 @@ class UserStore {
     @action
     setPreference(prefs){
         this.preference = prefs;
+    }
+
+    @action
+    setPicOne(p1){
+        this.photos[0] = p1;
+        console.log(this.photos[0])
+    }
+
+    @action insertToken(authObj){
+        // this.accessToken = authObj.accessToken;
+        this.accessToken = authObj.auth_token;
+    }
+    // @action 
+    // populateUser(userAuth) {
+    //     console.log(userAuth.profile_id);
+    //     this.profile_id= userAuth.profile_id;
+    //     console.log(this.profile_id);
+    //     this.token = userAuth.auth_token
+    //     this.name = userAuth.name
+    //     this.email = true;
+    //     this.profilePicture = userAuth.profile_image
+    // }
+
+    @action
+    setProspects(prospects){
+        this.prospects = prospects;
+    }
+
+    @action
+    nextProspect(){
+        if(this.prospects.length > 1){
+            this.prospects.splice(0,1);
+        }
+    }
+
+    @computed get currentProspect(){
+        return this.prospects[0];
     }
 }
 
