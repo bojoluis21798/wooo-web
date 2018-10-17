@@ -7,7 +7,7 @@ export default class MessageHead extends Component {
   render() {
     return (
       <div onClick={this.reroute}>
-        <Link to={{ pathname: `/messages/${this.props.id}`, state: this.props }} className="link">
+        <Link to={{ pathname: `/messages/${this.props.roomId}`, state: this.props }} className="link">
           <div className="content">
             <div className="div-3">
               <img src={this.props.pairedImage} alt={this.props.name}/>
