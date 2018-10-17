@@ -8,8 +8,7 @@ export class Messaging extends Component {
   };
 
   componentDidMount(){
-    console.log("MAIN");
-    console.log(this.state.props.name);
+    
   }
 
   render() {

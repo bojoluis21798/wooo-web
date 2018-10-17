@@ -5,7 +5,9 @@ import back from '../../../../../assets/images/left.png';
 import './main.css';
 import '../../../global/global.css';
 import _ from 'lodash';
+import { inject, observer } from 'mobx-react';
 
+import axios from 'axios';
 import firebase from 'firebase';
 import firebaseConfig from '../../../config';
 
@@ -40,23 +42,84 @@ const roomData = {
 	},]
 }
 
+@inject('store') @observer
 export default class MessageBody extends Component {
   constructor(props) {
     super(props);
-    this.messageRef = firebase.database().ref().child('roomData/16R14');
-    console.log(this.props)
+    this.messageRef = firebase.database().ref().child('roomData/'+this.props.ree.roomId);
+    this.handleMessageListen();
   }
 
   state = {
-    roomData,
+    roomDatad: roomData,
+    message: '',
+    userId: this.props.store.userStore.profile_id
   }
 
   componentDidMount(){
-    
+    this.setState({message: ""});
+    this.setState({userId: this.props.store.userStore.profile_id});
+  }
+  
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.user) {
+      console.log(nextProps.user);
+      this.setState({'userId': nextProps.user.displayId});
+    }
+  }
+
+  handleChange(event) {
+    this.setState({message: event.target.value});
+  }
+
+  handleSend() {
+    console.log(this.props.store.userStore)
+    if (this.state.message) {
+      var newmessage = {
+        userId: this.state.userId,
+        message: {
+          type: "String",
+          content: this.state.message
+        }
+      }
+      console.log(newmessage)
+      this.messageRef.push(newmessage);
+      this.setState({ message: '' });
+      this.handleMessageListen();
+    }
+  }
+
+  handleKeyPress(event) {
+    if (event.key !== 'Enter') return;
+    this.handleSend();
+  }
+
+  handleMessageListen(){
+    var messg = null;
+    this.messageRef
+    .limitToLast(10)
+    .on('value', message => {
+        console.log(message.val())
+        messg = message.val()
+        
+    });
+    if(messg != null){
+        this.listenMessages()
+    }
+  }
+
+  listenMessages() {
+    this.messageRef
+    .limitToLast(10)
+    .on('value', message => {
+        this.setState({
+            list: Object.values(message.val()),
+        });
+    });
   }
 
   MessageItems = () => {
-    const posts = this.state.roomData.messages;
+    const posts = this.state.list;
     const items = [];
 
     _.mapKeys(posts, (data, index) => {
@@ -93,7 +156,21 @@ export default class MessageBody extends Component {
         <div className="Messages">
           {this.MessageItems()}
         </div>
-
+        <div className="search form-control">
+          <div className="div-8">
+            <input type="text" className="form-control" id="usr" placeholder="Send a Message" 
+            onChange={this.handleChange.bind(this)}
+            value={this.state.message}
+            onKeyPress={this.handleKeyPress.bind(this)}
+            />
+          </div>
+          <div className="div-2">
+            <button className="button"
+            onClick={this.handleSend.bind(this)}>
+            SEND
+            </button>
+          </div>
+        </div>
       </div>
     );
   }

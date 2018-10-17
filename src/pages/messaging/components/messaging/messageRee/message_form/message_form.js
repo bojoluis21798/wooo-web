@@ -25,11 +25,13 @@ export default class Form extends Component {
     this.messageRef = firebase.database().ref().child('roomData/16R14');
     this.handleMessageListen();
   }
+  
   componentWillReceiveProps(nextProps) {
     if(nextProps.user) {
       this.setState({'userName': nextProps.user.displayName});
     }
   }
+
   handleChange(event) {
     this.setState({message: event.target.value});
     console.log(this.state.message)
