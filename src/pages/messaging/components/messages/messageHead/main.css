@@ -1,20 +1,27 @@
-img{
-    max-width: 100%;
-    height: auto;
-    border-radius: 50%;
-}
-
 .link {
     color: white !important;
+    text-decoration: none;
 }
 
 .content{
     display: flex;
     align-items: center;
-
 }
 
-.details{
+.div-3{
+    flex: 1 1 !important;
+    padding: 0px;
+    margin: 0px;
+}
+
+.div-3 img{
+    min-width: 100% !important;
+    height: auto;
+    border-radius: 100%;
+}
+
+.details{   
+    flex: 3 3 !important;
     padding-left: 5%;
     padding-right: 5%;
     text-align: left;
@@ -22,4 +29,10 @@ img{
 
 .name{
     font-size: 1.5em;
+}
+
+.last-message{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis !important;
 }

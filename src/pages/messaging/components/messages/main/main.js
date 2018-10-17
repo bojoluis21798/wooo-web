@@ -58,12 +58,11 @@ export class Messages extends Component {
 
     _.mapKeys(posts, (data, index) => {
       items.push(
-        <div key={index}>
+        <div key={index} class='chat_item'>
           <MessageHead users={userd}
             {...data}
             id={"16R14"}
           />
-          <hr/>
         </div>,
       );
     });
