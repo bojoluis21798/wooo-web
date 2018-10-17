@@ -5,8 +5,6 @@ import './main.css';
 import axios from 'axios';
 import _ from 'lodash';
 
-import {MessageBody} from '../../messaging/messageRee/message_body/MessageBody'
-
 const roomData = [{
     img: "00.jpg",
     name: "Sausage Cate",
@@ -24,29 +22,14 @@ const roomData = [{
 @inject('store') @observer
 export class Messages extends Component {
   state = {
-    currentUser: this.props.store.userStore.profile_id,
-    pairedUser: [],
+    users:{
+      currentUser: this.props.store.userStore.profile_id,
+      pairedUser: [],
+    },
     roomData: roomData
   };
 
-  MessageItems = () => {
-    const posts= this.state.roomData;
-    const items = [];
-
-    _.mapKeys(posts, (data, index) => {
-      items.push(
-        <div key={index}>
-          <MessageHead
-            {...data}
-            id={"16R14"}
-          />
-          <hr/>
-        </div>,
-      );
-    });
-
-    return items;
-  };
+  
   componentDidMount(){
     axios.get(`https://wooo.philsony.com/api/profiles/${this.props.store.userStore.profile_id}/matches`)
     .then(response => {
@@ -64,9 +47,30 @@ export class Messages extends Component {
         roomIds.push(this.state.currentUser+'R'+element.id);
         PairedUser.push(pairedInfo);
       });
-      this.state.pairedUser = PairedUser;
+      this.state.users.pairedUser = PairedUser;
+      console.log(this.state.users)
     })
   }
+  MessageItems = () => {
+    const posts= this.state.roomData;
+    const items = [];
+    const userd = this.state.users;
+    console.log(userd);
+
+    _.mapKeys(posts, (data, index) => {
+      items.push(
+        <div key={index}>
+          <MessageHead users={userd}
+            {...data}
+            id={"16R14"}
+          />
+          <hr/>
+        </div>,
+      );
+    });
+
+    return items;
+  };
   render() {
     return (
       <div>
@@ -79,7 +83,6 @@ export class Messages extends Component {
         <div>
           {this.MessageItems()}
         </div>
-      <MessageBody />
       </div>
     );
   }
