@@ -80,14 +80,19 @@ class editProfile extends Component {
       console.log("PuT was Successful!");
 
     })
+    .catch(error => {
+      console.log(error);
+    })
   }
-  handleImage = (file) => {
-    console.log("This is Handle Image")
-    console.log(file)
-    const store = this.props.store.userStore
+
+  handleImageOne = () => {
+    console.log("----BEGIN HANLDER----")
+    var file = document.getElementById("imageOne").files[0].path;
+    const store = this.props.store.userStore;
 
     store.setPicOne(file)
     this.handleSubmit()
+    console.log("----END HANDLER----")
   }
 
   handleMale = (e) => {
@@ -155,17 +160,35 @@ class editProfile extends Component {
                       <ProfileImageMain alt='Profile' src={this.props.store.userStore.profilePicture} />
                     {/* </imageContainer>  */}
                       <Image id="img1" type="button" onClick={(e) =>{this.refs.fileUploader.click();}} >
-                        <input type="file" ref="fileUploader" style={{display:"none"}} onChange={this.handleImage}/>
+                        <input 
+                          id="imageOne"
+                          type="file" 
+                          ref="fileUploader" 
+                          value={this.props.store.userStore.photos[0]} 
+                          style={{display:"none"}} 
+                          onChange={this.handleImageOne}/>
                       </Image>
-                      <Image id="img2" type="button" onClick={(e) =>{this.refs.fileUploader.click();}} >
-                        <input type="file" ref="fileUploader" style={{display:"none"}} onChange={this.handleImage}/>
+                      {/*<Image id="img2" type="button" onClick={(e) =>{this.refs.fileUploader.click();}} >
+                        <input 
+                          type="file" 
+                          ref="fileUploader" 
+                          style={{display:"none"}} 
+                          onChange={this.handleImageTwo}/>
                       </Image>
                       <Image id="img3" type="button" onClick={(e) =>{this.refs.fileUploader.click();}} >
-                        <input type="file" ref="fileUploader" style={{display:"none"}} onChange={this.handleImage}/>
+                        <input 
+                          type="file" 
+                          ref="fileUploader" 
+                          style={{display:"none"}} 
+                          onChange={this.handleImageThree}/>
                       </Image>
                       <Image id="img4" type="button" onClick={(e) =>{this.refs.fileUploader.click();}} >
-                        <input type="file" ref="fileUploader" style={{display:"none"}} onChange={this.handleImage}/>
-                      </Image>
+                        <input 
+                          type="file" 
+                          ref="fileUploader" 
+                          style={{display:"none"}} 
+                          onChange={this.handleImageFour}/>
+                      </Image>*/}
                     <ProfileImageSet>
                       {/* <Image1 type="button" onClick={(e) =>{this.refs.fileUploader.click();}} >
                         <input type="file" ref="fileUploader" style={{display:"none"}} onChange={this.handleImage}/>

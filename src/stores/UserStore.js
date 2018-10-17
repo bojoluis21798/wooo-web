@@ -71,6 +71,7 @@ class UserStore {
         this.photos[0] = p1;
         console.log(this.photos[0])
     }
+    
 
     @action insertToken(authObj){
         // this.accessToken = authObj.accessToken;
