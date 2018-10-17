@@ -41,7 +41,6 @@ export default class MessageBody extends Component {
   }
 
   componentDidMount(){
-    console.log(this.props.name)
   }
 
   MessageItems = () => {
@@ -54,6 +53,7 @@ export default class MessageBody extends Component {
             {...data}
             key={index}
             id={index}
+            userData={this.props.ree}
           />,
       );
     });
@@ -71,7 +71,7 @@ export default class MessageBody extends Component {
           </div>
           <div className="ree">
             <div className="name">
-              <strong>{this.props.ree.name}</strong>
+              <strong>{this.props.ree.pairedName}</strong>
             </div>
             <div className="last-message">
               <p>Active Now</p>

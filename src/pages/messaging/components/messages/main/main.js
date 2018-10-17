@@ -44,7 +44,6 @@ export class Messages extends Component {
         <div key={index}>
           <MessageHead
             {...data}
-            id={"16R14"}
           />
           <hr/>
         </div>,
