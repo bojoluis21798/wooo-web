@@ -81,6 +81,14 @@ export default class MessageBody extends Component {
         <div className="Messages">
           {this.MessageItems()}
         </div>
+        <div className="search form-control">
+          <div className="div-8">
+            <input type="text" className="form-control" id="usr" placeholder="Send a Message"/>
+          </div>
+          <div className="div-2">
+            <button className="button">SEND</button>
+          </div>
+        </div>
       </div>
     );
   }

@@ -19,9 +19,6 @@ export class Messages extends Component {
   MessageItems = () => {
     axios.get(`https://wooo.philsony.com/api/profiles/${this.props.store.userStore.profile_id}/matches`)
     .then(response => {
-      console.log(response);
-      console.log("Get was Successful!");
-
       var pairedUser = [];
       response.data.forEach(element => {
         var pairedInfo = {

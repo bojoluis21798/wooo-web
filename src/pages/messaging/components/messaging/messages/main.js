@@ -6,9 +6,6 @@ import '../../../global/global.css';
 
 @inject('store') @observer
 export default class Messages extends Component {
-  help(){
-    console.log()
-  }
   render() {
     return (
       <div>
