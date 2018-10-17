@@ -5,38 +5,21 @@ import './main.css';
 import axios from 'axios';
 import _ from 'lodash';
 
-const roomData = [{
-    img: "00.jpg",
-    name: "Sausage Cate",
-    message: "You! Yes, you! You wanna see some powerful dank memes?",
-  },{
-    img: "01.jpg",
-    name: "Shepherd Frog",
-    message: "Bork! Bork! Mofo",
-  },{
-    img: "02.jpg",
-    name: "Multi Insect",
-    message: "Godbless America and all its citizens!",
-}];
-
 @inject('store') @observer
 export class Messages extends Component {
   state = {
-    users:{
-      currentUser: this.props.store.userStore.profile_id,
-      pairedUser: [],
-    },
-    roomData: roomData
+    currentUser: this.props.store.userStore.profile_id,
+    pairedUser: [],
   };
-  
-  async componentDidMount(){
+
+  MessageItems = () => {
     axios.get(`https://wooo.philsony.com/api/profiles/${this.props.store.userStore.profile_id}/matches`)
     .then(response => {
       console.log(response);
       console.log("Get was Successful!");
       
-      var roomIds = new Array();
-      var PairedUser = new Array();
+      var roomIds = [];
+      var pairedUser = [];
       response.data.forEach(element => {
         var pairedInfo = {
           pairedId: element.id,
@@ -44,22 +27,19 @@ export class Messages extends Component {
           pairedImage: element.profile_image
         }
         roomIds.push(this.state.currentUser+'R'+element.id);
-        PairedUser.push(pairedInfo);
+        pairedUser.push(pairedInfo);
       });
-      this.state.users.pairedUser = PairedUser;
+      this.setState({
+        pairedUser,
+      })
     })
-  }
-
-  MessageItems = () => {
-    const posts= this.state.roomData;
+    const matches= this.state.pairedUser;
     const items = [];
-    const userd = this.state.users;
-    console.log(userd.pairedUser);
 
-    _.mapKeys(posts, (data, index) => {
+    _.mapKeys(matches, (data, index) => {
       items.push(
         <div key={index}>
-          <MessageHead users={userd}
+          <MessageHead
             {...data}
             id={"16R14"}
           />
