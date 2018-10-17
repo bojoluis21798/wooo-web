@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { MessageHead } from '../message_head/main';
+import { MessageHead } from '../messageHead/main';
 import './main.css';
 import _ from 'lodash';
 
@@ -22,17 +22,19 @@ export class Messages extends Component {
     roomData,
   };
 
-  VoteItems = () => {
+  MessageItems = () => {
     const posts= this.state.roomData;
     const items = [];
 
     _.mapKeys(posts, (data, index) => {
-      items.push(<div>
-        <MessageHead
-          {...data}
-          id={(index)}
-          key={index}
-        /><hr/></div>,
+      items.push(
+        <div key={index}>
+          <MessageHead
+            {...data}
+            id={index}
+          />
+          <hr/>
+        </div>,
       );
     });
 
@@ -49,7 +51,7 @@ export class Messages extends Component {
           <input type="text" className="form-control" id="usr" placeholder="Search for a message"/>
         </div>
         <div>
-          {this.VoteItems()}
+          {this.MessageItems()}
         </div>
       </div>
     );

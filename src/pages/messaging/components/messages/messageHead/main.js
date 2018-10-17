@@ -11,7 +11,7 @@ export class MessageHead extends Component {
     const img = require('../../../imgs/'+this.props.img);
     return (
       <div onClick={this.reroute}>
-        <Link to={`/message/${this.props.id}`} className="link">
+        <Link to={{ pathname: `/messages/${this.props.id}`, state: this.props }} className="link">
           <div className="content">
             <div className="div-3">
               <img src={img} alt={this.props.name}/>
