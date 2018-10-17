@@ -52,11 +52,13 @@ export class Messages extends Component {
     })
   }
   MessageItems = () => {
-    const posts= this.state.roomData;
     const items = [];
     const userd = this.state.users;
+    const posts = userd.pairedUser;
     console.log(userd);
-
+    console.log("ASD");
+    console.log(userd.pairedUser);
+    console.log("ASASDASDASDD");
     _.mapKeys(posts, (data, index) => {
       items.push(
         <div key={index}>
