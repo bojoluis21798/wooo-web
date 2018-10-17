@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { MessageHead } from '../messageHead/main';
+import MessageHead from '../messageHead/main';
+import { inject, observer } from 'mobx-react';
 import './main.css';
+import axios from 'axios';
 import _ from 'lodash';
 
 const roomData = [{
@@ -17,6 +19,7 @@ const roomData = [{
     message: "Godbless America and all its citizens!",
 }];
 
+@inject('store') @observer
 export class Messages extends Component {
   state = {
     roomData,
@@ -40,7 +43,15 @@ export class Messages extends Component {
 
     return items;
   };
-
+  componentDidMount(){
+    axios.get(`https://wooo.philsony.com/api/profiles/${this.props.store.userStore.profile_id}/matches`)
+    .then(response => {
+      console.log(response);
+      console.log("Get was Successful!");
+    })
+    console.log("REEEE");
+    console.log(this.props.store.userStore.profile_id);
+  }
   render() {
     return (
       <div>

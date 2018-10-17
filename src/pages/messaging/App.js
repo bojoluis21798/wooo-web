@@ -10,7 +10,7 @@ import './App.css';
 @inject('store') @observer
 class App extends Component {
   componentDidMount(){
-    console.log(this.props.store.userStore.biography)
+    console.log(this.props.store.userStore.profile_id)
   }
   render() {
     return (

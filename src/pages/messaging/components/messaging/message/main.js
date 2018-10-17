@@ -1,17 +1,65 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import Messages from '../messages/main';
 import back from '../../../../../assets/images/left.png';
 import './main.css';
 import '../../../global/global.css';
+import _ from 'lodash';
 
-export class MessageBody extends Component {
-  return = () => {
-    console.log("Hello");
-  };
+const roomData = {
+	roomId: 1,
+	messages: [{
+    profile_id: 14,
+    img: "00.jpg",
+		message: {
+			type: "String",
+			content: "REEE MOFO"
+		},
+		time: "IDK IF WANT",
+	},{
+    profile_id: 2,
+    img: "01.jpg",
+		message: {
+			type: "Image",
+			content: "IDK WHAT IT LOOKS LIKE (link maybe?)"
+		},
+		time: "IDK IF WANT",
+	},{
+    profile_id: 14,
+    img: "00.jpg",
+		message: {
+			type: "String",
+			content: "U STUPID IDK WHATU STUPID IDK WHATU STUPID IDK WHATU STUPID IDK WHATU STUPID IDK WHATU STUPID IDK WHATU STUPID IDK WHATU STUPID IDK WHATU STUPID IDK WHATU STUPID IDK WHATU STUPID IDK WHATU STUPID IDK WHATU STUPID IDK WHATU STUPID IDK WHATU STUPID IDK WHATU STUPID IDK WHATU STUPID IDK WHAT"
+		},
+		time: "IDK IF WANT",
+	},]
+}
+
+export default class MessageBody extends Component {
+  state ={
+    roomData,
+  }
 
   componentDidMount(){
     console.log(this.props.name)
   }
+
+  MessageItems = () => {
+    const posts = this.state.roomData.messages;
+    const items = [];
+
+    _.mapKeys(posts, (data, index) => {
+      items.push(
+          <Messages
+            {...data}
+            key={index}
+            id={index}
+          />,
+      );
+    });
+
+    return items;
+  };
   render() {
     return (
       <div>
@@ -23,12 +71,15 @@ export class MessageBody extends Component {
           </div>
           <div className="ree">
             <div className="name">
-              <strong>{this.props.name}</strong>
+              <strong>{this.props.ree.name}</strong>
             </div>
             <div className="last-message">
               <p>Active Now</p>
             </div>
           </div>
+        </div>
+        <div className="Messages">
+          {this.MessageItems()}
         </div>
       </div>
     );

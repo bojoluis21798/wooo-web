@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import './main.css';
 import '../../../global/global.css'
 
-export class MessageHead extends Component {
+export default class MessageHead extends Component {
   reroute = () => {
     console.log("Hello");
   };

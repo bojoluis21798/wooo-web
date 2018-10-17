@@ -1,0 +1,27 @@
+img{
+    max-width: 100%;
+    height: auto;
+    border-radius: 50%;
+}
+
+.link {
+    color: white !important;
+}
+
+.content{
+    display: flex;
+    align-items: center;
+
+}
+
+.details{
+    text-align: left;
+    margin: 5px;
+    padding: 1px;
+    background-color: #FC3F73;
+    border-radius: 10px;
+}
+
+.name{
+    font-size: 1.5em;
+}

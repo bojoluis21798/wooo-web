@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './main.css';
-import {MessageBody} from '../message/main';
+import MessageBody from '../message/main';
 
 export class Messaging extends Component {
   state = {
@@ -14,7 +14,7 @@ export class Messaging extends Component {
   render() {
     return (
       <div>
-        <MessageBody/>
+        <MessageBody ree={this.state.props}/>
       </div>
     );
   }
