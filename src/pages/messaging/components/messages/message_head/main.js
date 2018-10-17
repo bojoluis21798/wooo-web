@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
-import ree from '../../../imgs/00.jpg';
 import './main.css';
 import '../../../global/global.css'
 

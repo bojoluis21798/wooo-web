@@ -31,6 +31,7 @@ export class Messages extends Component {
         <MessageHead
           {...data}
           id={(index)}
+          key={index}
         /><hr/></div>,
       );
     });
