@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import './message_form.css';
 import Message from '../message_users/message_users';
 import firebase from 'firebase';
+import firebaseConfig from '../../../../config';
+
+firebase.initializeApp(firebaseConfig);
 
 export default class Form extends Component {
   constructor(props) {

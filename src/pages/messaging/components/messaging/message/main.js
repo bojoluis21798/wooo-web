@@ -6,6 +6,11 @@ import './main.css';
 import '../../../global/global.css';
 import _ from 'lodash';
 
+import firebase from 'firebase';
+import firebaseConfig from '../../../config';
+
+firebase.initializeApp(firebaseConfig);
+
 const roomData = {
 	roomId: 1,
 	messages: [{
@@ -17,7 +22,7 @@ const roomData = {
 		},
 		time: "IDK IF WANT",
 	},{
-    profile_id: 2,
+    profile_id: 16,
     img: "01.jpg",
 		message: {
 			type: "Image",
@@ -36,11 +41,18 @@ const roomData = {
 }
 
 export default class MessageBody extends Component {
-  state ={
+  constructor(props) {
+    super(props);
+    this.messageRef = firebase.database().ref().child('roomData/16R14');
+    console.log(this.props)
+  }
+
+  state = {
     roomData,
   }
 
   componentDidMount(){
+    
   }
 
   MessageItems = () => {
@@ -81,6 +93,7 @@ export default class MessageBody extends Component {
         <div className="Messages">
           {this.MessageItems()}
         </div>
+
       </div>
     );
   }
