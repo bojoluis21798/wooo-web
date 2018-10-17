@@ -40,7 +40,6 @@ export class Messages extends Component {
         <div key={index}>
           <MessageHead
             {...data}
-            id={"16R14"}
           />
           <hr/>
         </div>,
@@ -59,7 +58,6 @@ export class Messages extends Component {
           <input type="text" className="form-control" id="usr" placeholder="Search for a message"/>
         </div>
         <div>
-          {this.componentDidMount()}
           {this.MessageItems()}
         </div>
       </div>
