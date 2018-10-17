@@ -11,6 +11,7 @@ export class Messaging extends Component {
     console.log("MAIN");
     console.log(this.state.props.name);
   }
+
   render() {
     return (
       <div>

@@ -18,6 +18,7 @@ export class MessageBody extends Component {
       this.setState({ user });
     });
   }
+
   handleSignIn() {
     const provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithPopup(provider);
