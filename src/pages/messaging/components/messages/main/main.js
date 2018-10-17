@@ -28,9 +28,8 @@ export class Messages extends Component {
     },
     roomData: roomData
   };
-
   
-  componentDidMount(){
+  async componentDidMount(){
     axios.get(`https://wooo.philsony.com/api/profiles/${this.props.store.userStore.profile_id}/matches`)
     .then(response => {
       console.log(response);
@@ -48,14 +47,14 @@ export class Messages extends Component {
         PairedUser.push(pairedInfo);
       });
       this.state.users.pairedUser = PairedUser;
-      console.log(this.state.users)
     })
   }
+
   MessageItems = () => {
     const posts= this.state.roomData;
     const items = [];
     const userd = this.state.users;
-    console.log(userd);
+    console.log(userd.pairedUser);
 
     _.mapKeys(posts, (data, index) => {
       items.push(
@@ -81,6 +80,7 @@ export class Messages extends Component {
           <input type="text" className="form-control" id="usr" placeholder="Search for a message"/>
         </div>
         <div>
+          {this.componentDidMount()}
           {this.MessageItems()}
         </div>
       </div>
