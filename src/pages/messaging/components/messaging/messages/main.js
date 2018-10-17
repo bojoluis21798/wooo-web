@@ -15,7 +15,7 @@ export default class Messages extends Component {
             <div className="div-3">
               <img src={img} alt={this.props.profile_id}/>
             </div>
-            <div  className="div-7 details">
+            <div  className="div-7 details1">
               <div className="message">
                 <p>{this.props.message.content}</p>
               </div>
