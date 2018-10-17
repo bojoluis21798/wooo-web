@@ -8,7 +8,7 @@ export default class MessageHead extends Component {
     console.log(this.props.users);
   };
   render() {
-    const img = require('../../../imgs/'+this.props.img);
+    const img = require(this.props.pairedImage);
     return (
       <div onClick={this.reroute}>
         <Link to={{ pathname: `/messages/${this.props.id}`, state: this.props }} className="link">
@@ -18,7 +18,7 @@ export default class MessageHead extends Component {
             </div>
             <div  className="div-7 details">
               <div className="name">
-                <strong>{this.props.name}</strong>
+                <strong>{this.props.pairedName}</strong>
               </div>
               <br />
               <div className="last-message">

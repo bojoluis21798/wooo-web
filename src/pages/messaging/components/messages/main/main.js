@@ -28,7 +28,6 @@ export class Messages extends Component {
     },
     roomData: roomData
   };
-
   
   componentDidMount(){
     axios.get(`https://wooo.philsony.com/api/profiles/${this.props.store.userStore.profile_id}/matches`)
@@ -36,8 +35,8 @@ export class Messages extends Component {
       console.log(response);
       console.log("Get was Successful!");
       
-      var roomIds = new Array();
-      var PairedUser = new Array();
+      var roomIds = [];
+      var PairedUser = [];
       response.data.forEach(element => {
         var pairedInfo = {
           pairedId: element.id,
@@ -48,17 +47,15 @@ export class Messages extends Component {
         PairedUser.push(pairedInfo);
       });
       this.state.users.pairedUser = PairedUser;
-      console.log(this.state.users)
+      this.MessageItems()
     })
   }
+
   MessageItems = () => {
     const items = [];
     const userd = this.state.users;
-    const posts = userd.pairedUser;
-    console.log(userd);
-    console.log("ASD");
-    console.log(userd.pairedUser);
-    console.log("ASASDASDASDD");
+    const posts= userd.pairedUser;
+
     _.mapKeys(posts, (data, index) => {
       items.push(
         <div key={index}>
@@ -83,7 +80,7 @@ export class Messages extends Component {
           <input type="text" className="form-control" id="usr" placeholder="Search for a message"/>
         </div>
         <div>
-          {this.MessageItems()}
+          {this.componentDidMount()}
         </div>
       </div>
     );
