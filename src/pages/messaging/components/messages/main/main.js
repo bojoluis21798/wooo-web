@@ -22,19 +22,49 @@ const roomData = [{
 @inject('store') @observer
 export class Messages extends Component {
   state = {
-    roomData,
+    users:{
+      currentUser: this.props.store.userStore.profile_id,
+      pairedUser: [],
+    },
+    roomData: roomData
   };
 
+  
+  componentDidMount(){
+    axios.get(`https://wooo.philsony.com/api/profiles/${this.props.store.userStore.profile_id}/matches`)
+    .then(response => {
+      console.log(response);
+      console.log("Get was Successful!");
+      
+      var roomIds = new Array();
+      var PairedUser = new Array();
+      response.data.forEach(element => {
+        var pairedInfo = {
+          pairedId: element.id,
+          pairedName: element.user.first_name,
+          pairedImage: element.profile_image
+        }
+        roomIds.push(this.state.currentUser+'R'+element.id);
+        PairedUser.push(pairedInfo);
+      });
+      this.state.users.pairedUser = PairedUser;
+      console.log(this.state.users)
+    })
+  }
   MessageItems = () => {
-    const posts= this.state.roomData;
     const items = [];
-
+    const userd = this.state.users;
+    const posts = userd.pairedUser;
+    console.log(userd);
+    console.log("ASD");
+    console.log(userd.pairedUser);
+    console.log("ASASDASDASDD");
     _.mapKeys(posts, (data, index) => {
       items.push(
         <div key={index} class='chat_item'>
-          <MessageHead
+          <MessageHead users={userd}
             {...data}
-            id={index}
+            id={"16R14"}
           />
         </div>,
       );
@@ -42,15 +72,6 @@ export class Messages extends Component {
 
     return items;
   };
-  componentDidMount(){
-    axios.get(`https://wooo.philsony.com/api/profiles/${this.props.store.userStore.profile_id}/matches`)
-    .then(response => {
-      console.log(response);
-      console.log("Get was Successful!");
-    })
-    console.log("REEEE");
-    console.log(this.props.store.userStore.profile_id);
-  }
   render() {
     return (
       <div>

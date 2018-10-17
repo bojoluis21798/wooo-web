@@ -12,13 +12,13 @@ export class MessageBody extends Component {
     this.state = {
       user: null,
     }
-    console.log(this.props.roomID)
   }
   componentDidMount() {
     firebase.auth().onAuthStateChanged(user => {
       this.setState({ user });
     });
   }
+
   handleSignIn() {
     const provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithPopup(provider);
