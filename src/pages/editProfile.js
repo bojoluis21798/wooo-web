@@ -143,17 +143,29 @@ class editProfile extends Component {
                 {/* <Icon><img src="../assests/icons/heartfill.png" alt="my image" onclick={this.myfunction} /></Icon> */}
                 {/* <Icon id="matching" aria-label="heart" data={heart} onClick={this.myfunction}/> */}
                 {/* <form onSubmit={this.handleSubmit}> */}
-                  <Tagline>Photos</Tagline>
+                  <Tagline id="photos">Photos</Tagline>
                  {/* <form onSubmit={this.handleImage}>*/}
                   <ProfileImage>
                     <ProfileImageMain id="profilePic"/>
                     {/* <imageContainer> */}
                       <ProfileImageMain alt='Profile' src={this.props.store.userStore.profilePicture} />
                     {/* </imageContainer>  */}
-                    <ProfileImageSet>
-                      <Image1 type="button" onClick={(e) =>{this.refs.fileUploader.click();}} >
+                      <Image id="img1" type="button" onClick={(e) =>{this.refs.fileUploader.click();}} >
                         <input type="file" ref="fileUploader" style={{display:"none"}} onChange={this.handleImage}/>
-                      </Image1>
+                      </Image>
+                      <Image id="img2" type="button" onClick={(e) =>{this.refs.fileUploader.click();}} >
+                        <input type="file" ref="fileUploader" style={{display:"none"}} onChange={this.handleImage}/>
+                      </Image>
+                      <Image id="img3" type="button" onClick={(e) =>{this.refs.fileUploader.click();}} >
+                        <input type="file" ref="fileUploader" style={{display:"none"}} onChange={this.handleImage}/>
+                      </Image>
+                      <Image id="img4" type="button" onClick={(e) =>{this.refs.fileUploader.click();}} >
+                        <input type="file" ref="fileUploader" style={{display:"none"}} onChange={this.handleImage}/>
+                      </Image>
+                    <ProfileImageSet>
+                      {/* <Image1 type="button" onClick={(e) =>{this.refs.fileUploader.click();}} >
+                        <input type="file" ref="fileUploader" style={{display:"none"}} onChange={this.handleImage}/>
+                      </Image1> */}
                       {/*<Image2 type="button"/>
                       <Image3 type="button"/>
                       <Image4 type="button"/>*/}
@@ -241,37 +253,10 @@ const ProfileContent = styled.div`
   justify-items: center;
   min-height: 100vh;
   z-index: 1;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
   padding-bottom: 50px;
 `;
-// const Header = styled.div`
-// margin: auto;
-//   min-width:30%;
-// `;
-
-// const Button = styled.button`
-//   width:40px;
-//   height:40px;
-//   margin-right: 120px
-//   background-image:heart
-// `;
-
-// const Icon = styled.object`
-//   width: 40px;
-//   height: 40px;
-//   margin: auto;
-//   margin-right: 120px;
-//   margin-bottom: 20px;
-// `;
-
-// const Icon2 = styled.object`
-//   width: 50px;
-//   margin: auto;
-//   margin-left: 8px;
-//   margin-bottom: 20px;
-//   margin-top: 10px;
-// `;
 
 const Tagline = styled.div`
   width: 100%;
@@ -282,6 +267,10 @@ const Tagline = styled.div`
   display: block;
   margin-bottom: 20px;
   margin-top: 20px;
+
+  &#photos {
+    margin-top: 0; 
+  }
 `;
 const RadiusNum = styled.div`
   color: #f3f3f3;
@@ -290,16 +279,16 @@ const RadiusNum = styled.div`
 `;
 const ProfileImage = styled.div`
   width: 100%;
-  display: flex;
+  display: inline-block;
 `;
 const ProfileImageMain = styled.img`
   width: 100%;
-  max-width: 140px;
+  max-width: 160px;
   height: 100%;
-  max-height: 145px;
-  border-radius: 20px;
-  boder: none
-  margin: auto
+  max-height: 170px;
+  border-radius: 5px;
+  boder: none;
+  float: left;
 
   &:hover {
     cursor: pointer
@@ -336,25 +325,37 @@ const ProfileImageSet = styled.div`
   max-height: 145px;
   float: right;
 `;
-const Image1 = styled.button`
-  width: 45px
-  height: 48px
+const Image = styled.button`
+  width: 77px;
+  height: 77px;
   background-color: #191919
   border-color: #191919
-  border-radius: 5px
-  margin: auto
-  margin-left: 3%
-  float: right
+  border-radius: 5px;
+  border: none;
+  margin: auto;
+  margin-left: 2.7%;
+  float: right;
 
   &:hover {
-    cursor: pointer
-    background-position: 300px
-    background-color:  #191919
-    border: 1px solid #f51a63
+    cursor: pointer;
+    background-position: 300px;
+    background-color:  #191919;
+    border: 1px solid #f51a63;
   }
   &:focus {
-    outline: none !important
-    border: 1px solid #f51a63 !important
+    outline: none !important;
+    border: 1px solid #f51a63 !important;
+  }
+
+  &#img3 {
+    margin-top: 2.5%;
+  }
+  &#img4 {
+    margin-top: 2.5%;
+    margin-left: 2.5%;
+  }
+  &#img2 {
+    margin-left: 2.5%;
   }
 `;
 // const imgUp = styled.input`
