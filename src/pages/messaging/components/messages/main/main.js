@@ -21,16 +21,15 @@ export class Messages extends Component {
     .then(response => {
       console.log(response);
       console.log("Get was Successful!");
-      
-      var roomIds = [];
+
       var pairedUser = [];
       response.data.forEach(element => {
         var pairedInfo = {
           pairedId: element.id,
           pairedName: element.user.first_name,
-          pairedImage: element.profile_image
+          pairedImage: element.profile_image,
+          roomId: this.state.currentUser+'R'+element.id,
         }
-        roomIds.push(this.state.currentUser+'R'+element.id);
         pairedUser.push(pairedInfo);
       });
       this.setState({
