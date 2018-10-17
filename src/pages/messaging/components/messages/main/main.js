@@ -5,6 +5,8 @@ import './main.css';
 import axios from 'axios';
 import _ from 'lodash';
 
+import {MessageBody} from '../../messaging/messageRee/message_body/MessageBody'
+
 const roomData = [{
     img: "00.jpg",
     name: "Sausage Cate",
@@ -22,7 +24,9 @@ const roomData = [{
 @inject('store') @observer
 export class Messages extends Component {
   state = {
-    roomData,
+    currentUser: this.props.store.userStore.profile_id,
+    pairedUser: [],
+    roomData: roomData
   };
 
   MessageItems = () => {
@@ -34,7 +38,7 @@ export class Messages extends Component {
         <div key={index}>
           <MessageHead
             {...data}
-            id={index}
+            id={"16R14"}
           />
           <hr/>
         </div>,
@@ -48,9 +52,20 @@ export class Messages extends Component {
     .then(response => {
       console.log(response);
       console.log("Get was Successful!");
+      
+      var roomIds = new Array();
+      var PairedUser = new Array();
+      response.data.forEach(element => {
+        var pairedInfo = {
+          pairedId: element.id,
+          pairedName: element.user.first_name,
+          pairedImage: element.profile_image
+        }
+        roomIds.push(this.state.currentUser+'R'+element.id);
+        PairedUser.push(pairedInfo);
+      });
+      this.state.pairedUser = PairedUser;
     })
-    console.log("REEE");
-    console.log(this.props.store.userStore.profile_id);
   }
   render() {
     return (
@@ -64,6 +79,7 @@ export class Messages extends Component {
         <div>
           {this.MessageItems()}
         </div>
+      <MessageBody />
       </div>
     );
   }

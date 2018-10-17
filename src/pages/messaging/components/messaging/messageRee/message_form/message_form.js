@@ -2,21 +2,24 @@ import React, { Component } from 'react';
 import './message_form.css';
 import Message from '../message_users/message_users';
 import firebase from 'firebase';
+
 export default class Form extends Component {
   constructor(props) {
     super(props);
     console.log('message/'+ this.props.roomID)
     this.state = {
-      profile_id: 0,
-      userName: "",
-      message: [{
-        type: "String",
-        content: ""
-      }],
-      time: "",
+      message_details: {
+        profile_id: 16,
+        userName: "",
+        message: [{
+          type: "String",
+          content: ""
+        }],
+        time: "",
+      },
       list:[]
     };
-    this.messageRef = firebase.database().ref().child('message/1');
+    this.messageRef = firebase.database().ref().child('roomData/16R14');
     this.handleMessageListen();
   }
   componentWillReceiveProps(nextProps) {
@@ -72,7 +75,7 @@ export default class Form extends Component {
         });
     });
   }
-  
+
   render() {
     return (
       <div className="form">
