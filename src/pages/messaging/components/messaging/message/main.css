@@ -1,0 +1,27 @@
+img{
+    max-width: 100%;
+    height: auto;
+    border-radius: 50%;
+}
+
+.link {
+    color: white !important;
+}
+
+.back{
+    float: left !important;
+}
+
+.content{
+    display: flex;
+    align-items: center;
+}
+
+.name{
+    font-size: 1.5em;
+}
+
+.ree{
+    margin:0 auto;
+    text-align: center;
+}
