@@ -1,10 +1,10 @@
-import React, {Component} from 'react'
+import React, { Component, PropTypes } from 'react'
 import styled, {css} from "styled-components"
 // import heart from "../assets/icons/heart.svg"
 // import alarm from "../assets/icons/alarm.png"
 // import chat from "../assets/icons/chat.png"
 // import user from "../assets/icons/user.png"
-import { inject, observer } from 'mobx-react'
+import { inject, observer, propTypes } from 'mobx-react'
 import { ToastContainer } from "react-toastify"
 import Slider from "rc-slider"
 import "rc-slider/assets/index.css"
@@ -22,6 +22,11 @@ import AuthorizedLayout from '../layouts/AuthorizedLayout'
 
 class editProfile extends Component {
 
+  static propTypes = {
+    checked: propTypes.bool,
+    onChange: propTypes.func,
+  }
+  
   onFormSubmit = (e) =>{
     e.preventDefault() // Stop form submit
     this.fileUpload(this.state.file).then((response)=>{
@@ -50,8 +55,6 @@ class editProfile extends Component {
     console.log("BEGINNING OF PROFILE")
   }
 
-  
-
   handleSubmit = (e = null) => {
     if (e != null){
       e.preventDefault();
@@ -68,6 +71,7 @@ class editProfile extends Component {
     axios.put('https://wooo.philsony.com/api/profiles/'+this.props.store.userStore.profile_id+'/', {
       bio:this.props.store.userStore.biography,
       sexual_preference:this.props.store.userStore.preference,
+      gay:this.props.store.userStore.gay,
       search_radius:this.props.store.userStore.radius,
       supporting_pic_1: this.props.store.userStore.photos[0]
     },config)
@@ -86,7 +90,6 @@ class editProfile extends Component {
     this.handleSubmit()
   }
 
-
   handleMale = (e) => {
     const store = this.props.store.userStore;
 
@@ -101,10 +104,17 @@ class editProfile extends Component {
     this.handleSubmit(e)
   }
 
-  handleOthers = (e) => {
+  handleBoth = (e) => {
     const store = this.props.store.userStore;
 
     store.setPreference(2)
+    this.handleSubmit(e)
+  }
+
+  handleGay = (e) => {
+    const store = this.props.store.userStore;
+
+    store.setGay(1)
     this.handleSubmit(e)
   }
 
@@ -115,7 +125,6 @@ class editProfile extends Component {
 
     this.handleSubmit(null)
   }
-
 
   handleChangeBio = (e) => {
 
@@ -130,7 +139,6 @@ class editProfile extends Component {
     })
   }
 
-
   myfunction = ()=>{
     this.props.history.push('/matching');
   }
@@ -139,10 +147,6 @@ class editProfile extends Component {
           <AuthorizedLayout>
           <ToastContainer />
             <ProfileContent>
-              {/*<Header>*/}
-                {/* <Icon><img src="../assests/icons/heartfill.png" alt="my image" onclick={this.myfunction} /></Icon> */}
-                {/* <Icon id="matching" aria-label="heart" data={heart} onClick={this.myfunction}/> */}
-                {/* <form onSubmit={this.handleSubmit}> */}
                   <Tagline id="photos">Photos</Tagline>
                  {/* <form onSubmit={this.handleImage}>*/}
                   <ProfileImage>
@@ -181,24 +185,31 @@ class editProfile extends Component {
                     onBlur={this.handleSubmit}
                   />
                   <Tagline>Preference</Tagline>
-                  <PrefButtonMale id="male"
+                  <PrefButton id="male"
                       aria-label="Male"
                       value= "0"
                       onClick={this.handleMale}
                       active = {this.props.store.userStore.preference === 0}
-                  >Male</PrefButtonMale>
-                  <PrefButtonFemale id="female"
+                  >Male</PrefButton>
+                  <PrefButton id="female"
                       aria-label="Female"
                       value= "1"
                       onClick={this.handleFemale}
                       active = {this.props.store.userStore.preference === 1}
-                  >Female</PrefButtonFemale>
-                  <PrefButtonOthers id="other"
-                      aria-label="Others"
-                      value="2"
-                      onClick={this.handleOthers}
+                  >Female</PrefButton>
+                  <PrefButton id="both"
+                      aria-label="both"
+                      value= "2"
+                      onClick={this.handleBoth}
                       active = {this.props.store.userStore.preference === 2}
-                  >Others</PrefButtonOthers>
+                  >Both</PrefButton>
+                  <PrefBox id="gay"
+                      aria-label="gay"
+                      type="checkbox"
+                      value="1"
+                      checked={this.props.store.userStore.gay === 1}
+                      onChange={this.handleGay}
+                  /><label style={{paddingLeft:"10px"}}>Gay</label>
                   <Tagline>Radius</Tagline>
                   <RadiusNum>{this.props.store.userStore.radius} Km</RadiusNum>
                   <br/>
@@ -239,10 +250,6 @@ class editProfile extends Component {
                     }}
                     value={this.props.store.userStore.radius}
                     onChange={this.handleSlider} />
-                  <br/>
-                  {/* <button value="submit" type="submit">Click here</button> */}
-                {/* </form> */}
-              {/*</Header>*/}
             </ProfileContent>
           </AuthorizedLayout>
         )
@@ -301,30 +308,14 @@ const ProfileImageMain = styled.img`
     border: 1px solid #f51a63 !important
   }
 `;
-// width: 100%;
-//   max-width: 140px;
-//   height: 100%;
-//   max-height: 145px;
-//   border-radius: 20px;
-//   boder: none
-//   margin: auto
 
-//   &:hover {
-//     cursor: pointer
-//     background-position: 300px
-//     background-color:  #191919
-//     border: 1px solid #f51a63
-//   }
-//   &:focus {
-//     outline: none !important
-//     border: 1px solid #f51a63 !important
-//   }
 const ProfileImageSet = styled.div`
   width: 100%;
   height: 100%;
   max-height: 145px;
   float: right;
 `;
+
 const Image = styled.button`
   width: 77px;
   height: 77px;
@@ -358,74 +349,7 @@ const Image = styled.button`
     margin-left: 2.5%;
   }
 `;
-// const imgUp = styled.input`
-//   display: none
-// `
-// const Image2 = styled.button`
-//   width: 45%
-//   height: 48%
-//   background-color: #191919
-//   border-color: #191919
-//   border-radius: 5px
-//   margin: auto
-//   margin-right: 3%
-//   float: right
 
-//   &:hover {
-//     cursor: pointer
-//     background-position: 300px
-//     background-color:  #191919
-//     border: 1px solid #f51a63
-//   }
-//   &:focus {
-//     outline: none !important
-//     border: 1px solid #f51a63 !important
-//   }
-// `
-// const Image3 = styled.button`
-//   width: 45%
-//   height: 48%
-//   background-color: #191919
-//   border-color: #191919
-//   border-radius: 5px
-//   margin: auto
-//   margin-top: 5%
-//   margin-left: 3%
-//   float: right
-
-//   &:hover {
-//     cursor: pointer
-//     background-position: 300px
-//     background-color:  #191919
-//     border: 1px solid #f51a63
-//   }
-//   &:focus {
-//     outline: none !important
-//     border: 1px solid #f51a63 !important
-//   }
-// `
-// const Image4 = styled.button`
-//   width: 45%
-//   height: 48%
-//   background-color: #191919
-//   border-color: #191919
-//   border-radius: 5px
-//   margin: auto
-//   margin-top: 5%
-//   margin-right: 3%
-//   float: right
-
-//   &:hover {
-//     cursor: pointer
-//     background-position: 300px
-//     background-color:  #191919
-//     border: 1px solid #f51a63
-//   }
-//   &:focus {
-//     outline: none !important
-//     border: 1px solid #f51a63 !important
-//   }
-// `
 const BioText = styled.textarea`
   height: 90px;
   max-height: 150px;
@@ -447,7 +371,7 @@ const BioText = styled.textarea`
     border: 1px solid #f51a63 !important;
   }
 `;
-const PrefButtonMale = styled.button`
+const PrefButton = styled.button`
   font-weight: 100;
   font-size: 15px;
   color: #ffffff;
@@ -473,59 +397,36 @@ const PrefButtonMale = styled.button`
         `
   }
 `;
-const PrefButtonFemale = styled.button`
-  font-weight: 100;
-  font-size: 15px;
-  color: #ffffff;
-  background-color: #191919;
-  letter-spacing: 0.01px;
-  text-align: center;
-  border-radius: 5px;
-  border: 0;
-  padding: 12px;
-  width: 90px;
-  margin: auto;
-  margin-bottom: 5px;
-  margin-right: 15px;
-  transition: 0.5s all ease;
-  box-sizing: border-box;
-  cursor: pointer;
+const PrefBox = styled.input`
+position: relative; /* permet de positionner les pseudo-éléments */
+padding-left: 20px; 
+cursor: pointer; 
 
-  ${
-    props => props.active &&
-        css`
-          background-position: 300px;
-          background-color:  #f51a63;
-          border: 1px solid #f51a63;
-        `
-  }
-`;
-const PrefButtonOthers = styled.button`
-  font-weight: 100;
-  font-size: 15px;
-  color: #ffffff;
-  background-color: #191919;
-  letter-spacing: 0.01px;
-  text-align: center;
-  border-radius: 5px;
-  border: 0;
-  padding: 12px;
-  width: 90px;
-  margin: auto;
-  margin-bottom: 5px;
-  margin-right: 15px;
-  transition: 0.5s all ease;
-  box-sizing: border-box;
-  cursor: pointer;
+&:before {
+  content: '';
+  position: absolute;
+  left: 0px; top: -1px;
+  width: 17px; height: 17px; 
+  border: 1px solid #191919;
+  background: #191919;
+  border-radius: 2px;
+  box-shadow: none;
+}
 
-  ${
-    props => props.active &&
-        css`
-          background-position: 300px;
-          background-color:  #f51a63;
-          border: 1px solid #f51a63;
-        `
-  }
+
+${
+  props => props.checked &&
+      css`
+      &:after {
+        content: '✔';
+        position: absolute;
+        top: .5px; left: 2.5px;
+        font-size: 16px;
+        color: #f51a63;
+        transition: all .2s;
+      }
+      `
+}
 `;
 
 export default editProfile;
