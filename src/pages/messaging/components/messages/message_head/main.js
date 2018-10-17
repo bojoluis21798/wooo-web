@@ -6,7 +6,6 @@ import '../../../global/global.css'
 
 export class MessageHead extends Component {
   reroute = () => {
-    console.log("Hello");
   };
   render() {
     const img = require('../../../imgs/'+this.props.img);

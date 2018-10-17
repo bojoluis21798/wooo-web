@@ -12,7 +12,6 @@ export class MessageBody extends Component {
     this.state = {
       user: null,
     }
-    console.log(this.props.roomID)
   }
   componentDidMount() {
     firebase.auth().onAuthStateChanged(user => {

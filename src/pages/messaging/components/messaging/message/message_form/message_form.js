@@ -7,11 +7,16 @@ export default class Form extends Component {
     super(props);
     console.log('message/'+ this.props.roomID)
     this.state = {
-      userName: 'Daniel',
-      message: '',
-      list: [],
+      profile_id: 0,
+      userName: "",
+      message: [{
+        type: "String",
+        content: ""
+      }],
+      time: "",
+      list:[]
     };
-    this.messageRef = firebase.database().ref().child('message/'+ this.props.roomID);
+    this.messageRef = firebase.database().ref().child('message/1');
     this.handleMessageListen();
   }
   componentWillReceiveProps(nextProps) {
@@ -21,13 +26,21 @@ export default class Form extends Component {
   }
   handleChange(event) {
     this.setState({message: event.target.value});
+    console.log(this.state.message)
   }
   handleSend() {
     if (this.state.message) {
-      var newItem = {
-        userName: this.state.userName,
-        message: this.state.message,
+      var newmessage = {
+        type: "String",
+        content: this.state.message
       }
+      var newItem = {
+        profile_id: 5123,
+        userName: this.state.userName,
+        message: new Array(),
+        time: "12:32:33"
+      }
+      newItem.message.push(newmessage);
       this.messageRef.push(newItem);
       this.setState({ message: '' });
       this.handleMessageListen();
@@ -44,7 +57,6 @@ export default class Form extends Component {
     .limitToLast(10)
     .on('value', message => {
         messg = message.val()
-        console.log(messg)
     });
     if(messg != null){
         this.listenMessages()
