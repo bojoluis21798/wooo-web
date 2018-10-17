@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {MessageHead} from '../messageHead/main';
+import MessageHead from '../messageHead/main';
 import { inject, observer } from 'mobx-react';
 import './main.css';
 import axios from 'axios';
