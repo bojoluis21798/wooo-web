@@ -1,9 +1,10 @@
 import React, {Component} from 'react'
 import styled, {css} from "styled-components"
-import heart from "../assets/icons/heart.svg"
-import alarm from "../assets/icons/alarm.png"
-import chat from "../assets/icons/chat.png"
-import user from "../assets/icons/user.png"
+// Unsused Vars, Commented out to remove warnings
+// import heart from "../assets/icons/heart.svg"
+// import alarm from "../assets/icons/alarm.png"
+// import chat from "../assets/icons/chat.png"
+// import user from "../assets/icons/user.png"
 import { inject, observer } from 'mobx-react'
 import { ToastContainer } from "react-toastify"
 import Slider from "rc-slider"
@@ -16,7 +17,7 @@ import AuthorizedLayout from '../layouts/AuthorizedLayout'
 // import ImageUploader3 from 'react-images-uploader'
 // import ImageUploader4 from 'react-images-uploader'
 // import 'react-images-uploader/styles.css'
-import {Link,Redirect} from 'react-router-dom';
+// import {Link,Redirect} from 'react-router-dom';
 
 @inject('store') @observer
 
@@ -238,28 +239,29 @@ margin: auto;
   min-width:30%;
 `;
 
-const Button = styled.button`
-  width:40px;
-  height:40px;
-  margin-right: 120px
-  background-image:heart
-`;
+// Unused, commented out to remove warning.
+// const Button = styled.button`
+//   width:40px;
+//   height:40px;
+//   margin-right: 120px
+//   background-image:heart
+// `;
 
-const Icon = styled.object`
-  width: 40px;
-  height: 40px;
-  margin: auto;
-  margin-right: 120px;
-  margin-bottom: 20px;
-`;
+// const Icon = styled.object`
+//   width: 40px;
+//   height: 40px;
+//   margin: auto;
+//   margin-right: 120px;
+//   margin-bottom: 20px;
+// `;
 
-const Icon2 = styled.object`
-  width: 50px;
-  margin: auto;
-  margin-left: 8px;
-  margin-bottom: 20px;
-  margin-top: 10px;
-`;
+// const Icon2 = styled.object`
+//   width: 50px;
+//   margin: auto;
+//   margin-left: 8px;
+//   margin-bottom: 20px;
+//   margin-top: 10px;
+// `;
 const Tagline = styled.div`
   width: 100%;
   font-weight: 500;

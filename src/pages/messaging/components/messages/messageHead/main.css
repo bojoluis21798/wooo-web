@@ -1,0 +1,38 @@
+.link {
+    color: white !important;
+    text-decoration: none;
+}
+
+.content{
+    display: flex;
+    align-items: center;
+}
+
+.div-3{
+    flex: 1 1 !important;
+    padding: 0px;
+    margin: 0px;
+}
+
+.div-3 img{
+    min-width: 100% !important;
+    height: auto;
+    border-radius: 100%;
+}
+
+.details{   
+    flex: 3 3 !important;
+    padding-left: 5%;
+    padding-right: 5%;
+    text-align: left;
+}
+
+.name{
+    font-size: 1.5em;
+}
+
+.last-message{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis !important;
+}
