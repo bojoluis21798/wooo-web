@@ -1,12 +1,9 @@
 import React, { Component } from 'react'
 import styled, {css} from "styled-components"
-// import heart from "../assets/icons/heart.svg"
-// import alarm from "../assets/icons/alarm.png"
-// import chat from "../assets/icons/chat.png"
-// import user from "../assets/icons/user.png"
-import { inject, observer, propTypes } from 'mobx-react'
+import { inject, observer } from 'mobx-react'
 import { ToastContainer } from "react-toastify"
 import Slider from "rc-slider"
+import Toggle from 'react-switch'
 import "rc-slider/assets/index.css"
 import axios from 'axios'
 import AuthorizedLayout from '../layouts/AuthorizedLayout'
@@ -21,11 +18,6 @@ import AuthorizedLayout from '../layouts/AuthorizedLayout'
 @inject('store') @observer
 
 class editProfile extends Component {
-
-  static propTypes = {
-    checked: propTypes.bool,
-    onChange: propTypes.func,
-  }
   
   onFormSubmit = (e) =>{
     e.preventDefault() // Stop form submit
@@ -125,7 +117,7 @@ class editProfile extends Component {
       store.setGay(false)
     }
 
-    this.handleSubmit(e)
+    this.handleSubmit()
 
   }
 
@@ -232,12 +224,21 @@ class editProfile extends Component {
                       onClick={this.handleBoth}
                       active = {this.props.store.userStore.preference === 2}
                   >Both</PrefButton>
-                  <PrefBox id="gay"
+                  <label htmlFor="normal-switch">
+                  <span style={{
+                                marginRight: "10px"
+                  }}>Gay</span>
+                  <Toggle className="gayToggle"
+                      id="normal-switch"
                       aria-label="gay"
-                      type="checkbox"
+                      onColor="#f51a63"
+                      offColor="#191919"
+                      uncheckedIcon={false}
+                      checkedIcon={false}
+                      bottom= "-10px"
                       checked={this.props.store.userStore.gay === true}
-                      onClick={this.handleGay}
-                  /><label style={{paddingLeft:"10px"}}>Gay</label>
+                      onChange={this.handleGay}
+                  /></label>
                   <Tagline>Radius</Tagline>
                   <RadiusNum>{this.props.store.userStore.radius} Km</RadiusNum>
                   <br/>
@@ -425,36 +426,4 @@ const PrefButton = styled.button`
         `
   }
 `;
-const PrefBox = styled.input`
-position: relative; /* permet de positionner les pseudo-éléments */
-padding-left: 20px; 
-cursor: pointer; 
-
-&:before {
-  content: '';
-  position: absolute;
-  left: 0px; top: -1px;
-  width: 17px; height: 17px; 
-  border: 1px solid #191919;
-  background: #191919;
-  border-radius: 2px;
-  box-shadow: none;
-}
-
-
-${
-  props => props.checked &&
-      css`
-      &:after {
-        content: '✔';
-        position: absolute;
-        top: .5px; left: 2.5px;
-        font-size: 16px;
-        color: #f51a63;
-        transition: all .2s;
-      }
-      `
-}
-`;
-
 export default editProfile;
