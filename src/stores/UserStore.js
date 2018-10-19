@@ -6,6 +6,7 @@ class UserStore {
     @observable username = null
     @observable name = null
     @observable biography = null
+    @observable gay = null
     @observable preference = null
     @observable radius = null
     @observable location = null
@@ -54,6 +55,11 @@ class UserStore {
     @action
     setBio(bio){
         this.biography = bio;
+    }
+
+    @action
+    setGay(gay){
+        this.gay = gay
     }
 
     @action
