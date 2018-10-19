@@ -119,8 +119,14 @@ class editProfile extends Component {
   handleGay = (e) => {
     const store = this.props.store.userStore;
 
-    store.setGay(1)
+    if(store.gay === null || store.gay === false) {
+      store.setGay(true)
+    } else {
+      store.setGay(false)
+    }
+
     this.handleSubmit(e)
+
   }
 
   handleSlider = (radius) => {
@@ -229,9 +235,8 @@ class editProfile extends Component {
                   <PrefBox id="gay"
                       aria-label="gay"
                       type="checkbox"
-                      value="1"
-                      checked={this.props.store.userStore.gay === 1}
-                      onChange={this.handleGay}
+                      checked={this.props.store.userStore.gay === true}
+                      onClick={this.handleGay}
                   /><label style={{paddingLeft:"10px"}}>Gay</label>
                   <Tagline>Radius</Tagline>
                   <RadiusNum>{this.props.store.userStore.radius} Km</RadiusNum>
