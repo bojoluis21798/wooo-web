@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component, Proptypes } from 'react'
 import styled, {css} from "styled-components"
 // import heart from "../assets/icons/heart.svg"
 // import alarm from "../assets/icons/alarm.png"
