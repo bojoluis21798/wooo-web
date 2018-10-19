@@ -74,9 +74,8 @@ class UserStore {
     }
 
     @action
-    setPicOne(p1){
+    setPicOne(p1 , path){
         this.photos[0] = p1;
-        console.log(this.photos[0])
     }
     
 

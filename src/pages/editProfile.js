@@ -68,6 +68,7 @@ class editProfile extends Component {
     }
     // console.log(e)
     console.log("Axios --POST")
+    console.log(this.props.store.userStore.photos[0])
     axios.put('https://wooo.philsony.com/api/profiles/'+this.props.store.userStore.profile_id+'/', {
       bio:this.props.store.userStore.biography,
       sexual_preference:this.props.store.userStore.preference,
@@ -85,12 +86,13 @@ class editProfile extends Component {
     })
   }
 
-  handleImageOne = () => {
+  handleImageOne = (event) => {
     console.log("----BEGIN HANLDER----")
-    var file = document.getElementById("imageOne").files[0].path;
+    var file = event.target.files[0];
+    var path = document.getElementById('imageOne').value;
     const store = this.props.store.userStore;
 
-    store.setPicOne(file)
+    store.setPicOne(file, path)
     this.handleSubmit()
     console.log("----END HANDLER----")
   }
@@ -165,10 +167,16 @@ class editProfile extends Component {
                     {/* <imageContainer> */}
                       <ProfileImageMain alt='Profile' src={this.props.store.userStore.profilePicture} />
                     {/* </imageContainer>  */}
-                      <Image id="img1" type="button" onClick={(e) =>{this.refs.fileUploader.click();}} >
+                      <Image 
+                        id="img1" 
+                        type="button" 
+                        onClick={(e) =>{this.refs.fileUploader.click();}}
+                        src={this.props.store.userStore.photos[0]}
+                      >
                         <input 
                           id="imageOne"
                           type="file" 
+                          accept="image/*"
                           ref="fileUploader" 
                           value={this.props.store.userStore.photos[0]} 
                           style={{display:"none"}} 
@@ -237,7 +245,8 @@ class editProfile extends Component {
                       type="checkbox"
                       checked={this.props.store.userStore.gay === true}
                       onClick={this.handleGay}
-                  /><label style={{paddingLeft:"10px"}}>Gay</label>
+                  />
+                  <label style={{paddingLeft:"10px"}}>Gay</label>
                   <Tagline>Radius</Tagline>
                   <RadiusNum>{this.props.store.userStore.radius} Km</RadiusNum>
                   <br/>
@@ -344,7 +353,7 @@ const ProfileImageSet = styled.div`
   float: right;
 `;
 
-const Image = styled.button`
+const Image = styled.image`
   width: 77px;
   height: 77px;
   background-color: #191919
