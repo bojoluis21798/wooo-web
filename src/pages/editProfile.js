@@ -87,12 +87,13 @@ class editProfile extends Component {
     })
   }
 
-  handleImageOne = (event) => {
+  handleImageOne = () => {
     console.log("----BEGIN HANLDER----")
     const store = this.props.store.userStore;
     
     store.setPicOne(event.target.files[0])
     this.handleSubmit(event)
+
     console.log("----END HANDLER----")
   }
 
@@ -125,7 +126,7 @@ class editProfile extends Component {
     } else {
       store.setGay(false)
     }
- 
+    
     this.handleSubmit(e)
   }
 
@@ -165,16 +166,10 @@ class editProfile extends Component {
                     {/* <imageContainer> */}
                       <ProfileImageMain alt='Profile' src={this.props.store.userStore.profilePicture} />
                     {/* </imageContainer>  */}
-                      <Image 
-                        id="img1" 
-                        type="button" 
-                        onClick={(e) =>{this.refs.fileUploader.click();}}
-                        src={this.props.store.userStore.photos[0]}
-                      >
+                      <Image id="img1" type="button" onClick={(e) =>{this.refs.fileUploader.click();}} >
                         <input 
                           id="imageOne"
                           type="file" 
-                          accept="image/*"
                           ref="fileUploader" 
                           value={this.props.store.userStore.photos[0]} 
                           style={{display:"none"}} 
@@ -253,6 +248,7 @@ class editProfile extends Component {
                       bottom= "-10px"
                       checked={this.props.store.userStore.gay === true}
                       onChange={this.handleGay}
+
                   />
                   <label style={{paddingLeft:"10px"}}>Gay</label>
                   </label>
@@ -363,6 +359,7 @@ const ProfileImageSet = styled.div`
 `;
 
 const Image = styled.div`
+
   width: 77px;
   height: 77px;
   background-color: #191919
