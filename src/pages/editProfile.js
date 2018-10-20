@@ -49,7 +49,7 @@ class editProfile extends Component {
 
   handleSubmit = (e = null) => {
     if (e != null){
-      e.preventDefault();
+      // e.preventDefault();
     }
     const token = this.props.store.userStore.token;
     const config = {
@@ -116,9 +116,8 @@ class editProfile extends Component {
     } else {
       store.setGay(false)
     }
-
-    this.handleSubmit()
-
+ 
+    this.handleSubmit(e)
   }
 
   handleSlider = (radius) => {
