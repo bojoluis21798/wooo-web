@@ -48,9 +48,9 @@ class editProfile extends Component {
   }
 
   handleSubmit = (e = null) => {
-    if (e != null){
-      // e.preventDefault();
-    }
+    // if (e != null){
+    //   // e.preventDefault();
+    // }
     const token = this.props.store.userStore.token;
     const config = {
         headers: {
@@ -60,7 +60,6 @@ class editProfile extends Component {
     }
     // console.log(e)
     console.log("Axios --POST")
-    console.log(this.props.store.userStore.photos[0])
     axios.put('https://wooo.philsony.com/api/profiles/'+this.props.store.userStore.profile_id+'/', {
       bio:this.props.store.userStore.biography,
       sexual_preference:this.props.store.userStore.preference,
@@ -78,13 +77,12 @@ class editProfile extends Component {
     })
   }
 
-  handleImageOne = (event) => {
+  handleImageOne = () => {
     console.log("----BEGIN HANLDER----")
-    var file = event.target.files[0];
-    var path = document.getElementById('imageOne').value;
+    var file = document.getElementById("imageOne").files[0].path;
     const store = this.props.store.userStore;
 
-    store.setPicOne(file, path)
+    store.setPicOne(file)
     this.handleSubmit()
     console.log("----END HANDLER----")
   }
@@ -113,12 +111,12 @@ class editProfile extends Component {
   handleGay = (e) => {
     const store = this.props.store.userStore;
 
-    if(store.gay === null || store.gay === false) {
+    if(store.gay === false) {
       store.setGay(true)
     } else {
       store.setGay(false)
     }
- 
+    
     this.handleSubmit(e)
   }
 
@@ -158,16 +156,10 @@ class editProfile extends Component {
                     {/* <imageContainer> */}
                       <ProfileImageMain alt='Profile' src={this.props.store.userStore.profilePicture} />
                     {/* </imageContainer>  */}
-                      <Image 
-                        id="img1" 
-                        type="button" 
-                        onClick={(e) =>{this.refs.fileUploader.click();}}
-                        src={this.props.store.userStore.photos[0]}
-                      >
+                      <Image id="img1" type="button" onClick={(e) =>{this.refs.fileUploader.click();}} >
                         <input 
                           id="imageOne"
                           type="file" 
-                          accept="image/*"
                           ref="fileUploader" 
                           value={this.props.store.userStore.photos[0]} 
                           style={{display:"none"}} 
@@ -244,9 +236,8 @@ class editProfile extends Component {
                       checkedIcon={false}
                       bottom= "-10px"
                       checked={this.props.store.userStore.gay === true}
-                      onClick={this.handleGay}
-                  />
-                  <label style={{paddingLeft:"10px"}}>Gay</label>
+                      onChange={this.handleGay}
+                  /></label>
                   <Tagline>Radius</Tagline>
                   <RadiusNum>{this.props.store.userStore.radius} Km</RadiusNum>
                   <br/>
@@ -353,7 +344,7 @@ const ProfileImageSet = styled.div`
   float: right;
 `;
 
-const Image = styled.image`
+const Image = styled.button`
   width: 77px;
   height: 77px;
   background-color: #191919
