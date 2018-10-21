@@ -53,7 +53,14 @@ export default class Login extends Component {
     }
   }
 
-  onLoginButtonClick = () => this.setState({ loading: 'Authenticating you..' })
+  onLoginButtonClick = () => {
+    var checkBox = document.getElementById("defaultCheck1");
+    if (checkBox.checked === true) {
+      this.setState({ loading: 'Authenticating you..' })   
+    } else {
+      alert("You must agree to the terms and conditions first.")
+    }
+  }
 
   render() {
     return this.props.store.userStore.email ? (
@@ -87,7 +94,12 @@ export default class Login extends Component {
               )}
             />
             <TermsNotice>
-              Upon logging in, you agree to our terms and conditions.
+              <a href="pages/PolicyTerms.html">See our terms and conditions</a>
+              <br/>
+              <input className="form-check-input" type="checkbox" value="" id="defaultCheck1" />
+              <label className="form-check-label" htmlFor="defaultCheck1">
+                I hereby agree to the terms and conditions of the company.
+              </label>
             </TermsNotice>
           </LoginActionSection>
         </LoginContent>
@@ -177,7 +189,7 @@ const LoginButton = styled.button`
   }
 `
 
-const TermsNotice = styled.p`
+const TermsNotice = styled.div`
   margin: auto;
   font-size: 12px;
   color: "#969696";
