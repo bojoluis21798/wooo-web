@@ -1,32 +1,75 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
-import './main.css';
+import styled from "styled-components";
 import '../../../global/global.css'
 
 export default class MessageHead extends Component {
   render() {
     return (
-      <div onClick={this.reroute}>
-        <Link to={{ pathname: `/messages/${this.props.roomId}`, state: this.props }} className="link">
-          <div className="content">
-            <div className="div-3">
-              <img src={this.props.pairedImage} alt={this.props.name}/>
-            </div>
-            <div className="div-7 details">
-              <div className="name">
+      <Linked>
+        <Link to={{ pathname: `/messages/${this.props.roomId}`, state: this.props }}>
+          <Content>
+            <Div3>
+              <Image src={this.props.pairedImage} alt={this.props.name}/>
+            </Div3>
+            <Div7>
+              <Name>
                 <strong>
                   {this.props.pairedName}
                 </strong>
-              </div>
+              </Name>
               <div>
-                <p className="last-message">
+                <LastMessage>
                   {this.props.pairedName}
-                </p>
+                </LastMessage>
               </div>
-            </div>
-          </div>
+            </Div7>
+          </Content>
         </Link>
-      </div>
+      </Linked>
     );
   }
 }
+
+const Linked = styled.div`
+  color: white !important;
+  text-decoration: none;
+`;
+
+const Content = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const Image = styled.img`
+  min-width: 100% !important;
+  height: auto;
+  border-radius: 100%;
+`;
+
+const  Div3 = styled.div`
+  width: 30%;
+  display: inline-block;
+  flex: 1 1 !important;
+  padding: 0px;
+  margin: 0px;
+`;
+
+const Div7 = styled.div`
+  width: 70%;
+  display: inline-block;
+  flex: 3 3 !important;
+  padding-left: 5%;
+  padding-right: 5%;
+  text-align: left;
+`;
+
+const Name = styled.div`
+  font-size: 1.5em;
+`;
+
+const LastMessage = styled.p`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis !important;
+`;

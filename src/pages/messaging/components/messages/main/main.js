@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import MessageHead from '../messageHead/main';
 import { inject, observer } from 'mobx-react';
-import './main.css';
+import styled from "styled-components";
 import axios from 'axios';
 import _ from 'lodash';
 
@@ -48,12 +48,12 @@ export class Messages extends Component {
   render() {
     return (
       <div>
-        <div className="tag">
+        <Tag>
           <h2><strong>Messages</strong></h2>
-        </div>
-        <div className="search">
-          <input type="text" className="form-control" id="usr" placeholder="Search for a message"/>
-        </div>
+        </Tag>
+        <Search>
+          <Input type="text" id="usr" placeholder="Search for a message"/>
+        </Search>
         <div>
           {this.MessageItems()}
         </div>
@@ -61,3 +61,34 @@ export class Messages extends Component {
     );
   }
 }
+
+const Tag = styled.div`
+  text-align: left;
+`;
+
+const Search = styled.div`
+  margin-top: 10px;
+  margin-bottom: 10px;
+`;
+
+const Input = styled.input`
+  height: 45px;
+  min-height: 45px;
+  width: 100%;
+  font-weight: 20;
+  font-size: 18px;
+  padding: 15px;
+  color: #ffffff !important;
+  background-color: #191919 !important;
+  border-radius: 5px;
+  border: none;
+  justify-items: center;
+  overflow: hidden;
+  resize: hidden;
+  border: 1px solid #191919 !important;
+  
+  &:focus {
+    outline: none !important;
+    border: 1px solid #f51a63 !important;
+  }
+`;

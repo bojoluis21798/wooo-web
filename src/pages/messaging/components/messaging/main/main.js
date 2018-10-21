@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './main.css';
 import MessageBody from '../message/main';
 
 export class Messaging extends Component {
