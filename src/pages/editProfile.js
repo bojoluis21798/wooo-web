@@ -27,11 +27,11 @@ class editProfile extends Component {
   // }
 
 
-  // onFormSubmit = (e) => {
-  //   console.log("-- ON FORM SUBMIT --")
-  //   e.preventDefault() // Stop form submit
-  //   this.fileUpload(this.state.picOne)
-  // }
+  onFormSubmit = (e) => {
+    console.log("-- ON FORM SUBMIT --")
+    e.preventDefault() // Stop form submit
+    this.fileUpload(this.state.picOne)
+  }
 
   // onChange = (e) => {
   //   console.log("-- ON CHANGE --")
@@ -65,11 +65,12 @@ class editProfile extends Component {
     const token = this.props.store.userStore.token;
     const config = {
         headers: {
-            Authorization: 'Token ' + token,
-            'content-type': 'multipart/form-data'
+            'Authorization': 'Token ' + token,
+            // 'content-type': 'multipart/form-data'
+            
         }
     }
-    console.log("Axios --POST")
+    console.log("Axios --PUT")
     axios.put('https://wooo.philsony.com/api/profiles/'+this.props.store.userStore.profile_id+'/', {
       bio:this.props.store.userStore.biography,
       sexual_preference:this.props.store.userStore.preference,
@@ -78,8 +79,9 @@ class editProfile extends Component {
       suporting_pic_1:this.props.store.userStore.photos[0]
     },config)
     .then(response => {
+      console.log(this.props.store.userStore.photos[0]);
       console.log(response);
-      console.log("PuT was Successful!");
+      console.log("PUT was Successful!");
 
     })
     .catch(error => {
@@ -87,12 +89,37 @@ class editProfile extends Component {
     })
   }
 
-  handleImageOne = () => {
+  handleSubmitImage = () => {
+    const token = this.props.store.userStore.token;
+    const config = {
+        headers: {
+            'Authorization': 'Token ' + token,
+            'content-type': 'multipart/form-data'
+            
+        }
+    }
+    const fd = new FormData();
+    fd.append('suporting_pic_1',this.props.store.userStore.photos[0])
+    const url = 'https://wooo.philsony.com/api/profiles/'+this.props.store.userStore.profile_id+'/';
+
+    axios.put(url,fd,config)
+    .then(response => {
+      console.log("-- PUT PHOTO --");
+      console.log(response);
+    })
+    .catch(error => {
+      console.log("-- ERROR PHOTO --");
+      console.log(error);
+    })
+
+  }
+
+  handleImageOne = (event) => {
     console.log("----BEGIN HANLDER----")
     const store = this.props.store.userStore;
     
     store.setPicOne(event.target.files[0])
-    this.handleSubmit(event)
+    this.handleSubmitImage()
 
     console.log("----END HANDLER----")
   }
@@ -145,11 +172,11 @@ class editProfile extends Component {
     store.setBio(e.target.value);
   }
 
-  onDrop = (photo) => {
-    this.setState({
-      photos: this.state.photos.concat(photo)
-    })
-  }
+  // onDrop = (photo) => {
+  //   this.setState({
+  //     photos: this.state.photos.concat(photo)
+  //   })
+  // }
 
   myfunction = ()=>{
     this.props.history.push('/matching');
@@ -166,16 +193,18 @@ class editProfile extends Component {
                     {/* <imageContainer> */}
                       <ProfileImageMain alt='Profile' src={this.props.store.userStore.profilePicture} />
                     {/* </imageContainer>  */}
-                      <Image id="img1" type="button" onClick={(e) =>{this.refs.fileUploader.click();}} >
+                    <form onChange={this.handleImageOne} encType="multipart/form-data">
+                      <Image id="img1" onClick={(e) =>{this.refs.fileUploader.click();}} >
                         <input 
                           id="imageOne"
                           type="file" 
                           ref="fileUploader" 
                           value={this.props.store.userStore.photos[0]} 
                           style={{display:"none"}} 
-                          onChange={this.handleImageOne}
+                          // onChange={this.handleImageOne}
                         />
                       </Image>
+                    </form>
                       {/*<Image id="img2" type="button" onClick={(e) =>{this.refs.fileUploader.click();}} >
                         <input 
                           type="file" 
@@ -244,7 +273,7 @@ class editProfile extends Component {
                       onColor="#f51a63"
                       offColor="#191919"
                       uncheckedIcon={false}
-                      checkedIcon={false}
+                      checkedIcon={true}
                       bottom= "-10px"
                       checked={this.props.store.userStore.gay === true}
                       onChange={this.handleGay}
