@@ -157,7 +157,7 @@ export default class MessageBody extends Component {
           {this.MessageItems()}
         </div>
         {/* search form-control -to check */}
-        <div>
+        <Chat>
           <Div8>
             <Input type="text" id="usr" placeholder="Send a Message" 
             onChange={this.handleChange.bind(this)}
@@ -171,7 +171,7 @@ export default class MessageBody extends Component {
             SEND
             </ButtonA>
           </Div2>
-        </div>
+        </Chat>
       </div>
     );
   }
@@ -230,8 +230,26 @@ const LastMessage = styled.p`
   text-overflow: ellipsis !important;
 `;
 
-const Search = styled.div`
+const Chat = styled.div`
+  height: 45px;
+  min-height: 45px;
+  width: 100%;
+  font-weight: 20;
+  font-size: 18px;
+  padding: 15px;
+  color: #ffffff !important;
+  background-color: #191919 !important;
+  border-radius: 5px;
+  border: none;
+  justify-items: center;
+  overflow: hidden;
+  resize: hidden;
+  border: 1px solid #191919 !important;
 
+  &:focus {
+    outline: none !important;
+    border: 1px solid #f51a63 !important;
+  }
 `;
 
 const Input = styled.input`
