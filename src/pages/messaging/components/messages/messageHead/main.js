@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import styled from "styled-components";
-import '../../../global/global.css'
 
 export default class MessageHead extends Component {
   render() {
@@ -48,20 +47,18 @@ const Image = styled.img`
 `;
 
 const  Div3 = styled.div`
-  width: 30%;
-  display: inline-block;
   flex: 1 1 !important;
   padding: 0px;
   margin: 0px;
 `;
 
 const Div7 = styled.div`
-  width: 70%;
-  display: inline-block;
   flex: 3 3 !important;
   padding-left: 5%;
   padding-right: 5%;
   text-align: left;
+  color: white !important;
+  text-decoration: none;
 `;
 
 const Name = styled.div`

@@ -21,11 +21,11 @@ export default class Messages extends Component {
         )}
         {this.props.profile_id === this.props.store.userStore.profile_id && (
           <DivContent>
-            <Div3>
+            <Div4>
               <div>
                 <p>{this.props.message.content}</p>
               </div>
-            </Div3>
+            </Div4>
             <Div2>
               <Img src={this.props.store.userStore.profilePicture} alt={this.props.profile_id}/>
             </Div2>
