@@ -57,7 +57,7 @@ const Div3 = styled.div`
   border-radius: 10px;
 `;
 
-const Div3 = styled.div`
+const Div4 = styled.div`
   width: 80%;
   display: inline-block;
   text-align: left;
