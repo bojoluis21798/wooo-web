@@ -59,6 +59,7 @@ export default class MessageBody extends Component {
   componentDidMount(){
     this.setState({message: ""});
     this.setState({userId: this.props.store.userStore.profile_id});
+    this.handleMessageListen();
   }
   
   componentWillReceiveProps(nextProps) {
