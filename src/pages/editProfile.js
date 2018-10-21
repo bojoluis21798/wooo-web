@@ -76,7 +76,6 @@ class editProfile extends Component {
       sexual_preference:this.props.store.userStore.preference,
       gay:this.props.store.userStore.gay,
       search_radius:this.props.store.userStore.radius,
-      suporting_pic_1:this.props.store.userStore.photos[0]
     },config)
     .then(response => {
       console.log(this.props.store.userStore.photos[0]);
@@ -194,7 +193,11 @@ class editProfile extends Component {
                       <ProfileImageMain alt='Profile' src={this.props.store.userStore.profilePicture} />
                     {/* </imageContainer>  */}
                     <form onChange={this.handleImageOne} encType="multipart/form-data">
-                      <Image id="img1" onClick={(e) =>{this.refs.fileUploader.click();}} >
+                      <Image 
+                        id="img1" 
+                        style={ { backgroundImage: "url('this.props.store.userStore.photos[0]')" } } 
+                        onClick={(e) =>{this.refs.fileUploader.click();}} 
+                      >
                         <input 
                           id="imageOne"
                           type="file" 

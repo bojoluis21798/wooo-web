@@ -61,7 +61,6 @@ class UserStore {
     @action
     setGay(gay){
         this.gay = gay
-        console.log(this.gay)
     }
 
     @action
