@@ -58,6 +58,20 @@ const Div3 = styled.div`
   border-radius: 10px;
 `;
 
+<<<<<<< HEAD
+=======
+const Div4 = styled.div`
+  width: 80%;
+  display: inline-block;
+  text-align: left;
+  margin: 3px;
+  padding: 1px;
+  padding-left: 5px;
+  background-color: #FC3F73;
+  border-radius: 10px;
+`;
+
+>>>>>>> f52e39ee4e43fab37c4f714a39387a537237a0c7
 const DivContent = styled.div`
   display: flex;
   align-items: center;
