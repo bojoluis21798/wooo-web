@@ -15,35 +15,39 @@ export class Messages extends Component {
   MessageItems = () => {
     axios.get(`https://wooo.philsony.com/api/profiles/${this.props.store.userStore.profile_id}/matches`)
     .then(response => {
-      var pairedUser = [];
-      response.data.forEach(element => {
-        var pairedInfo = {
-          pairedId: element.id,
-          pairedName: element.user.first_name,
-          pairedImage: element.profile_image,
-          roomId: this.state.currentUser+'R'+element.id,
-        }
-        pairedUser.push(pairedInfo);
-      });
-      this.setState({
-        pairedUser,
-      })
+      console.log(response);
+      if(response.data){
+        var pairedUser = [];
+        response.data.forEach(element => {
+          var pairedInfo = {
+            pairedId: element.id,
+            pairedName: element.user.first_name,
+            pairedImage: element.profile_image,
+            roomId: this.state.currentUser+'R'+element.id,
+          }
+          pairedInfo.roomId = (element.id < this.state.currentUser) ? element.id+'R'+this.state.currentUser : this.state.currentUser+'R'+element.id
+          pairedUser.push(pairedInfo);
+        });
+        this.setState({
+          pairedUser,
+        })
+      }
     })
     const matches= this.state.pairedUser;
     const items = [];
 
-    _.mapKeys(matches, (data, index) => {
-      items.push(
-        <div key={index}>
-          <MessageHead
-            {...data}
-          />
-          <hr/>
-        </div>,
-      );
-    });
+  _.mapKeys(matches, (data, index) => {
+    items.push(
+      <div key={index}>
+        <MessageHead
+          {...data}
+        />
+        <hr/>
+      </div>,
+    );
+  });
 
-    return items;
+  return items;
   };
   render() {
     return (
