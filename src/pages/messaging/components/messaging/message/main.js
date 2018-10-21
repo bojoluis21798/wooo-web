@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Messages from '../messages/main';
+import styled from "styled-components";
 import back from '../../../../../assets/images/left.png';
 import './main.css';
 import '../../../global/global.css';
@@ -138,40 +139,120 @@ export default class MessageBody extends Component {
   render() {
     return (
       <div>
-        <div className="content">
-          <div className="back">
-            <Link to='/' className="link">
+        <Content>
+          <Back>
+            <Link to='/'>
               <img src={back} alt="Back"></img>
             </Link>
-          </div>
-          <div className="ree">
-            <div className="name">
+          </Back>
+          <Ree>
+            <Name>
               <strong>{this.props.ree.pairedName}</strong>
-            </div>
-            <div className="last-message">
+            </Name>
+            <LastMessage>
               <p>Active Now</p>
-            </div>
-          </div>
-        </div>
-        <div className="Messages">
+            </LastMessage>
+          </Ree>
+        </Content>
+        <div>
           {this.MessageItems()}
         </div>
-        <div className="search form-control">
-          <div className="div-8">
-            <input type="text" className="form-control" id="usr" placeholder="Send a Message" 
+        {/* search form-control -to check */}
+        <div>
+          <Div8>
+            <Input type="text" id="usr" placeholder="Send a Message" 
             onChange={this.handleChange.bind(this)}
             value={this.state.message}
             onKeyPress={this.handleKeyPress.bind(this)}
             />
-          </div>
-          <div className="div-2">
-            <button className="button"
+          </Div8>
+          <Div2>
+            <ButtonA
             onClick={this.handleSend.bind(this)}>
             SEND
-            </button>
-          </div>
+            </ButtonA>
+          </Div2>
         </div>
       </div>
     );
   }
 }
+
+const Content = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const Back = styled.div`
+  float: left !important;
+  color: white !important;
+`;
+
+const Ree = styled.div`
+  margin:0 auto;
+  text-align: center;
+`;
+
+const Name = styled.div`
+  font-size: 1.5em;
+`;
+
+const ButtonA = styled.button`
+  font-weight: 100;
+  font-size: 15px;
+  color: #ffffff;
+  background-color: #191919;
+  letter-spacing: 0.01px;
+  text-align: center;
+  border-radius: 5px;
+  border: 0;
+  padding: 12px;
+  width: 90px;
+  margin: auto;
+  margin-bottom: 5px;
+  margin-right: 15px;
+  transition: 0.5s all ease;
+  cursor: pointer;
+`;
+
+const Div2 = styled.div`
+  width: 20%;
+  display: inline-block;
+`;
+
+const Div8 = styled.div`
+  width: 80%;
+  display: inline-block;
+`;
+
+const LastMessage = styled.p`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis !important;
+`;
+
+const Search = styled.div`
+
+`;
+
+const Input = styled.input`
+  height: 45px;
+  min-height: 45px;
+  width: 100%;
+  font-weight: 20;
+  font-size: 18px;
+  padding: 15px;
+  color: #ffffff !important;
+  background-color: #191919 !important;
+  border-radius: 5px;
+  border: none;
+  justify-items: center;
+  overflow: hidden;
+  resize: hidden;
+  border: 1px solid #191919 !important;
+  
+  &:focus {
+    outline: none !important;
+    border: 1px solid #f51a63 !important;
+  }
+`;
