@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import Messages from '../messages/main';
 import styled from "styled-components";
 import back from '../../../../../assets/images/left.png';
-import '../../../global/global.css';
 import _ from 'lodash';
 import { inject, observer } from 'mobx-react';
 
