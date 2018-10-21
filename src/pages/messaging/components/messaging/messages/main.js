@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
+import styled from "styled-components";
 
 @inject('store') @observer
 export default class Messages extends Component {
@@ -20,11 +21,11 @@ export default class Messages extends Component {
         )}
         {this.props.profile_id === this.props.store.userStore.profile_id && (
           <DivContent>
-            <Div4>
+            <Div3>
               <div>
                 <p>{this.props.message.content}</p>
               </div>
-            </Div4>
+            </Div3>
             <Div2>
               <Img src={this.props.store.userStore.profilePicture} alt={this.props.profile_id}/>
             </Div2>
@@ -54,17 +55,6 @@ const Div3 = styled.div`
   padding: 1px;
   padding-left: 5px;
   background-color: #191919;
-  border-radius: 10px;
-`;
-
-const Div3 = styled.div`
-  width: 80%;
-  display: inline-block;
-  text-align: left;
-  margin: 3px;
-  padding: 1px;
-  padding-left: 5px;
-  background-color: #FC3F73;
   border-radius: 10px;
 `;
 
