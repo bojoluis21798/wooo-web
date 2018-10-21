@@ -73,7 +73,6 @@ export default class MessageBody extends Component {
   }
 
   handleSend() {
-    console.log(this.props.store.userStore)
     if (this.state.message) {
       var newmessage = {
         userId: this.state.userId,
@@ -82,7 +81,6 @@ export default class MessageBody extends Component {
           content: this.state.message
         }
       }
-      console.log(newmessage)
       this.messageRef.push(newmessage);
       this.setState({ message: '' });
       this.handleMessageListen();
@@ -99,7 +97,6 @@ export default class MessageBody extends Component {
     this.messageRef
     .limitToLast(10)
     .on('value', message => {
-        console.log(message.val())
         messg = message.val()
         
     });
@@ -121,7 +118,6 @@ export default class MessageBody extends Component {
   MessageItems = () => {
     const posts = this.state.list;
     const items = [];
-
     _.mapKeys(posts, (data, index) => {
       items.push(
           <Messages
@@ -129,6 +125,8 @@ export default class MessageBody extends Component {
             key={index}
             id={index}
             userData={this.props.ree}
+            user1={this.state.userId}
+            user2={this.props.ree.pairedId}
           />,
       );
     });

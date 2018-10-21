@@ -7,7 +7,7 @@ export default class Messages extends Component {
   render() {
     return (
       <div>
-        {this.props.profile_id !== this.props.store.userStore.profile_id && (
+        {this.props.userData.pairedId === this.props.userId && (
           <Div>
             <Div2>
               <Img src={this.props.userData.pairedImage} alt={this.props.userData.pairedId}/>
@@ -19,7 +19,7 @@ export default class Messages extends Component {
             </Div3>
           </Div>
         )}
-        {this.props.profile_id === this.props.store.userStore.profile_id && (
+        {this.props.userId === this.props.store.userStore.profile_id && (
           <DivContent>
             <Div4>
               <div>
