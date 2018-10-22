@@ -5,7 +5,6 @@ import back from '../assets/images/left.png';
 import _ from 'lodash';
 import { inject, observer } from 'mobx-react';
 
-import axios from 'axios';
 import firebase from 'firebase';
 
 const config =  {
@@ -101,7 +100,7 @@ class MessageBody extends Component {
         messg = message.val()
         
     });
-    if(messg != null){
+    if(messg !== null){
         this.listenMessages()
     }
   }

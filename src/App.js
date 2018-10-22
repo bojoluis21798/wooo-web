@@ -2,13 +2,13 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import RootStore from "./stores/RootStore";
 import { Provider } from "mobx-react";
-// import {Loading}
+
 // Pages
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import EditProfile from "./pages/EditProfile";
 import Loading from "./pages/Loading";
-import Matching from "./pages/matchingUI";
+import Matching from "./pages/Matching";
 import Testing from './pages/Testing';
 import Messaging from './pages/Message-Log';
 

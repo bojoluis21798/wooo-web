@@ -49,7 +49,7 @@ class EditProfile extends Component {
   }
 
   handleSubmit = (e = null) => {
-    if (e != null){
+    if (e !== null){
       e.preventDefault();
     }
     const token = this.props.store.userStore.token;

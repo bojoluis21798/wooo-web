@@ -1,5 +1,4 @@
 import React,{Component} from 'react';
-// import './matchingUI.css';
 import {inject,observer} from 'mobx-react';
 import back from '../assets/images/back-button.png';
 import close from '../assets/images/close-button.png';
@@ -9,7 +8,7 @@ import dog2 from '../assets/images/dog2.jpg';
 import dog3 from '../assets/images/dog3.jpg';
 import heart from '../assets/images/heart-outline.png';
 
-import styled, {css,keyframes}from 'styled-components';
+import styled, {css} from 'styled-components';
 import left from '../assets/images/left.png';
 import right from '../assets/images/right.png';
 import Notifications, {notify} from 'react-notify-toast';
@@ -37,9 +36,9 @@ const BackArea = styled.div`
     justify-content:
     ${
         props => {
-            if(props.type == "back"){
+            if(props.type === "back"){
                 return ("flex-start");
-            }else if(props.type == "exit"){
+            }else if(props.type === "exit"){
                 return ("flex-end");
             }
         }
@@ -136,6 +135,13 @@ const TextDiv = styled.div`
                             font-weight: 300;
                         `
                     );
+                default:
+                    return(
+                        css`
+                            font-size:2.7vh;
+                            font-weight: 300;
+                        `
+                    )
             }
         }
     }
@@ -179,7 +185,7 @@ const PicSlide = styled.div`
 const Arrow = styled.button`
     background: url(
         ${props=>
-            props.direction == "left" ?
+            props.direction === "left" ?
                 left: right
     }) no-repeat scroll 0 0 transparent;
     background-size: contain;
@@ -196,10 +202,6 @@ const NoMatch = styled.p`
 `;
 
 class FooterArea extends Component {
-    constructor(props){
-        super(props);
-    }
-
     render(){
         return (
             <ButtonArea>
@@ -220,23 +222,19 @@ class FooterArea extends Component {
 
 
 class HeaderArea extends Component {
-    constructor(props){
-        super(props);
-    }
-
     goBack = () =>{
        return <Redirect to='/dashboard'/>
     }
 
     render(){
 
-        if(this.props.type=='back'){
+        if(this.props.type === 'back'){
             return(
 
                 <BackArea type = {this.props.type} >
                  <Link to='/edit-profile'>
                     <TopButton onClick = {this.props.eventHandle}>
-                        <Icon src={this.props.type == "back" ? back : close}/>
+                        <Icon src={this.props.type === "back" ? back : close}/>
                     </TopButton>
                  </Link>
                 </BackArea>
@@ -246,7 +244,7 @@ class HeaderArea extends Component {
             return(
                 <BackArea type = {this.props.type} >
                     <TopButton onClick = {this.props.eventHandle}>
-                        <Icon src={this.props.type == "back" ? back : close}/>
+                        <Icon src={this.props.type === "back" ? back : close}/>
                     </TopButton>
                 </BackArea>
             );
@@ -312,7 +310,7 @@ class Matching extends Component{
              }
          }).then(
              res=>{
-                 if(res.data.length == 0){
+                 if(res.data.length === 0){
                     this.setState({noProspects: true})
                  }else{
                     store.setProspects(res.data);
@@ -368,7 +366,7 @@ class Matching extends Component{
                 match_id:store.currentProspect.id,
                 status:1
         },config).then(res=>{
-            let matchExists = res.match_exists != undefined;
+            let matchExists = res.match_exists !== undefined;
             if(matchExists){
                 notify.show("You matched!", "success", 4000);
             }
@@ -403,7 +401,7 @@ class Matching extends Component{
     handlePreviousPic(imgLength){
         let imgIdx = this.state.imgIdx;
         this.setState({
-            imgIdx: (imgIdx-1 == -1) ? imgLength-1: imgIdx-1,
+            imgIdx: (imgIdx-1 === -1) ? imgLength-1: imgIdx-1,
         });
     }
     render(){
