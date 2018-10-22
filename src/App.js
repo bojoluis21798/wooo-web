@@ -5,13 +5,11 @@ import { Provider } from "mobx-react";
 
 // Pages
 import Login from "./pages/Login";
-import Dashboard from "./pages/Dashboard";
-import EditProfile from "./pages/EditProfile";
 import Loading from "./pages/Loading";
 import Matching from "./pages/Matching";
-import Testing from './pages/Testing';
 import Messages from './pages/Messages'
 import MessageThread from './pages/MessageThread';
+import EditProfile from './pages/EditProfile'
 
 class App extends Component {
   state = { loading: true };
