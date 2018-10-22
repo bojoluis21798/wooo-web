@@ -20,14 +20,14 @@ export default class Loading extends Component {
 }
 
 const LoadingScreen = styled.div`
-    transition: 1s all
-    background-color: #000000
-    width: 100vw
-    height: 100vh
-    display: grid
-    align-items: center
-    justify-items: center
-    color: #FFFFFF
-    grid-row-template: 1fr 1fr
-    text-align: center
+    transition: 1s all;
+    background-color: #000000;
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    color: #FFFFFF;
+    grid-template-rows: 1fr 1fr;
+    text-align: center;
 `

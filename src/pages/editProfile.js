@@ -45,9 +45,6 @@ class EditProfile extends Component {
   //   return axios.post(url, formData, config)
   // }
 
-  componentDidMount(){
-  }
-
   handleSubmit = (e = null) => {
     if (e !== null){
       e.preventDefault();

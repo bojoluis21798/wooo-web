@@ -65,6 +65,7 @@ class UserStore {
         // this.accessToken = authObj.accessToken
         this.accessToken = authObj.auth_token
     }
+    
     // @action 
     // populateUser(userAuth) {
     //     console.log(userAuth.profile_id)
