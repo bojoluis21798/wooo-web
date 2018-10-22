@@ -140,7 +140,7 @@ class MessageBody extends Component {
       <div>
         <Content>
           <Back>
-            <Link to='/'>
+            <Link to='/messsages'>
               <img src={back} alt="Back"></img>
             </Link>
           </Back>
