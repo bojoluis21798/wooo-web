@@ -1,13 +1,19 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
+import close from '../assets/images/close-button.png';
 export default class PolicyTerms extends Component {
     constructor(props){
         super(props);
     }
 
+    componentDidMount(){
+        console.log(close);
+    }
+
     render() {
         return (
             <Container>
+                <BackArea src = {close}></BackArea>
                 <Title id="name">Privacy Policy</Title>
                     <ChapterTitle>Introduction</ChapterTitle>
                     <ol type="1" class="list">
@@ -151,7 +157,7 @@ const Container = styled.div`
     justify-content: center;
     background-color: black;
     color: white;
-    padding: 4vh;
+    padding: 2.6vh;
 `;
 
 const Title = styled.span`
@@ -176,5 +182,14 @@ const ChapterListItem = styled.li`
 const Url = styled.a`
     color: #6393f9;
 `;
+
+const BackArea = styled.img`
+    height: 7vh;
+    width: 7vh;
+    background-color: black;
+    border-width: 0;
+    cursor: pointer;
+`;
+
 
 
