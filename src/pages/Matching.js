@@ -1,426 +1,117 @@
-import React,{Component} from 'react';
-import {inject,observer} from 'mobx-react';
-import back from '../assets/images/back-button.png';
-import close from '../assets/images/close-button.png';
-import dislike from '../assets/images/dislike.png';
-import dog from '../assets/images/dog.jpeg';
-import dog2 from '../assets/images/dog2.jpg';
-import dog3 from '../assets/images/dog3.jpg';
-import heart from '../assets/images/heart-outline.png';
+import React, { Component } from 'react'
+import { inject, observer } from 'mobx-react'
 
-import styled, {css} from 'styled-components';
-import left from '../assets/images/left.png';
-import right from '../assets/images/right.png';
-import Notifications, {notify} from 'react-notify-toast';
-import Loading from './Loading';
-import axios from 'axios';
-import AuthorizedLayout from '../layouts/AuthorizedLayout';
-import {Link,Redirect} from 'react-router-dom';
-//
-const Container = styled.div`
-    display: flex;
-    position: absolute;
-    float: left;
-    height:100%;
-    width: 100%;
-    flex-direction: column;
-    align-items:center;
-    background-color: black;
-`;
+import styled, { css } from 'styled-components'
+import left from '../assets/images/left.png'
+import right from '../assets/images/right.png'
+import Notifications, {notify} from 'react-notify-toast'
+import Loading from './Loading'
+import axios from 'axios'
+import AuthorizedLayout from '../layouts/AuthorizedLayout'
+import matchingData from '../assets/data/matching.data'
+import MatchingHeader from '../components/MatchingHeader'
+import MatchingFooter from '../components/MatchingFooter'
 
-const BackArea = styled.div`
-    flex-basis: min-content;
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    justify-content:
-    ${
-        props => {
-            if(props.type === "back"){
-                return ("flex-start");
-            }else if(props.type === "exit"){
-                return ("flex-end");
-            }
-        }
-    };
-`;
-
-const TopButton = styled.button`
-    border: none;
-    text-align: center;
-    background-color:black;
-    text-decoration: none;
-    display: inline-block;
-    cursor: pointer;
-    margin: 3vh;
-    padding: 0vh;
-`;
-
-const Icon = styled.img`
-    width:5vh;
-    height:5vh;
-`;
-
-const Profile = styled.div`
-    display: flex;
-    width: 100%;
-    flex-basis: min-content;
-    justify-content: space-between;
-    align-items: center;
-    flex-direction: column;
-`;
-
-const PicArea = styled.div`
-    flex-basis: min-content;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-`;
-
-const ImageStyle = styled.img`
-    width:40vh;
-    height:40vh;
-    border-radius:20px;
-`;
-
-const MainTextArea = styled.div`
-    flex-basis: min-content;
-    width: 100%;
-    display:flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-`;
-
-const TextContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-`;
-
-const BioRow = styled.div`
-    display: flex;
-    padding: 2.5vh;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-`;
-
-const TextDiv = styled.div`
-    text-align:center;
-    color: white;
-    font-family: 'Apercu', sans-serif;
-    ${
-        props => {
-            switch(props.level){
-                case "1":
-                    return(
-                        css`
-                            font-size:4vh;
-                            font-weight: 500;
-                        `
-                    );
-                case "2":
-                    return(
-                        css`
-                            font-size:2.7svh;
-                            font-weight: 300;
-                        `
-                    );
-                case "3":
-                    return(
-                        css`
-                            font-size:2.7vh;
-                            font-weight: 300;
-                        `
-                    );
-                default:
-                    return(
-                        css`
-                            font-size:2.7vh;
-                            font-weight: 300;
-                        `
-                    )
-            }
-        }
-    }
-`;
-
-const ButtonActions = styled.button`
-    border-radius: 100%;
-    background-color: rgba(18, 18, 18, 1); /* Green */
-    border: none;
-    color: white;
-    padding: 3vh;
-    margin: 3.5vh;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    cursor: pointer;
-`;
-
-const ButtonArea = styled.div`
-    width: 100%;
-    position: absolute;
-    bottom: 0;
-    justify-content: center;
-    display:flex;
-    flex-direction:row;
-    background-color: black;
-`;
-
-const Item = styled.div`
-    align-self: center;
-`;
-
-const PicSlide = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    flex-basis: max-content;
-`;
-
-const Arrow = styled.button`
-    background: url(
-        ${props=>
-            props.direction === "left" ?
-                left: right
-    }) no-repeat scroll 0 0 transparent;
-    background-size: contain;
-    width: 6vh;
-    height: 6vh;
-    color: #000000;
-    border-width: 0px;
-`;
-
-const NoMatch = styled.p`
-    font-size: 9vh;
-    font-family: Apercu;
-    font-weight: 700;
-`;
-
-class FooterArea extends Component {
-    render(){
-        return (
-            <ButtonArea>
-                <Item>
-                    <ButtonActions onClick = {this.props.handleDislike}>
-                        <Icon src={dislike}/>
-                    </ButtonActions>
-                </Item>
-                <Item>
-                    <ButtonActions onClick = {this.props.handleLike}>
-                        <Icon src={heart}/>
-                    </ButtonActions>
-                </Item>
-            </ButtonArea>
-        );
-    }
-}
-
-
-class HeaderArea extends Component {
-    goBack = () =>{
-       return <Redirect to='/dashboard'/>
-    }
-
-    render(){
-
-        if(this.props.type === 'back'){
-            return(
-
-                <BackArea type = {this.props.type} >
-                 <Link to='/edit-profile'>
-                    <TopButton onClick = {this.props.eventHandle}>
-                        <Icon src={this.props.type === "back" ? back : close}/>
-                    </TopButton>
-                 </Link>
-                </BackArea>
-
-            );
-        }else{
-            return(
-                <BackArea type = {this.props.type} >
-                    <TopButton onClick = {this.props.eventHandle}>
-                        <Icon src={this.props.type === "back" ? back : close}/>
-                    </TopButton>
-                </BackArea>
-            );
-        }
-
-    }
-}
-
-@inject('store')@observer
-class Matching extends Component{
-
+@observer
+@inject('store')
+export default class Matching extends Component{
     constructor(props){
-        super(props);
-
+        super(props)
         this.state = {
             hasPayload : false,
-            people: [
-                {
-                    name: "Rico",
-                    age: 16,
-                    img: [dog, dog2, dog3],
-                    location: "DOWNTOWN MANHATTAN, NEW YORK",
-                    bio: "My friends call me daddy. I can't figure out why. Do you mind helping me figure it out?",
-                },
-                {
-                    name: "Rob",
-                    age: 17,
-                    img: [dog2, dog, dog3],
-                    location: "DOWNTOWN MANHATTAN, NEW YORK",
-                    bio: "Im chinese",
-                },
-                {
-                    name: "Joe",
-                    age: 17,
-                    img: [dog3, dog, dog2],
-                    location: "DOWNTOWN MANHATTAN, NEW YORK",
-                    bio: "Im white",
-                }
-            ],
+            people: matchingData,
             viewProfile: false,
             imgIdx: 0,
             noProspects: false,
-        };
-
-
-        this.nextPerson = this.nextPerson.bind(this);
-        this.handleDislike = this.handleDislike.bind(this);
-        this.handleLike = this.handleLike.bind(this);
-        this.handleViewProfile = this.handleViewProfile.bind(this);
-        this.handleCloseProfile = this.handleCloseProfile.bind(this);
-        this.handleNextPic = this.handleNextPic.bind(this);
-        this.handlePreviousPic = this.handlePreviousPic.bind(this);
+        }
     }
 
-    componentDidMount(){
-         /*this.changeSmth();*/
-
-         const store = this.props.store.userStore;
-
+    componentDidMount = () => {
          axios.get("https://wooo.philsony.com/api/matching",{
              params:{
-                 profile_id:store.profile_id
+                 profile_id:this.props.store.userStore.profile_id
              }
          }).then(
              res=>{
                  if(res.data.length === 0){
                     this.setState({noProspects: true})
                  }else{
-                    store.setProspects(res.data);
+                    this.props.store.userStore.setProspects(res.data)
                  }
-                //  this.setState({prospects:store.prospects});
-                 this.setState({hasPayload:true});
+                 this.setState({hasPayload:true})
 
              }
-         );
+         )
     }
 
-    nextPerson(){
-        // if(this.state.people.length > 1){
-        //     this.setState(prev =>
-        //         {
-        //             prev.people.splice(0,1);
-        //             return {people: prev.people};
-        //         }
-        //     );
-        // }
-
-        const store = this.props.store.userStore;
-
-        store.nextProspect();
+    nextPerson = () => {
+        this.props.store.userStore.nextProspect()
     }
 
-    handleDislike(){
-        const store = this.props.store.userStore;
+    handleDislike = () => {
         const config ={
             headers:{
-                Authorization:'Token '+ store.token
+                Authorization:'Token '+ this.props.store.userStore.token
             }
         }
         axios.post("https://wooo.philsony.com/api/matching/",{
-                profile_id:store.profile_id,
-                match_id:store.currentProspect.id,
+                profile_id:this.props.store.userStore.profile_id,
+                match_id:this.props.store.userStore.currentProspect.id,
                 status:0
         },config).then(res=>{
-        });
-        this.nextPerson();
+        })
+        this.nextPerson()
     }
 
-    handleLike(){
-        const store = this.props.store.userStore;
+    handleLike = () => {
         const config ={
             headers:{
-                Authorization:'Token '+ store.token
+                Authorization:'Token '+ this.props.store.userStore.token
             }
         }
-        //notify.show('Toasty!', "success", 4000);
-        axios.post("https://wooo.philsony.com/api/matching/",{
-                profile_id:store.profile_id,
-                match_id:store.currentProspect.id,
-                status:1
-        },config).then(res=>{
-            let matchExists = res.match_exists !== undefined;
+        axios.post("https://wooo.philsony.com/api/matching/", {
+                profile_id: this.props.store.userStore.token.profile_id,
+                match_id: this.props.store.userStore.token.currentProspect.id,
+                status: 1
+        }, config).then(res=>{
+            let matchExists = res.match_exists !== undefined
             if(matchExists){
-                notify.show("You matched!", "success", 4000);
+                notify.show("You matched!", "success", 4000)
             }
         })
-        this.nextPerson();
+        this.nextPerson()
     }
 
-    handleViewProfile(){
+    handleViewProfile = () => {
         this.setState({
             viewProfile: true,
-        });
+        })
     }
 
-    handleCloseProfile(){
-
-
-
+    handleCloseProfile = () => {
             this.setState({
                 viewProfile: false,
                 imgIdx: 0,
-            });
-
-
+            })
     }
 
-    handleNextPic(imgLength){
+    handleNextPic = imgLength => {
         this.setState({
             imgIdx: (this.state.imgIdx+1)%imgLength,
-        });
+        })
     }
 
-    handlePreviousPic(imgLength){
-        let imgIdx = this.state.imgIdx;
+    handlePreviousPic = imgLength => {
+        let imgIdx = this.state.imgIdx
         this.setState({
             imgIdx: (imgIdx-1 === -1) ? imgLength-1: imgIdx-1,
-        });
+        })
     }
-    render(){
-        const store = this.props.store.userStore;
 
-        // const list = store.arr.map(num=>{
-        //     return <li>{num}</li>
-        // });
-
-        // //OR
-        // const list = store.arr.map((num,index)=>(
-        //     <li key={index}>{num}</li>
-        // ));
-        // const anotherList = store.users.map((object,index)=>(
-        //     <li>{object.firstName}</li>
-        // ));
-        let state = this.state;
-        let currentPerson = state.people[0];
-        let imgIdx = state.imgIdx;
+    render() {
+        let state = this.state
+        let currentPerson = state.people[0]
+        let imgIdx = state.imgIdx
 
         if(!this.state.hasPayload){
             return <Loading message="Finding Gorls"/>
@@ -429,9 +120,10 @@ class Matching extends Component{
             <AuthorizedLayout noheaders={true}>
                 <Container>
                     <Notifications/>
-                    <HeaderArea
+                    <MatchingHeader
                         eventHandle = {this.handleCloseProfile}
-                        type = {state.viewProfile ? "exit" : "back"}/>
+                        type = {state.viewProfile ? "exit" : "back"}
+                    />
                     {this.state.noProspects ?
                         <NoMatch>
                             No Match
@@ -446,7 +138,7 @@ class Matching extends Component{
                                 />
                             }
                             <PicArea>
-                                <ImageStyle src={store.currentProspect.profile_image?store.currentProspect.profile_image:currentPerson.img[imgIdx]} />
+                                <ImageStyle src={this.props.store.userStore.currentProspect.profile_image?this.props.store.userStore.currentProspect.profile_image:currentPerson.img[imgIdx]} />
                             </PicArea>
                             {state.viewProfile &&
                                 <Arrow
@@ -458,11 +150,21 @@ class Matching extends Component{
                         <MainTextArea>
                             <TextContainer>
                                 <BioRow>
-                                    <TextDiv level = "1">{store.currentProspect.user.first_name?store.currentProspect.user.first_name:currentPerson.name}, {store.currentProspect.age?store.currentProspect.age:currentPerson.age}</TextDiv>
+                                    <TextDiv level = "1">
+                                        { this.props.store.userStore.currentProspect.user.first_name?
+                                            this.props.store.userStore.currentProspect.user.first_name
+                                            :currentPerson.name
+                                        }
+                                        , 
+                                        {
+                                            this.props.store.userStore.currentProspect.age?
+                                            this.props.store.userStore.currentProspect.age:currentPerson.age
+                                        }
+                                    </TextDiv>
                                     <TextDiv level= "2">{currentPerson.location}</TextDiv>
                                 </BioRow>
                                 <BioRow>
-                                    <TextDiv level = "3">{store.currentProspect.bio?store.currentProspect.bio:currentPerson.bio}</TextDiv>
+                                    <TextDiv level = "3">{this.props.store.userStore.currentProspect.bio?this.props.store.userStore.currentProspect.bio:currentPerson.bio}</TextDiv>
                                 </BioRow>
                             </TextContainer>
                         </MainTextArea>
@@ -470,20 +172,137 @@ class Matching extends Component{
                     }
                     {
                         !state.noProspects &&
-                        <FooterArea
+                        <MatchingFooter
                             handleLike = {this.handleLike}
                             handleDislike = {this.handleDislike}
                         />
                     }
                 </Container>
             </AuthorizedLayout>
-        );
+        )
     }
-
-    //  changeSmth = ()=>{
-    //     // this.props.store.add();
-    //     this.props.store.fetchUsers();
-    // }
 }
 
-export default Matching;
+const Container = styled.div`
+    display: flex
+    position: absolute
+    float: left
+    height:100%
+    width: 100%
+    flex-direction: column
+    align-items:center
+    background-color: black
+`
+
+const Profile = styled.div`
+    display: flex
+    width: 100%
+    flex-basis: min-content
+    justify-content: space-between
+    align-items: center
+    flex-direction: column
+`
+
+const PicArea = styled.div`
+    flex-basis: min-content
+    display: flex
+    flex-direction: row
+    align-items: center
+    justify-content: center
+`
+
+const ImageStyle = styled.img`
+    width:40vh
+    height:40vh
+    border-radius:20px
+`
+
+const MainTextArea = styled.div`
+    flex-basis: min-content
+    width: 100%
+    display:flex
+    flex-direction: row
+    justify-content: center
+    align-items: center
+`
+
+const TextContainer = styled.div`
+    display: flex
+    flex-direction: column
+    align-items: center
+`
+
+const BioRow = styled.div`
+    display: flex
+    padding: 2.5vh
+    flex-direction: column
+    align-items: center
+    justify-content: space-between
+`
+
+const TextDiv = styled.div`
+    text-align:center
+    color: white
+    font-family: 'Apercu', sans-serif
+    ${
+        props => {
+            switch(props.level){
+                case "1":
+                    return(
+                        css`
+                            font-size:4vh
+                            font-weight: 500
+                        `
+                    )
+                case "2":
+                    return(
+                        css`
+                            font-size:2.7svh
+                            font-weight: 300
+                        `
+                    )
+                case "3":
+                    return(
+                        css`
+                            font-size:2.7vh
+                            font-weight: 300
+                        `
+                    )
+                default:
+                    return(
+                        css`
+                            font-size:2.7vh
+                            font-weight: 300
+                        `
+                    )
+            }
+        }
+    }
+`
+
+const PicSlide = styled.div`
+    display: flex
+    flex-direction: row
+    align-items: center
+    justify-content: center
+    flex-basis: max-content
+`
+
+const Arrow = styled.button`
+    background: url(
+        ${props=>
+            props.direction === "left" ?
+                left: right
+    }) no-repeat scroll 0 0 transparent
+    background-size: contain
+    width: 6vh
+    height: 6vh
+    color: #000000
+    border-width: 0px
+`
+
+const NoMatch = styled.p`
+    font-size: 9vh
+    font-family: Apercu
+    font-weight: 700
+`
