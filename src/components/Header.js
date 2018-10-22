@@ -55,7 +55,7 @@ const HeaderContainer = styled.div`
     justify-items: center;
     padding-top: 20px;
     padding-bottom: 35px;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 30px;
+    padding-right: 15px;
 `
 

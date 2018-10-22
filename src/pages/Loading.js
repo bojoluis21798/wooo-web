@@ -28,6 +28,5 @@ const LoadingScreen = styled.div`
     align-items: center;
     justify-items: center;
     color: #FFFFFF;
-    grid-template-rows: 1fr 1fr;
     text-align: center;
 `

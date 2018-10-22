@@ -160,8 +160,6 @@ class EditProfile extends Component {
 const ProfileContent = styled.div`
   justify-items: center;
   z-index: 1;
-  padding-left: 20px;
-  padding-right: 20px;
 `;
 
 const Tagline = styled.div`

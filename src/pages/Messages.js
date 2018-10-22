@@ -43,9 +43,9 @@ export default class Messages extends Component {
         <Search>
           <Input type="text" id="usr" placeholder="Search for a message"/>
         </Search>
-        <div>
+        <MessageList>
           <MessageItems pairedUser={this.state.pairedUser} />
-        </div>
+        </MessageList>
       </AuthorizedLayout>
     );
   }
@@ -71,21 +71,22 @@ const Input = styled.input`
   height: 45px;
   min-height: 45px;
   width: 100%;
-  font-weight: 20;
-  font-size: 18px;
-  padding: 15px;
-  color: #ffffff !important;
-  background-color: #191919 !important;
+  font-size: 16px;
+  color: #ffffff;
+  padding: 25px 15px;
+  background-color: #191919;
   border-radius: 5px;
   border: none;
   justify-items: center;
   overflow: hidden;
   resize: hidden;
-  border: 1px solid #191919 !important;
+  border: 1px solid #191919;
   
   &:focus {
     outline: none !important;
-    border: 1px solid #f51a63 !important;
   }
 `;
   
+const MessageList = styled.div`
+  margin-top: 30px;
+`

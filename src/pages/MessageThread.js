@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from "styled-components";
 import back from '../assets/images/left.png';
-import _ from 'lodash';
 import { inject, observer } from 'mobx-react';
 import firebase from 'firebase';
 import AuthorizedLayout from '../layouts/AuthorizedLayout';
@@ -32,8 +31,6 @@ export default class MessageThread extends Component {
 
 @inject('store') @observer
 class MessageBody extends Component {
-
-
   constructor(props) {
     super(props);
     this.messageRef = firebase.database().ref().child('roomData/'+this.props.ree.roomId);
@@ -45,23 +42,21 @@ class MessageBody extends Component {
     userId: this.props.store.userStore.profile_id
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.setState({message: ""});
     this.setState({userId: this.props.store.userStore.profile_id});
     this.handleMessageListen();
   }
-  
-  componentWillReceiveProps(nextProps) {
-    if(nextProps.user) {
-      this.setState({'userId': nextProps.user.displayId});
-    }
-  }
 
-  handleChange(event) {
+  static getDerivedStateFromProps(nextProps, prevState) {
+    return nextProps.user? ({ userId: nextProps.user.displayId }): ({});
+  }
+  
+  handleChange = event => {
     this.setState({message: event.target.value});
   }
 
-  handleSend() {
+  handleSend = () => {
     if (this.state.message) {
       var newmessage = {
         userId: this.state.userId,
@@ -76,12 +71,12 @@ class MessageBody extends Component {
     }
   }
 
-  handleKeyPress(event) {
+  handleKeyPress = event => {
     if (event.key !== 'Enter') return;
     this.handleSend();
   }
 
-  handleMessageListen(){
+  handleMessageListen = () => {
     var messg = null;
     this.messageRef
     .limitToLast(10)
@@ -94,7 +89,7 @@ class MessageBody extends Component {
     }
   }
 
-  listenMessages() {
+  listenMessages = () => {
     this.messageRef
     .limitToLast(10)
     .on('value', message => {
@@ -103,25 +98,6 @@ class MessageBody extends Component {
         });
     });
   }
-
-  MessageItems = () => {
-    const posts = this.state.list;
-    const items = [];
-    _.mapKeys(posts, (data, index) => {
-      items.push(
-          <Messages
-            {...data}
-            key={index}
-            id={index}
-            userData={this.props.ree}
-            user1={this.state.userId}
-            user2={this.props.ree.pairedId}
-          />,
-      );
-    });
-
-    return items;
-  };
 
   render() {
     return (
@@ -142,20 +118,32 @@ class MessageBody extends Component {
           </Ree>
         </Content>
         <div>
-          {this.MessageItems()}
+          {
+            this.state.list && this.state.list.map((message, index) => (
+              <Messages 
+                key={index}
+                {...message}
+                id={index}
+                userData={this.props.ree}
+                user1={this.state.userId}
+                user2={this.props.ree.pairedId}
+              />
+            ))
+          }
         </div>
         <Chat>
           <Div8>
             <Input type="text" id="usr" placeholder="Send a Message" 
-            onChange={this.handleChange.bind(this)}
+            onChange={this.handleChange}
+            onKeyPress={this.handleKeyPress}
             value={this.state.message}
-            onKeyPress={this.handleKeyPress.bind(this)}
             />
           </Div8>
           <Div2>
             <ButtonA
-            onClick={this.handleSend.bind(this)}>
-            SEND
+              onClick={this.handleSend}
+            >
+              Send
             </ButtonA>
           </Div2>
         </Chat>
