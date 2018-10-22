@@ -4,47 +4,36 @@ import styled from "styled-components";
 import back from '../assets/images/left.png';
 import _ from 'lodash';
 import { inject, observer } from 'mobx-react';
-
 import firebase from 'firebase';
+import AuthorizedLayout from '../layouts/AuthorizedLayout';
 
 const config =  {
-    apiKey: "AIzaSyCXAvzvQo7-pVZJ4e74jpP5Zq5AKBn68sg",
-    authDomain: "wooo-4fe01.firebaseapp.com",
-    databaseURL: "https://wooo-4fe01.firebaseio.com",
-    projectId: "wooo-4fe01",
-    storageBucket: "wooo-4fe01.appspot.com",
-    messagingSenderId: "17995314822"
-
-    // apiKey: "AIzaSyAaODb7bCoZPvV4gdVyG_sV_Lc1_GuVdwg",
-    // authDomain: "react-intro-37cd1.firebaseapp.com",
-    // databaseURL: "https://react-intro-37cd1.firebaseio.com",
-    // projectId: "react-intro-37cd1",
-    // storageBucket: "react-intro-37cd1.appspot.com",
-    // messagingSenderId: "181293593583"
+    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+    authDomain: process.env.REACT_APP_FIREBASE_AUTHDOMAIN,
+    databaseURL: process.env.REACT_APP_FIREBASE_DBURL,
+    projectId: process.env.REACT_APP_FIREBASE_PROJECTID,
+    storageBucket: process.env.REACT_APP_FIREBASE_STORAGEBUCKET,
+    messagingSenderId: process.env.REACT_APP_FIREBASE_SENDERID
 };
   
 firebase.initializeApp(config);
 
-export class Messaging extends Component {
+export default class MessageThread extends Component {
   state = {
-    props: this.props.location.state,
+    location: this.props.location.state,
   };
-
-  componentDidMount(){
-    
-  }
 
   render() {
     return (
-      <div>
-        <MessageBody ree={this.state.props}/>
-      </div>
+      <MessageBody ree={this.state.location}/>
     );
   }
 }
 
 @inject('store') @observer
 class MessageBody extends Component {
+
+
   constructor(props) {
     super(props);
     this.messageRef = firebase.database().ref().child('roomData/'+this.props.ree.roomId);
@@ -133,9 +122,10 @@ class MessageBody extends Component {
 
     return items;
   };
+
   render() {
     return (
-      <div>
+      <AuthorizedLayout>
         <Content>
           <Back>
             <Link to='/messsages'>
@@ -154,7 +144,6 @@ class MessageBody extends Component {
         <div>
           {this.MessageItems()}
         </div>
-        {/* search form-control -to check */}
         <Chat>
           <Div8>
             <Input type="text" id="usr" placeholder="Send a Message" 
@@ -170,7 +159,7 @@ class MessageBody extends Component {
             </ButtonA>
           </Div2>
         </Chat>
-      </div>
+      </AuthorizedLayout>
     );
   }
 }

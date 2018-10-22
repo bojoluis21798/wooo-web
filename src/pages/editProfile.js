@@ -10,7 +10,6 @@ import AuthorizedLayout from '../layouts/AuthorizedLayout'
 @inject('store') @observer
 
 class EditProfile extends Component {
-
   onFormSubmit = (e) =>{
     e.preventDefault() 
     this.fileUpload(this.state.file).then((response)=>{
@@ -22,25 +21,20 @@ class EditProfile extends Component {
   }
 
   handleSubmit = (e = null) => {
-
     if (e !== null){
       e.preventDefault();
     }
-    const token = this.props.store.userStore.token;
     const config = {
         headers: {
-            Authorization: 'Token ' + token
+            Authorization: 'Token ' + this.props.store.userStore.token
         }
     }
 
-    axios.put('https://wooo.philsony.com/api/profiles/'+this.props.store.userStore.profile_id+'/', {
+    axios.put(`${process.env.REACT_APP_API_BASEURL}/profiles/${this.props.store.userStore.profile_id}/`, {
       bio:this.props.store.userStore.biography,
       sexual_preference:this.props.store.userStore.preference,
       search_radius:this.props.store.userStore.radius
-    },config)
-    .then(response => {
-
-    })
+    }, config)
   }
 
   handleMale = (e) => {

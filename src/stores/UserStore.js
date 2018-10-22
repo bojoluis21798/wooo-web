@@ -21,7 +21,7 @@ class UserStore {
     @action
     async authenticateUser(authObj) {
         try {
-            let response = await axios.post(process.env.REACT_APP_API_BASEURL + 'login/', {
+            let response = await axios.post(`${process.env.REACT_APP_API_BASEURL}/login/`, {
                 accessToken: authObj.accessToken
             })
 

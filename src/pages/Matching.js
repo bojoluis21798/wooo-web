@@ -27,7 +27,7 @@ export default class Matching extends Component{
     }
 
     componentDidMount = () => {
-         axios.get("https://wooo.philsony.com/api/matching",{
+         axios.get(`${process.env.REACT_APP_API_BASEURL}/matching`,{
              params:{
                  profile_id:this.props.store.userStore.profile_id
              }
@@ -54,12 +54,11 @@ export default class Matching extends Component{
                 Authorization:'Token '+ this.props.store.userStore.token
             }
         }
-        axios.post("https://wooo.philsony.com/api/matching/",{
+        axios.post(`${process.env.REACT_APP_API_BASEURL}/matching/`, {
                 profile_id:this.props.store.userStore.profile_id,
                 match_id:this.props.store.userStore.currentProspect.id,
                 status:0
-        },config).then(res=>{
-        })
+        }, config)
         this.nextPerson()
     }
 
@@ -69,7 +68,7 @@ export default class Matching extends Component{
                 Authorization:'Token '+ this.props.store.userStore.token
             }
         }
-        axios.post("https://wooo.philsony.com/api/matching/", {
+        axios.post(`${process.env.REACT_APP_API_BASEURL}/matching/`, {
                 profile_id: this.props.store.userStore.token.profile_id,
                 match_id: this.props.store.userStore.token.currentProspect.id,
                 status: 1

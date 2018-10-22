@@ -32,6 +32,6 @@ const AuthorizedContent = styled.div`
 `
 
 const ContentContainer = styled.div`
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 36px;
+    padding-right: 36px;
 `
