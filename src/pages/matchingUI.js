@@ -225,7 +225,6 @@ class HeaderArea extends Component {
     }
 
     goBack = () =>{
-        console.log("WTF");
        return <Redirect to='/dashboard'/>
     }
 
@@ -307,16 +306,12 @@ class Matching extends Component{
 
          const store = this.props.store.userStore;
 
-         console.log("FML");
-         console.log(store.profile_id);
          axios.get("https://wooo.philsony.com/api/matching",{
              params:{
                  profile_id:store.profile_id
              }
          }).then(
              res=>{
-                 console.log(res);
-                 console.log(store);
                  if(res.data.length == 0){
                     this.setState({noProspects: true})
                  }else{
@@ -351,16 +346,11 @@ class Matching extends Component{
                 Authorization:'Token '+ store.token
             }
         }
-        console.log("LIKE STARTS HERE");
-        console.log(store.profile_id);
-        console.log(store.token);
-        console.log(store.currentProspect.id);
         axios.post("https://wooo.philsony.com/api/matching/",{
                 profile_id:store.profile_id,
                 match_id:store.currentProspect.id,
                 status:0
         },config).then(res=>{
-            console.log(res);
         });
         this.nextPerson();
     }
@@ -373,17 +363,11 @@ class Matching extends Component{
             }
         }
         //notify.show('Toasty!', "success", 4000);
-        console.log("LIKE STARTS HERE");
-        console.log(store.profile_id);
-        console.log(store.token);
-        console.log(store.currentProspect.id);
         axios.post("https://wooo.philsony.com/api/matching/",{
                 profile_id:store.profile_id,
                 match_id:store.currentProspect.id,
                 status:1
         },config).then(res=>{
-            console.log(res);
-            console.log("Match Exists: "+res.match_exists)
             let matchExists = res.match_exists != undefined;
             if(matchExists){
                 notify.show("You matched!", "success", 4000);
@@ -430,7 +414,6 @@ class Matching extends Component{
         // });
 
         // //OR
-        // console.log(store.users);
         // const list = store.arr.map((num,index)=>(
         //     <li key={index}>{num}</li>
         // ));
@@ -440,7 +423,6 @@ class Matching extends Component{
         let state = this.state;
         let currentPerson = state.people[0];
         let imgIdx = state.imgIdx;
-        console.log(imgIdx);
 
         if(!this.state.hasPayload){
             return <Loading message="Finding Gorls"/>

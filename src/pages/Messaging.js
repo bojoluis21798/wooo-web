@@ -65,7 +65,6 @@ class MessageBody extends Component {
   
   componentWillReceiveProps(nextProps) {
     if(nextProps.user) {
-      console.log(nextProps.user);
       this.setState({'userId': nextProps.user.displayId});
     }
   }

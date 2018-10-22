@@ -21,14 +21,10 @@ class UserStore {
     @action
     async authenticateUser(authObj) {
         try {
-            console.log("GOT IN")
             let response = await axios.post(process.env.REACT_APP_API_BASEURL + 'login/', {
                 accessToken: authObj.accessToken
             })
 
-            
-            
-            console.log(response)
             this.populateUser(response.data)
             this.insertToken(authObj)
             return true
@@ -40,7 +36,6 @@ class UserStore {
 
     @action 
     populateUser(userAuth) {
-        console.log("NO ERROR HERE")
         this.token = userAuth.auth_token
         this.name = userAuth.name
         this.email = true

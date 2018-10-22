@@ -11,9 +11,6 @@ import _ from 'lodash';
 
 @inject('store') @observer
 export default class MessageLog extends Component {
-  componentDidMount(){
-    console.log(this.props.store.userStore.profile_id)
-  }
   render() {
     return (
       <AuthorizedLayout>
@@ -55,7 +52,6 @@ class Messages extends Component {
   MessageItems = () => {
     axios.get(`https://wooo.philsony.com/api/profiles/${this.props.store.userStore.profile_id}/matches`)
     .then(response => {
-      console.log(response);
       if(response.data){
         var pairedUser = [];
         response.data.forEach(element => {

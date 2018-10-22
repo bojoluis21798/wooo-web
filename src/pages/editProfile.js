@@ -26,8 +26,6 @@ class EditProfile extends Component {
   onFormSubmit = (e) =>{
     e.preventDefault() // Stop form submit
     this.fileUpload(this.state.file).then((response)=>{
-      console.log(response.data);
-      console.log("HELLO THIS SHOULD WORK!!!!")
     })
   }
   onChange = (e) => {
@@ -48,7 +46,6 @@ class EditProfile extends Component {
   // }
 
   componentDidMount(){
-    console.log(this.props.store.userStore)
   }
 
   handleSubmit = (e = null) => {
@@ -58,19 +55,15 @@ class EditProfile extends Component {
     const token = this.props.store.userStore.token;
     const config = {
         headers: {
-            // 'content-type': 'multipart/form-data',
             Authorization: 'Token ' + token
         }
     }
-    console.log("Axios --POST")
     axios.put('https://wooo.philsony.com/api/profiles/'+this.props.store.userStore.profile_id+'/', {
       bio:this.props.store.userStore.biography,
       sexual_preference:this.props.store.userStore.preference,
       search_radius:this.props.store.userStore.radius
     },config)
     .then(response => {
-      console.log(response);
-      console.log("PuT was Successful!");
 
     })
   }
