@@ -13,6 +13,7 @@ export default class PolicyTerms extends Component {
     render() {
         return (
             <Container>
+                {/*Place route to previous page here*/}
                 <BackArea src = {close}></BackArea>
                 <Title id="name">Privacy Policy</Title>
                     <ChapterTitle>Introduction</ChapterTitle>
