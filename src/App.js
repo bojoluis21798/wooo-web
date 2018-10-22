@@ -11,6 +11,7 @@ import Loading from "./pages/Loading";
 import Matching from "./pages/matchingUI";
 import Testing from './pages/Testing';
 import Messaging from './pages/messaging/App';
+import PolicyTerms from './pages/PolicyTerms';
 
 class App extends Component {
   state = { loading: true };
@@ -33,6 +34,7 @@ class App extends Component {
             <Route path="/matching" component={Matching} />
             <Route path='/testing' component={Testing} />
             <Route path='/messages' component={Messaging} />
+            <Route path='/policy-terms' component={PolicyTerms} />
             <Route path="*" component={Login} />
           </Switch>
         </Router>
