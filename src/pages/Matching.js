@@ -184,7 +184,6 @@ export default class Matching extends Component{
 
 const Container = styled.div`
     display: flex
-    position: absolute
     float: left
     height:100%
     width: 100%

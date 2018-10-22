@@ -28,11 +28,8 @@ class App extends Component {
         <Router>
           <Switch>
             <Route exact path="/login" component={Login} />
-            <Route path="/dashboard" component={Dashboard} />
             <Route path="/edit-profile" component={EditProfile} />
-            <Route path="/loading" component={Loading} />
             <Route path="/matching" component={Matching} />
-            <Route path='/testing' component={Testing} />
             <Route path="/messages" exact component={Messages} />
             <Route path="/messages/:id" component={MessageThread} />
             <Route path="*" component={Login} />
