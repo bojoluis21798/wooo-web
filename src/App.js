@@ -6,7 +6,7 @@ import { Provider } from "mobx-react";
 // Pages
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
-import EditProfile from "./pages/editProfile";
+import EditProfile from "./pages/EditProfile";
 import Loading from "./pages/Loading";
 import Matching from "./pages/matchingUI";
 import Testing from './pages/Testing';

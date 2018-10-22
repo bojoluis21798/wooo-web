@@ -21,7 +21,7 @@ import AuthorizedLayout from '../layouts/AuthorizedLayout'
 
 @inject('store') @observer
 
-class editProfile extends Component {
+class EditProfile extends Component {
 
   onFormSubmit = (e) =>{
     e.preventDefault() // Stop form submit
@@ -506,4 +506,4 @@ const PrefButtonOthers = styled.button`
   }
 `;
 
-export default editProfile
+export default EditProfile
