@@ -10,7 +10,7 @@ import EditProfile from "./pages/editProfile";
 import Loading from "./pages/Loading";
 import Matching from "./pages/matchingUI";
 import Testing from './pages/Testing';
-import Messaging from './pages/messaging/App';
+import Messaging from './pages/Message-Log';
 
 class App extends Component {
   state = { loading: true };

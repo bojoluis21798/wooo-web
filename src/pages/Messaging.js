@@ -1,48 +1,51 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import Messages from '../messages/main';
 import styled from "styled-components";
-import back from '../../../../../assets/images/left.png';
+import back from '../assets/images/left.png';
 import _ from 'lodash';
 import { inject, observer } from 'mobx-react';
 
 import axios from 'axios';
 import firebase from 'firebase';
-import firebaseConfig from '../../../config';
 
-firebase.initializeApp(firebaseConfig);
+const config =  {
+    apiKey: "AIzaSyCXAvzvQo7-pVZJ4e74jpP5Zq5AKBn68sg",
+    authDomain: "wooo-4fe01.firebaseapp.com",
+    databaseURL: "https://wooo-4fe01.firebaseio.com",
+    projectId: "wooo-4fe01",
+    storageBucket: "wooo-4fe01.appspot.com",
+    messagingSenderId: "17995314822"
 
-const roomData = {
-	roomId: 1,
-	messages: [{
-    profile_id: 14,
-    img: "00.jpg",
-		message: {
-			type: "String",
-			content: "REEE MOFO"
-		},
-		time: "IDK IF WANT",
-	},{
-    profile_id: 16,
-    img: "01.jpg",
-		message: {
-			type: "Image",
-			content: "IDK WHAT IT LOOKS LIKE (link maybe?)"
-		},
-		time: "IDK IF WANT",
-	},{
-    profile_id: 14,
-    img: "00.jpg",
-		message: {
-			type: "String",
-			content: "U STUPID IDK WHATU STUPID IDK WHATU STUPID IDK WHATU STUPID IDK WHATU STUPID IDK WHATU STUPID IDK WHATU STUPID IDK WHATU STUPID IDK WHATU STUPID IDK WHATU STUPID IDK WHATU STUPID IDK WHATU STUPID IDK WHATU STUPID IDK WHATU STUPID IDK WHATU STUPID IDK WHATU STUPID IDK WHATU STUPID IDK WHAT"
-		},
-		time: "IDK IF WANT",
-	},]
+    // apiKey: "AIzaSyAaODb7bCoZPvV4gdVyG_sV_Lc1_GuVdwg",
+    // authDomain: "react-intro-37cd1.firebaseapp.com",
+    // databaseURL: "https://react-intro-37cd1.firebaseio.com",
+    // projectId: "react-intro-37cd1",
+    // storageBucket: "react-intro-37cd1.appspot.com",
+    // messagingSenderId: "181293593583"
+};
+  
+firebase.initializeApp(config);
+
+export class Messaging extends Component {
+  state = {
+    props: this.props.location.state,
+  };
+
+  componentDidMount(){
+    
+  }
+
+  render() {
+    return (
+      <div>
+        <MessageBody ree={this.state.props}/>
+      </div>
+    );
+  }
 }
 
 @inject('store') @observer
-export default class MessageBody extends Component {
+class MessageBody extends Component {
   constructor(props) {
     super(props);
     this.messageRef = firebase.database().ref().child('roomData/'+this.props.ree.roomId);
@@ -50,7 +53,6 @@ export default class MessageBody extends Component {
   }
 
   state = {
-    roomDatad: roomData,
     message: '',
     userId: this.props.store.userStore.profile_id
   }
@@ -270,4 +272,76 @@ const Input = styled.input`
     outline: none !important;
     border: 1px solid #f51a63 !important;
   }
+`;
+
+@inject('store') @observer
+class Messages extends Component {
+  render() {
+    return (
+      <div>
+        {this.props.userData.pairedId === this.props.userId && (
+          <Div>
+            <Div2>
+              <Img src={this.props.userData.pairedImage} alt={this.props.userData.pairedId}/>
+            </Div2>
+            <Div3>
+              <div>
+                <p>{this.props.message.content}</p>
+              </div>
+            </Div3>
+          </Div>
+        )}
+        {this.props.userId === this.props.store.userStore.profile_id && (
+          <DivContent>
+            <Div4>
+              <div>
+                <p>{this.props.message.content}</p>
+              </div>
+            </Div4>
+            <Div2>
+              <Img src={this.props.store.userStore.profilePicture} alt={this.props.profile_id}/>
+            </Div2>
+          </DivContent>
+        )}
+      </div>
+    );
+  }
+}
+
+const Div = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const Div3 = styled.div`
+  width: 80%;
+  display: inline-block;
+  text-align: left;
+  margin: 3px;
+  padding: 1px;
+  padding-left: 5px;
+  background-color: #191919;
+  border-radius: 10px;
+`;
+
+const Div4 = styled.div`
+  width: 80%;
+  display: inline-block;
+  text-align: left;
+  margin: 3px;
+  padding: 1px;
+  padding-left: 5px;
+  background-color: #FC3F73;
+  border-radius: 10px;
+`;
+
+const DivContent = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const Img = styled.img`
+  max-width: 100%;
+  height: auto;
+  border-radius: 50%;
 `;
