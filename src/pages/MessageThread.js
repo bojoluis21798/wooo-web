@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from "styled-components";
 import back from '../assets/images/left.png';
+import video from '../assets/images/video.png';
 import { inject, observer } from 'mobx-react';
 import firebase from 'firebase';
 import AuthorizedLayout from '../layouts/AuthorizedLayout';
@@ -113,9 +114,14 @@ class MessageBody extends Component {
               <strong>{this.props.ree.pairedName}</strong>
             </Name>
             <LastMessage>
-              <p>Active Now</p>
+              Active Now
             </LastMessage>
           </Ree>
+          <div>
+            <Link to='/video/{slug_of_user_to_call}'>
+                <img src={video} alt="Video Call"></img>
+            </Link>
+          </div>
         </Content>
         <div>
           {
