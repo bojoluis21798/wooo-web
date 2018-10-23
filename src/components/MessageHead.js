@@ -19,7 +19,7 @@ export default class MessageHead extends Component {
                     </Name>
                     <div>
                         <LastMessage>
-                        {this.props.pairedName}
+                            {this.props.message}
                         </LastMessage>
                     </div>
                     </Div7>

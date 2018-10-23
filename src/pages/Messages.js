@@ -4,6 +4,7 @@ import styled from "styled-components";
 import MessageItems from '../components/MessageItems'
 import axios from 'axios';
 import AuthorizedLayout from '../layouts/AuthorizedLayout';
+import firebase from 'firebase';
 
 @inject('store') @observer
 export default class Messages extends Component {
@@ -13,6 +14,7 @@ export default class Messages extends Component {
   };
 
   componentDidMount() {
+
     axios.get(`${process.env.REACT_APP_API_BASEURL}/profiles/${this.props.store.userStore.profile_id}/matches`)
     .then(response => {
       if(response.data){
@@ -23,9 +25,16 @@ export default class Messages extends Component {
             pairedName: element.user.first_name,
             pairedImage: element.profile_image,
             roomId: this.state.currentUser+'R'+element.id,
+            message: ""
           }
           pairedInfo.roomId = (element.id < this.state.currentUser) ? element.id+'R'+this.state.currentUser : this.state.currentUser+'R'+element.id
+
+          firebase.database().ref().child('roomData/'+pairedInfo.roomId).limitToLast(1).on('value', message => {
+              var lastmessage = Object.values(message.val());
+              pairedInfo.message = lastmessage[0].message.content;
+            });
           pairedUser.push(pairedInfo);
+          
         });
         this.setState({
           pairedUser
