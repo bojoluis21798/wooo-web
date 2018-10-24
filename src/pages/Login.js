@@ -16,8 +16,24 @@ export default class Login extends Component {
     super(props)
     this.props.store.appStore.startLoading()
   }
-
-  authenticateUser = (loginData) => this.props.store.userStore.authenticateUser(loginData)
+  
+  authenticateUser = ({
+    accessToken,
+    email,
+    name,
+    picture,
+    location,
+    gender
+  }) => {
+    this.props.store.userStore.authenticateUser({
+      accessToken,
+      email,
+      name,
+      picture,
+      location,
+      gender
+    })
+  }
 
   responseFacebook = response => this.authenticateUser(response)
 
@@ -31,15 +47,16 @@ export default class Login extends Component {
 
   onLoginButtonClick = () => this.props.store.appStore.startLoading()
   
-  locateUser = () => {
+  locateUser(){
     if (
         navigator.geolocation
     ) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-          this.props.store.userStore.location = {
+        navigator.geolocation.getCurrentPosition((position) => {
+          this.props.store.userStore.setLocation( {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
-            };
+            });
+            console.log(this.props.store.userStore.location);
             
         })
     }

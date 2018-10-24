@@ -44,6 +44,7 @@ class UserStore {
         this.radius = userAuth.search_radius
         this.preference = userAuth.sexual_preference
         this.profile_id = userAuth.profile_id
+        
     }
 
     @action
@@ -59,6 +60,11 @@ class UserStore {
     @action
     setBio(bio){
         this.biography = bio
+    }
+
+    @action
+    setLocation(location){
+    this.location = location
     }
 
     @action
