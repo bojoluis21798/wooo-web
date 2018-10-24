@@ -7,14 +7,14 @@ import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props
 import { inject, observer } from "mobx-react"
 import { ToastContainer } from "react-toastify"
 import { Redirect } from "react-router-dom"
-import queryString from "query-string"
-import Loading from "./Loading"
+import LoaderWrapper from "../layouts/LoaderWrapper";
 
 @inject("store")
 @observer
 export default class Login extends Component {
-  state = {
-    loading: 'Initializing the app..'
+  constructor(props) {
+    super(props)
+    this.props.store.appStore.startLoading()
   }
 
   authenticateUser = (loginData) => this.props.store.userStore.authenticateUser(loginData)
@@ -22,20 +22,14 @@ export default class Login extends Component {
   responseFacebook = response => this.authenticateUser(response)
 
   componentDidMount() {
-    setTimeout(() => this.setState({ loading: null }), 2000)
+    setTimeout(() => { 
+      this.setState({ loading: null });
+      this.props.store.userStore.purgeRedirect()
+      this.props.store.appStore.doneLoading()
+    }, 1500)
   }
 
-  componentDidUpdate() {
-    if (
-      this.props.location &&
-      this.props.location.search &&
-      queryString.parse(this.props.location.search).code
-    ) {
-      if (!this.state.loading) this.setState({ loading: 'Authenticating you..' })
-    }
-  }
-
-  onLoginButtonClick = () => this.setState({ loading: 'Authenticating you..' })
+  onLoginButtonClick = () => this.props.store.appStore.startLoading()
   
   locateUser = () => {
     if (
@@ -50,13 +44,11 @@ export default class Login extends Component {
         })
     }
   }
-  
+
   render() {
     return this.props.store.userStore.token ? (
-      <Redirect to="/edit-profile" />
-    ) : this.state.loading ? (
-      <Loading message={ this.state.loading } />
-    ) : (
+      <Redirect to={`${this.props.store.userStore.redirect_to || '/edit-profile'}`} />
+    ) : <LoaderWrapper>
       <LoginScreen>
         <ToastContainer />
         <BackgroundOverlay>
@@ -93,7 +85,7 @@ export default class Login extends Component {
           </LoginActionSection>
         </LoginContent>
       </LoginScreen>
-    )
+    </LoaderWrapper>
   }
 }
 
