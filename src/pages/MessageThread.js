@@ -1,11 +1,12 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import styled from "styled-components";
-import back from '../assets/images/left.png';
-import video from '../assets/images/video.png';
-import { inject, observer } from 'mobx-react';
-import firebase from 'firebase';
-import AuthorizedLayout from '../layouts/AuthorizedLayout';
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+import styled from "styled-components"
+import back from '../assets/icons/back.svg'
+import video from '../assets/icons/videocall.svg'
+import send from '../assets/icons/send.svg'
+import { inject, observer } from 'mobx-react'
+import firebase from 'firebase'
+import AuthorizedLayout from '../layouts/AuthorizedLayout'
 import Messages from '../components/Messages'
 
 const config =  {
@@ -21,18 +22,13 @@ firebase.initializeApp(config);
 
 @inject('store') @observer
 export default class MessageThread extends Component {
-  constructor(props) {
-    super(props);
-    this.messageRef = firebase.database().ref().child('roomData/'+this.props.location.state.roomId);
-    this.handleMessageListen();
-  }
-
   state = {
     message: '',
     userId: this.props.store.userStore.profile_id
   }
 
   componentDidMount() {
+    this.messageRef = firebase.database().ref().child('roomData/'+this.props.location.state.roomId);
     this.setState({message: ""});
     this.setState({userId: this.props.store.userStore.profile_id});
     this.handleMessageListen();
@@ -90,7 +86,7 @@ export default class MessageThread extends Component {
 
   render() {
     return (
-      <AuthorizedLayout>
+      <AuthorizedLayout noverflow={true} redirectTo='/messages'>
         <Content>
           <Back>
             <Link to='/messsages'>
@@ -99,7 +95,7 @@ export default class MessageThread extends Component {
           </Back>
           <Ree>
             <Name>
-              <strong>{this.props.location && this.props.location.state.pairedName}</strong>
+              {this.props.location && this.props.location.state.pairedName}
             </Name>
             <LastMessage>
               Active Now
@@ -111,7 +107,7 @@ export default class MessageThread extends Component {
             </Link>
           </div>
         </Content>
-        <div>
+        <MessageList>
           {
             this.props.location
             && this.state.userId
@@ -127,22 +123,18 @@ export default class MessageThread extends Component {
               />
             ))
           }
-        </div>
+        </MessageList>
         <Chat>
-          <Div8>
-            <Input type="text" id="usr" placeholder="Send a Message" 
-            onChange={this.handleChange}
-            onKeyPress={this.handleKeyPress}
-            value={this.state.message}
-            />
-          </Div8>
-          <Div2>
-            <ButtonA
-              onClick={this.handleSend}
-            >
-              Send
-            </ButtonA>
-          </Div2>
+          <Input type="text" id="usr" placeholder="Send a Message" 
+          onChange={this.handleChange}
+          onKeyPress={this.handleKeyPress}
+          value={this.state.message}
+          />
+          <ButtonA
+            onClick={this.handleSend}
+          >
+            <img src={send} alt="Send Icon" />
+          </ButtonA>
         </Chat>
       </AuthorizedLayout>
     );
@@ -150,14 +142,19 @@ export default class MessageThread extends Component {
 }
 
 const Content = styled.div`
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr 9fr 1fr;
+  margin-bottom: 30px;
 `;
 
 const Back = styled.div`
-  float: left !important;
-  color: white !important;
+  float: left;
+  color: white;
 `;
+
+const MessageList = styled.div`
+  margin-top: 20px;  
+`
 
 const Ree = styled.div`
   margin:0 auto;
@@ -166,83 +163,51 @@ const Ree = styled.div`
 
 const Name = styled.div`
   font-size: 1.5em;
+  margin-bottom: 5px;
 `;
 
 const ButtonA = styled.button`
-  font-weight: 100;
-  font-size: 15px;
-  color: #ffffff;
-  background-color: #191919;
-  letter-spacing: 0.01px;
-  text-align: center;
-  border-radius: 5px;
-  border: 0;
-  padding: 12px;
-  width: 90px;
-  margin: auto;
-  margin-bottom: 5px;
-  margin-right: 15px;
-  transition: 0.5s all ease;
+  text-align: right;
   cursor: pointer;
-`;
-
-const Div2 = styled.div`
-  width: 18%;
-  margin: 4%;
-  display: inline-block;
-`;
-
-const Div8 = styled.div`
-  width: 80%;
-  display: inline-block;
+  background-color: transparent;
+  border: 0;
 `;
 
 const LastMessage = styled.div`
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis !important;
+  text-overflow: ellipsis;
+  background-color: transparent;
 `;
 
 const Chat = styled.div`
-  height: 45px;
-  min-height: 45px;
-  width: 100%;
-  font-weight: 20;
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: 9fr 1fr;
   font-size: 18px;
-  padding: 15px;
-  color: #ffffff !important;
-  background-color: #191919 !important;
+  padding: 10px;
+  color: #ffffff;
+  background-color: #191919;
   border-radius: 5px;
   border: none;
   justify-items: center;
   overflow: hidden;
-  resize: hidden;
-  border: 1px solid #191919 !important;
+  border: 1px solid #191919;
 
   &:focus {
-    outline: none !important;
-    border: 1px solid #f51a63 !important;
+    outline: none;
   }
 `;
 
 const Input = styled.input`
-  height: 45px;
-  min-height: 45px;
   width: 100%;
-  font-weight: 20;
-  font-size: 18px;
-  padding: 15px;
-  color: #ffffff !important;
-  background-color: #191919 !important;
-  border-radius: 5px;
-  border: none;
-  justify-items: center;
-  overflow: hidden;
-  resize: hidden;
-  border: 1px solid #191919 !important;
+  font-size: 16px;
+  padding: 5px 15px;
+  color: #ffffff;
+  background-color: #191919;
+  border: 1px solid #191919;
   
   &:focus {
-    outline: none !important;
-    border: 1px solid #f51a63 !important;
+    outline: none;
   }
 `;
