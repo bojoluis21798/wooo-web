@@ -6,6 +6,7 @@ class UserStore {
     @observable username = null
     @observable name = null
     @observable biography = null
+    @observable gay = null
     @observable preference = null
     @observable radius = null
     @observable location = null
@@ -44,6 +45,7 @@ class UserStore {
         this.radius = userAuth.search_radius
         this.preference = userAuth.sexual_preference
         this.profile_id = userAuth.profile_id
+        this.gay = userAuth.gay
         
     }
 
@@ -68,6 +70,11 @@ class UserStore {
     }
 
     @action
+    setGay(gay){
+        this.gay = gay
+    }
+
+    @action
     setRadius(radius){
         this.radius = radius
     }
@@ -76,6 +83,12 @@ class UserStore {
     setPreference(prefs){
         this.preference = prefs
     }
+
+    @action
+    setPicOne(p1){
+        this.photos[0] = p1;
+    }
+    
 
     @action insertToken(authObj){
         this.accessToken = authObj.auth_token
