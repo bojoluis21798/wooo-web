@@ -1,0 +1,14 @@
+<svg width="42px" height="42px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs></defs>
+    <g id="Phone-Screen" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Message-Thread" transform="translate(-288.000000, -125.000000)" fill-rule="nonzero">
+            <g id="Video-Call" transform="translate(288.000000, 125.000000)">
+                <circle id="Oval" fill="#191919" cx="21" cy="21" r="21"></circle>
+                <g id="video-call-(1)" transform="translate(11.000000, 15.000000)" stroke="#FFFFFF">
+                    <path d="M14.3962448,0 L1.60346456,0 C0.719245469,0 0,0.628661433 0,1.40136677 L0,10.5984808 C0,11.3713386 0.71936173,12 1.60346456,12 L14.3962448,12 C15.2806383,12 16,11.3712369 16,10.5984808 L16,1.40136677 C15.9999419,0.628661433 15.2805801,0 14.3962448,0 Z" id="Shape"></path>
+                    <polygon id="Shape" points="18 7.66656269 18 4.33328134 23 1 22.9999466 11"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
