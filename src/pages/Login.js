@@ -17,14 +17,30 @@ export default class Login extends Component {
     loading: 'Initializing the app..'
   }
 
-  authenticateUser = (loginData) => this.props.store.userStore.authenticateUser(loginData)
+  authenticateUser = ({
+    accessToken,
+    email,
+    name,
+    picture,
+    location,
+    gender
+  }) => {
+    this.props.store.userStore.authenticateUser({
+      accessToken,
+      email,
+      name,
+      picture,
+      location,
+      gender
+    })
+  }
 
   responseFacebook = response => {
     this.authenticateUser(response)
   }
 
   componentDidMount() {
-    setTimeout(() => this.setState({ loading: null }), 2000)
+    setTimeout(() => this.setState({ loading: null }), 1500)
   }
 
   componentDidUpdate() {
@@ -39,21 +55,25 @@ export default class Login extends Component {
 
   onLoginButtonClick = () => this.setState({ loading: 'Authenticating you..' })
   
-  locateUser = () => {
+  locateUser(){
     if (
         navigator.geolocation
     ) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-          this.props.store.userStore.location = {
+        
+        navigator.geolocation.getCurrentPosition((position) => {
+          this.props.store.userStore.setLocation( {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
-            };
+            });
+            console.log(this.props.store.userStore.location);
             
         })
     }
-  }
+}
   render() {
-    return this.props.store.userStore.token ? (
+    this.locateUser();
+    
+    return this.props.store.userStore.email ? (
       <Redirect to="/edit-profile" />
     ) : this.state.loading ? (
       <Loading message={ this.state.loading } />
