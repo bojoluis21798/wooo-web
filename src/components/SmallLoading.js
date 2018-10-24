@@ -9,12 +9,14 @@ export default class Loading extends Component {
   render() {
     return (
         <LoadingScreen {...this.props}>
-            <TailSpin 
-                width="50" 
-                height="50" 
-                color="#F11A61"
-                tailColor="#F11A61"    
-                />
+            <Container>
+                <TailSpin 
+                    width="50" 
+                    height="50" 
+                    color="#F11A61"
+                    tailColor="#F11A61"    
+                    />
+            </Container>
         </LoadingScreen>
     )
   }
@@ -27,9 +29,13 @@ const LoadingScreen = styled.div`
     color: #FFFFFF;
     display: grid;
     height: fill-available;
-    height: 100vh;
     ${props => props.isBlack? 
         css`background-color: #000000`
         : css`background-color: #111111` 
     }
+`
+
+const Container = styled.div`
+    padding-top: 50px;
+    padding-bottom: 50px;
 `
