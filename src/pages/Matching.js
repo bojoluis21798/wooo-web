@@ -12,8 +12,8 @@ import matchingData from '../assets/data/matching.data'
 import MatchingHeader from '../components/MatchingHeader'
 import MatchingFooter from '../components/MatchingFooter'
 
-@observer
 @inject('store')
+@observer
 export default class Matching extends Component{
     constructor(props){
         super(props)

@@ -31,7 +31,6 @@ class UserStore {
         } catch(err) {
             return false
         }
-        
     }
 
     @action 
@@ -62,21 +61,9 @@ class UserStore {
     }
 
     @action insertToken(authObj){
-        // this.accessToken = authObj.accessToken
         this.accessToken = authObj.auth_token
     }
     
-    // @action 
-    // populateUser(userAuth) {
-    //     console.log(userAuth.profile_id)
-    //     this.profile_id= userAuth.profile_id
-    //     console.log(this.profile_id)
-    //     this.token = userAuth.auth_token
-    //     this.name = userAuth.name
-    //     this.email = true
-    //     this.profilePicture = userAuth.profile_image
-    // }
-
     @action
     setProspects(prospects){
         this.prospects = prospects

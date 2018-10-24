@@ -17,30 +17,14 @@ export default class Login extends Component {
     loading: 'Initializing the app..'
   }
 
-  authenticateUser = ({
-    accessToken,
-    email,
-    name,
-    picture,
-    location,
-    gender
-  }) => {
-    this.props.store.userStore.authenticateUser({
-      accessToken,
-      email,
-      name,
-      picture,
-      location,
-      gender
-    })
-  }
+  authenticateUser = (loginData) => this.props.store.userStore.authenticateUser(loginData)
 
   responseFacebook = response => {
     this.authenticateUser(response)
   }
 
   componentDidMount() {
-    setTimeout(() => this.setState({ loading: null }), 1500)
+    setTimeout(() => this.setState({ loading: null }), 2000)
   }
 
   componentDidUpdate() {
@@ -69,7 +53,7 @@ export default class Login extends Component {
     }
   }
   render() {
-    return this.props.store.userStore.email ? (
+    return this.props.store.userStore.token ? (
       <Redirect to="/edit-profile" />
     ) : this.state.loading ? (
       <Loading message={ this.state.loading } />
