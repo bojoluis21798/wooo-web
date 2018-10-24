@@ -118,7 +118,7 @@ class MessageBody extends Component {
             </LastMessage>
           </Ree>
           <div>
-            <Link to='/video/{slug_of_user_to_call}'>
+            <Link to={`/video/${this.props.ree.pairedSlug}`}>
                 <img src={video} alt="Video Call"></img>
             </Link>
           </div>
