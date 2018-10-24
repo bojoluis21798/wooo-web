@@ -20,9 +20,12 @@ export default class Messages extends Component {
       if(response.data){
         var pairedUser = [];
         response.data.forEach(element => {
+          console.log(element);
           var pairedInfo = {
             pairedId: element.id,
             pairedName: element.user.first_name,
+            pairedSlug: element.user.slug,
+            pairedBio: element.bio,
             pairedImage: element.profile_image,
             roomId: this.state.currentUser+'R'+element.id,
             message: ""

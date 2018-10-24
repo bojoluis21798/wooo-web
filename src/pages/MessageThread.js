@@ -102,7 +102,7 @@ export default class MessageThread extends Component {
             </LastMessage>
           </Ree>
           <div>
-            <Link to='/video/{slug_of_user_to_call}'>
+            <Link to={`/video/${this.props.location.state.pairedSlug}`}>
                 <img src={video} alt="Video Call"></img>
             </Link>
           </div>
