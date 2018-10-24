@@ -36,9 +36,21 @@ export default class Login extends Component {
   }
 
   onLoginButtonClick = () => this.setState({ loading: 'Authenticating you..' })
-
-  prepareLoginButton = () => this.setState({ loading: 'Preparing to login..' })
-
+  
+  locateUser = () => {
+    if (
+        navigator.geolocation
+    ) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          this.props.store.userStore.location = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
+            
+        })
+    }
+  }
+  
   render() {
     return this.props.store.userStore.token ? (
       <Redirect to="/edit-profile" />
