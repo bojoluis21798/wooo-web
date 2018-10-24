@@ -35,9 +35,7 @@ export default class Login extends Component {
     })
   }
 
-  responseFacebook = response => {
-    this.authenticateUser(response)
-  }
+  responseFacebook = response => this.authenticateUser(response)
 
   componentDidMount() {
     setTimeout(() => this.setState({ loading: null }), 1500)
@@ -69,7 +67,8 @@ export default class Login extends Component {
             
         })
     }
-}
+  }
+  
   render() {
     this.locateUser();
     
@@ -92,13 +91,18 @@ export default class Login extends Component {
           <LoginActionSection>
             <FacebookLogin
               appId={process.env.REACT_APP_FB_APPID}
-              fields="name,email,picture"
+              fields="name,email,picture,gender"
               scope="public_profile,user_friends"
+              autoLoad={true}
               callback={this.responseFacebook}
               redirectUri={`${process.env.REACT_APP_SITE}/login`}
               onClick={this.onLoginButtonClick}
+              isProcessing={this.prepareLoginButton}
               render={renderProps => (
-                <LoginButton onClick={renderProps.onClick}>
+                <LoginButton 
+                  onClick={renderProps.onClick} 
+                  isProcessing={renderProps.isProcessing}
+                >
                   Login with Facebook
                 </LoginButton>
               )}
