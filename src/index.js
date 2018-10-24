@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import 'babel-polyfill'
 import App from './App'
 import { Provider } from 'mobx-react'
 import registerServiceWorker from './registerServiceWorker'
@@ -16,8 +17,7 @@ injectGlobal`
     ${globalStyling}
 `
 
-ReactDOM.render(
-    <Provider store={RootStore}>
+ReactDOM.render(<Provider store={RootStore}>
         <App />
     </Provider>, 
     document.getElementById('root'))
