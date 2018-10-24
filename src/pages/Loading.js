@@ -1,19 +1,20 @@
 import React, { Component } from 'react'
-import Loader from 'react-loader-spinner'
-import styled from 'styled-components'
+import TailSpin from '../assets/animated/TailSpin'
+import styled, { css } from 'styled-components'
+import { observer, inject } from 'mobx-react';
 
+@inject('store')
+@observer
 export default class Loading extends Component {
   render() {
     return (
-        <LoadingScreen>
-            <div>
-                <Loader 
-                    type="Rings"
-                    color="#FFFFFF"
-                    height="80"
-                    width="80" />
-                <p>{ this.props.message? this.props.message: 'We\'re loading some things for you.' }</p>
-            </div>
+        <LoadingScreen {...this.props}>
+            <TailSpin 
+                width="50" 
+                height="50" 
+                color="#F11A61"
+                tailColor="#F11A61"    
+                />
         </LoadingScreen>
     )
   }
@@ -21,12 +22,14 @@ export default class Loading extends Component {
 
 const LoadingScreen = styled.div`
     transition: 1s all;
-    background-color: #000000;
-    width: 100vw;
-    height: 100vh;
-    display: grid;
     align-items: center;
     justify-items: center;
     color: #FFFFFF;
-    text-align: center;
+    display: grid;
+    height: fill-available;
+    height: 100vh;
+    ${props => props.isBlack? 
+        css`background-color: #000000`
+        : css`background-color: #111111` 
+    }
 `
