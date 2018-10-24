@@ -8,7 +8,7 @@ import Header from '../components/Header'
 @inject('store') @observer
 export default class AuthorizedLayout extends Component {
   
-    isAuthorized = () => true //this.props.store.userStore.auth_token
+    isAuthorized = () => this.props.store.userStore.token
 
     render() {
         return !this.isAuthorized()? 
