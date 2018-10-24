@@ -17,30 +17,12 @@ export default class Login extends Component {
     loading: 'Initializing the app..'
   }
 
-  authenticateUser = ({
-    accessToken,
-    email,
-    name,
-    picture,
-    location,
-    gender
-  }) => {
-    this.props.store.userStore.authenticateUser({
-      accessToken,
-      email,
-      name,
-      picture,
-      location,
-      gender
-    })
-  }
+  authenticateUser = (loginData) => this.props.store.userStore.authenticateUser(loginData)
 
-  responseFacebook = response => {
-    this.authenticateUser(response)
-  }
+  responseFacebook = response => this.authenticateUser(response)
 
   componentDidMount() {
-    setTimeout(() => this.setState({ loading: null }), 1500)
+    setTimeout(() => this.setState({ loading: null }), 2000)
   }
 
   componentDidUpdate() {
@@ -54,9 +36,23 @@ export default class Login extends Component {
   }
 
   onLoginButtonClick = () => this.setState({ loading: 'Authenticating you..' })
-
+  
+  locateUser = () => {
+    if (
+        navigator.geolocation
+    ) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          this.props.store.userStore.location = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
+            
+        })
+    }
+  }
+  
   render() {
-    return this.props.store.userStore.email ? (
+    return this.props.store.userStore.token ? (
       <Redirect to="/edit-profile" />
     ) : this.state.loading ? (
       <Loading message={ this.state.loading } />
@@ -75,13 +71,18 @@ export default class Login extends Component {
           <LoginActionSection>
             <FacebookLogin
               appId={process.env.REACT_APP_FB_APPID}
-              fields="name,email,picture"
+              fields="name,email,picture,gender"
               scope="public_profile,user_friends"
+              autoLoad={true}
               callback={this.responseFacebook}
               redirectUri={`${process.env.REACT_APP_SITE}/login`}
               onClick={this.onLoginButtonClick}
+              isProcessing={this.prepareLoginButton}
               render={renderProps => (
-                <LoginButton onClick={renderProps.onClick}>
+                <LoginButton 
+                  onClick={renderProps.onClick} 
+                  isProcessing={renderProps.isProcessing}
+                >
                   Login with Facebook
                 </LoginButton>
               )}

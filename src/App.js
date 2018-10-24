@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import RootStore from "./stores/RootStore";
 import { Provider } from "mobx-react";
+import { hot } from 'react-hot-loader';
 
 // Pages
 import Login from "./pages/Login";
@@ -38,4 +39,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default hot(module)(App)
