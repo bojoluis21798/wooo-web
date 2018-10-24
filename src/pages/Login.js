@@ -16,7 +16,7 @@ export default class Login extends Component {
   state = {
     loading: 'Initializing the app..'
   }
-
+  
   authenticateUser = ({
     accessToken,
     email,
@@ -57,7 +57,6 @@ export default class Login extends Component {
     if (
         navigator.geolocation
     ) {
-        
         navigator.geolocation.getCurrentPosition((position) => {
           this.props.store.userStore.setLocation( {
                 lat: position.coords.latitude,
@@ -71,7 +70,6 @@ export default class Login extends Component {
   
   render() {
     this.locateUser();
-    
     return this.props.store.userStore.email ? (
       <Redirect to="/edit-profile" />
     ) : this.state.loading ? (
