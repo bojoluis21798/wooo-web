@@ -17,6 +17,7 @@ class UserStore {
     @observable accessToken = null
     @observable profile_id = null
     @observable prospects = []
+    @observable redirect_to = null
 
     @action
     async authenticateUser(authObj) {
@@ -43,6 +44,16 @@ class UserStore {
         this.radius = userAuth.search_radius
         this.preference = userAuth.sexual_preference
         this.profile_id = userAuth.profile_id
+    }
+
+    @action
+    setRedirectTo(link) {
+        this.redirect_to = link
+    }
+
+    @action
+    purgeRedirect() {
+        this.redirect_to = null
     }
 
     @action
