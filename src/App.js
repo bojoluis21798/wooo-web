@@ -30,7 +30,7 @@ class App extends Component {
             <Route path="/edit-profile" component={EditProfile} />
             <Route path="/matching" component={Matching} />
             <Route path="/messages" exact component={Messages} />
-            <Route path="/messages/:id" component={MessageThread} />
+            <Route exact path="/messages/:id" component={MessageThread} />
             <Route path="*" component={Login} />
           </Switch>
         </Router>
