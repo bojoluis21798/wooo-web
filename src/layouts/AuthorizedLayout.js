@@ -8,7 +8,7 @@ import Header from '../components/Header'
 @inject('store') @observer
 export default class AuthorizedLayout extends Component {
   
-    isAuthorized = () => true //this.props.store.userStore.auth_token
+    isAuthorized = () => this.props.store.userStore.token
 
     render() {
         return !this.isAuthorized()? 
@@ -34,4 +34,5 @@ const AuthorizedContent = styled.div`
 const ContentContainer = styled.div`
     padding-left: 36px;
     padding-right: 36px;
+    padding-bottom: 50px;
 `

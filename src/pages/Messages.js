@@ -6,7 +6,8 @@ import axios from 'axios';
 import AuthorizedLayout from '../layouts/AuthorizedLayout';
 import firebase from 'firebase';
 
-@inject('store') @observer
+@inject('store') 
+@observer
 export default class Messages extends Component {
   state = {
     currentUser: this.props.store.userStore.profile_id,
