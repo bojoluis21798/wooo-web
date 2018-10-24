@@ -16,26 +16,8 @@ export default class Login extends Component {
     super(props)
     this.props.store.appStore.startLoading()
   }
-  
-  authenticateUser = ({
-    accessToken,
-    email,
-    name,
-    picture,
-    location,
-    gender
-  }) => {
-    this.props.store.userStore.authenticateUser({
-      accessToken,
-      email,
-      name,
-      picture,
-      location,
-      gender
-    })
-  }
 
-  responseFacebook = response => this.authenticateUser(response)
+  responseFacebook = response => this.props.store.userStore.authenticateUser(response)
 
   componentDidMount() {
     setTimeout(() => { 
@@ -43,6 +25,10 @@ export default class Login extends Component {
       this.props.store.userStore.purgeRedirect()
       this.props.store.appStore.doneLoading()
     }, 1500)
+  }
+
+  componentWillUnmount() {
+    this.props.store.appStore.doneLoading()
   }
 
   onLoginButtonClick = () => this.props.store.appStore.startLoading()
@@ -56,8 +42,6 @@ export default class Login extends Component {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
             });
-            console.log(this.props.store.userStore.location);
-            
         })
     }
   }
