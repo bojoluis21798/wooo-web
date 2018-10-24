@@ -4,7 +4,6 @@ import MessageHead from './MessageHead'
 import SmallLoading from '../components/SmallLoading';
 
 export default props => {
-    console.log(props)
     return (
       props.pairedUser?
         <MessagesContainer>
