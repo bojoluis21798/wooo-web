@@ -29,7 +29,8 @@ export default class MessageThread extends Component {
   }
 }
 
-@inject('store') @observer
+@inject('store') 
+@observer
 class MessageBody extends Component {
   constructor(props) {
     super(props);

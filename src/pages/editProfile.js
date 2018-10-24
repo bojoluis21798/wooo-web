@@ -7,8 +7,8 @@ import "rc-slider/assets/index.css"
 import axios from 'axios'
 import AuthorizedLayout from '../layouts/AuthorizedLayout'
 
-@inject('store') @observer
-
+@inject('store') 
+@observer
 class EditProfile extends Component {
   onFormSubmit = (e) =>{
     e.preventDefault() 
