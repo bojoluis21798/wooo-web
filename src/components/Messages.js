@@ -1,84 +1,59 @@
 
 import React, { Component } from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { observer, inject } from 'mobx-react';
 
 @inject('store')
 @observer
 export default class Messages extends Component {
+
   render() {
-    return (
-      <div>
-        {this.props.userData.pairedId === this.props.userId && (
-          <Div>
-            <Div2>
-              <Img src={this.props.userData.pairedImage} alt={this.props.userData.pairedId}/>
-            </Div2>
-            <Div3>
-              <div>
-                <MessageContent>{this.props.message.content}</MessageContent>
-              </div>
-            </Div3>
-          </Div>
-        )}
-        {this.props.userId === this.props.store.userStore.profile_id && (
-          <DivContent>
-            <Div4>
-              <div>
-                <MessageContent>{this.props.message.content}</MessageContent>
-              </div>
-            </Div4>
-            <Div2>
-              <Img src={this.props.store.userStore.profilePicture} alt={this.props.profile_id}/>
-            </Div2>
-          </DivContent>
-        )}
-      </div>
-    );
+    return this.props.userData.pairedId === this.props.userId? 
+      <SenderMessage>
+        <MessageContent>{this.props.message.content}</MessageContent>
+        <Img src={this.props.userData.pairedImage} alt={this.props.profile_id}/>
+      </SenderMessage> : 
+      <MyMessage>
+        <MessageContent selfsent={true}>You: {this.props.message.content}</MessageContent>
+      </MyMessage>
+      
   }
 }
 
-const Div = styled.div`
-  display: flex;
-  align-items: center;
-`;
+const MyMessage = styled.div`
+  display: grid;
+  padding: 6px;
+`
 
-const Div3 = styled.div`
-  width: 80%;
-  display: inline-block;
-  text-align: right;
-  background-color: #191919;
-  border-radius: 10px;
-`;
-
-const Div4 = styled.div`
-  width: 80%;
-  display: inline-block;
-  text-align: left;
-  margin: 10px 0px;
-  border-radius: 10px;
-`;
-
-const DivContent = styled.div`
-  display: flex;
-  align-items: center;
-`;
+const SenderMessage = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 40px;
+  grid-column-gap: 10px;
+  padding: 6px;
+  justify-items: right;
+`
 
 const Img = styled.img`
   max-width: 40px;
   width: 100%;
   height: auto;
   border-radius: 50%;
-`;
-
-const Div2 = styled.div`
-  width: 18%;
-  margin: 4%;
-  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
 `;
 
 const MessageContent = styled.span`
     background-color: #FC3F73;
     padding: 10px;
-    
+    width: fit-content;
+    border-radius: 5px;
+    margin-bottom: 2px;
+    max-width: 250px;
+    line-height: 22px;
+
+    ${
+      props => props.selfsent && css`
+        background-color: #121212
+      `
+    }
 `
