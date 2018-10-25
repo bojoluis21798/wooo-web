@@ -24,7 +24,7 @@ export default class Login extends Component {
   }
 
   componentDidMount() {
-    setTimeout(() => { 
+    setTimeout(() => {
       this.setState({ loading: null });
       this.props.store.userStore.purgeRedirect()
       this.props.store.appStore.doneLoading()
@@ -36,19 +36,6 @@ export default class Login extends Component {
   }
 
   onLoginButtonClick = () => this.props.store.appStore.startLoading()
-  
-  locateUser(){
-    if (
-        navigator.geolocation
-    ) {
-        navigator.geolocation.getCurrentPosition((position) => {
-          this.props.store.userStore.setLocation( {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-            });
-        })
-    }
-  }
 
   render() {
     return this.props.store.userStore.token ? (
@@ -76,8 +63,8 @@ export default class Login extends Component {
               onClick={this.onLoginButtonClick}
               isProcessing={this.prepareLoginButton}
               render={renderProps => (
-                <LoginButton 
-                  onClick={renderProps.onClick} 
+                <LoginButton
+                  onClick={renderProps.onClick}
                   isProcessing={renderProps.isProcessing}
                 >
                   Login with Facebook
