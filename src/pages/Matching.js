@@ -71,7 +71,7 @@ export default class Matching extends Component{
                     this.props.store.userStore.setProspects(res.data)
                     this.setState({hasPayload:true})
                  }
-                 
+
 
              }
          )
@@ -83,7 +83,7 @@ export default class Matching extends Component{
         }else{
             this.getProspects();
         }
-        
+
     }
 
     handleDislike = () => {
@@ -118,7 +118,7 @@ export default class Matching extends Component{
             console.log(res);
             console.log(res.data.match_exists);
             if(res.data.match_exists){
-                
+
                 store.setIsMatched(true);
                 console.log(store.isMatched);
                 this.setState({show:store.isMatched});
@@ -126,7 +126,7 @@ export default class Matching extends Component{
                 this.nextPerson();
             }
 
-            
+
         })
     }
 
@@ -185,7 +185,7 @@ export default class Matching extends Component{
              res=>{
                  console.log("getProspects response here");
                  console.log(res);
-                 
+
                  if(res.data.length == 0){
                      console.log("res.data.length == 0");
                     store.setNoProspects(true);
@@ -194,8 +194,8 @@ export default class Matching extends Component{
                     this.setState({hasPayload:true});
                     store.setNoProspects(false);
                  }
-                
-                
+
+
 
              }
          );
@@ -217,15 +217,15 @@ export default class Matching extends Component{
                         eventHandle = {this.handleCloseProfile}
                         type = {state.viewProfile ? "exit" : "back"}
                     />
-                    
+
                         <NoMatches>
 
                         </NoMatches>
-                        
-                        <Profile onClick = {this.handleViewProfile}>
-                        
+
                         <MatchSwipe show={this.props.store.userStore.isMatchedValue}/>
-                        
+
+                        <Profile onClick = {this.handleViewProfile}>
+
                         <PicSlide>
                             {state.viewProfile &&
                                 <Arrow
@@ -251,7 +251,7 @@ export default class Matching extends Component{
                                             this.props.store.userStore.currentProspect.user.first_name
                                             :currentPerson.name
                                         }
-                                        , 
+                                        ,
                                         {
                                             this.props.store.userStore.currentProspect.age?
                                             this.props.store.userStore.currentProspect.age:currentPerson.age
@@ -265,9 +265,9 @@ export default class Matching extends Component{
                             </TextContainer>
                         </MainTextArea>
                         </Profile>
-                    
+
                     {
-                        !this.props.store.userStore.noProspects&&
+                        !state.viewProfile &&
                         <MatchingFooter
                             handleLike = {this.handleLike}
                             handleDislike = {this.handleDislike}
@@ -287,7 +287,7 @@ const customStyles = {
       bottom                : 'auto',
       marginRight           : '-50%',
       transform             : 'translate(-50%, -50%)',
-      backgroundColor       :'transparent' 
+      backgroundColor       :'transparent'
     }
   };
 
