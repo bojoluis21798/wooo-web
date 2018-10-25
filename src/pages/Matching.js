@@ -229,9 +229,9 @@ export default class Matching extends Component{
 
                         </NoMatches>
 
-                        <Profile onClick = {this.handleViewProfile}>
-
                         <MatchSwipe show={this.props.store.userStore.isMatchedValue}/>
+
+                        <Profile onClick = {this.handleViewProfile}>
 
                         <PicSlide>
                             {state.viewProfile &&
