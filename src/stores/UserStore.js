@@ -51,7 +51,7 @@ class UserStore {
             let response = await axios.post(`${process.env.REACT_APP_API_BASEURL}/login/`, {
                 accessToken: authObj.accessToken
             })
-
+            this.getLocation()
             this.populateUser(response.data)
             this.insertToken(authObj)
             return true
@@ -60,7 +60,7 @@ class UserStore {
         }
     }
 
-    @action 
+    @action
     populateUser(userAuth) {
         this.token = userAuth.auth_token
         this.name = userAuth.name
@@ -71,7 +71,7 @@ class UserStore {
         this.preference = userAuth.sexual_preference
         this.profile_id = userAuth.profile_id
         this.gay = userAuth.gay
-        
+
     }
 
     @action
@@ -113,12 +113,27 @@ class UserStore {
     setPicOne(p1){
         this.photos[0] = p1;
     }
-    
+
+    @action
+    getLocation(){
+        if (
+            navigator.geolocation
+        ) {
+            navigator.geolocation.getCurrentPosition((position) => {
+              this.setLocation( {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                });
+            })
+            console.log(this.location)
+        }
+        console.log("No location")
+    }
 
     @action insertToken(authObj){
         this.accessToken = authObj.auth_token
     }
-    
+
     @action
     setProspects(prospects){
         this.prospects = prospects
