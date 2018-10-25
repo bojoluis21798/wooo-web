@@ -115,19 +115,17 @@ class UserStore {
     }
 
     @action
-    getLocation(){
-        if (
-            navigator.geolocation
-        ) {
+    async getLocation(){
+        try{
             navigator.geolocation.getCurrentPosition((position) => {
               this.setLocation( {
                     lat: position.coords.latitude,
                     lng: position.coords.longitude
                 });
             })
-            console.log(this.location)
+        } catch (err){
+
         }
-        console.log("No location")
     }
 
     @action insertToken(authObj){
