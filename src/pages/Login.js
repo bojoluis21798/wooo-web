@@ -39,7 +39,7 @@ export default class Login extends Component {
 
   render() {
     return this.props.store.userStore.token ? (
-      <Redirect to={`${this.props.store.userStore.redirect_to || '/edit-profile'}`} />
+      <Redirect to={`${this.props.store.userStore.redirect_to || '/dashboard'}`} />
     ) : <LoaderWrapper>
       <LoginScreen>
         <ToastContainer />

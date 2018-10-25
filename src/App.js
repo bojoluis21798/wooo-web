@@ -12,11 +12,11 @@ import Messages from './pages/Messages'
 import MessageThread from './pages/MessageThread';
 import EditProfile from './pages/EditProfile'
 import MatchSwipe from './components/MatchSwipe';
-
+import Dashboard from './pages/Dashboard'; 
 class App extends Component {
   state = { loading: true };
 
-  componentDidMount() {
+  componentDidMount() { 
     this.setState({ loading: false });
   }
 
@@ -29,6 +29,7 @@ class App extends Component {
           <Switch>
             <Route exact path="/login" component={Login} />
             <Route path="/edit-profile" component={EditProfile} />
+            <Route path="/dashboard" component={Dashboard} />
             <Route path="/matching" component={Matching} />
             <Route path="/messages" exact component={Messages} />
             <Route exact path="/messages/:id" component={MessageThread} />
