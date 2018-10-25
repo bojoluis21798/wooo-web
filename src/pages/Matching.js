@@ -347,19 +347,20 @@ const BioRow = styled.div`
 `
 
 const TextDiv = styled.div`
-    text-align:center
-    color: white
-    font-family: 'Apercu', sans-serif
+    text-align:center;
+    color: white;
+    font-family: 'Apercu', sans-serif;
     ${
         props => {
             switch(props.level){
                 case "1":
                     return(
                         css`
-                            font-size:4vh
+                            font-size:3.5vh
                             font-weight: 500
                         `
                     )
+                    break;
                 case "2":
                     return(
                         css`
@@ -367,6 +368,7 @@ const TextDiv = styled.div`
                             font-weight: 300
                         `
                     )
+                    break;
                 case "3":
                     return(
                         css`
@@ -374,6 +376,7 @@ const TextDiv = styled.div`
                             font-weight: 300
                         `
                     )
+                    break;
                 default:
                     return(
                         css`
@@ -381,6 +384,7 @@ const TextDiv = styled.div`
                             font-weight: 300
                         `
                     )
+                    break;
             }
         }
     }
