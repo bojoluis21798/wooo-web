@@ -52,7 +52,7 @@ export default class Login extends Component {
             <FacebookLogin
               appId={process.env.REACT_APP_FB_APPID}
               fields="name,email,picture,gender"
-              scope="public_profile,user_friends"
+              scope="public_profile,user_friends,email,user_gender"
               autoLoad={true}
               callback={this.responseFacebook}
               redirectUri={`${process.env.REACT_APP_SITE}/login`}
