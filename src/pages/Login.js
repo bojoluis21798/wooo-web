@@ -36,6 +36,7 @@ export default class Login extends Component {
   }
 
   responseFacebook = response => {
+    console.log(response);
     this.authenticateUser(response)
   }
 
@@ -76,7 +77,7 @@ export default class Login extends Component {
             <FacebookLogin
               appId={process.env.REACT_APP_FB_APPID}
               fields="name,email,picture"
-              scope="public_profile,user_friends"
+              scope="public_profile,user_friends,email,user_gender"
               callback={this.responseFacebook}
               redirectUri={`${process.env.REACT_APP_SITE}/login`}
               onClick={this.onLoginButtonClick}

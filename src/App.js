@@ -9,7 +9,8 @@ import Loading from "./pages/Loading";
 import Matching from "./pages/Matching";
 import Messages from './pages/Messages'
 import MessageThread from './pages/MessageThread';
-import EditProfile from './pages/EditProfile'
+import EditProfile from './pages/editProfile'
+import MatchSwipe from './components/MatchSwipe';
 
 class App extends Component {
   state = { loading: true };
@@ -30,9 +31,11 @@ class App extends Component {
             <Route path="/matching" component={Matching} />
             <Route path="/messages" exact component={Messages} />
             <Route path="/messages/:id" component={MessageThread} />
+
             <Route path="*" component={Login} />
           </Switch>
         </Router>
+        
       </Provider>
     );
   }

@@ -17,7 +17,20 @@ class UserStore {
     @observable accessToken = null
     @observable profile_id = null
     @observable prospects = []
+    @observable isMatched = false;
+    @observable noProspects = false;
 
+    @action
+    setIsMatched(bool){
+        console.log("got in setIsmatched");
+        this.isMatched = bool;
+    }
+
+    @action
+    setNoProspects(bool){
+        this.noProspects = bool
+    }
+    
     @action
     async authenticateUser(authObj) {
         try {
@@ -89,8 +102,22 @@ class UserStore {
         }
     }
 
+    @computed get isMatchedValue(){
+        return this.isMatched
+    }
     @computed get currentProspect(){
         return this.prospects[0]
+    }
+
+    @computed get noProspectsValue(){
+        console.log(this.noProspects);
+        return this.noProspects
+    }
+
+    @computed get prospectLength(){
+        console.log("Prospect's length"+ this.prospects.length);
+        // return this.prospects.length?this.prospects.length:null;
+        return this.prospects.length;
     }
 }
 

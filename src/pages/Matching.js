@@ -11,6 +11,14 @@ import AuthorizedLayout from '../layouts/AuthorizedLayout'
 import matchingData from '../assets/data/matching.data'
 import MatchingHeader from '../components/MatchingHeader'
 import MatchingFooter from '../components/MatchingFooter'
+import Modal from 'react-modal';
+import MatchSwipe from '../components/MatchSwipe';
+import dog from '../assets/images/dog.jpeg';
+import dog2 from '../assets/images/dog2.jpg';
+import dog3 from '../assets/images/dog3.jpg';
+import NoMatches from '../components/NoMatches';
+
+Modal.setAppElement(document.getElementById("root"))
 
 @observer
 @inject('store')
@@ -23,6 +31,31 @@ export default class Matching extends Component{
             viewProfile: false,
             imgIdx: 0,
             noProspects: false,
+            modalIsOpen: false,
+            people: [
+                {
+                    name: "Rico",
+                    age: 16,
+                    img: [dog, dog2, dog3],
+                    location: "DOWNTOWN MANHATTAN, NEW YORK",
+                    bio: "My friends call me daddy. I can't figure out why. Do you mind helping me figure it out?",
+                },
+                {
+                    name: "Rob",
+                    age: 17,
+                    img: [dog2, dog, dog3],
+                    location: "DOWNTOWN MANHATTAN, NEW YORK",
+                    bio: "Im chinese",
+                },
+                {
+                    name: "Joe",
+                    age: 17,
+                    img: [dog3, dog, dog2],
+                    location: "DOWNTOWN MANHATTAN, NEW YORK",
+                    bio: "Im white",
+                }
+            ],
+            show:this.props.store.userStore.isMatched
         }
     }
 
@@ -34,51 +67,69 @@ export default class Matching extends Component{
          }).then(
              res=>{
                  if(res.data.length === 0){
+                    this.props.store.userStore.setNoProspects(true);
                     this.setState({noProspects: true})
                  }else{
                     this.props.store.userStore.setProspects(res.data)
+                    this.setState({hasPayload:true})
                  }
-                 this.setState({hasPayload:true})
+                 
 
              }
          )
     }
 
     nextPerson = () => {
-        this.props.store.userStore.nextProspect()
+        if(this.props.store.userStore.prospectLength > 1){
+            this.props.store.userStore.nextProspect()
+        }else{
+            this.getProspects();
+        }
+        
     }
 
     handleDislike = () => {
+        const store = this.props.store.userStore;
         const config ={
             headers:{
                 Authorization:'Token '+ this.props.store.userStore.token
             }
         }
         axios.post(`${process.env.REACT_APP_API_BASEURL}/matching/`, {
-                profile_id:this.props.store.userStore.profile_id,
-                match_id:this.props.store.userStore.currentProspect.id,
+                profile_id:store.profile_id,
+                match_id:store.currentProspect.id,
                 status:0
-        }, config)
-        this.nextPerson()
+        }, config).then(res=>{
+            this.nextPerson();
+        });
     }
 
     handleLike = () => {
+        const store = this.props.store.userStore;
         const config ={
             headers:{
                 Authorization:'Token '+ this.props.store.userStore.token
             }
         }
         axios.post(`${process.env.REACT_APP_API_BASEURL}/matching/`, {
-                profile_id: this.props.store.userStore.token.profile_id,
-                match_id: this.props.store.userStore.token.currentProspect.id,
+                profile_id: store.profile_id,
+                match_id:store.currentProspect.id,
                 status: 1
         }, config).then(res=>{
-            let matchExists = res.match_exists !== undefined
-            if(matchExists){
-                notify.show("You matched!", "success", 4000)
+            console.log("RESPONSE IS HERE");
+            console.log(res);
+            console.log(res.data.match_exists);
+            if(res.data.match_exists){
+                
+                store.setIsMatched(true);
+                console.log(store.isMatched);
+                this.setState({show:store.isMatched});
+            }else{
+                this.nextPerson();
             }
+
+            
         })
-        this.nextPerson()
     }
 
     handleViewProfile = () => {
@@ -107,6 +158,51 @@ export default class Matching extends Component{
         })
     }
 
+    openModal = () =>{
+        this.setState({modalIsOpen: true});
+    }
+
+    afterOpenModal = ()=>{
+        setTimeout(() => {
+            this.closeModal();
+            console.log("nextPerson was called");
+            this.nextPerson();
+        }, 2000);
+    }
+
+    closeModal = () =>{
+        this.setState({modalIsOpen: false});
+    }
+
+    getProspects = ()=>{
+        const store = this.props.store.userStore;
+
+         console.log("FML");
+         console.log(store.profile_id);
+         axios.get("https://wooo.philsony.com/api/matching",{
+             params:{
+                 profile_id:store.profile_id
+             }
+         }).then(
+             res=>{
+                 console.log("getProspects response here");
+                 console.log(res);
+                 
+                 if(res.data.length == 0){
+                     console.log("res.data.length == 0");
+                    store.setNoProspects(true);
+                 }else{
+                    store.setProspects(res.data);
+                    this.setState({hasPayload:true});
+                    store.setNoProspects(false);
+                 }
+                
+                
+
+             }
+         );
+    }
+
     render() {
         let state = this.state
         let currentPerson = state.people[0]
@@ -123,12 +219,23 @@ export default class Matching extends Component{
                         eventHandle = {this.handleCloseProfile}
                         type = {state.viewProfile ? "exit" : "back"}
                     />
-                    {this.state.noProspects ?
-                        <NoMatch>
-                            No Match
-                        </NoMatch>
-                        :
+                    
+                        <NoMatches>
+
+                        </NoMatches>
+                        
                         <Profile onClick = {this.handleViewProfile}>
+                        
+                        <MatchSwipe show={this.props.store.userStore.isMatchedValue}/>
+                        <Modal
+                                isOpen={this.state.modalIsOpen}
+                                onAfterOpen={this.afterOpenModal}
+                                onRequestClose={this.closeModal}
+                                style={customStyles}
+                                contentLabel="Example Modal"
+                        >
+                                <h2>You Matched!</h2>
+                        </Modal>
                         <PicSlide>
                             {state.viewProfile &&
                                 <Arrow
@@ -168,9 +275,9 @@ export default class Matching extends Component{
                             </TextContainer>
                         </MainTextArea>
                         </Profile>
-                    }
+                    
                     {
-                        !state.noProspects &&
+                        !this.props.store.userStore.noProspects&&
                         <MatchingFooter
                             handleLike = {this.handleLike}
                             handleDislike = {this.handleDislike}
@@ -181,6 +288,18 @@ export default class Matching extends Component{
         )
     }
 }
+
+const customStyles = {
+    content : {
+      top                   : '50%',
+      left                  : '50%',
+      right                 : 'auto',
+      bottom                : 'auto',
+      marginRight           : '-50%',
+      transform             : 'translate(-50%, -50%)',
+      backgroundColor       :'transparent' 
+    }
+  };
 
 const Container = styled.div`
     display: flex
