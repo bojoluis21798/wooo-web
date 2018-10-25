@@ -14,7 +14,7 @@ export default class HeaderArea extends Component {
             return(
                 <BackArea type = {this.props.type} >
                  <Link to='/edit-profile'>
-                    <TopButton onClick = {this.props.eventHandle}>
+                    <TopButton>
                         <Icon src={this.props.type === "back" ? back : close}/>
                     </TopButton>
                  </Link>
@@ -52,7 +52,7 @@ const BackArea = styled.div`
 const TopButton = styled.button`
     border: none;
     text-align: center;
-    background-color:black;
+    background-color:#111111;
     text-decoration: none;
     display: inline-block;
     cursor: pointer;
