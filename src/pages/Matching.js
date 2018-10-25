@@ -56,7 +56,7 @@ export default class Matching extends Component{
             show:this.props.store.userStore.isMatched
         }
     }
-    
+
     componentDidMount = () => {
          axios.get(`${process.env.REACT_APP_API_BASEURL}/matching`,{
              params:{
@@ -68,7 +68,7 @@ export default class Matching extends Component{
                  if(res.data.length === 0){
                     this.props.store.userStore.setNoProspects(true);
                     this.setState({hasPayload:true})//used to take away the loading screen
-                    
+
                  }else{
                     this.props.store.userStore.setProspects(res.data)
                     this.setState({hasPayload:true})
@@ -231,7 +231,10 @@ export default class Matching extends Component{
 
                         </NoMatches>
 
-                        <MatchSwipe show={this.props.store.userStore.isMatchedValue}/>
+                        <MatchSwipe
+                            show={this.props.store.userStore.isMatchedValue}
+                            eventHandle={this.nextPerson}
+                        />
 
                         <Profile onClick = {this.handleViewProfile}>
 
