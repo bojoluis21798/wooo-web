@@ -5,7 +5,7 @@ import { inject, observer } from 'mobx-react'
 @observer
 @inject('store')
 export default class MatchSwipe extends Component{
-    
+
 
     render(){
         if(this.props.show){
@@ -23,7 +23,7 @@ export default class MatchSwipe extends Component{
                    <Text onClick={this.toggle}>Continue Swiping</Text>
                 </Container>
             );
-            
+
         }else {
             return null;
         }
@@ -31,7 +31,7 @@ export default class MatchSwipe extends Component{
 
     toggle = ()=>{
         this.props.store.userStore.setIsMatched(false);
-        this.props.store.userStore.nextProspect();
+        this.props.eventHandle();
     }
 }
 
@@ -40,7 +40,7 @@ const Container = styled.div`
     display:grid; /* Hidden by default */
     width: 100%; /* Full width (cover the whole page) */
     height: 100%; /* Full height (cover the whole page) */
-    top: 0; 
+    top: 0;
     left: 0;
     right: 0;
     bottom: 0;
