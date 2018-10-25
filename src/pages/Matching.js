@@ -56,7 +56,7 @@ export default class Matching extends Component{
             show:this.props.store.userStore.isMatched
         }
     }
-
+    
     componentDidMount = () => {
          axios.get(`${process.env.REACT_APP_API_BASEURL}/matching`,{
              params:{
@@ -73,7 +73,7 @@ export default class Matching extends Component{
                     this.props.store.userStore.setProspects(res.data)
                     this.setState({hasPayload:true})
                  }
-                 
+
 
              }
          )
@@ -86,7 +86,7 @@ export default class Matching extends Component{
             this.setState({hasPayload:false});
             this.getProspects();
         }
-        
+
     }
 
     handleDislike = () => {
@@ -121,7 +121,7 @@ export default class Matching extends Component{
             console.log(res);
             console.log(res.data.match_exists);
             if(res.data.match_exists){
-                
+
                 store.setIsMatched(true);
                 console.log(store.isMatched);
                 this.setState({show:store.isMatched});
@@ -129,7 +129,7 @@ export default class Matching extends Component{
                 this.nextPerson();
             }
 
-            
+
         })
     }
 
@@ -188,7 +188,7 @@ export default class Matching extends Component{
              res=>{
                  console.log("getProspects response here");
                  console.log(res);
-                 
+
                  if(res.data.length == 0){
                      console.log("res.data.length == 0");
                     store.setNoProspects(true);
@@ -200,8 +200,8 @@ export default class Matching extends Component{
                     this.setState({hasPayload:true});
                     store.setNoProspects(false);
                  }
-                
-                
+
+
 
              }
          );
@@ -216,64 +216,67 @@ export default class Matching extends Component{
             return <Loading message="Finding Gorls"/>
         }
         return (
-            <AuthorizedLayout noheaders={true}>
+            <AuthorizedLayout
+                noheaders={true}
+                noPad={true}
+            >
                 <Container>
                     <Notifications/>
                     <MatchingHeader
                         eventHandle = {this.handleCloseProfile}
                         type = {state.viewProfile ? "exit" : "back"}
                     />
-                    
+
                         <NoMatches noProspects={this.props.store.userStore.noProspectsValue}>
 
                         </NoMatches>
-                        
+
+                        <MatchSwipe show={this.props.store.userStore.isMatchedValue}/>
+
                         <Profile onClick = {this.handleViewProfile}>
-                        
-                            <MatchSwipe show={this.props.store.userStore.isMatchedValue}/>
-                        
-                            <PicSlide>
-                                {state.viewProfile &&
-                                    <Arrow
-                                        onClick = {e => this.handlePreviousPic(currentPerson.img.length, e)}
-                                        direction = "left"
-                                    />
-                                }
-                                <PicArea>
-                                    <ImageStyle src={this.props.store.userStore.currentProspect.profile_image?this.props.store.userStore.currentProspect.profile_image:currentPerson.img[imgIdx]} />
-                                </PicArea>
-                                {state.viewProfile &&
-                                    <Arrow
-                                        onClick = {e => this.handleNextPic(currentPerson.img.length, e)}
-                                        direction = "right"
-                                    />
-                                }
-                            </PicSlide>
-                            <MainTextArea>
-                                <TextContainer>
-                                    <BioRow>
-                                        <TextDiv level = "1">
-                                            { this.props.store.userStore.currentProspect.user.first_name?
-                                                this.props.store.userStore.currentProspect.user.first_name
-                                                :currentPerson.name
-                                            }
-                                            , 
-                                            {
-                                                this.props.store.userStore.currentProspect.age?
-                                                this.props.store.userStore.currentProspect.age:currentPerson.age
-                                            }
-                                        </TextDiv>
-                                        <TextDiv level= "2">{currentPerson.location}</TextDiv>
-                                    </BioRow>
-                                    <BioRow>
-                                        <TextDiv level = "3">{this.props.store.userStore.currentProspect.bio?this.props.store.userStore.currentProspect.bio:currentPerson.bio}</TextDiv>
-                                    </BioRow>
-                                </TextContainer>
-                            </MainTextArea>
+
+                        <PicSlide>
+                            {state.viewProfile &&
+                                <Arrow
+                                    onClick = {e => this.handlePreviousPic(currentPerson.img.length, e)}
+                                    direction = "left"
+                                />
+                            }
+                            <PicArea>
+                                <ImageStyle src={this.props.store.userStore.currentProspect.profile_image?this.props.store.userStore.currentProspect.profile_image:currentPerson.img[imgIdx]} />
+                            </PicArea>
+                            {state.viewProfile &&
+                                <Arrow
+                                    onClick = {e => this.handleNextPic(currentPerson.img.length, e)}
+                                    direction = "right"
+                                />
+                            }
+                        </PicSlide>
+                        <MainTextArea>
+                            <TextContainer>
+                                <BioRow>
+                                    <TextDiv level = "1">
+                                        { this.props.store.userStore.currentProspect.user.first_name?
+                                            this.props.store.userStore.currentProspect.user.first_name
+                                            :currentPerson.name
+                                        }
+                                        ,
+                                        {
+                                            this.props.store.userStore.currentProspect.age?
+                                            this.props.store.userStore.currentProspect.age:currentPerson.age
+                                        }
+                                    </TextDiv>
+                                    <TextDiv level= "2">{currentPerson.location}</TextDiv>
+                                </BioRow>
+                                <BioRow>
+                                    <TextDiv level = "3">{this.props.store.userStore.currentProspect.bio?this.props.store.userStore.currentProspect.bio:currentPerson.bio}</TextDiv>
+                                </BioRow>
+                            </TextContainer>
+                        </MainTextArea>
                         </Profile>
-                    
+
                     {
-                        !this.props.store.userStore.noProspects&&
+                        !state.viewProfile &&
                         <MatchingFooter
                             handleLike = {this.handleLike}
                             handleDislike = {this.handleDislike}
@@ -293,7 +296,7 @@ const customStyles = {
       bottom                : 'auto',
       marginRight           : '-50%',
       transform             : 'translate(-50%, -50%)',
-      backgroundColor       :'transparent' 
+      backgroundColor       :'transparent'
     }
   };
 
@@ -304,7 +307,6 @@ const Container = styled.div`
     width: 100%
     flex-direction: column
     align-items:center
-    background-color: black
 `
 
 const Profile = styled.div`
@@ -354,19 +356,20 @@ const BioRow = styled.div`
 `
 
 const TextDiv = styled.div`
-    text-align:center
-    color: white
-    font-family: 'Apercu', sans-serif
+    text-align:center;
+    color: white;
+    font-family: 'Apercu', sans-serif;
     ${
         props => {
             switch(props.level){
                 case "1":
                     return(
                         css`
-                            font-size:4vh
+                            font-size:3.5vh
                             font-weight: 500
                         `
                     )
+                    break;
                 case "2":
                     return(
                         css`
@@ -374,6 +377,7 @@ const TextDiv = styled.div`
                             font-weight: 300
                         `
                     )
+                    break;
                 case "3":
                     return(
                         css`
@@ -381,6 +385,7 @@ const TextDiv = styled.div`
                             font-weight: 300
                         `
                     )
+                    break;
                 default:
                     return(
                         css`
@@ -388,6 +393,7 @@ const TextDiv = styled.div`
                             font-weight: 300
                         `
                     )
+                    break;
             }
         }
     }
