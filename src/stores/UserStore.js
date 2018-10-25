@@ -90,7 +90,7 @@ class UserStore {
     }
 
     @action
-    getLocation(){
+    await getLocation(){
         try{
             navigator.geolocation.getCurrentPosition((position) => {
               this.setLocation( {
