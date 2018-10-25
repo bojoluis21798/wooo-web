@@ -191,7 +191,7 @@ export default class Matching extends Component{
                      console.log("res.data.length == 0");
                     store.setNoProspects(true);
                     console.log(store.noProspects);
-                    this.setState({hasPayload:true});//used to remove the loading screen;
+                    this.setState({hasPayload:true});//used to remove the loading
                  }else{
 
                     store.setProspects(res.data);

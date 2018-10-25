@@ -25,7 +25,7 @@ class AuthorizedLayout extends Component {
             <Redirect to='/login'></Redirect>
             : <LoaderWrapper>
                 <AuthorizedContent>
-                    { !this.props.noheaders? (<Header />): '<div></div>' }
+                    { !this.props.noheaders? (<Header />): <div></div> }
                     <ContentContainer>
                         { this.props.children }
                     </ContentContainer>
