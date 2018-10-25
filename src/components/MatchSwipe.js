@@ -12,7 +12,7 @@ export default class MatchSwipe extends Component{
             console.log("got in MatchSwipe");
             return (
                 <Container>
-                   <LargeText>Rico likes you too!</LargeText>
+                   <LargeText>{this.props.store.userStore.currentProspect.user.first_name} likes you too!</LargeText>
                    <ButtonArea>
                      <SubContainer>
                        <Button>

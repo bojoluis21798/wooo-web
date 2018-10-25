@@ -81,6 +81,7 @@ export default class Matching extends Component{
         if(this.props.store.userStore.prospectLength > 1){
             this.props.store.userStore.nextProspect()
         }else{
+            this.setState({hasPayload:false});
             this.getProspects();
         }
         
@@ -189,7 +190,10 @@ export default class Matching extends Component{
                  if(res.data.length == 0){
                      console.log("res.data.length == 0");
                     store.setNoProspects(true);
+                    console.log(store.noProspects);
+                    this.setState({hasPayload:true});//used to remove the loading screen;
                  }else{
+
                     store.setProspects(res.data);
                     this.setState({hasPayload:true});
                     store.setNoProspects(false);
@@ -218,7 +222,7 @@ export default class Matching extends Component{
                         type = {state.viewProfile ? "exit" : "back"}
                     />
                     
-                        <NoMatches>
+                        <NoMatches noProspects={this.props.store.userStore.noProspectsValue}>
 
                         </NoMatches>
                         
