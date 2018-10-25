@@ -126,7 +126,6 @@ class UserStore {
     }
 
     @computed get noProspectsValue(){
-        console.log(this.noProspects);
         return this.noProspects
     }
 
