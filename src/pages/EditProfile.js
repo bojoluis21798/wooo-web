@@ -7,8 +7,8 @@ import "rc-slider/assets/index.css"
 import axios from 'axios'
 import AuthorizedLayout from '../layouts/AuthorizedLayout'
 
-@inject('store') @observer
-
+@inject('store') 
+@observer
 class EditProfile extends Component {
   onFormSubmit = (e) =>{
     e.preventDefault() 
@@ -196,7 +196,6 @@ const BioText = styled.textarea`
   max-height: 150px;
   min-height: 90px;
   width: 100%;
-  min-width: 335px;
   font-weight: 20;
   font-size: 16px;
   padding: 15px;

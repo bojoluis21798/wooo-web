@@ -20,8 +20,8 @@ import NoMatches from '../components/NoMatches';
 
 Modal.setAppElement(document.getElementById("root"))
 
-@observer
 @inject('store')
+@observer
 export default class Matching extends Component{
     constructor(props){
         super(props)

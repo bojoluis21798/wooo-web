@@ -1,10 +1,13 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import styled from "styled-components";
-import back from '../assets/images/left.png';
-import { inject, observer } from 'mobx-react';
-import firebase from 'firebase';
-import AuthorizedLayout from '../layouts/AuthorizedLayout';
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+import styled from "styled-components"
+import back from '../assets/icons/back.svg'
+import video from '../assets/icons/videocall.svg'
+import send from '../assets/icons/send.svg'
+import { inject, observer } from 'mobx-react'
+import firebase from 'firebase'
+import AuthorizedLayout from '../layouts/AuthorizedLayout'
+import Messages from '../components/Messages'
 
 const config =  {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -17,39 +20,22 @@ const config =  {
   
 firebase.initializeApp(config);
 
-export default class MessageThread extends Component {
-  state = {
-    location: this.props.location.state,
-  };
-
-  render() {
-    return (
-      <MessageBody ree={this.state.location}/>
-    );
-  }
-}
-
 @inject('store') @observer
-class MessageBody extends Component {
-  constructor(props) {
-    super(props);
-    this.messageRef = firebase.database().ref().child('roomData/'+this.props.ree.roomId);
-    this.handleMessageListen();
-  }
-
+export default class MessageThread extends Component {
   state = {
     message: '',
     userId: this.props.store.userStore.profile_id
   }
 
   componentDidMount() {
+    this.messageRef = firebase.database().ref().child('roomData/'+this.props.location.state.roomId);
     this.setState({message: ""});
     this.setState({userId: this.props.store.userStore.profile_id});
     this.handleMessageListen();
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    return nextProps.user? ({ userId: nextProps.user.displayId }): ({});
+  static getDerivedStateFromProps(nextProps) {
+    return nextProps.user? ({ userId: nextProps.user.displayId }): nextProps;
   }
   
   handleChange = event => {
@@ -82,7 +68,6 @@ class MessageBody extends Component {
     .limitToLast(10)
     .on('value', message => {
         messg = message.val()
-        
     });
     if(messg !== null){
         this.listenMessages()
@@ -101,7 +86,7 @@ class MessageBody extends Component {
 
   render() {
     return (
-      <AuthorizedLayout>
+      <AuthorizedLayout noverflow={true} redirectTo='/messages'>
         <Content>
           <Back>
             <Link to='/messsages'>
@@ -110,42 +95,46 @@ class MessageBody extends Component {
           </Back>
           <Ree>
             <Name>
-              <strong>{this.props.ree.pairedName}</strong>
+              {this.props.location && this.props.location.state.pairedName}
             </Name>
             <LastMessage>
-              <p>Active Now</p>
+              Active Now
             </LastMessage>
           </Ree>
+          <div>
+            <Link to={`/video/${this.props.location.state.pairedSlug}`}>
+                <img src={video} alt="Video Call"></img>
+            </Link>
+          </div>
         </Content>
-        <div>
+        <MessageList>
           {
-            this.state.list && this.state.list.map((message, index) => (
+            this.props.location
+            && this.state.userId
+            && this.state.list 
+            && this.state.list.map((message, index) => (
               <Messages 
                 key={index}
                 {...message}
                 id={index}
-                userData={this.props.ree}
+                userData={this.props.location.state}
                 user1={this.state.userId}
-                user2={this.props.ree.pairedId}
+                user2={this.props.location.state.pairedId}
               />
             ))
           }
-        </div>
+        </MessageList>
         <Chat>
-          <Div8>
-            <Input type="text" id="usr" placeholder="Send a Message" 
-            onChange={this.handleChange}
-            onKeyPress={this.handleKeyPress}
-            value={this.state.message}
-            />
-          </Div8>
-          <Div2>
-            <ButtonA
-              onClick={this.handleSend}
-            >
-              Send
-            </ButtonA>
-          </Div2>
+          <Input type="text" id="usr" placeholder="Send a Message" 
+          onChange={this.handleChange}
+          onKeyPress={this.handleKeyPress}
+          value={this.state.message}
+          />
+          <ButtonA
+            onClick={this.handleSend}
+          >
+            <img src={send} alt="Send Icon" />
+          </ButtonA>
         </Chat>
       </AuthorizedLayout>
     );
@@ -153,14 +142,19 @@ class MessageBody extends Component {
 }
 
 const Content = styled.div`
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr 9fr 1fr;
+  margin-bottom: 30px;
 `;
 
 const Back = styled.div`
-  float: left !important;
-  color: white !important;
+  float: left;
+  color: white;
 `;
+
+const MessageList = styled.div`
+  margin-top: 20px;  
+`
 
 const Ree = styled.div`
   margin:0 auto;
@@ -169,154 +163,51 @@ const Ree = styled.div`
 
 const Name = styled.div`
   font-size: 1.5em;
+  margin-bottom: 5px;
 `;
 
 const ButtonA = styled.button`
-  font-weight: 100;
-  font-size: 15px;
-  color: #ffffff;
-  background-color: #191919;
-  letter-spacing: 0.01px;
-  text-align: center;
-  border-radius: 5px;
-  border: 0;
-  padding: 12px;
-  width: 90px;
-  margin: auto;
-  margin-bottom: 5px;
-  margin-right: 15px;
-  transition: 0.5s all ease;
+  text-align: right;
   cursor: pointer;
+  background-color: transparent;
+  border: 0;
 `;
 
-const Div2 = styled.div`
-  width: 20%;
-  display: inline-block;
-`;
-
-const Div8 = styled.div`
-  width: 80%;
-  display: inline-block;
-`;
-
-const LastMessage = styled.p`
+const LastMessage = styled.div`
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis !important;
+  text-overflow: ellipsis;
+  background-color: transparent;
 `;
 
 const Chat = styled.div`
-  height: 45px;
-  min-height: 45px;
-  width: 100%;
-  font-weight: 20;
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: 9fr 1fr;
   font-size: 18px;
-  padding: 15px;
-  color: #ffffff !important;
-  background-color: #191919 !important;
+  padding: 10px;
+  color: #ffffff;
+  background-color: #191919;
   border-radius: 5px;
   border: none;
   justify-items: center;
   overflow: hidden;
-  resize: hidden;
-  border: 1px solid #191919 !important;
+  border: 1px solid #191919;
 
   &:focus {
-    outline: none !important;
-    border: 1px solid #f51a63 !important;
+    outline: none;
   }
 `;
 
 const Input = styled.input`
-  height: 45px;
-  min-height: 45px;
   width: 100%;
-  font-weight: 20;
-  font-size: 18px;
-  padding: 15px;
-  color: #ffffff !important;
-  background-color: #191919 !important;
-  border-radius: 5px;
-  border: none;
-  justify-items: center;
-  overflow: hidden;
-  resize: hidden;
-  border: 1px solid #191919 !important;
+  font-size: 16px;
+  padding: 5px 15px;
+  color: #ffffff;
+  background-color: #191919;
+  border: 1px solid #191919;
   
   &:focus {
-    outline: none !important;
-    border: 1px solid #f51a63 !important;
+    outline: none;
   }
-`;
-
-@inject('store') @observer
-class Messages extends Component {
-  render() {
-    return (
-      <div>
-        {this.props.userData.pairedId === this.props.userId && (
-          <Div>
-            <Div2>
-              <Img src={this.props.userData.pairedImage} alt={this.props.userData.pairedId}/>
-            </Div2>
-            <Div3>
-              <div>
-                <p>{this.props.message.content}</p>
-              </div>
-            </Div3>
-          </Div>
-        )}
-        {this.props.userId === this.props.store.userStore.profile_id && (
-          <DivContent>
-            <Div4>
-              <div>
-                <p>{this.props.message.content}</p>
-              </div>
-            </Div4>
-            <Div2>
-              <Img src={this.props.store.userStore.profilePicture} alt={this.props.profile_id}/>
-            </Div2>
-          </DivContent>
-        )}
-      </div>
-    );
-  }
-}
-
-const Div = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const Div3 = styled.div`
-  width: 80%;
-  display: inline-block;
-  text-align: left;
-  margin: 3px;
-  padding: 1px;
-  padding-left: 5px;
-  background-color: #191919;
-  border-radius: 10px;
-`;
-
-const Div4 = styled.div`
-  width: 80%;
-  display: inline-block;
-  text-align: left;
-  margin: 3px;
-  padding: 1px;
-  padding-left: 5px;
-  background-color: #FC3F73;
-  border-radius: 10px;
-`;
-
-const DivContent = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const Img = styled.img`
-  max-width: 100%;
-  height: auto;
-  border-radius: 50%;
 `;

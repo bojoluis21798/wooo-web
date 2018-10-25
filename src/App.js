@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import RootStore from "./stores/RootStore";
 import { Provider } from "mobx-react";
+import { hot } from 'react-hot-loader';
 
 // Pages
 import Login from "./pages/Login";
@@ -30,8 +31,7 @@ class App extends Component {
             <Route path="/edit-profile" component={EditProfile} />
             <Route path="/matching" component={Matching} />
             <Route path="/messages" exact component={Messages} />
-            <Route path="/messages/:id" component={MessageThread} />
-
+            <Route exact path="/messages/:id" component={MessageThread} />
             <Route path="*" component={Login} />
           </Switch>
         </Router>
@@ -41,4 +41,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default hot(module)(App)

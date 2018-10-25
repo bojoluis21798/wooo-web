@@ -6,23 +6,19 @@ export default class MessageHead extends Component {
   render() {
     return (
         <Item>
-            <Linked to={{ pathname: `/messages/${this.props.roomId}`, state: this.props }}>
+            <Linked to={{ pathname: `/messages/${(this.props.roomId || '') }`, state: this.props }}>
                 <Content>
-                    <Div3>
-                    <Image src={this.props.pairedImage} alt={this.props.name}/>
-                    </Div3>
-                    <Div7>
-                    <Name>
-                        <strong>
-                        {this.props.pairedName}
-                        </strong>
-                    </Name>
-                    <div>
+                    {this.props.roomId && <Image src={this.props.pairedImage} alt={this.props.name}/> } 
+                    <MessageTease>
+                        <Name>
+                            <strong>
+                            {this.props.pairedName}
+                            </strong>
+                        </Name>
                         <LastMessage>
-                        {this.props.pairedName}
+                            {this.props.message}
                         </LastMessage>
-                    </div>
-                    </Div7>
+                    </MessageTease>
                 </Content>
             </Linked>
         </Item>
@@ -41,30 +37,22 @@ const Linked = styled(Link)`
 `;
 
 const Content = styled.div`
-    display: flex;
+    display: grid;
+    grid-template-columns: 85px 1fr;
+    grid-column-gap: 30px;
     align-items: center;
+    margin-top: 10px;
 `;
 
 const Image = styled.img`
     height: auto;
     border-radius: 100%;
-    width: 95px;
+    width: 90px;
 `;
 
-const  Div3 = styled.div`
-    flex: 1 1 !important;
-    padding: 0px;
-    margin: 0px;
-`;
-
-const Div7 = styled.div`
-    flex: 3 3 !important;
-    padding-left: 5%;
-    padding-right: 5%;
-    text-align: left;
-    color: white !important;
-    text-decoration: none;
-`;
+const MessageTease = styled.div`
+    
+`
 
 const Name = styled.div`
     font-size: 18px;

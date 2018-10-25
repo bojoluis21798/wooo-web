@@ -6,6 +6,7 @@ class UserStore {
     @observable username = null
     @observable name = null
     @observable biography = null
+    @observable gay = null
     @observable preference = null
     @observable radius = null
     @observable location = null
@@ -17,9 +18,8 @@ class UserStore {
     @observable accessToken = null
     @observable profile_id = null
     @observable prospects = []
-    @observable isMatched = false;
-    @observable noProspects = false;
-
+    @observable redirect_to = null
+    @observaebl noProspects = false;
     @action
     setIsMatched(bool){
         console.log("got in setIsmatched");
@@ -44,7 +44,6 @@ class UserStore {
         } catch(err) {
             return false
         }
-        
     }
 
     @action 
@@ -57,11 +56,33 @@ class UserStore {
         this.radius = userAuth.search_radius
         this.preference = userAuth.sexual_preference
         this.profile_id = userAuth.profile_id
+        this.gay = userAuth.gay
+        
+    }
+
+    @action
+    setRedirectTo(link) {
+        this.redirect_to = link
+    }
+
+    @action
+    purgeRedirect() {
+        this.redirect_to = null
     }
 
     @action
     setBio(bio){
         this.biography = bio
+    }
+
+    @action
+    setLocation(location){
+    this.location = location
+    }
+
+    @action
+    setGay(gay){
+        this.gay = gay
     }
 
     @action
@@ -74,22 +95,16 @@ class UserStore {
         this.preference = prefs
     }
 
+    @action
+    setPicOne(p1){
+        this.photos[0] = p1;
+    }
+    
+
     @action insertToken(authObj){
-        // this.accessToken = authObj.accessToken
         this.accessToken = authObj.auth_token
     }
     
-    // @action 
-    // populateUser(userAuth) {
-    //     console.log(userAuth.profile_id)
-    //     this.profile_id= userAuth.profile_id
-    //     console.log(this.profile_id)
-    //     this.token = userAuth.auth_token
-    //     this.name = userAuth.name
-    //     this.email = true
-    //     this.profilePicture = userAuth.profile_image
-    // }
-
     @action
     setProspects(prospects){
         this.prospects = prospects

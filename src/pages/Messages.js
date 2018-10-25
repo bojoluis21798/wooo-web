@@ -4,12 +4,14 @@ import styled from "styled-components";
 import MessageItems from '../components/MessageItems'
 import axios from 'axios';
 import AuthorizedLayout from '../layouts/AuthorizedLayout';
+import firebase from 'firebase';
 
-@inject('store') @observer
+@inject('store') 
+@observer
 export default class Messages extends Component {
   state = {
     currentUser: this.props.store.userStore.profile_id,
-    pairedUser: [],
+    pairedUser: null,
   };
 
   componentDidMount() {
@@ -21,12 +23,20 @@ export default class Messages extends Component {
           var pairedInfo = {
             pairedId: element.id,
             pairedName: element.user.first_name,
+            pairedSlug: element.user.slug,
+            pairedBio: element.bio,
             pairedImage: element.profile_image,
             roomId: this.state.currentUser+'R'+element.id,
+            message: ""
           }
           pairedInfo.roomId = (element.id < this.state.currentUser) ? element.id+'R'+this.state.currentUser : this.state.currentUser+'R'+element.id
+
+          firebase.database().ref().child('roomData/'+pairedInfo.roomId).limitToLast(1).on('value', message => {
+              var lastmessage = Object.values(message.val());
+              pairedInfo.message = lastmessage[0].message.content;
+            })
           pairedUser.push(pairedInfo);
-        });
+        })
         this.setState({
           pairedUser
         })
@@ -36,16 +46,16 @@ export default class Messages extends Component {
 
   render() {
     return (
-      <AuthorizedLayout>
-        <Tag>
-          <PageTitle>Messages</PageTitle>
-        </Tag>
-        <Search>
-          <Input type="text" id="usr" placeholder="Search for a message"/>
-        </Search>
-        <MessageList>
+      <AuthorizedLayout noverflow={true}>
+        <Content>
+          <Tag>
+            <PageTitle>Messages</PageTitle>
+          </Tag>
+          <Search>
+            <Input type="text" id="usr" placeholder="Search for a message"/>
+          </Search>
           <MessageItems pairedUser={this.state.pairedUser} />
-        </MessageList>
+        </Content>
       </AuthorizedLayout>
     );
   }
@@ -55,7 +65,10 @@ const PageTitle = styled.div`
   font-size: 28px;
   color: #fff;
   font-weight: bold;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+`
+
+const Content = styled.div`
 `
 
 const Tag = styled.div`
@@ -68,18 +81,17 @@ const Search = styled.div`
 `;
 
 const Input = styled.input`
-  height: 45px;
-  min-height: 45px;
   width: 100%;
-  font-size: 16px;
+  font-size: 15px;
   color: #ffffff;
-  padding: 25px 15px;
+  padding: 15px 15px;
   background-color: #191919;
   border-radius: 5px;
   border: none;
   justify-items: center;
   overflow: hidden;
   resize: hidden;
+  margin-bottom: 5px;
   border: 1px solid #191919;
   
   &:focus {
@@ -87,6 +99,3 @@ const Input = styled.input`
   }
 `;
   
-const MessageList = styled.div`
-  margin-top: 30px;
-`
