@@ -11,14 +11,12 @@ import AuthorizedLayout from '../layouts/AuthorizedLayout'
 import matchingData from '../assets/data/matching.data'
 import MatchingHeader from '../components/MatchingHeader'
 import MatchingFooter from '../components/MatchingFooter'
-import Modal from 'react-modal';
 import MatchSwipe from '../components/MatchSwipe';
 import dog from '../assets/images/dog.jpeg';
 import dog2 from '../assets/images/dog2.jpg';
 import dog3 from '../assets/images/dog3.jpg';
 import NoMatches from '../components/NoMatches';
 
-Modal.setAppElement(document.getElementById("root"))
 
 @inject('store')
 @observer
@@ -227,15 +225,7 @@ export default class Matching extends Component{
                         <Profile onClick = {this.handleViewProfile}>
                         
                         <MatchSwipe show={this.props.store.userStore.isMatchedValue}/>
-                        <Modal
-                                isOpen={this.state.modalIsOpen}
-                                onAfterOpen={this.afterOpenModal}
-                                onRequestClose={this.closeModal}
-                                style={customStyles}
-                                contentLabel="Example Modal"
-                        >
-                                <h2>You Matched!</h2>
-                        </Modal>
+                        
                         <PicSlide>
                             {state.viewProfile &&
                                 <Arrow

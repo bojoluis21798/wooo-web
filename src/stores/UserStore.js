@@ -19,7 +19,8 @@ class UserStore {
     @observable profile_id = null
     @observable prospects = []
     @observable redirect_to = null
-    @observaebl noProspects = false;
+    @observable noProspects = false;
+    @observable isMatched = false;
     @action
     setIsMatched(bool){
         console.log("got in setIsmatched");

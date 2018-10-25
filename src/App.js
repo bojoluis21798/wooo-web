@@ -10,7 +10,7 @@ import Loading from "./pages/Loading";
 import Matching from "./pages/Matching";
 import Messages from './pages/Messages'
 import MessageThread from './pages/MessageThread';
-import EditProfile from './pages/editProfile'
+import EditProfile from './pages/EditProfile'
 import MatchSwipe from './components/MatchSwipe';
 
 class App extends Component {
