@@ -30,6 +30,7 @@ export default class Matching extends Component{
             imgIdx: 0,
             noProspects: false,
             modalIsOpen: false,
+            photos: [],
             people: [
                 {
                     name: "Rico",
@@ -71,12 +72,22 @@ export default class Matching extends Component{
 
                  }else{
                     this.props.store.userStore.setProspects(res.data)
+                    this.repopulatePhotos()
                     this.setState({hasPayload:true})
                  }
 
 
              }
          )
+    }
+
+    repopulatePhotos = () => {
+        this.setState({
+            photos: [
+                this.props.store.userStore.currentProspect.profile_image,
+                // supporting images here
+            ]
+        })
     }
 
     nextPerson = () => {
@@ -86,7 +97,7 @@ export default class Matching extends Component{
             this.setState({hasPayload:false});
             this.getProspects();
         }
-
+        this.repopulatePhotos()
     }
 
     handleDislike = () => {
@@ -210,7 +221,9 @@ export default class Matching extends Component{
     render() {
         let state = this.state
         let currentPerson = state.people[0]
+        let currentProspect = this.props.store.userStore.currentProspect
         let imgIdx = state.imgIdx
+        let profileImage = currentProspect.profile_image
 
         if(!this.state.hasPayload){
             return <Loading message="Finding Gorls"/>
@@ -241,16 +254,16 @@ export default class Matching extends Component{
                         <PicSlide>
                             {state.viewProfile &&
                                 <Arrow
-                                    onClick = {e => this.handlePreviousPic(currentPerson.img.length, e)}
+                                    onClick = {e => this.handlePreviousPic(photos.length, e)}
                                     direction = "left"
                                 />
                             }
                             <PicArea>
-                                <ImageStyle src={this.props.store.userStore.currentProspect.profile_image?this.props.store.userStore.currentProspect.profile_image:currentPerson.img[imgIdx]} />
+                                <ImageStyle src={profileImage?state.photos[imgIdx]:currentPerson.img[imgIdx]} />
                             </PicArea>
                             {state.viewProfile &&
                                 <Arrow
-                                    onClick = {e => this.handleNextPic(currentPerson.img.length, e)}
+                                    onClick = {e => this.handleNextPic(photos.length, e)}
                                     direction = "right"
                                 />
                             }
@@ -259,20 +272,20 @@ export default class Matching extends Component{
                             <TextContainer>
                                 <BioRow>
                                     <TextDiv level = "1">
-                                        { this.props.store.userStore.currentProspect.user.first_name?
-                                            this.props.store.userStore.currentProspect.user.first_name
+                                        { currentProspect.user.first_name?
+                                            currentProspect.user.first_name
                                             :currentPerson.name
                                         }
                                         ,
                                         {
-                                            this.props.store.userStore.currentProspect.age?
-                                            this.props.store.userStore.currentProspect.age:currentPerson.age
+                                            currentProspect.age?
+                                            currentProspect.age:currentPerson.age
                                         }
                                     </TextDiv>
                                     <TextDiv level= "2">{currentPerson.location}</TextDiv>
                                 </BioRow>
                                 <BioRow>
-                                    <TextDiv level = "3">{this.props.store.userStore.currentProspect.bio?this.props.store.userStore.currentProspect.bio:currentPerson.bio}</TextDiv>
+                                    <TextDiv level = "3">{currentProspect.bio?currentProspect.bio:currentPerson.bio}</TextDiv>
                                 </BioRow>
                             </TextContainer>
                         </MainTextArea>
