@@ -64,9 +64,11 @@ export default class Matching extends Component{
              }
          }).then(
              res=>{
+                 console.log(res)
                  if(res.data.length === 0){
                     this.props.store.userStore.setNoProspects(true);
-                    this.setState({noProspects: true})
+                    this.setState({hasPayload:true})//used to take away the loading screen
+                    
                  }else{
                     this.props.store.userStore.setProspects(res.data)
                     this.setState({hasPayload:true})
@@ -228,46 +230,46 @@ export default class Matching extends Component{
                         
                         <Profile onClick = {this.handleViewProfile}>
                         
-                        <MatchSwipe show={this.props.store.userStore.isMatchedValue}/>
+                            <MatchSwipe show={this.props.store.userStore.isMatchedValue}/>
                         
-                        <PicSlide>
-                            {state.viewProfile &&
-                                <Arrow
-                                    onClick = {e => this.handlePreviousPic(currentPerson.img.length, e)}
-                                    direction = "left"
-                                />
-                            }
-                            <PicArea>
-                                <ImageStyle src={this.props.store.userStore.currentProspect.profile_image?this.props.store.userStore.currentProspect.profile_image:currentPerson.img[imgIdx]} />
-                            </PicArea>
-                            {state.viewProfile &&
-                                <Arrow
-                                    onClick = {e => this.handleNextPic(currentPerson.img.length, e)}
-                                    direction = "right"
-                                />
-                            }
-                        </PicSlide>
-                        <MainTextArea>
-                            <TextContainer>
-                                <BioRow>
-                                    <TextDiv level = "1">
-                                        { this.props.store.userStore.currentProspect.user.first_name?
-                                            this.props.store.userStore.currentProspect.user.first_name
-                                            :currentPerson.name
-                                        }
-                                        , 
-                                        {
-                                            this.props.store.userStore.currentProspect.age?
-                                            this.props.store.userStore.currentProspect.age:currentPerson.age
-                                        }
-                                    </TextDiv>
-                                    <TextDiv level= "2">{currentPerson.location}</TextDiv>
-                                </BioRow>
-                                <BioRow>
-                                    <TextDiv level = "3">{this.props.store.userStore.currentProspect.bio?this.props.store.userStore.currentProspect.bio:currentPerson.bio}</TextDiv>
-                                </BioRow>
-                            </TextContainer>
-                        </MainTextArea>
+                            <PicSlide>
+                                {state.viewProfile &&
+                                    <Arrow
+                                        onClick = {e => this.handlePreviousPic(currentPerson.img.length, e)}
+                                        direction = "left"
+                                    />
+                                }
+                                <PicArea>
+                                    <ImageStyle src={this.props.store.userStore.currentProspect.profile_image?this.props.store.userStore.currentProspect.profile_image:currentPerson.img[imgIdx]} />
+                                </PicArea>
+                                {state.viewProfile &&
+                                    <Arrow
+                                        onClick = {e => this.handleNextPic(currentPerson.img.length, e)}
+                                        direction = "right"
+                                    />
+                                }
+                            </PicSlide>
+                            <MainTextArea>
+                                <TextContainer>
+                                    <BioRow>
+                                        <TextDiv level = "1">
+                                            { this.props.store.userStore.currentProspect.user.first_name?
+                                                this.props.store.userStore.currentProspect.user.first_name
+                                                :currentPerson.name
+                                            }
+                                            , 
+                                            {
+                                                this.props.store.userStore.currentProspect.age?
+                                                this.props.store.userStore.currentProspect.age:currentPerson.age
+                                            }
+                                        </TextDiv>
+                                        <TextDiv level= "2">{currentPerson.location}</TextDiv>
+                                    </BioRow>
+                                    <BioRow>
+                                        <TextDiv level = "3">{this.props.store.userStore.currentProspect.bio?this.props.store.userStore.currentProspect.bio:currentPerson.bio}</TextDiv>
+                                    </BioRow>
+                                </TextContainer>
+                            </MainTextArea>
                         </Profile>
                     
                     {

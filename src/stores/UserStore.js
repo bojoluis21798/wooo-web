@@ -1,7 +1,9 @@
 
 import { observable, action,computed } from 'mobx'
 import axios from 'axios'
-
+import dog from '../assets/images/dog.jpeg';
+import dog2 from '../assets/images/dog2.jpg';
+import dog3 from '../assets/images/dog3.jpg';
 class UserStore {
     @observable username = null
     @observable name = null
@@ -17,7 +19,18 @@ class UserStore {
     @observable email = null
     @observable accessToken = null
     @observable profile_id = null
-    @observable prospects = []
+    @observable prospects = [
+        {
+          user:{
+            first_name: "Rico",
+            
+          },
+            age: 16,
+            img: [dog, dog2, dog3],
+            location: "DOWNTOWN MANHATTAN, NEW YORK",
+            bio: "My friends call me daddy. I can't figure out why. Do you mind helping me figure it out?",
+        }
+    ]
     @observable redirect_to = null
     @observable noProspects = false;
     @observable isMatched = false;
