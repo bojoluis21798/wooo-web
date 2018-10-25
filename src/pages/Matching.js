@@ -298,7 +298,6 @@ const Container = styled.div`
     width: 100%
     flex-direction: column
     align-items:center
-    background-color: black
 `
 
 const Profile = styled.div`
