@@ -19,6 +19,7 @@ export default class Login extends Component {
 
   responseFacebook = (response) => {
     console.log(response);
+    console.log(typeof response.gender);
     this.props.store.userStore.authenticateUser(response)
   }
 

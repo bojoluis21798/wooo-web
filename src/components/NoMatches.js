@@ -15,6 +15,7 @@ export default class NoMatches extends Component{
                     <SubContainer>
                         <BrokenHeart data={brokenHeart}/>
                     </SubContainer>
+                    <LargeText>We have no available potential matches for you at the moment.</LargeText>
                   </IconArea>
               </Container>
             );
@@ -72,4 +73,9 @@ const IconArea = styled.div`
     grid-column-end:4;
     grid-row-start: 2;
     grid-row-end: 3;
+`
+const LargeText = styled.div`
+    color:white;
+    font-size:2vh;
+    text-align:center;
 `
