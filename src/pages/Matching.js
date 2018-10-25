@@ -210,7 +210,10 @@ export default class Matching extends Component{
             return <Loading message="Finding Gorls"/>
         }
         return (
-            <AuthorizedLayout noheaders={true}>
+            <AuthorizedLayout
+                noheaders={true}
+                noPad={true}
+            >
                 <Container>
                     <Notifications/>
                     <MatchingHeader
