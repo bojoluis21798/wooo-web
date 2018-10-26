@@ -80,7 +80,7 @@ export default class Login extends Component {
               )}
             />
             <TermsNotice>
-              <Link to="/policy-terms">See our terms and conditions</Link>
+              <Link to="/policy-terms">See our privacy policy</Link>
               <br/>
               <input
                 className="form-check-input"
@@ -89,7 +89,7 @@ export default class Login extends Component {
                 onChange = {this.handleCheck}
               />
               <label className="form-check-label" htmlFor="defaultCheck1">
-                I hereby agree to the terms and conditions of the company.
+                I hereby agree to the privacy policy of the company.
               </label>
             </TermsNotice>
           </LoginActionSection>
