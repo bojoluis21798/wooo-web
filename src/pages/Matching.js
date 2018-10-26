@@ -219,10 +219,9 @@ export default class Matching extends Component{
     }
 
     render() {
-        let state = this.state
-        let currentPerson = state.people[0]
+        let currentPerson = this.state.people[0]
         let currentProspect = this.props.store.userStore.currentProspect
-        let imgIdx = state.imgIdx
+        let imgIdx = this.state.imgIdx
         let profileImage = currentProspect.profile_image
 
         if(!this.state.hasPayload){
@@ -237,7 +236,7 @@ export default class Matching extends Component{
                     <Notifications/>
                     <MatchingHeader
                         eventHandle = {this.handleCloseProfile}
-                        type = {state.viewProfile ? "exit" : "back"}
+                        type = {this.state.viewProfile ? "exit" : "back"}
                     />
 
                         <NoMatches noProspects={this.props.store.userStore.noProspectsValue}>
@@ -252,16 +251,16 @@ export default class Matching extends Component{
                         <Profile onClick = {this.handleViewProfile}>
 
                         <PicSlide>
-                            {state.viewProfile &&
+                            {this.state.viewProfile &&
                                 <Arrow
                                     onClick = {e => this.handlePreviousPic(photos.length, e)}
                                     direction = "left"
                                 />
                             }
                             <PicArea>
-                                <ImageStyle src={profileImage?state.photos[imgIdx]:currentPerson.img[imgIdx]} />
+                                <ImageStyle src={profileImage?this.state.photos[imgIdx]:currentPerson.img[imgIdx]} />
                             </PicArea>
-                            {state.viewProfile &&
+                            {this.state.viewProfile &&
                                 <Arrow
                                     onClick = {e => this.handleNextPic(photos.length, e)}
                                     direction = "right"
@@ -292,7 +291,7 @@ export default class Matching extends Component{
                         </Profile>
 
                     {
-                        !state.viewProfile &&
+                        !this.state.viewProfile &&
                         <MatchingFooter
                             handleLike = {this.handleLike}
                             handleDislike = {this.handleDislike}
