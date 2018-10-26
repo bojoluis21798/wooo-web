@@ -57,6 +57,8 @@ export default class Login extends Component {
   onLoginButtonClick = () => {
     if (this.state.checked) {
       this.setState({ loading: 'Authenticating you..' })
+    } else {
+      alert("You must agree to the terms and conditions first.")
     }
   }
 
