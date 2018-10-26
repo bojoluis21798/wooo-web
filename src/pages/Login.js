@@ -32,6 +32,10 @@ export default class Login extends Component {
     this.props.store.appStore.startLoading()
   }
 
+  componentWillUnmount() {
+    this.props.store.appStore.doneLoading()
+  }
+
   handleCheck = (e) => {
     this.setState({
         checked: e.target.checked,
