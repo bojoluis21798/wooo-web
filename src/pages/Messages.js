@@ -12,9 +12,9 @@ import SmallLoading from '../components/SmallLoading'
 @observer
 export default class Messages extends Component {
   state = {
-    currentUser: this.props.store.userStore.profile_id,
     pairedUser: null,
-    loading: true
+    loading: true,
+    listeners: []
   };
 
   componentDidMount() {
@@ -29,27 +29,34 @@ export default class Messages extends Component {
             pairedSlug: element.user.slug,
             pairedBio: element.bio,
             pairedImage: element.profile_image,
-            roomId: this.state.currentUser+'R'+element.id,
+            roomId: this.props.store.userStore.profile_id+'R'+element.id,
             message: ""
           }
-          pairedInfo.roomId = (element.id < this.state.currentUser) ? element.id+'R'+this.state.currentUser : this.state.currentUser+'R'+element.id
+          pairedInfo.roomId = (element.id < this.props.store.userStore.profile_id) ? element.id+'R'+this.props.store.userStore.profile_id : this.props.store.userStore.profile_id+'R'+element.id
+          
+          const listener = message => {
+            if(message.val()) {
+              var lastmessage = Object.values(message.val());
+              pairedInfo.message = lastmessage[0].message.content;
+              this.setState({ pairedUser })
+            }
+          }
 
-          firebase.database().ref().child('roomData/'+pairedInfo.roomId).limitToLast(1).on('value', message => {
-              if(message.val()) {
-                var lastmessage = Object.values(message.val());
-                pairedInfo.message = lastmessage[0].message.content;
-              }
-            })
-            pairedUser.push(pairedInfo);
-          })
+          this.setState({ listeners: [...this.state.listeners, listener] })
+
+          firebase.database().ref().child('roomData/'+pairedInfo.roomId).limitToLast(1).on('value', listener)
+          pairedUser.push(pairedInfo);
+        })
         this.setState({
           pairedUser,
           loading: false
         })
-      } else {
-
-      }
+      } 
     })
+  }
+
+  async componentWillUnmount() {
+    await this.state.listeners.forEach(listener => firebase.database().ref().off('value', listener))
   }
 
   render() {
