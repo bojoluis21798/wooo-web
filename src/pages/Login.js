@@ -14,7 +14,8 @@ import Loading from "./Loading"
 @observer
 export default class Login extends Component {
   state = {
-    loading: 'Initializing the app..'
+    loading: 'Initializing the app..',
+    checked: false,
   }
 
   authenticateUser = ({
@@ -54,12 +55,15 @@ export default class Login extends Component {
   }
 
   onLoginButtonClick = () => {
-    var checkBox = document.getElementById("defaultCheck1");
-    if (checkBox.checked === true) {
-      this.setState({ loading: 'Authenticating you..' })   
-    } else {
-      alert("You must agree to the terms and conditions first.")
+    if (this.state.checked) {
+      this.setState({ loading: 'Authenticating you..' })
     }
+  }
+
+  handleCheck = (e) => {
+    this.setState({
+        checked: e.target.checked,
+    })
   }
 
   render() {
@@ -96,7 +100,12 @@ export default class Login extends Component {
             <TermsNotice>
               <a href="pages/PolicyTerms.html">See our terms and conditions</a>
               <br/>
-              <input className="form-check-input" type="checkbox" value="" id="defaultCheck1" />
+              <input
+                className="form-check-input"
+                type="checkbox"
+                checked={this.state.checked}
+                onChange = {this.handleCheck}
+              />
               <label className="form-check-label" htmlFor="defaultCheck1">
                 I hereby agree to the terms and conditions of the company.
               </label>
