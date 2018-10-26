@@ -1,7 +1,9 @@
 
 import { observable, action,computed } from 'mobx'
 import axios from 'axios'
-
+import dog from '../assets/images/dog.jpeg';
+import dog2 from '../assets/images/dog2.jpg';
+import dog3 from '../assets/images/dog3.jpg';
 class UserStore {
     @observable username = null
     @observable name = null
@@ -16,10 +18,34 @@ class UserStore {
     @observable token = null
     @observable accessToken = null
     @observable profile_id = null
-    @observable prospects = []
+    @observable prospects = [
+        {
+          user:{
+            first_name: "Rico",
+            
+          },
+            age: 16,
+            img: [dog, dog2, dog3],
+            location: "DOWNTOWN MANHATTAN, NEW YORK",
+            bio: "My friends call me daddy. I can't figure out why. Do you mind helping me figure it out?",
+        }
+    ]
     @observable redirect_to = null
     @observable user_slug = null
+    @observable noProspects = false;
+    @observable isMatched = false;
 
+    @action
+    setIsMatched(bool){
+        console.log("got in setIsmatched");
+        this.isMatched = bool;
+    }
+
+    @action
+    setNoProspects(bool){
+        this.noProspects = bool
+    }
+    
     @action
     async authenticateUser(authObj) {
         try {
@@ -54,8 +80,10 @@ class UserStore {
     }
 
     @action
-    purgeRedirect() {
+    getRedirectTo() {
+        const redirectLink = this.redirect_to
         this.redirect_to = null
+        return redirectLink
     }
 
     @action
@@ -118,8 +146,21 @@ class UserStore {
         }
     }
 
+    @computed get isMatchedValue(){
+        return this.isMatched
+    }
     @computed get currentProspect(){
         return this.prospects[0]
+    }
+
+    @computed get noProspectsValue(){
+        return this.noProspects
+    }
+
+    @computed get prospectLength(){
+        console.log("Prospect's length"+ this.prospects.length);
+        // return this.prospects.length?this.prospects.length:null;
+        return this.prospects.length;
     }
 }
 

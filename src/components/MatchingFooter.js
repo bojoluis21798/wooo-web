@@ -24,7 +24,7 @@ export default class FooterArea extends Component {
 
 const ButtonActions = styled.button`
     border-radius: 100%
-    background-color: rgba(18, 18, 18, 1) 
+    background-color: #212020
     border: none
     color: white
     padding: 3vh
@@ -42,7 +42,6 @@ const ButtonArea = styled.div`
     justify-content: center
     display:flex
     flex-direction:row
-    background-color: black
 `
 
 const Item = styled.div`
@@ -50,6 +49,6 @@ const Item = styled.div`
 `
 
 const Icon = styled.img`
-    width:5vh;
-    height:5vh;
+    width:4vh;
+    height:4vh;
 `;

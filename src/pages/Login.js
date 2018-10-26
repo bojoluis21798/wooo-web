@@ -17,12 +17,12 @@ export default class Login extends Component {
     this.props.store.appStore.startLoading()
   }
 
-  responseFacebook = response => this.props.store.userStore.authenticateUser(response)
+  responseFacebook = (response) => {
+    this.props.store.userStore.authenticateUser(response)
+  }
 
   componentDidMount() {
     setTimeout(() => {
-      this.setState({ loading: null });
-      this.props.store.userStore.purgeRedirect()
       this.props.store.appStore.doneLoading()
     }, 1500)
   }
@@ -35,7 +35,7 @@ export default class Login extends Component {
 
   render() {
     return this.props.store.userStore.token ? (
-      <Redirect to={`${this.props.store.userStore.redirect_to || '/edit-profile'}`} />
+      <Redirect to={`${this.props.store.userStore.getRedirectTo() || '/edit-profile'}`} />
     ) : <LoaderWrapper>
       <LoginScreen>
         <ToastContainer />

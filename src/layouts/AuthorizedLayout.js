@@ -13,12 +13,16 @@ class AuthorizedLayout extends Component {
     isAuthorized = () => this.props.store.userStore.token
 
     componentDidMount() {
-        if(!this.isAuthorized())
-            if(this.props.redirectTo)
+        if(!this.isAuthorized()) {
+            if(this.props.redirectTo) {
                 this.props.store.userStore.setRedirectTo(this.props.redirectTo)
-            else
+            } else {
                 this.props.store.userStore.setRedirectTo(this.props.location.pathname)
+            }
+        }
     }
+
+    
 
     render() {
         return !this.isAuthorized()?

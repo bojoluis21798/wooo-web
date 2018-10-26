@@ -56,5 +56,6 @@ const HeaderContainer = styled.div`
     padding-top: 20px;
     padding-left: 30px;
     padding-right: 15px;
+    padding-bottom: 20px;
 `
 
