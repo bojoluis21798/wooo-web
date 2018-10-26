@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { inject, observer } from 'mobx-react'
+import { Link } from 'react-router-dom'
 import styled from "styled-components";
 import MessageItems from '../components/MessageItems'
 import axios from 'axios';
@@ -17,7 +18,7 @@ export default class Messages extends Component {
   componentDidMount() {
     axios.get(`${process.env.REACT_APP_API_BASEURL}/profiles/${this.props.store.userStore.profile_id}/matches`)
     .then(response => {
-      if(response.data){
+      if(response.data && response.data.length){
         var pairedUser = [];
         response.data.forEach(element => {
           var pairedInfo = {
@@ -40,6 +41,8 @@ export default class Messages extends Component {
         this.setState({
           pairedUser
         })
+      } else {
+
       }
     })
   }
@@ -48,13 +51,23 @@ export default class Messages extends Component {
     return (
       <AuthorizedLayout noverflow={true}>
         <Content>
-          <Tag>
-            <PageTitle>Messages</PageTitle>
-          </Tag>
-          <Search>
-            <Input type="text" id="usr" placeholder="Search for a message"/>
-          </Search>
-          <MessageItems pairedUser={this.state.pairedUser} />
+          { this.state.pairedUser && this.state.pairedUser.length?
+            <Fragment>
+              <Tag>
+                <PageTitle>Messages</PageTitle>
+              </Tag>
+              <Search>
+                <Input type="text" id="usr" placeholder="Search for a message"/>
+              </Search>
+              <MessageItems pairedUser={this.state.pairedUser} />
+            </Fragment>
+            : <EmphasizedTextContent>
+              <p>You haven't found a match yet, start looking:</p>
+              <Link to='/matching'>
+                <LookForOneButton>Start Swiping</LookForOneButton>
+              </Link>
+            </EmphasizedTextContent>
+          }
         </Content>
       </AuthorizedLayout>
     );
@@ -79,6 +92,35 @@ const Search = styled.div`
   margin-top: 10px;
   margin-bottom: 10px;
 `;
+
+const EmphasizedTextContent = styled.div`
+  font-size: 22px;
+  line-height: 31px;
+  max-width: 250px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  display: grid;
+  justify-items: center;
+  padding-top: 20vh;
+  padding-bottom: 20vh;
+`
+
+const LookForOneButton = styled.button`
+  background-color: #F11A61;
+  padding: 16px 18px;
+  color: #fff;
+  border: 0;
+  font-size: 17px;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 150px;
+  transition: 500ms all;
+
+  &:hover {
+    width: 170px;
+  }
+`
 
 const Input = styled.input`
   width: 100%;
