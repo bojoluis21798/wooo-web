@@ -76,6 +76,7 @@ class UserStore {
 
     @action
     setRedirectTo(link) {
+        console.log("Redirect to: " + link)
         this.redirect_to = link
     }
 
