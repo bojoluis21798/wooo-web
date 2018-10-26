@@ -24,7 +24,7 @@ export default class VideoChat extends Component {
 
     async componentDidMount() {
         this.props.store.appStore.startLoading()
-        const response = await axios.get('http://localhost:7000/get_token/6/5')
+        const response = await axios.get(`${process.env.REACT_APP_OPENTOK_SERVER}/get_token/6/5`)
         const data = response.data
         const { token, session } = data
         this.setState({ token, session })
