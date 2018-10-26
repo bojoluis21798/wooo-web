@@ -101,15 +101,14 @@ export default class Matching extends Component{
     }
 
     handleDislike = () => {
-        const store = this.props.store.userStore;
         const config ={
             headers:{
                 Authorization:'Token '+ this.props.store.userStore.token
             }
         }
         axios.post(`${process.env.REACT_APP_API_BASEURL}/matching/`, {
-                profile_id:store.profile_id,
-                match_id:store.currentProspect.id,
+                profile_id:this.props.store.userStore.profile_id,
+                match_id:this.props.store.userStore.currentProspect.id,
                 status:0
         }, config).then(res=>{
             this.nextPerson();
@@ -117,15 +116,14 @@ export default class Matching extends Component{
     }
 
     handleLike = () => {
-        const store = this.props.store.userStore;
         const config ={
             headers:{
                 Authorization:'Token '+ this.props.store.userStore.token
             }
         }
         axios.post(`${process.env.REACT_APP_API_BASEURL}/matching/`, {
-                profile_id: store.profile_id,
-                match_id:store.currentProspect.id,
+                profile_id: this.props.store.userStore.profile_id,
+                match_id:this.props.store.userStore.currentProspect.id,
                 status: 1
         }, config).then(res=>{
             console.log("RESPONSE IS HERE");
@@ -133,9 +131,9 @@ export default class Matching extends Component{
             console.log(res.data.match_exists);
             if(res.data.match_exists){
 
-                store.setIsMatched(true);
-                console.log(store.isMatched);
-                this.setState({show:store.isMatched});
+                this.props.store.userStore.setIsMatched(true);
+                console.log(this.props.store.userStore.isMatched);
+                this.setState({show:this.props.store.userStore.isMatched});
             }else{
                 this.nextPerson();
             }
@@ -187,13 +185,11 @@ export default class Matching extends Component{
     }
 
     getProspects = ()=>{
-        const store = this.props.store.userStore;
-
          console.log("FML");
-         console.log(store.profile_id);
+         console.log(this.props.store.userStore.profile_id);
          axios.get("https://wooo.philsony.com/api/matching",{
              params:{
-                 profile_id:store.profile_id
+                 profile_id:this.props.store.userStore.profile_id
              }
          }).then(
              res=>{
@@ -202,14 +198,14 @@ export default class Matching extends Component{
 
                  if(res.data.length == 0){
                      console.log("res.data.length == 0");
-                    store.setNoProspects(true);
-                    console.log(store.noProspects);
+                    this.props.store.userStore.setNoProspects(true);
+                    console.log(this.props.store.userStore.noProspects);
                     this.setState({hasPayload:true});//used to remove the loading
                  }else{
 
-                    store.setProspects(res.data);
+                    this.props.store.userStore.setProspects(res.data);
                     this.setState({hasPayload:true});
-                    store.setNoProspects(false);
+                    this.props.store.userStore.setNoProspects(false);
                  }
 
 
