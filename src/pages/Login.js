@@ -6,7 +6,7 @@ import circlecenter from "../assets/images/circlecenterbg.svg"
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props"
 import { inject, observer } from "mobx-react"
 import { ToastContainer } from "react-toastify"
-import { Redirect } from "react-router-dom"
+import { Redirect, Link } from "react-router-dom"
 import queryString from "query-string"
 import Loading from "./Loading"
 
@@ -98,7 +98,7 @@ export default class Login extends Component {
               )}
             />
             <TermsNotice>
-              <a href="pages/PolicyTerms.html">See our terms and conditions</a>
+              <Link to="/policy-terms">See our terms and conditions</Link>
               <br/>
               <input
                 className="form-check-input"
