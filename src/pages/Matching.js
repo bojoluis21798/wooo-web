@@ -155,16 +155,15 @@ export default class Matching extends Component{
             })
     }
 
-    handleNextPic = imgLength => {
+    handleNextPic = () => {
         this.setState({
-            imgIdx: (this.state.imgIdx+1)%imgLength,
+            imgIdx: (this.state.imgIdx+1)%this.state.photos.length,
         })
     }
 
-    handlePreviousPic = imgLength => {
-        let imgIdx = this.state.imgIdx
+    handlePreviousPic = () => {
         this.setState({
-            imgIdx: (imgIdx-1 === -1) ? imgLength-1: imgIdx-1,
+            imgIdx: (this.state.imgIdx-1 === -1) ? this.state.photos.length-1: this.state.imgIdx-1,
         })
     }
 
@@ -215,11 +214,6 @@ export default class Matching extends Component{
     }
 
     render() {
-        let currentPerson = this.state.people[0]
-        let currentProspect = this.props.store.userStore.currentProspect
-        let imgIdx = this.state.imgIdx
-        let profileImage = currentProspect.profile_image
-
         if(!this.state.hasPayload){
             return <Loading message="Finding Gorls"/>
         }
@@ -249,16 +243,16 @@ export default class Matching extends Component{
                         <PicSlide>
                             {this.state.viewProfile &&
                                 <Arrow
-                                    onClick = {e => this.handlePreviousPic(photos.length, e)}
+                                    onClick = {this.handlePreviousPic}
                                     direction = "left"
                                 />
                             }
                             <PicArea>
-                                <ImageStyle src={profileImage?this.state.photos[imgIdx]:currentPerson.img[imgIdx]} />
+                                <ImageStyle src={this.state.photos[0]?this.state.photos[this.state.imgIdx]:this.state.people[0].img[this.state.imgIdx]} />
                             </PicArea>
                             {this.state.viewProfile &&
                                 <Arrow
-                                    onClick = {e => this.handleNextPic(photos.length, e)}
+                                    onClick = {this.handleNextPic}
                                     direction = "right"
                                 />
                             }
@@ -267,20 +261,20 @@ export default class Matching extends Component{
                             <TextContainer>
                                 <BioRow>
                                     <TextDiv level = "1">
-                                        { currentProspect.user.first_name?
-                                            currentProspect.user.first_name
-                                            :currentPerson.name
+                                        { this.props.store.userStore.currentProspect.user.first_name?
+                                            this.props.store.userStore.currentProspect.user.first_name
+                                            :this.state.people[0].name
                                         }
                                         ,
                                         {
-                                            currentProspect.age?
-                                            currentProspect.age:currentPerson.age
+                                            this.props.store.userStore.currentProspect.age?
+                                            this.props.store.userStore.currentProspect.age:this.state.people[0].age
                                         }
                                     </TextDiv>
-                                    <TextDiv level= "2">{currentPerson.location}</TextDiv>
+                                    <TextDiv level= "2">{this.state.people[0].location}</TextDiv>
                                 </BioRow>
                                 <BioRow>
-                                    <TextDiv level = "3">{currentProspect.bio?currentProspect.bio:currentPerson.bio}</TextDiv>
+                                    <TextDiv level = "3">{this.props.store.userStore.currentProspect.bio?this.props.store.userStore.currentProspect.bio:this.state.people[0].bio}</TextDiv>
                                 </BioRow>
                             </TextContainer>
                         </MainTextArea>
