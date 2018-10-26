@@ -22,8 +22,6 @@ class AuthorizedLayout extends Component {
         }
     }
 
-    
-
     render() {
         return !this.isAuthorized()?
             <Redirect to='/login'></Redirect>
