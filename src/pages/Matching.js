@@ -65,7 +65,6 @@ export default class Matching extends Component{
              }
          }).then(
              res=>{
-                 console.log(res)
                  if(res.data.length === 0){
                     this.props.store.userStore.setNoProspects(true);
                     this.setState({hasPayload:true})//used to take away the loading screen
@@ -126,13 +125,9 @@ export default class Matching extends Component{
                 match_id:this.props.store.userStore.currentProspect.id,
                 status: 1
         }, config).then(res=>{
-            console.log("RESPONSE IS HERE");
-            console.log(res);
-            console.log(res.data.match_exists);
             if(res.data.match_exists){
 
                 this.props.store.userStore.setIsMatched(true);
-                console.log(this.props.store.userStore.isMatched);
                 this.setState({show:this.props.store.userStore.isMatched});
             }else{
                 this.nextPerson();
@@ -174,7 +169,6 @@ export default class Matching extends Component{
     afterOpenModal = ()=>{
         setTimeout(() => {
             this.closeModal();
-            console.log("nextPerson was called");
             this.nextPerson();
         }, 2000);
     }
@@ -184,21 +178,14 @@ export default class Matching extends Component{
     }
 
     getProspects = ()=>{
-         console.log("FML");
-         console.log(this.props.store.userStore.profile_id);
          axios.get("${process.env.REACT_APP_API_BASEURL}/matching",{
              params:{
                  profile_id:this.props.store.userStore.profile_id
              }
          }).then(
              res=>{
-                 console.log("getProspects response here");
-                 console.log(res);
-
                  if(res.data.length == 0){
-                     console.log("res.data.length == 0");
                     this.props.store.userStore.setNoProspects(true);
-                    console.log(this.props.store.userStore.noProspects);
                     this.setState({hasPayload:true});//used to remove the loading
                  }else{
 
