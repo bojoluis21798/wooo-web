@@ -47,5 +47,5 @@ const AuthorizedContent = styled.div`
 const ContentContainer = styled.div`
     padding-left: ${props => (props.noPad)?css`0`:css`20px`};
     padding-right: ${props => (props.noPad)?css`0`:css`20px`};
-    padding-bottom: ${props => (props.noPad)?css`0`:css`20px`};
+    padding-bottom: ${props => (props.noPad)?css`0`:css`40px`};
 `
