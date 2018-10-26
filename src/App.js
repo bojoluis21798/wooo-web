@@ -7,6 +7,7 @@ import { hot } from 'react-hot-loader';
 // Pages
 import Login from "./pages/Login";
 import Loading from "./pages/Loading";
+import PolicyTerms from './pages/PolicyTerms';
 import Matching from "./pages/Matching";
 import Messages from './pages/Messages'
 import MessageThread from './pages/MessageThread';
@@ -39,6 +40,7 @@ class App extends Component {
                 <Route exact path="/messages/:id" component={MessageThread} />
                 <Route path="/video/:slug" component={VideoChat} />
                 <Route path='/error' component={ErrorPage} />
+                <Route path='/policy-terms' component={PolicyTerms} />
                 <Route path="*" component={Login} />
               </Switch>
             </Router>
