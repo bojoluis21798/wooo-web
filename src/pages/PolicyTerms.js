@@ -1,20 +1,13 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
-import close from '../assets/images/close-button.png';
+import back from '../assets/icons/back.svg';
+
 export default class PolicyTerms extends Component {
-    constructor(props){
-        super(props);
-    }
-
-    componentDidMount(){
-        console.log(close);
-    }
-
     render() {
         return (
             <Container>
                 {/*Place route to previous page here*/}
-                <BackArea src = {close}></BackArea>
+                <BackArea src={back}></BackArea>
                 <Title id="name">Privacy Policy</Title>
                     <ChapterTitle>Introduction</ChapterTitle>
                     <ol type="1" class="list">
