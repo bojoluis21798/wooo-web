@@ -13,6 +13,10 @@ import Messages from './pages/Messages'
 import MessageThread from './pages/MessageThread';
 import EditProfile from './pages/EditProfile'
 import VideoChat from './pages/VideoChat'
+import ErrorPage from './pages/ErrorPage'
+
+// Wrappers
+import AppWrapper from './layouts/AppWrapper'
 
 class App extends Component {
   state = { loading: true };
@@ -25,19 +29,22 @@ class App extends Component {
     return this.state.loading ? (
       <Loading message="Preparing the app.." />
     ) : (
-      <Provider store={RootStore}>
-        <Router>
-          <Switch>
-            <Route exact path="/login" component={Login} />
-            <Route path="/edit-profile" component={EditProfile} />
-            <Route path="/matching" component={Matching} />
-            <Route path='/policy-terms' component={PolicyTerms} />
-            <Route path="/messages" exact component={Messages} />
-            <Route exact path="/messages/:id" component={MessageThread} />
-            <Route path="/video/:slug" component={VideoChat} />
-            <Route path="*" component={Login} />
-          </Switch>
-        </Router>
+        <Provider store={RootStore}>
+          <AppWrapper>
+            <Router>
+              <Switch>
+                <Route exact path="/login" component={Login} />
+                <Route path="/edit-profile" component={EditProfile} />
+                <Route path="/matching" component={Matching} />
+                <Route path="/messages" exact component={Messages} />
+                <Route exact path="/messages/:id" component={MessageThread} />
+                <Route path="/video/:slug" component={VideoChat} />
+                <Route path='/error' component={ErrorPage} />
+                <Route path='/policy-terms' component={PolicyTerms} />
+                <Route path="*" component={Login} />
+              </Switch>
+            </Router>
+          </AppWrapper>
       </Provider>
     );
   }

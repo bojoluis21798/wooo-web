@@ -34,6 +34,10 @@ export default class MessageThread extends Component {
     this.handleMessageListen();
   }
 
+  componentDidUpdate() {
+    this.handleMessageListen();
+  }
+
   static getDerivedStateFromProps(nextProps) {
     return nextProps.user? ({ userId: nextProps.user.displayId }): nextProps;
   }
@@ -95,14 +99,14 @@ export default class MessageThread extends Component {
           </Back>
           <Ree>
             <Name>
-              {this.props.location && this.props.location.state.pairedName}
+              {this.props.location && this.props.location.state && this.props.location.state.pairedName}
             </Name>
             <LastMessage>
               Active Now
             </LastMessage>
           </Ree>
           <div>
-            <Link to={`/video/${this.props.location.state.pairedSlug}`}>
+            <Link to={`/video/${this.props.location && this.props.location.state && this.props.location.state.pairedSlug}`}>
                 <img src={video} alt="Video Call"></img>
             </Link>
           </div>
@@ -132,12 +136,11 @@ export default class MessageThread extends Component {
           />
           <ButtonA
             onClick={this.handleSend}
-          >
+            >
             <img src={send} alt="Send Icon" />
           </ButtonA>
         </Chat>
-      </AuthorizedLayout>
-    );
+    </AuthorizedLayout>);
   }
 }
 
@@ -145,6 +148,8 @@ const Content = styled.div`
   display: grid;
   grid-template-columns: 1fr 9fr 1fr;
   margin-bottom: 30px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 `;
 
 const Back = styled.div`
@@ -181,7 +186,6 @@ const LastMessage = styled.div`
 `;
 
 const Chat = styled.div`
-  margin-top: 10px;
   display: grid;
   grid-template-columns: 9fr 1fr;
   font-size: 18px;
@@ -189,10 +193,12 @@ const Chat = styled.div`
   color: #ffffff;
   background-color: #191919;
   border-radius: 5px;
-  border: none;
-  justify-items: center;
-  overflow: hidden;
-  border: 1px solid #191919;
+  position: absolute;
+  bottom: 20px;
+  left: -12px
+  margin-left: 5%;
+  margin-right: 5%;
+  width: 90%;
 
   &:focus {
     outline: none;

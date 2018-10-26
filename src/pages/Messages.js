@@ -6,6 +6,7 @@ import MessageItems from '../components/MessageItems'
 import axios from 'axios';
 import AuthorizedLayout from '../layouts/AuthorizedLayout';
 import firebase from 'firebase';
+import SmallLoading from '../components/SmallLoading'
 
 @inject('store') 
 @observer
@@ -13,6 +14,7 @@ export default class Messages extends Component {
   state = {
     currentUser: this.props.store.userStore.profile_id,
     pairedUser: null,
+    loading: true
   };
 
   componentDidMount() {
@@ -33,13 +35,16 @@ export default class Messages extends Component {
           pairedInfo.roomId = (element.id < this.state.currentUser) ? element.id+'R'+this.state.currentUser : this.state.currentUser+'R'+element.id
 
           firebase.database().ref().child('roomData/'+pairedInfo.roomId).limitToLast(1).on('value', message => {
-              var lastmessage = Object.values(message.val());
-              pairedInfo.message = lastmessage[0].message.content;
+              if(message.val()) {
+                var lastmessage = Object.values(message.val());
+                pairedInfo.message = lastmessage[0].message.content;
+              }
             })
-          pairedUser.push(pairedInfo);
-        })
+            pairedUser.push(pairedInfo);
+          })
         this.setState({
-          pairedUser
+          pairedUser,
+          loading: false
         })
       } else {
 
@@ -51,7 +56,8 @@ export default class Messages extends Component {
     return (
       <AuthorizedLayout noverflow={true}>
         <Content>
-          { this.state.pairedUser && this.state.pairedUser.length?
+          { this.state.loading? <SmallLoading />: 
+            this.state.pairedUser && this.state.pairedUser.length?
             <Fragment>
               <Tag>
                 <PageTitle>Messages</PageTitle>
@@ -82,6 +88,7 @@ const PageTitle = styled.div`
 `
 
 const Content = styled.div`
+  margin-top: 10px;
 `
 
 const Tag = styled.div`
