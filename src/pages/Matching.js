@@ -58,7 +58,7 @@ export default class Matching extends Component{
         }
     }
 
-    componentDidMount = () => {
+    componentDidMount() {
          axios.get(`${process.env.REACT_APP_API_BASEURL}/matching`,{
              params:{
                  profile_id:this.props.store.userStore.profile_id
