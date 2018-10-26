@@ -35,11 +35,7 @@ export default class Login extends Component {
   }
 
   onLoginButtonClick = () => {
-    if (this.state.checked) {
-      this.props.store.appStore.startLoading()
-    } else {
-      alert("You must agree to the terms and conditions first.")
-    }
+    this.props.store.appStore.startLoading()
   }
 
   handleCheck = (e) => {
