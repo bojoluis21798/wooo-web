@@ -7,56 +7,36 @@ import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props
 import { inject, observer } from "mobx-react"
 import { ToastContainer } from "react-toastify"
 import { Redirect, Link } from "react-router-dom"
-import queryString from "query-string"
-import Loading from "./Loading"
+import LoaderWrapper from "../layouts/LoaderWrapper";
 
 @inject("store")
 @observer
 export default class Login extends Component {
   state = {
-    loading: 'Initializing the app..',
     checked: false,
   }
-
-  authenticateUser = ({
-    accessToken,
-    email,
-    name,
-    picture,
-    location,
-    gender
-  }) => {
-    this.props.store.userStore.authenticateUser({
-      accessToken,
-      email,
-      name,
-      picture,
-      location,
-      gender
-    })
+  constructor(props) {
+    super(props)
+    this.props.store.appStore.startLoading()
   }
 
-  responseFacebook = response => {
-    this.authenticateUser(response)
-  }
+  responseFacebook = response => this.props.store.userStore.authenticateUser(response)
 
   componentDidMount() {
-    setTimeout(() => this.setState({ loading: null }), 1500)
+    setTimeout(() => {
+      this.setState({ loading: null });
+      this.props.store.userStore.purgeRedirect()
+      this.props.store.appStore.doneLoading()
+    }, 1500)
   }
 
-  componentDidUpdate() {
-    if (
-      this.props.location &&
-      this.props.location.search &&
-      queryString.parse(this.props.location.search).code
-    ) {
-      if (!this.state.loading) this.setState({ loading: 'Authenticating you..' })
-    }
+  componentWillUnmount() {
+    this.props.store.appStore.doneLoading()
   }
 
   onLoginButtonClick = () => {
     if (this.state.checked) {
-      this.setState({ loading: 'Authenticating you..' })
+      this.props.store.appStore.startLoading()
     } else {
       alert("You must agree to the terms and conditions first.")
     }
@@ -68,12 +48,11 @@ export default class Login extends Component {
     })
   }
 
+
   render() {
-    return this.props.store.userStore.email ? (
-      <Redirect to="/edit-profile" />
-    ) : this.state.loading ? (
-      <Loading message={ this.state.loading } />
-    ) : (
+    return this.props.store.userStore.token ? (
+      <Redirect to={`${this.props.store.userStore.redirect_to || '/edit-profile'}`} />
+    ) : <LoaderWrapper>
       <LoginScreen>
         <ToastContainer />
         <BackgroundOverlay>
@@ -89,12 +68,17 @@ export default class Login extends Component {
             <FacebookLogin
               appId={process.env.REACT_APP_FB_APPID}
               fields="name,email,picture"
-              scope="public_profile,user_friends"
+              scope="public_profile,user_friends,email,user_gender"
+              autoLoad={true}
               callback={this.responseFacebook}
               redirectUri={`${process.env.REACT_APP_SITE}/login`}
               onClick={this.onLoginButtonClick}
+              isProcessing={this.prepareLoginButton}
               render={renderProps => (
-                <LoginButton onClick={renderProps.onClick}>
+                <LoginButton
+                  onClick={renderProps.onClick}
+                  isProcessing={renderProps.isProcessing}
+                >
                   Login with Facebook
                 </LoginButton>
               )}
@@ -115,7 +99,7 @@ export default class Login extends Component {
           </LoginActionSection>
         </LoginContent>
       </LoginScreen>
-    )
+    </LoaderWrapper>
   }
 }
 

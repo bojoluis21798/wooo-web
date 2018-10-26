@@ -2,16 +2,17 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import RootStore from "./stores/RootStore";
 import { Provider } from "mobx-react";
-// import {Loading}
+import { hot } from 'react-hot-loader';
+
 // Pages
 import Login from "./pages/Login";
-import Dashboard from "./pages/Dashboard";
-import EditProfile from "./pages/editProfile";
 import Loading from "./pages/Loading";
-import Matching from "./pages/matchingUI";
-import Testing from './pages/Testing';
-import Messaging from './pages/messaging/App';
 import PolicyTerms from './pages/PolicyTerms';
+import Matching from "./pages/Matching";
+import Messages from './pages/Messages'
+import MessageThread from './pages/MessageThread';
+import EditProfile from './pages/EditProfile'
+import VideoChat from './pages/VideoChat'
 
 class App extends Component {
   state = { loading: true };
@@ -28,13 +29,12 @@ class App extends Component {
         <Router>
           <Switch>
             <Route exact path="/login" component={Login} />
-            <Route path="/dashboard" component={Dashboard} />
             <Route path="/edit-profile" component={EditProfile} />
-            <Route path="/loading" component={Loading} />
             <Route path="/matching" component={Matching} />
-            <Route path='/testing' component={Testing} />
-            <Route path='/messages' component={Messaging} />
             <Route path='/policy-terms' component={PolicyTerms} />
+            <Route path="/messages" exact component={Messages} />
+            <Route exact path="/messages/:id" component={MessageThread} />
+            <Route path="/video/:slug" component={VideoChat} />
             <Route path="*" component={Login} />
           </Switch>
         </Router>
@@ -43,4 +43,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default hot(module)(App)
