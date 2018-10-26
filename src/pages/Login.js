@@ -25,12 +25,6 @@ export default class Login extends Component {
   }
 
   componentDidMount() {
-    setTimeout(() => {
-      this.props.store.appStore.doneLoading()
-    }, 1500)
-  }
-
-  componentWillUnmount() {
     this.props.store.appStore.doneLoading()
   }
 
