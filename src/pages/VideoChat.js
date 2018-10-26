@@ -23,6 +23,7 @@ export default class VideoChat extends Component {
     }
 
     async componentDidMount() {
+        console.log(process.env.REACT_APP_OPENTOK_KEY)
         this.props.store.appStore.startLoading()
         const response = await axios.get(`${process.env.REACT_APP_OPENTOK_SERVER}/get_token/6/5`)
         const data = response.data
@@ -30,14 +31,15 @@ export default class VideoChat extends Component {
         this.setState({ token, session })
         this.props.store.appStore.doneLoading()
     }
+
     
     render() {
         return (
-            <AuthorizedLayout noheaders={true} noPad={true}>
+            <AuthorizedLayout noheaders={true} noPad={true} className={`key-is-${process.env.REACT_APP_OPENTOK_KEY}`}>
                 <VideoContent>
                     { this.state.session && this.state.token? (
                         <OTSession 
-                            apiKey={process.env.REACT_APP_OPENTOK_API_KEY}
+                            apiKey={process.env.REACT_APP_OPENTOK_KEY}
                             sessionId={this.state.session}
                             token={this.state.token}
                         >

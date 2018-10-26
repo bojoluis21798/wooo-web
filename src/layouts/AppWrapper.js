@@ -16,11 +16,12 @@ export default class AppWrapper extends Component {
     }
   
   render() {
-    return !this.state.hasError? 
-        this.props.children
-        : <ErrorPage 
-            error={this.state.error} 
-            info={this.state.info} 
-        />
+    return this.props.children
+    // return !this.state.hasError? 
+    //     this.props.children
+    //     : <ErrorPage 
+    //         error={this.state.error} 
+    //         info={this.state.info} 
+    //     />
   }
 }
