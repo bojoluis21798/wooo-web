@@ -31,9 +31,11 @@ class UserStore {
             bio: "My friends call me daddy. I can't figure out why. Do you mind helping me figure it out?",
         }
     ]
+    @observable matches = []
     @observable redirect_to = null
     @observable noProspects = false;
     @observable isMatched = false;
+
     @action
     setIsMatched(bool){
         console.log("got in setIsmatched");
@@ -48,10 +50,15 @@ class UserStore {
     @action
     async authenticateUser(authObj) {
         try {
-            let response = await axios.post(`${process.env.REACT_APP_API_BASEURL}/login/`, {
-                accessToken: authObj.accessToken
-            })
             this.getLocation()
+            console.log(this.location);
+            let response = await axios.post(`${process.env.REACT_APP_API_BASEURL}/login/`, {
+                accessToken: authObj.accessToken,
+                lng:this.location.lng,
+                lat:this.location.lat
+            })
+            
+            console.log(response);
             this.populateUser(response.data)
             this.insertToken(authObj)
             return true
@@ -69,7 +76,7 @@ class UserStore {
         this.biography = userAuth.biography
         this.radius = userAuth.search_radius
         this.preference = userAuth.sexual_preference
-        this.profile_id = userAuth.profile_id
+        this.profile_id = userAuth.user_profile.id
         this.gay = userAuth.gay
 
     }
@@ -91,7 +98,7 @@ class UserStore {
 
     @action
     setLocation(location){
-    this.location = location
+        this.location = location
     }
 
     @action
@@ -112,6 +119,11 @@ class UserStore {
     @action
     setPicOne(p1){
         this.photos[0] = p1;
+    }
+
+    @action
+    setMatches(matches){
+        this.matches = matches;
     }
 
     @action
