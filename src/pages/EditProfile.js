@@ -219,7 +219,6 @@ const BioText = styled.textarea`
 
   &:focus {
     outline: none !important;
-    border: 1px solid #f51a63 !important;
   }
 `;
 const PrefButtonMale = styled.button`
@@ -242,7 +241,6 @@ const PrefButtonMale = styled.button`
   ${
     props => props.active &&
         css`
-          background-position: 300px;
           background-color:  #f51a63;
           border: 1px solid #f51a63;
         `
@@ -269,7 +267,6 @@ const PrefButtonFemale = styled.button`
   ${
     props => props.active &&
         css`
-          background-position: 300px;
           background-color:  #f51a63;
           border: 1px solid #f51a63;
         `
@@ -296,7 +293,6 @@ const PrefButtonOthers = styled.button`
   ${
     props => props.active &&
         css`
-          background-position: 300px;
           background-color:  #f51a63;
           border: 1px solid #f51a63;
         `
