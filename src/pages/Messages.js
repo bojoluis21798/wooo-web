@@ -1,11 +1,11 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment } from 'react'
 import { inject, observer } from 'mobx-react'
 import { Link } from 'react-router-dom'
-import styled from "styled-components";
+import styled from "styled-components"
 import MessageItems from '../components/MessageItems'
-import axios from 'axios';
-import AuthorizedLayout from '../layouts/AuthorizedLayout';
-import firebase from 'firebase';
+import axios from 'axios'
+import AuthorizedLayout from '../layouts/AuthorizedLayout'
+import firebase from 'firebase'
 import SmallLoading from '../components/SmallLoading'
 
 @inject('store') 
@@ -17,6 +17,16 @@ export default class Messages extends Component {
   };
 
   componentDidMount() {
+    const userListRef = firebase.database().ref("users/"+this.props.store.userStore.profile_id);
+    const myUserRef = userListRef.push();
+    firebase.database().ref(".info/connected").on("value", function (snap) {
+      if (snap.val()) {
+        myUserRef.onDisconnect().remove();
+        myUserRef.set(true);
+        console.log(myUserRef);
+      }
+    });
+
 
     axios.get(`${process.env.REACT_APP_API_BASEURL}/profiles/${this.props.store.userStore.profile_id}/matches`)
     .then(response => {
@@ -49,7 +59,7 @@ export default class Messages extends Component {
           pairedUser
         })
       }
-    })
+    });
   }
 
   render() {

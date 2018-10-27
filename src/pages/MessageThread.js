@@ -28,7 +28,6 @@ export default class MessageThread extends Component {
     messageDetail: { },
     message: "", 
     userId: this.props.store.userStore.profile_id
-    
   }
 
   componentDidMount() {
