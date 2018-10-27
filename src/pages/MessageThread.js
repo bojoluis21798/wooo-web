@@ -8,8 +8,9 @@ import { inject, observer } from 'mobx-react'
 import firebase from 'firebase'
 import AuthorizedLayout from '../layouts/AuthorizedLayout'
 import Messages from '../components/Messages'
+import Rebase from 're-base'
 
-const config =  {
+const config = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
     authDomain: process.env.REACT_APP_FIREBASE_AUTHDOMAIN,
     databaseURL: process.env.REACT_APP_FIREBASE_DBURL,
@@ -17,21 +18,35 @@ const config =  {
     storageBucket: process.env.REACT_APP_FIREBASE_STORAGEBUCKET,
     messagingSenderId: process.env.REACT_APP_FIREBASE_SENDERID
 };
+
+const app = firebase.initializeApp(config);
   
-firebase.initializeApp(config);
+// firebase.initializeApp(config);
+export var base = Rebase.createClass(app.database());
 
 @inject('store') @observer
 export default class MessageThread extends Component {
   state = {
-    message: '',
-    userId: this.props.store.userStore.profile_id
+    messageDetail: { },
+    message: "", 
+    userId: 1
+    // userId: this.props.store.userStore.profile_id
+    
   }
 
   componentDidMount() {
-    this.messageRef = firebase.database().ref().child('roomData/'+this.props.location.state.roomId);
-    this.setState({message: ""});
-    this.setState({userId: this.props.store.userStore.profile_id});
+    this.messageReff = firebase.database().ref().child('roomData/'+this.props.location.state.roomId);
+    this.messageRef = base.syncState('roomData/'+this.props.location.state.roomId,{
+      context: this,
+      state:'messageDetail'
+    });
+    // this.setState({userId: this.props.store.userStore.profile_id});
+    this.setState({userId: 1});
     this.handleMessageListen();
+  }
+
+  componentWillUnmount() {
+    base.removeBinding(this.messageRef);
   }
 
   static getDerivedStateFromProps(nextProps) {
@@ -39,22 +54,22 @@ export default class MessageThread extends Component {
   }
   
   handleChange = event => {
-    this.setState({message: event.target.value});
+    this.setState({message:event.target.value});
   }
 
   handleSend = () => {
-    if (this.state.message) {
-      var newmessage = {
-        userId: this.state.userId,
-        message: {
-          type: "String",
-          content: this.state.message
-        }
+    if (this.state.message) { 
+      let messageDet = Object.assign({}, this.state.messageDetail);
+      const id = Date.now() + "" + this.state.userId;
+      messageDet[id] = {
+        content: this.state.message,
+        messageType: "String",
+        userId: this.state.userId
       }
-      this.messageRef.push(newmessage);
-      this.setState({ message: '' });
-      this.handleMessageListen();
+      this.setState({messageDetail:messageDet});
+      this.setState({message:""})
     }
+    this.handleMessageListen();
   }
 
   handleKeyPress = event => {
@@ -64,7 +79,7 @@ export default class MessageThread extends Component {
 
   handleMessageListen = () => {
     var messg = null;
-    this.messageRef
+    this.messageReff
     .limitToLast(10)
     .on('value', message => {
         messg = message.val()
@@ -75,8 +90,8 @@ export default class MessageThread extends Component {
   }
 
   listenMessages = () => {
-    this.messageRef
-    .limitToLast(10)
+    this.messageReff
+    .limitToLast(100)
     .on('value', message => {
         this.setState({
             list: Object.values(message.val()),
@@ -152,10 +167,6 @@ const Back = styled.div`
   color: white;
 `;
 
-const MessageList = styled.div`
-  margin-top: 20px;  
-`
-
 const Ree = styled.div`
   margin:0 auto;
   text-align: center;
@@ -211,3 +222,24 @@ const Input = styled.input`
     outline: none;
   }
 `;
+
+const MessageList = styled.div`
+  margin-top: 30px;
+  height: 72vh;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar-track  {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar{
+    width: 12px;
+  }
+
+  &::-webkit-scrollbar-thumb{
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #555;
+  }
+`
