@@ -70,6 +70,7 @@ export default class Matching extends Component{
                     this.setState({hasPayload:true})//used to take away the loading screen
 
                  }else{
+                    console.log(res.data)
                     this.props.store.userStore.setProspects(res.data)
                     this.repopulatePhotos()
                     this.setState({hasPayload:true})
@@ -184,6 +185,7 @@ export default class Matching extends Component{
              }
          }).then(
              res=>{
+                 
                  if(res.data.length == 0){
                     this.props.store.userStore.setNoProspects(true);
                     this.setState({hasPayload:true});//used to remove the loading
@@ -222,6 +224,7 @@ export default class Matching extends Component{
 
                         <MatchSwipe
                             show={this.props.store.userStore.isMatchedValue}
+                            id={this.props.store.userStore.currentProspect.id}
                             eventHandle={this.nextPerson}
                         />
 

@@ -158,6 +158,7 @@ class UserStore {
         return this.isMatched
     }
     @computed get currentProspect(){
+        
         return this.prospects[0]
     }
 

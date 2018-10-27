@@ -54,6 +54,9 @@ export default class Dashboard extends Component{
                 noheaders={false}
                 noPad={false}
             >
+                <Header>
+                        <HeaderStyle>Matches</HeaderStyle>
+                </Header>
                 <Container>
                     <MatchList></MatchList>
                 </Container>
@@ -69,3 +72,14 @@ const Container=styled.div`
     grid-template-columns:[first-line] 50% [second-line] 50% [second-line]
 `
 
+const Header = styled.div`
+    display:grid
+    grid-template-columns:100%
+
+`
+const HeaderStyle = styled.div`
+    text-align:center;
+    font-size:3.5vh;
+    font-color:white;
+    justify-self:start;
+`
