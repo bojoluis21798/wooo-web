@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import { inject, observer } from "mobx-react";
 import styled, { css } from 'styled-components'
+import { Link } from 'react-router-dom'
 
 @inject("store")
 @observer
@@ -11,8 +12,11 @@ export default class MatchList extends Component{
        
         if(store.matches){
             return store.matches.map(match=>(
-                <Person>
-                    <Image src={match.profile_image} />
+              
+                <Person key={match.id}>
+                    <Link to={`/messages/${match.id}`}>
+                        <Image src={match.profile_image} />
+                    </Link>
                     <Name>{match.user.first_name}</Name>
                 </Person>
             ));

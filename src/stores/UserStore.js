@@ -16,7 +16,6 @@ class UserStore {
     @observable profilePicture = null
     @observable photos = []
     @observable token = null
-    @observable email = null
     @observable accessToken = null
     @observable profile_id = null
     @observable prospects = [
@@ -33,6 +32,7 @@ class UserStore {
     ]
     @observable matches = []
     @observable redirect_to = null
+    @observable user_slug = null
     @observable noProspects = false;
     @observable isMatched = false;
 
@@ -68,25 +68,27 @@ class UserStore {
     @action
     populateUser(userAuth) {
         this.token = userAuth.auth_token
-        this.name = userAuth.name
-        this.email = true
-        this.profilePicture = userAuth.profile_image
-        this.biography = userAuth.biography
-        this.radius = userAuth.search_radius
-        this.preference = userAuth.sexual_preference
+        this.name = userAuth.user_profile.user.full_name
+        this.profilePicture = userAuth.user_profile.profile_image
+        this.biography = userAuth.user_profile.biography
+        this.radius = userAuth.user_profile.search_radius
+        this.preference = userAuth.user_profile.sexual_preference
         this.profile_id = userAuth.user_profile.id
-        this.gay = userAuth.gay
-
+        this.gay = userAuth.user_profile.gay
+        this.user_slug = userAuth.user_profile.user.slug
     }
 
     @action
     setRedirectTo(link) {
+        console.log("Redirect to: " + link)
         this.redirect_to = link
     }
 
     @action
-    purgeRedirect() {
+    getRedirectTo() {
+        const redirectLink = this.redirect_to
         this.redirect_to = null
+        return redirectLink
     }
 
     @action

@@ -4,7 +4,6 @@ import { inject, observer } from 'mobx-react'
 import styled, { css } from 'styled-components'
 import left from '../assets/images/left.png'
 import right from '../assets/images/right.png'
-import Notifications, {notify} from 'react-notify-toast'
 import Loading from './Loading'
 import axios from 'axios'
 import AuthorizedLayout from '../layouts/AuthorizedLayout'
@@ -12,9 +11,6 @@ import matchingData from '../assets/data/matching.data'
 import MatchingHeader from '../components/MatchingHeader'
 import MatchingFooter from '../components/MatchingFooter'
 import MatchSwipe from '../components/MatchSwipe';
-import dog from '../assets/images/dog.jpeg';
-import dog2 from '../assets/images/dog2.jpg';
-import dog3 from '../assets/images/dog3.jpg';
 import NoMatches from '../components/NoMatches';
 
 
@@ -31,29 +27,6 @@ export default class Matching extends Component{
             noProspects: false,
             modalIsOpen: false,
             photos: [],
-            people: [
-                {
-                    name: "Rico",
-                    age: 16,
-                    img: [dog, dog2, dog3],
-                    location: "DOWNTOWN MANHATTAN, NEW YORK",
-                    bio: "My friends call me daddy. I can't figure out why. Do you mind helping me figure it out?",
-                },
-                {
-                    name: "Rob",
-                    age: 17,
-                    img: [dog2, dog, dog3],
-                    location: "DOWNTOWN MANHATTAN, NEW YORK",
-                    bio: "Im chinese",
-                },
-                {
-                    name: "Joe",
-                    age: 17,
-                    img: [dog3, dog, dog2],
-                    location: "DOWNTOWN MANHATTAN, NEW YORK",
-                    bio: "Im white",
-                }
-            ],
             show:this.props.store.userStore.isMatched
         }
     }
@@ -179,7 +152,7 @@ export default class Matching extends Component{
     }
 
     getProspects = ()=>{
-         axios.get("${process.env.REACT_APP_API_BASEURL}/matching",{
+         axios.get(`${process.env.REACT_APP_API_BASEURL}/matching`,{
              params:{
                  profile_id:this.props.store.userStore.profile_id
              }
@@ -212,7 +185,7 @@ export default class Matching extends Component{
                 noPad={true}
             >
                 <Container>
-                    <Notifications/>
+                    
                     <MatchingHeader
                         eventHandle = {this.handleCloseProfile}
                         type = {this.state.viewProfile ? "exit" : "back"}

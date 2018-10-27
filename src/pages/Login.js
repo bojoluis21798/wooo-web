@@ -6,36 +6,42 @@ import circlecenter from "../assets/images/circlecenterbg.svg"
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props"
 import { inject, observer } from "mobx-react"
 import { ToastContainer } from "react-toastify"
-import { Redirect } from "react-router-dom"
+import { Redirect, Link } from "react-router-dom"
 import LoaderWrapper from "../layouts/LoaderWrapper";
 
 @inject("store")
 @observer
 export default class Login extends Component {
+  state = {
+    checked: false,
+  }
   constructor(props) {
     super(props)
     this.props.store.appStore.startLoading()
   }
 
   responseFacebook = (response) => {
-    console.log(response);
-    console.log(typeof response.gender);
     this.props.store.userStore.authenticateUser(response)
   }
 
   componentDidMount() {
-    setTimeout(() => {
-      this.setState({ loading: null });
-      this.props.store.userStore.purgeRedirect()
-      this.props.store.appStore.doneLoading()
-    }, 1500)
+    this.props.store.appStore.doneLoading()
+  }
+
+  onLoginButtonClick = () => {
+    this.props.store.appStore.startLoading()
   }
 
   componentWillUnmount() {
     this.props.store.appStore.doneLoading()
   }
 
-  onLoginButtonClick = () => this.props.store.appStore.startLoading()
+  handleCheck = (e) => {
+    this.setState({
+        checked: e.target.checked,
+    })
+  }
+
 
   render() {
     return this.props.store.userStore.token ? (
@@ -55,9 +61,8 @@ export default class Login extends Component {
           <LoginActionSection>
             <FacebookLogin
               appId={process.env.REACT_APP_FB_APPID}
-              fields="name,email,picture,gender"
+              fields="name,email,picture"
               scope="public_profile,user_friends,email,user_gender"
-              autoLoad={true}
               callback={this.responseFacebook}
               redirectUri={`${process.env.REACT_APP_SITE}/login`}
               onClick={this.onLoginButtonClick}
@@ -72,7 +77,17 @@ export default class Login extends Component {
               )}
             />
             <TermsNotice>
-              Upon logging in, you agree to our terms and conditions.
+              <Link to="/policy-terms">See our privacy policy</Link>
+              <br/>
+              <input
+                className="form-check-input"
+                type="checkbox"
+                checked={this.state.checked}
+                onChange = {this.handleCheck}
+              />
+              <label className="form-check-label" htmlFor="defaultCheck1">
+                I hereby agree to the privacy policy of the company.
+              </label>
             </TermsNotice>
           </LoginActionSection>
         </LoginContent>
@@ -162,7 +177,7 @@ const LoginButton = styled.button`
   }
 `
 
-const TermsNotice = styled.p`
+const TermsNotice = styled.div`
   margin: auto;
   font-size: 12px;
   color: "#969696";
