@@ -28,7 +28,7 @@ export default class MessageThread extends Component {
     messageDetail: { },
     message: "", 
     userId: this.props.store.userStore.profile_id,
-    status: "active"
+    status: ""
   }
 
   componentDidMount() {
@@ -45,6 +45,7 @@ export default class MessageThread extends Component {
   componentWillUnmount() {
     base.removeBinding(this.messageRef);
     this.handleMessageListen = null;
+    this.userStatus = null;
   }
 
   static getDerivedStateFromProps(nextProps) {
@@ -125,8 +126,8 @@ export default class MessageThread extends Component {
                     {this.props.location && this.props.location.state && this.props.location.state.pairedName}
                 </Name>
                 <LastMessage>
-                    {this.state.status != "active" && ("Offline")}
-                    {this.state.status == "active" && ("Active Now")}
+                    {this.state.status != "Active" && ("Offline")}
+                    {this.state.status == "Active" && ("Active Now")}
                 </LastMessage>
                 </Ree>
                 <div>
