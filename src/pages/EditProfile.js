@@ -90,26 +90,31 @@ class EditProfile extends Component {
                 onBlur={this.handleSubmit}
               />
               <Tagline>Preference</Tagline>
-              <PrefButtonMale id="male"
-                  aria-label="Male"
-                  value= "0"
-                  onClick={this.handleMale}
-                  active = {this.props.store.userStore.preference === 0}
-              >
-                Male</PrefButtonMale>
-              <PrefButtonFemale id="female"
-                aria-label="Female"
-                value= "1"
-                onClick={this.handleFemale}
-                active = {this.props.store.userStore.preference === 1}
-              >
-                Female</PrefButtonFemale>
-              <PrefButtonOthers id="other"
-                  aria-label="Others"
-                  value="2"
-                  onClick={this.handleOthers}
-                  active = {this.props.store.userStore.preference === 2}
-              >Others</PrefButtonOthers>
+              <PreferencesPanel>
+                <PrefButtonMale id="male"
+                    aria-label="Male"
+                    value= "0"
+                    onClick={this.handleMale}
+                    active = {this.props.store.userStore.preference === 0}
+                    >
+                  Male
+                </PrefButtonMale>
+                <PrefButtonFemale id="female"
+                  aria-label="Female"
+                  value= "1"
+                  onClick={this.handleFemale}
+                  active = {this.props.store.userStore.preference === 1}
+                  >
+                  Female
+                </PrefButtonFemale>
+                <PrefButtonOthers id="other"
+                    aria-label="Others"
+                    value="2"
+                    onClick={this.handleOthers}
+                    active = {this.props.store.userStore.preference === 2}
+                    >Others
+                </PrefButtonOthers>
+              </PreferencesPanel>
               <Tagline>Radius</Tagline>
               <RadiusNum>{this.props.store.userStore.radius} Km</RadiusNum>
               <br/>
@@ -191,6 +196,11 @@ const ProfileImageMain = styled.img`
   margin: auto;
 `;
 
+const PreferencesPanel = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+`
+
 const BioText = styled.textarea`
   height: 90px;
   max-height: 150px;
@@ -209,7 +219,6 @@ const BioText = styled.textarea`
 
   &:focus {
     outline: none !important;
-    border: 1px solid #f51a63 !important;
   }
 `;
 const PrefButtonMale = styled.button`
@@ -232,7 +241,6 @@ const PrefButtonMale = styled.button`
   ${
     props => props.active &&
         css`
-          background-position: 300px;
           background-color:  #f51a63;
           border: 1px solid #f51a63;
         `
@@ -259,7 +267,6 @@ const PrefButtonFemale = styled.button`
   ${
     props => props.active &&
         css`
-          background-position: 300px;
           background-color:  #f51a63;
           border: 1px solid #f51a63;
         `
@@ -286,7 +293,6 @@ const PrefButtonOthers = styled.button`
   ${
     props => props.active &&
         css`
-          background-position: 300px;
           background-color:  #f51a63;
           border: 1px solid #f51a63;
         `

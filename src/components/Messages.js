@@ -14,7 +14,7 @@ export default class Messages extends Component {
         <Img src={this.props.userData.pairedImage} alt={this.props.profile_id}/>
       </SenderMessage> : 
       <MyMessage>
-        <MessageContent selfsent={true}>You: {this.props.message.content}</MessageContent>
+        <MessageContent selfsent={true}>You: {this.props.content}</MessageContent>
       </MyMessage>
       
   }
