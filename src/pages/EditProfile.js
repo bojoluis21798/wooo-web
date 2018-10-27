@@ -22,6 +22,7 @@ class EditProfile extends Component {
   // }
   componentDidMount(){
     console.log("This is Profile")
+    console.log(this.props.store.userStore.profilePicture)
   }
 
   handleSubmit = (e = null) => {
@@ -47,7 +48,7 @@ class EditProfile extends Component {
     })
   }
 
-  handleSubmitImage = () => {
+  handleSubmitImage = (num) => {
     const token = this.props.store.userStore.token;
     const config = {
         headers: {
@@ -56,8 +57,9 @@ class EditProfile extends Component {
             
         }
     }
+    console.log(num)
     const fd = new FormData();
-    fd.append('suporting_pic_1',this.props.store.userStore.photos[0])
+    fd.append('supporting_pic_'+num+'',this.props.store.userStore.photos[0])
     const url = `${process.env.REACT_APP_API_BASEURL}/profiles/${this.props.store.userStore.profile_id}/`;
 
     axios.put(url,fd,config)
@@ -73,13 +75,31 @@ class EditProfile extends Component {
   }
 
   handleImageOne = (event) => {
-    console.log("----BEGIN HANLDER----")
     const store = this.props.store.userStore;
     
-    store.setPicOne(event.target.files[0])
-    this.handleSubmitImage()
+    store.setPic(event.target.files[0])
+    this.handleSubmitImage(1)
+  }
 
-    console.log("----END HANDLER----")
+  handleImageTwo = (event) => {
+    const store = this.props.store.userStore;
+    
+    store.setPic(event.target.files[0])
+    this.handleSubmitImage(2)
+  }
+
+  handleImageThree = (event) => {
+    const store = this.props.store.userStore;
+    
+    store.setPic(event.target.files[0])
+    this.handleSubmitImage(3)
+  }
+
+  handleImageFour = (event) => {
+    const store = this.props.store.userStore;
+    
+    store.setPic(event.target.files[0])
+    this.handleSubmitImage(4)
   }
 
   handleMale = (e) => {
@@ -139,16 +159,75 @@ class EditProfile extends Component {
                   <ProfileImageMain alt='Profile' src={this.props.store.userStore.profilePicture} />
                   <Image 
                     id="img1" 
-                    style={ { backgroundImage: "url('this.props.store.userStore.photos[0]')" } } 
-                    onClick={(e) =>{this.refs.fileUploader.click();}} 
+                    style={{ 
+                      backgroundImage: 'url(http://wooo.philsony.com'+ this.props.store.userStore.photo_link_1 +')',
+                      backgroundSize: "cover",
+                      backgroundRepeat: "no-repeat",
+                      backgroundPostion: "center"
+                    }} 
+                    onClick={(e) =>{this.refs.fileUploader1.click();}} 
                   >
                     <input 
                       id="imageOne"
                       type="file" 
-                      ref="fileUploader" 
+                      ref="fileUploader1" 
                       value={this.props.store.userStore.photos[0]} 
                       style={{display:"none"}} 
                       onChange={this.handleImageOne}
+                    />
+                  </Image>
+                  <Image 
+                    id="img2" 
+                    style={{ 
+                      backgroundImage: 'url(http://wooo.philsony.com'+ this.props.store.userStore.photo_link_2 +')',
+                      backgroundSize: "cover",
+                      backgroundRepeat: "no-repeat",
+                      backgroundPostion: "center"
+                    }} 
+                    onClick={(e) =>{this.refs.fileUploader2.click();}} 
+                  >
+                    <input 
+                      id="imageTwo"
+                      type="file" 
+                      ref="fileUploader2" 
+                      style={{display:"none"}} 
+                      onChange={this.handleImageTwo}
+                    />
+                  </Image>
+                  <Image 
+                    id="img3" 
+                    style={{ 
+                      backgroundImage: 'url(http://wooo.philsony.com'+ this.props.store.userStore.photo_link_3 +')',
+                      backgroundSize: "cover",
+                      backgroundRepeat: "no-repeat",
+                      backgroundPostion: "center" 
+                  }} 
+                    onClick={(e) =>{this.refs.fileUploader3.click();}} 
+                  >
+                    <input 
+                      id="imageThree"
+                      type="file" 
+                      ref="fileUploader3" 
+                      style={{display:"none"}} 
+                      onChange={this.handleImageThree}
+                    />
+                  </Image>
+                  <Image 
+                    id="img4" 
+                    style={{ 
+                      backgroundImage: 'url(http://wooo.philsony.com'+ this.props.store.userStore.photo_link_4 +')',
+                      backgroundSize: "cover",
+                      backgroundRepeat: "no-repeat",
+                      backgroundPostion: "center" 
+                    }} 
+                    onClick={(e) =>{this.refs.fileUploader4.click();}} 
+                  >
+                    <input 
+                      id="imageFour"
+                      type="file" 
+                      ref="fileUploader4"  
+                      style={{display:"none"}} 
+                      onChange={this.handleImageFour}
                     />
                   </Image>
               </ProfileImage>
