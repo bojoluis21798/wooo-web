@@ -23,7 +23,6 @@ export default class Messages extends Component {
       if (snap.val()) {
         myUserRef.onDisconnect().remove();
         myUserRef.set(true);
-        console.log(myUserRef);
       }
     });
 

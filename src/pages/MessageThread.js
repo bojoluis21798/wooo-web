@@ -27,7 +27,8 @@ export default class MessageThread extends Component {
   state = {
     messageDetail: { },
     message: "", 
-    userId: this.props.store.userStore.profile_id
+    userId: this.props.store.userStore.profile_id,
+    status: "active"
   }
 
   componentDidMount() {
@@ -38,6 +39,7 @@ export default class MessageThread extends Component {
     });
     this.setState({userId: this.props.store.userStore.profile_id});
     this.handleMessageListen();
+    this.userStatus();
   }
 
   componentWillUnmount() {
@@ -94,6 +96,16 @@ export default class MessageThread extends Component {
     });
   }
 
+  userStatus = () => {
+    this.userStatusRef = firebase.database().ref().child('users/'+this.props.location.state.pairedId).limitToLast(1).on('value', message => {
+      if(message.val()){
+        this.setState({status:"Active"})
+      }else{
+        this.setState({status:"Offline"})
+      }
+    });
+  }
+
   render() {
     return (
       <AuthorizedLayout noverflow={true} redirectTo='messages'>
@@ -113,7 +125,8 @@ export default class MessageThread extends Component {
                     {this.props.location && this.props.location.state && this.props.location.state.pairedName}
                 </Name>
                 <LastMessage>
-                    Active Now
+                    {this.state.status != "active" && ("Offline")}
+                    {this.state.status == "active" && ("Active Now")}
                 </LastMessage>
                 </Ree>
                 <div>
