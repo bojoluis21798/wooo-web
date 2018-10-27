@@ -38,7 +38,7 @@ class UserStore {
 
     @action
     setIsMatched(bool){
-        console.log("got in setIsmatched");
+        
         this.isMatched = bool;
     }
 
@@ -51,14 +51,12 @@ class UserStore {
     async authenticateUser(authObj) {
         try {
             this.getLocation()
-            console.log(this.location);
             let response = await axios.post(`${process.env.REACT_APP_API_BASEURL}/login/`, {
                 accessToken: authObj.accessToken,
                 lng:this.location.lng,
                 lat:this.location.lat
             })
             
-            console.log(response);
             this.populateUser(response.data)
             this.insertToken(authObj)
             return true
@@ -168,7 +166,7 @@ class UserStore {
     }
 
     @computed get prospectLength(){
-        console.log("Prospect's length"+ this.prospects.length);
+        
         // return this.prospects.length?this.prospects.length:null;
         return this.prospects.length;
     }

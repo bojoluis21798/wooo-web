@@ -11,7 +11,10 @@ export default class MatchList extends Component{
        
         if(store.matches){
             return store.matches.map(match=>(
-                <Person>{match.user.first_name}</Person>
+                <Person>
+                    <Image src={match.profile_image} />
+                    <Name>{match.user.first_name}</Name>
+                </Person>
             ));
         }
 
@@ -21,5 +24,24 @@ export default class MatchList extends Component{
 }
 
 const Person = styled.div`
-    height:400px;
+    height:200px;
+    margin: auto;
+    
+    display:grid;
+`
+
+const Image = styled.img `
+    justify-self: center;
+    width:17vh;
+    height:17vh;
+    border-radius: 11vh;
+    border: none;
+    margin: auto;
+    padding:10px;
+    padding-bottom:none;
+`
+const Name = styled.div `
+    text-align:center;
+    font-size:2vh;
+    font-color:white;
 `
