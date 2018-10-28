@@ -13,4 +13,5 @@ export default `
     button, input, textarea {
         box-sizing: border-box;
     }
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
 `
