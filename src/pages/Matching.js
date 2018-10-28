@@ -162,8 +162,8 @@ export default class Matching extends Component{
              }
          }).then(
              res=>{
-                 
-                 if(res.data.length == 0){
+
+                 if(res.data.length === 0){
                     this.props.store.userStore.setNoProspects(true);
                     this.setState({hasPayload:true});//used to remove the loading
                  }else{
@@ -190,7 +190,7 @@ export default class Matching extends Component{
                 noPad={true}
             >
                 <Container>
-                    
+
                     <MatchingHeader
                         eventHandle = {this.handleCloseProfile}
                         type = {this.state.viewProfile ? "exit" : "back"}
@@ -235,14 +235,14 @@ export default class Matching extends Component{
                                         }
                                         ,
                                         {
-                                            this.props.store.userStore.currentProspect.age == " "?
+                                            this.props.store.userStore.currentProspect.age === " "?
                                             this.state.people[0].age:this.props.store.userStore.currentProspect.age
                                         }
                                     </TextDiv>
                                     {/* <TextDiv level= "2">{this.state.people[0].location}</TextDiv> */}
                                 </BioRow>
                                 <BioRow>
-                                    <TextDiv level = "3">{this.props.store.userStore.currentProspect.bio == " "?this.state.people[0].bio:this.props.store.userStore.currentProspect.bio}</TextDiv>
+                                    <TextDiv level = "3">{this.props.store.userStore.currentProspect.bio === " "?this.state.people[0].bio:this.props.store.userStore.currentProspect.bio}</TextDiv>
                                 </BioRow>
                             </TextContainer>
                         </MainTextArea>
