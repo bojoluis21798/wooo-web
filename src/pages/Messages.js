@@ -48,6 +48,7 @@ export default class Messages extends Component {
             if(message.val() != null){
               var lastmessage = Object.values(message.val());
               pairedInfo.message = lastmessage[0].content;
+              this.setState({ pairedInfo })
             }else{
               pairedInfo.message = "";
             } 
