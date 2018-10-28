@@ -11,7 +11,10 @@ class UserStore {
     @observable gay = null
     @observable preference = null
     @observable radius = null
-    @observable location = null
+    @observable location = {
+        lat:0,
+        lng:0
+    }
     @observable state = null
     @observable profilePicture = null
     @observable photos = []
@@ -30,6 +33,7 @@ class UserStore {
             bio: "My friends call me daddy. I can't figure out why. Do you mind helping me figure it out?",
         }
     ]
+    @observable matches = []
     @observable redirect_to = null
     @observable user_slug = null
     @observable noProspects = false;
@@ -37,7 +41,7 @@ class UserStore {
 
     @action
     setIsMatched(bool){
-        console.log("got in setIsmatched");
+        
         this.isMatched = bool;
     }
 
@@ -48,15 +52,23 @@ class UserStore {
     
     @action
     async authenticateUser(authObj) {
+        console.log(authObj)
+        console.log(this.location)
         try {
+            
+            
             let response = await axios.post(`${process.env.REACT_APP_API_BASEURL}/login/`, {
-                accessToken: authObj.accessToken
+                accessToken: authObj.accessToken,
+                lng:this.location.lng,
+                lat:this.location.lat
             })
-            this.getLocation()
+            console.log("GOT IN");
+            console.log(response.data)
             this.populateUser(response.data)
             this.insertToken(authObj)
             return true
         } catch(err) {
+            console.log(err)
             return false
         }
     }
@@ -94,7 +106,9 @@ class UserStore {
 
     @action
     setLocation(location){
-    this.location = location
+        this.location.lat = location.lat;
+        this.location.lng = location.lng
+        
     }
 
     @action
@@ -118,13 +132,19 @@ class UserStore {
     }
 
     @action
+    setMatches(matches){
+        this.matches = matches;
+    }
+
+    @action
     async getLocation(){
         try{
-            navigator.geolocation.getCurrentPosition((position) => {
+           let response = await navigator.geolocation.getCurrentPosition((position) => {
               this.setLocation( {
                     lat: position.coords.latitude,
                     lng: position.coords.longitude
                 });
+
             })
         } catch (err){
 
@@ -138,6 +158,7 @@ class UserStore {
     @action
     setProspects(prospects){
         this.prospects = prospects
+        console.log(this.prospects)
     }
 
     @action
@@ -151,6 +172,12 @@ class UserStore {
         return this.isMatched
     }
     @computed get currentProspect(){
+        if(this.prospects[0].age ==null){
+            this.prospects[0].age = "";
+        }
+        if(this.prospects[0].bio == null){
+            this.prospects[0].bio = "";
+        }
         return this.prospects[0]
     }
 
@@ -159,7 +186,7 @@ class UserStore {
     }
 
     @computed get prospectLength(){
-        console.log("Prospect's length"+ this.prospects.length);
+        
         // return this.prospects.length?this.prospects.length:null;
         return this.prospects.length;
     }
