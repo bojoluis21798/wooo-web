@@ -13,7 +13,6 @@ import LoaderWrapper from "../layouts/LoaderWrapper";
 @observer
 export default class Login extends Component {
   state = {
-    checked: false,
   }
   constructor(props) {
     super(props)
@@ -25,7 +24,7 @@ export default class Login extends Component {
   }
 
   componentDidMount() {
-    this.props.store.appStore.doneLoading()
+    setTimeout(() => this.props.store.appStore.doneLoading(), 1500)
   }
 
   onLoginButtonClick = () => {
@@ -35,13 +34,6 @@ export default class Login extends Component {
   componentWillUnmount() {
     this.props.store.appStore.doneLoading()
   }
-
-  handleCheck = (e) => {
-    this.setState({
-        checked: e.target.checked,
-    })
-  } 
-
 
   render() {
     return this.props.store.userStore.token ? (
@@ -77,16 +69,8 @@ export default class Login extends Component {
               )}
             />
             <TermsNotice>
-              <Link to="/policy-terms">See our privacy policy</Link>
-              <br/>
-              <input
-                className="form-check-input"
-                type="checkbox"
-                checked={this.state.checked}
-                onChange = {this.handleCheck}
-              />
               <label className="form-check-label" htmlFor="defaultCheck1">
-                I hereby agree to the privacy policy of the company.
+                I hereby agree to the <LoginLink to='/privacy-policy'>privacy policy</LoginLink> of the company.
               </label>
             </TermsNotice>
           </LoginActionSection>
@@ -96,6 +80,9 @@ export default class Login extends Component {
   }
 }
 
+const LoginLink = styled(Link)`
+  color: inherit;
+`
 
 const LoginScreen = styled.div`
   position: relative;
