@@ -79,7 +79,6 @@ class UserStore {
 
     @action
     setGay(gay){
-        console.log("IT CHANGED IN USERSTORE")
         this.gay = gay
     }
 

@@ -22,7 +22,6 @@ class EditProfile extends Component {
   // }
   componentDidMount(){
     console.log("This is Profile")
-    console.log(this.props.store.userStore.profilePicture)
   }
 
   handleSubmit = (e = null) => {
@@ -32,9 +31,6 @@ class EditProfile extends Component {
             'Authorization': 'Token ' + token,
         }
     }
-    console.log("Axios --PUT")
-    console.log("Gay?")
-    console.log(this.props.store.userStore.gay)
     axios.put(`${process.env.REACT_APP_API_BASEURL}/profiles/${this.props.store.userStore.profile_id}/`, {
       bio:this.props.store.userStore.biography,
       sexual_preference:this.props.store.userStore.preference,
@@ -42,7 +38,7 @@ class EditProfile extends Component {
       search_radius:this.props.store.userStore.radius,
     },config)
     .then(response => {
-      console.log("PUT was Successful!");
+      console.log(response);
 
     })
     .catch(error => {
@@ -60,18 +56,15 @@ class EditProfile extends Component {
             
         }
     }
-    console.log(num)
     const fd = new FormData();
     fd.append('supporting_pic_'+num+'',this.props.store.userStore.photos[0])
     fd.append('gay',this.props.store.userStore.gay)
     const url = `${process.env.REACT_APP_API_BASEURL}/profiles/${this.props.store.userStore.profile_id}/`;
     axios.put(url,fd,config)
     .then(response => {
-      console.log("-- PUT PHOTO --");
       console.log(response);
     })
     .catch(error => {
-      console.log("-- ERROR PHOTO --");
       console.log(error);
     })
 
@@ -84,26 +77,26 @@ class EditProfile extends Component {
     this.handleSubmitImage(1)
   }
 
-  // handleImageTwo = (event) => {
-  //   const store = this.props.store.userStore;
+  handleImageTwo = (event) => {
+    const store = this.props.store.userStore;
     
-  //   store.setPic(event.target.files[0])
-  //   this.handleSubmitImage(2)
-  // }
+    store.setPic(event.target.files[0])
+    this.handleSubmitImage(2)
+  }
 
-  // handleImageThree = (event) => {
-  //   const store = this.props.store.userStore;
+  handleImageThree = (event) => {
+    const store = this.props.store.userStore;
     
-  //   store.setPic(event.target.files[0])
-  //   this.handleSubmitImage(3)
-  // }
+    store.setPic(event.target.files[0])
+    this.handleSubmitImage(3)
+  }
 
-  // handleImageFour = (event) => {
-  //   const store = this.props.store.userStore;
+  handleImageFour = (event) => {
+    const store = this.props.store.userStore;
     
-  //   store.setPic(event.target.files[0])
-  //   this.handleSubmitImage(4)
-  // }
+    store.setPic(event.target.files[0])
+    this.handleSubmitImage(4)
+  }
 
   handleMale = (e) => {
     this.props.store.userStore.setPreference(0)
@@ -128,7 +121,6 @@ class EditProfile extends Component {
     } else {
       store.setGay(false)
     }
-    console.log("GAY CHNAGED")
     this.handleSubmit(e)
   }
 
@@ -164,7 +156,7 @@ class EditProfile extends Component {
                     <Image 
                       id="img1" 
                       style={{ 
-                        backgroundImage: 'url(http://wooo.philsony.com'+ this.props.store.userStore.photo_link_1 +')',
+                        backgroundImage: 'url(https://wooo.philsony.com'+ this.props.store.userStore.photo_link_1 +')',
                         backgroundSize: "cover",
                         backgroundRepeat: "no-repeat",
                         backgroundPostion: "center"
@@ -182,7 +174,7 @@ class EditProfile extends Component {
                     <Image 
                       id="img2" 
                       style={{ 
-                        backgroundImage: 'url(http://wooo.philsony.com'+ this.props.store.userStore.photo_link_2 +')',
+                        backgroundImage: 'url(https://wooo.philsony.com'+ this.props.store.userStore.photo_link_2 +')',
                         backgroundSize: "cover",
                         backgroundRepeat: "no-repeat",
                         backgroundPostion: "center"
@@ -200,7 +192,7 @@ class EditProfile extends Component {
                     <Image 
                       id="img3" 
                       style={{ 
-                        backgroundImage: 'url(http://wooo.philsony.com'+ this.props.store.userStore.photo_link_3 +')',
+                        backgroundImage: 'url(https://wooo.philsony.com'+ this.props.store.userStore.photo_link_3 +')',
                         backgroundSize: "cover",
                         backgroundRepeat: "no-repeat",
                         backgroundPostion: "center" 
@@ -218,7 +210,7 @@ class EditProfile extends Component {
                     <Image 
                       id="img4" 
                       style={{ 
-                        backgroundImage: 'url(http://wooo.philsony.com'+ this.props.store.userStore.photo_link_4 +')',
+                        backgroundImage: 'url(https://wooo.philsony.com'+ this.props.store.userStore.photo_link_4 +')',
                         backgroundSize: "cover",
                         backgroundRepeat: "no-repeat",
                         backgroundPostion: "center" 
@@ -357,6 +349,7 @@ const ProfileImageMain = styled.img`
   max-width: 150px;
   border-radius: 5px;
   border: none;
+  border-left: 5px;
 `;
 
 const ImageContainer = styled.div`
