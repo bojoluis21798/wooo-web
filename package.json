@@ -51,6 +51,7 @@
     "react-hot-loader": "^4.3.11",
     "react-images-upload": "^1.2.3",
     "react-images-uploader": "^1.2.0-rc1",
+    "react-linkify": "^0.2.2",
     "react-notifications": "^1.4.3",
     "react-notify-toast": "^0.5.0",
     "react-progress-button": "^5.1.0",

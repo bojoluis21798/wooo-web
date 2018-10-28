@@ -75,6 +75,18 @@ export default class MessageThread extends Component {
     if (event.key === 'Enter') this.handleSend();
   }
 
+  handleVideo = () => {
+    var videoURL = this.props.location.state.pairedName + " is calling you! Click here " + window.location.origin + "/video/" + this.props.location.state.pairedSlug +" to answer.";
+    let messageDet = Object.assign({}, this.state.messageDetail);
+    const id = Date.now() + "" + this.state.userId;
+    messageDet[id] = {
+      content: videoURL,
+      messageType: "Link",
+      userId: this.state.userId
+    }
+    this.setState({messageDetail:messageDet});
+  }
+
   handleMessageListen = () => {
     var messg = null;
     this.messageReff
@@ -91,6 +103,7 @@ export default class MessageThread extends Component {
     this.messageReff
     .limitToLast(100)
     .on('value', message => {
+      console.log(message.val())
         this.setState({
             list: Object.values(message.val()),
         });
