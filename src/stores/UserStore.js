@@ -25,7 +25,7 @@ class UserStore {
         {
           user:{
             first_name: "Rico",
-            
+
           },
             age: 16,
             img: [dog, dog2, dog3],
@@ -41,7 +41,7 @@ class UserStore {
 
     @action
     setIsMatched(bool){
-        
+
         this.isMatched = bool;
     }
 
@@ -49,7 +49,7 @@ class UserStore {
     setNoProspects(bool){
         this.noProspects = bool
     }
-    
+
     @action
     async authenticateUser(authObj) {
         console.log(authObj)
@@ -62,8 +62,8 @@ class UserStore {
                 lng:this.location.lng,
                 lat:this.location.lat
             })
+            console.log(response);
             console.log("GOT IN");
-            console.log(response.data)
             this.populateUser(response.data)
             this.insertToken(authObj)
             return true
@@ -108,7 +108,7 @@ class UserStore {
     setLocation(location){
         this.location.lat = location.lat;
         this.location.lng = location.lng
-        
+
     }
 
     @action
@@ -196,6 +196,7 @@ class UserStore {
         return this.isMatched
     }
     @computed get currentProspect(){
+
         if(this.prospects[0].age ==null){
             this.prospects[0].age = "";
         }
@@ -210,7 +211,7 @@ class UserStore {
     }
 
     @computed get prospectLength(){
-        
+
         // return this.prospects.length?this.prospects.length:null;
         return this.prospects.length;
     }

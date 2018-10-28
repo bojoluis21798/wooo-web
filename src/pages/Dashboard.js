@@ -46,7 +46,7 @@ export default class Dashboard extends Component{
                 }
             ]
         }
-        
+
     }
     componentDidMount(){
         axios.get(`${process.env.REACT_APP_API_BASEURL}/profiles/${this.props.store.userStore.profile_id}/matches`).then((res)=>{
@@ -57,22 +57,27 @@ export default class Dashboard extends Component{
         })
     }
     render(){
-        
+        console.log(this.props.store.userStore.matches.length !== 0 &&
+                    this.props.store.userStore.matches.matches_exists)
         return (
-            <AuthorizedLayout 
+            <AuthorizedLayout
                 noheaders={false}
                 noPad={false}
             >
-                <Header>
-                        <HeaderStyle>Matches</HeaderStyle>
-                </Header>
-                { !this.state.loading? <MatchList></MatchList>: <SmallLoading /> }
-                
+                {
+                    (this.props.store.userStore.matches.length !== 0 &&
+                    this.props.store.userStore.matches.matches_exists !== false)  &&
+
+                    <Header>
+                            <HeaderStyle>Matches</HeaderStyle>
+                    </Header>
+                }
+                    { !this.state.loading? <MatchList></MatchList>: <SmallLoading /> }
             </AuthorizedLayout>
         );
     }
 
-   
+
 }
 
 
@@ -80,8 +85,8 @@ export default class Dashboard extends Component{
 const Header = styled.div`
     display:grid
     grid-template-columns:100%
-
 `
+
 const HeaderStyle = styled.div`
     text-align:center;
     font-size:3.5vh;

@@ -37,6 +37,7 @@ class App extends Component {
               <Route path="/matching" component={Matching} />
               <Route path="/dashboard" component={Dashboard} />
               <Route path="/messages" exact component={Messages} />
+              <Route path="/dashboard" component={Dashboard} />
               <Route exact path="/messages/:id" component={MessageThread} />
               <Route path="/video/:slug" component={VideoChat} />
               <Route path='/error' component={ErrorPage} />
