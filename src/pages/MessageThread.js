@@ -31,6 +31,8 @@ export default class MessageThread extends Component {
     status: ""
   }
 
+  messageList = React.createRef()
+
   componentDidMount() {
     this.messageReff = firebase.database().ref().child('roomData/'+this.props.location.state.roomId);
     this.messageRef = base.syncState('roomData/'+this.props.location.state.roomId,{
@@ -38,13 +40,13 @@ export default class MessageThread extends Component {
       state:'messageDetail'
     });
     this.setState({userId: this.props.store.userStore.profile_id});
-    this.handleMessageListen();
+    this.subscribeToMessages();
     this.userStatus();
   }
 
   componentWillUnmount() {
     base.removeBinding(this.messageRef);
-    this.handleMessageListen = null;
+    this.subscribeToMessages = null;
     this.userStatus = null;
   }
 
@@ -56,7 +58,7 @@ export default class MessageThread extends Component {
     this.setState({message:event.target.value});
   }
 
-  handleSend = () => {
+  handleSend = (message) => {
     if (this.state.message) { 
       let messageDet = Object.assign({}, this.state.messageDetail);
       const id = Date.now() + "" + this.state.userId;
@@ -68,33 +70,36 @@ export default class MessageThread extends Component {
       this.setState({messageDetail:messageDet});
       this.setState({message:""})
     }
-    this.handleMessageListen();
+    this.subscribeToMessages();
   }
 
   handleKeyPress = event => {
     if (event.key === 'Enter') this.handleSend();
   }
 
-  handleMessageListen = () => {
-    var messg = null;
-    this.messageReff
-    .limitToLast(10)
-    .on('value', message => {
-        messg = message.val()
-    });
-    if(messg !== null){
-        this.listenMessages()
-    }
-  }
-
-  listenMessages = () => {
+  subscribeToMessages = () => {
     this.messageReff
     .limitToLast(100)
     .on('value', message => {
         this.setState({
             list: Object.values(message.val()),
         });
+        this.messageListScrollToBottom()
     });
+  }
+
+  handleScrolling = el => {
+    this.messageList = el
+    this.messageListScrollToBottom()
+  }
+
+  componentDidUpdate() {
+    this.messageListScrollToBottom();
+  }
+  
+  messageListScrollToBottom = () => {
+    if(this.messageList && this.messageList.current)
+      this.messageList.current.scrollIntoView({ behavior: 'smooth' })
   }
 
   userStatus = () => {
@@ -138,7 +143,7 @@ export default class MessageThread extends Component {
                   )}
                 </div>
             </Content>
-            <MessageList>
+            <MessageList innerRef={this.messageList}>
               { this.state.list && this.state.list.map((message, index) => (
                   <Messages 
                   key={index}
@@ -246,17 +251,17 @@ const MessageList = styled.div`
   overflow-y: scroll;
 
   &::-webkit-scrollbar-track  {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
     border-radius: 10px;
   }
 
   &::-webkit-scrollbar{
-    width: 12px;
+    width: 4px;
   }
 
   &::-webkit-scrollbar-thumb{
     border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,.3);
     background-color: #555;
   }
 `
