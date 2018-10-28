@@ -13,11 +13,13 @@ class AuthorizedLayout extends Component {
     isAuthorized = () => this.props.store.userStore.token
 
     componentDidMount() {
-        if(!this.isAuthorized())
-            if(this.props.redirectTo)
+        if(!this.isAuthorized()) {
+            if(this.props.redirectTo) {
                 this.props.store.userStore.setRedirectTo(this.props.redirectTo)
-            else
+            } else {
                 this.props.store.userStore.setRedirectTo(this.props.location.pathname)
+            }
+        }
     }
 
     render() {
@@ -45,7 +47,8 @@ const AuthorizedContent = styled.div`
 `
 
 const ContentContainer = styled.div`
-    padding-left: ${props => (props.noPad)?css`0`:css`36px`};
-    padding-right: ${props => (props.noPad)?css`0`:css`36px`};
-    padding-bottom: ${props => (props.noPad)?css`0`:css`50px`};
+    padding-left: ${props => (props.noPad)?css`0`:css`20px`};
+    padding-right: ${props => (props.noPad)?css`0`:css`20px`};
+    padding-bottom: ${props => (props.noPad)?css`0`:css`40px`};
 `
+

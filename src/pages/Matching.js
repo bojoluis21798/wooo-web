@@ -4,7 +4,6 @@ import { inject, observer } from 'mobx-react'
 import styled, { css } from 'styled-components'
 import left from '../assets/images/left.png'
 import right from '../assets/images/right.png'
-import Notifications, {notify} from 'react-notify-toast'
 import Loading from './Loading'
 import axios from 'axios'
 import AuthorizedLayout from '../layouts/AuthorizedLayout'
@@ -12,9 +11,6 @@ import matchingData from '../assets/data/matching.data'
 import MatchingHeader from '../components/MatchingHeader'
 import MatchingFooter from '../components/MatchingFooter'
 import MatchSwipe from '../components/MatchSwipe';
-import dog from '../assets/images/dog.jpeg';
-import dog2 from '../assets/images/dog2.jpg';
-import dog3 from '../assets/images/dog3.jpg';
 import NoMatches from '../components/NoMatches';
 
 
@@ -31,29 +27,6 @@ export default class Matching extends Component{
             noProspects: false,
             modalIsOpen: false,
             photos: [],
-            people: [
-                {
-                    name: "Rico",
-                    age: 16,
-                    img: [dog, dog2, dog3],
-                    location: "DOWNTOWN MANHATTAN, NEW YORK",
-                    bio: "My friends call me daddy. I can't figure out why. Do you mind helping me figure it out?",
-                },
-                {
-                    name: "Rob",
-                    age: 17,
-                    img: [dog2, dog, dog3],
-                    location: "DOWNTOWN MANHATTAN, NEW YORK",
-                    bio: "Im chinese",
-                },
-                {
-                    name: "Joe",
-                    age: 17,
-                    img: [dog3, dog, dog2],
-                    location: "DOWNTOWN MANHATTAN, NEW YORK",
-                    bio: "Im white",
-                }
-            ],
             show:this.props.store.userStore.isMatched
         }
     }
@@ -65,11 +38,13 @@ export default class Matching extends Component{
              }
          }).then(
              res=>{
+                 console.log(res);
                  if(res.data.length === 0){
                     this.props.store.userStore.setNoProspects(true);
                     this.setState({hasPayload:true})//used to take away the loading screen
 
                  }else{
+                    console.log(res.data)
                     this.props.store.userStore.setProspects(res.data)
                     this.repopulatePhotos()
                     this.setState({hasPayload:true})
@@ -181,12 +156,13 @@ export default class Matching extends Component{
     }
 
     getProspects = ()=>{
-         axios.get("${process.env.REACT_APP_API_BASEURL}/matching",{
+         axios.get(`${process.env.REACT_APP_API_BASEURL}/matching`,{
              params:{
                  profile_id:this.props.store.userStore.profile_id
              }
          }).then(
              res=>{
+                 
                  if(res.data.length == 0){
                     this.props.store.userStore.setNoProspects(true);
                     this.setState({hasPayload:true});//used to remove the loading
@@ -207,13 +183,14 @@ export default class Matching extends Component{
         if(!this.state.hasPayload){
             return <Loading message="Finding Gorls"/>
         }
+
         return (
             <AuthorizedLayout
                 noheaders={true}
                 noPad={true}
             >
                 <Container>
-                    <Notifications/>
+                    
                     <MatchingHeader
                         eventHandle = {this.handleCloseProfile}
                         type = {this.state.viewProfile ? "exit" : "back"}
@@ -225,6 +202,7 @@ export default class Matching extends Component{
 
                         <MatchSwipe
                             show={this.props.store.userStore.isMatchedValue}
+                            id={this.props.store.userStore.currentProspect.id}
                             eventHandle={this.nextPerson}
                         />
 
@@ -257,14 +235,14 @@ export default class Matching extends Component{
                                         }
                                         ,
                                         {
-                                            this.props.store.userStore.currentProspect.age?
-                                            this.props.store.userStore.currentProspect.age:this.state.people[0].age
+                                            this.props.store.userStore.currentProspect.age == " "?
+                                            this.state.people[0].age:this.props.store.userStore.currentProspect.age
                                         }
                                     </TextDiv>
-                                    <TextDiv level= "2">{this.state.people[0].location}</TextDiv>
+                                    {/* <TextDiv level= "2">{this.state.people[0].location}</TextDiv> */}
                                 </BioRow>
                                 <BioRow>
-                                    <TextDiv level = "3">{this.props.store.userStore.currentProspect.bio?this.props.store.userStore.currentProspect.bio:this.state.people[0].bio}</TextDiv>
+                                    <TextDiv level = "3">{this.props.store.userStore.currentProspect.bio == " "?this.state.people[0].bio:this.props.store.userStore.currentProspect.bio}</TextDiv>
                                 </BioRow>
                             </TextContainer>
                         </MainTextArea>

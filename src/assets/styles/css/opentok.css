@@ -1,0 +1,10 @@
+.OTPublisherContainer {
+    position: absolute;
+    z-index: 10;
+    width: 200px !important;
+    height: 200px !important;
+}   
+.OTSubscriberContainer {
+    width: 100vw !important;
+    height: 100vh !important;
+}
