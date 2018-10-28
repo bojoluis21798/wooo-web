@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { inject, observer } from 'mobx-react'
 import { Link } from 'react-router-dom'
+
 @observer
 @inject('store')
 export default class MatchSwipe extends Component{
