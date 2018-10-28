@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styled, { css } from 'styled-components'
 import { inject, observer } from 'mobx-react'
-
+import { Link } from 'react-router-dom'
 @observer
 @inject('store')
 export default class MatchSwipe extends Component{
@@ -15,9 +15,11 @@ export default class MatchSwipe extends Component{
                    <LargeText>{this.props.store.userStore.currentProspect.user.first_name} likes you too!</LargeText>
                    <ButtonArea>
                      <SubContainer>
-                       <Button>
-                            Say Hi!
-                       </Button>
+                        <Link to={`/messages/${this.props.id}`}>
+                            <Button>
+                                Say Hi!
+                            </Button>
+                        </Link>
                      </SubContainer>
                    </ButtonArea>
                    <Text onClick={this.toggle}>Continue Swiping</Text>

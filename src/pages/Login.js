@@ -40,12 +40,12 @@ export default class Login extends Component {
     this.setState({
         checked: e.target.checked,
     })
-  }
+  } 
 
 
   render() {
     return this.props.store.userStore.token ? (
-      <Redirect to={`${this.props.store.userStore.getRedirectTo() || '/edit-profile'}`} />
+      <Redirect to={`${this.props.store.userStore.getRedirectTo() || '/dashboard'}`} />
     ) : <LoaderWrapper>
       <LoginScreen>
         <ToastContainer />
