@@ -81,11 +81,14 @@ export default class Matching extends Component{
     }
 
     repopulatePhotos = () => {
+        let photos = []
+
+        if (this.props.store.userStore.currentProspect.profile_image) {
+            photos.push(this.props.store.userStore.currentProspect.profile_image)
+        }
+
         this.setState({
-            photos: [
-                this.props.store.userStore.currentProspect.profile_image,
-                // supporting images here
-            ]
+            photos: photos,
         })
     }
 
