@@ -56,9 +56,14 @@ export default class Dashboard extends Component{
                 noheaders={false}
                 noPad={false}
             >
+                {
+                    this.props.store.userStore.matches.length !== 0 &&
+                    this.props.store.userStore.matches.matches_exists  &&
+
                 <Header>
                         <HeaderStyle>Matches</HeaderStyle>
                 </Header>
+                }
                     <MatchList></MatchList>
             </AuthorizedLayout>
         );

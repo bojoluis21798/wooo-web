@@ -30,7 +30,7 @@ export default class MatchList extends Component{
             return (
                 <Container>
                     <Text>You haven't found a match yet,would you like to find one?</Text>
-                    <div><Link to='/matching'><Button>Start Swiping ></Button></Link></div>
+                    <Link to='/matching'><Button>Start Swiping ></Button></Link>
                 </Container>
             );
         }
@@ -45,9 +45,9 @@ const ContainerMain=styled.div`
     grid-template-columns:[first-line] 50% [second-line] 50% [second-line]
 `
 const Container = styled.div`
-    display:grid;
-    grid-template-columns:[first-line] 100% [second-line]
-    grid-template-rows:[row-one] 50% [row-two] 50% [row-three]
+    padding-top: 20vh;
+    display: grid;
+    justify-items: center;
 `
 const Person = styled.div`
     height:200px;
@@ -62,13 +62,11 @@ const Name = styled.div `
 `
 
 const Text = styled.div `
-
-    height:250px;
+    padding-top: 3vh;
+    padding-bottom: 5vh;
     text-align:center;
-    font-size:4vh;
+    font-size:3vh;
     font-color:white;
-    justify-self:center;
-    align-self: end;
     grid-column-start: 1
     grid-column-end: 2
     grid-row-start: auto
@@ -76,12 +74,12 @@ const Text = styled.div `
 `
 
 const Button = styled.button`
-    background-color:pink; /* Green */
+    background-color:#F11A61; /* Green */
     border: none;
     color: white;
     text-align: center;
     text-decoration: none;
-    font-size: 2vh;
+    font-size: 2.5vh;
     cursor: pointer;
     border-radius:12px;
     margin:auto;
