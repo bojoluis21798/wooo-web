@@ -8,11 +8,16 @@ import dog2 from '../assets/images/dog2.jpg';
 import dog3 from '../assets/images/dog3.jpg';
 import MatchList from '../components/MatchList';
 import NoMatchYet from '../components/NoMatchYet';
+import SmallLoading from '../components/SmallLoading'
 
 @observer
 @inject('store')
 export default class Dashboard extends Component{
     
+    state = {
+        loading: true
+    }
+
     constructor(props){
         super(props)
 
@@ -48,6 +53,7 @@ export default class Dashboard extends Component{
             console.log("List of matches");
             console.log(res.data);
             this.props.store.userStore.setMatches(res.data);
+            // this.setState({ loading: false })
         })
     }
     render(){
@@ -60,9 +66,7 @@ export default class Dashboard extends Component{
                 <Header>
                         <HeaderStyle>Matches</HeaderStyle>
                 </Header>
-                
-                    <MatchList></MatchList>
-                
+                { !this.state.loading? <MatchList></MatchList>: <SmallLoading /> }
                 
             </AuthorizedLayout>
         );
