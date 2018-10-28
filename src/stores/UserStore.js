@@ -171,9 +171,6 @@ class UserStore {
 
     @action
     async ipToLocation(){
-        console.log('ziz0');
-       
-        console.log('zizi');
         try{
         let response = await fetch("https://freegeoip.app/json/");
         let body = await response.json(); 
@@ -187,6 +184,7 @@ class UserStore {
         } 
 
     }
+    
     @action
     nextProspect(){
         if(this.prospects.length > 1){
