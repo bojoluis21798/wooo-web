@@ -55,8 +55,9 @@ class UserStore {
         console.log(authObj)
         console.log(this.location)
         try {
-            
-            
+            //PAY ATTENTION TO THIS
+            this.getLocation()
+            console.log(this.location);
             let response = await axios.post(`${process.env.REACT_APP_API_BASEURL}/login/`, {
                 accessToken: authObj.accessToken,
                 lng:this.location.lng,
