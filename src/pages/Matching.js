@@ -12,7 +12,7 @@ import MatchingHeader from '../components/MatchingHeader'
 import MatchingFooter from '../components/MatchingFooter'
 import MatchSwipe from '../components/MatchSwipe';
 import NoMatches from '../components/NoMatches';
-
+import dog from '../assets/images/dog.jpeg'
 
 @inject('store')
 @observer
@@ -58,8 +58,18 @@ export default class Matching extends Component{
     repopulatePhotos = () => {
         let photos = []
 
-        if (this.props.store.userStore.currentProspect.profile_image) {
-            photos.push(this.props.store.userStore.currentProspect.profile_image)
+        let urls = [
+            this.props.store.userStore.currentProspect.profile_image,
+            this.props.store.userStore.currentProspect.supporting_pic_1,
+            this.props.store.userStore.currentProspect.supporting_pic_2,
+            this.props.store.userStore.currentProspect.supporting_pic_3,
+            this.props.store.userStore.currentProspect.supporting_pic_4
+        ]
+
+        for(let i = 0; i < 5; i++){
+            if(urls[i]){
+                photos.push(urls[i])
+            }
         }
 
         this.setState({
