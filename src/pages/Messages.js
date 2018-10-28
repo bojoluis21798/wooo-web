@@ -1,26 +1,35 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment } from 'react'
 import { inject, observer } from 'mobx-react'
 import { Link } from 'react-router-dom'
-import styled from "styled-components";
+import styled from "styled-components"
 import MessageItems from '../components/MessageItems'
-import axios from 'axios';
-import AuthorizedLayout from '../layouts/AuthorizedLayout';
-import firebase from 'firebase';
+import axios from 'axios'
+import AuthorizedLayout from '../layouts/AuthorizedLayout'
+import firebase from 'firebase'
 import SmallLoading from '../components/SmallLoading'
 
 @inject('store') 
 @observer
 export default class Messages extends Component {
   state = {
-    pairedUser: null,
-    loading: true,
-    listeners: []
+    currentUser: this.props.store.userStore.profile_id,
+    pairedUser: [],
   };
 
   componentDidMount() {
+    const userListRef = firebase.database().ref("users/"+this.props.store.userStore.profile_id);
+    const myUserRef = userListRef.push();
+    firebase.database().ref(".info/connected").on("value", function (snap) {
+      if (snap.val()) {
+        myUserRef.onDisconnect().remove();
+        myUserRef.set(true);
+      }
+    });
+
+
     axios.get(`${process.env.REACT_APP_API_BASEURL}/profiles/${this.props.store.userStore.profile_id}/matches`)
     .then(response => {
-      if(response.data && response.data.length){
+      if(response.data){
         var pairedUser = [];
         response.data.forEach(element => {
           var pairedInfo = {
@@ -29,34 +38,27 @@ export default class Messages extends Component {
             pairedSlug: element.user.slug,
             pairedBio: element.bio,
             pairedImage: element.profile_image,
-            roomId: this.props.store.userStore.profile_id+'R'+element.id,
+            roomId: this.state.currentUser+'R'+element.id,
             message: ""
           }
-          pairedInfo.roomId = (element.id < this.props.store.userStore.profile_id) ? element.id+'R'+this.props.store.userStore.profile_id : this.props.store.userStore.profile_id+'R'+element.id
-          
-          const listener = message => {
-            if(message.val()) {
+          pairedInfo.roomId = (element.id < this.state.currentUser) ? element.id+'R'+this.state.currentUser : this.state.currentUser+'R'+element.id
+
+          firebase.database().ref().child('roomData/'+pairedInfo.roomId).limitToLast(1).on('value', message => {
+            if(message.val() != null){
               var lastmessage = Object.values(message.val());
-              pairedInfo.message = lastmessage[0].message.content;
-              this.setState({ pairedUser })
-            }
-          }
-
-          this.setState({ listeners: [...this.state.listeners, listener] })
-
-          firebase.database().ref().child('roomData/'+pairedInfo.roomId).limitToLast(1).on('value', listener)
+              pairedInfo.message = lastmessage[0].content;
+            }else{
+              pairedInfo.message = "";
+            } 
+          });
           pairedUser.push(pairedInfo);
-        })
+          
+        });
         this.setState({
-          pairedUser,
-          loading: false
+          pairedUser
         })
-      } 
-    })
-  }
-
-  async componentWillUnmount() {
-    await this.state.listeners.forEach(listener => firebase.database().ref().off('value', listener))
+      }
+    });
   }
 
   render() {
@@ -137,21 +139,21 @@ const LookForOneButton = styled.button`
 `
 
 const Input = styled.input`
+  height: 45px;
+  min-height: 45px;
   width: 100%;
-  font-size: 15px;
+  font-size: 16px;
   color: #ffffff;
-  padding: 15px 15px;
+  padding: 25px 15px;
   background-color: #191919;
   border-radius: 5px;
   border: none;
   justify-items: center;
   overflow: hidden;
   resize: hidden;
-  margin-bottom: 5px;
   border: 1px solid #191919;
   
   &:focus {
     outline: none !important;
   }
 `;
-  

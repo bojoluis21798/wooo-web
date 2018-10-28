@@ -40,12 +40,12 @@ export default class Login extends Component {
     this.setState({
         checked: e.target.checked,
     })
-  }
+  } 
 
 
   render() {
     return this.props.store.userStore.token ? (
-      <Redirect to={`${this.props.store.userStore.getRedirectTo() || '/edit-profile'}`} />
+      <Redirect to={`${this.props.store.userStore.getRedirectTo() || '/dashboard'}`} />
     ) : <LoaderWrapper>
       <LoginScreen>
         <ToastContainer />
@@ -62,7 +62,7 @@ export default class Login extends Component {
             <FacebookLogin
               appId={process.env.REACT_APP_FB_APPID}
               fields="name,email,picture"
-              scope="public_profile,user_friends,email,user_gender"
+              scope="public_profile,email,user_gender"
               callback={this.responseFacebook}
               redirectUri={`${process.env.REACT_APP_SITE}/login`}
               onClick={this.onLoginButtonClick}

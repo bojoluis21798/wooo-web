@@ -14,6 +14,7 @@ import MessageThread from './pages/MessageThread';
 import EditProfile from './pages/EditProfile'
 import VideoChat from './pages/VideoChat'
 import ErrorPage from './pages/ErrorPage'
+import Dashboard from './pages/Dashboard'; 
 
 class App extends Component {
   state = { loading: true };
@@ -34,6 +35,7 @@ class App extends Component {
               <Route exact path="/login" component={Login} />
               <Route path="/edit-profile" component={EditProfile} />
               <Route path="/matching" component={Matching} />
+              <Route path="/dashboard" component={Dashboard} />
               <Route path="/messages" exact component={Messages} />
               <Route exact path="/messages/:id" component={MessageThread} />
               <Route path="/video/:slug" component={VideoChat} />
