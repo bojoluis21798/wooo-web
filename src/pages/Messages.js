@@ -14,6 +14,7 @@ export default class Messages extends Component {
   state = {
     currentUser: this.props.store.userStore.profile_id,
     pairedUser: [],
+    loading: true
   };
 
   componentDidMount() {
@@ -55,7 +56,8 @@ export default class Messages extends Component {
           
         });
         this.setState({
-          pairedUser
+          pairedUser,
+          loading: false
         })
       }
     });
