@@ -120,6 +120,7 @@ class UserStore {
     @action
     async getLocation(){
         try{
+            
             navigator.geolocation.getCurrentPosition((position) => {
               this.setLocation( {
                     lat: position.coords.latitude,
@@ -127,8 +128,26 @@ class UserStore {
                 });
             })
         } catch (err){
+/*
+            fetch('http://freegeoip.app/json/')
+            .then(response => {
+             console.log(response)
+              if (
+                response
+              ) {
+               
 
-        }
+              } else {
+               
+              }
+            })
+            .catch(() => {
+              console.log(
+                'No internet connection found. App is running in offline mode.'
+              );
+            });
+*/
+        } 
     }
 
     @action insertToken(authObj){
