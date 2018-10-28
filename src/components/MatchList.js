@@ -41,6 +41,7 @@ export default class MatchList extends Component{
 }
 
 const ContainerMain=styled.div`
+    margin-top: 5vh;
     display:grid
     grid-template-columns:[first-line] 50% [second-line] 50% [second-line]
 `

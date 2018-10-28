@@ -51,18 +51,20 @@ export default class Dashboard extends Component{
         })
     }
     render(){
+        console.log(this.props.store.userStore.matches.length !== 0 &&
+                    this.props.store.userStore.matches.matches_exists)
         return (
             <AuthorizedLayout
                 noheaders={false}
                 noPad={false}
             >
                 {
-                    this.props.store.userStore.matches.length !== 0 &&
-                    this.props.store.userStore.matches.matches_exists  &&
+                    (this.props.store.userStore.matches.length !== 0 &&
+                    this.props.store.userStore.matches.matches_exists !== false)  &&
 
-                <Header>
-                        <HeaderStyle>Matches</HeaderStyle>
-                </Header>
+                    <Header>
+                            <HeaderStyle>Matches</HeaderStyle>
+                    </Header>
                 }
                     <MatchList></MatchList>
             </AuthorizedLayout>
