@@ -33,6 +33,8 @@ class EditProfile extends Component {
         }
     }
     console.log("Axios --PUT")
+    console.log("Gay?")
+    console.log(this.props.store.userStore.gay)
     axios.put(`${process.env.REACT_APP_API_BASEURL}/profiles/${this.props.store.userStore.profile_id}/`, {
       bio:this.props.store.userStore.biography,
       sexual_preference:this.props.store.userStore.preference,
@@ -48,6 +50,7 @@ class EditProfile extends Component {
     })
   }
 
+
   handleSubmitImage = (num) => {
     const token = this.props.store.userStore.token;
     const config = {
@@ -60,8 +63,8 @@ class EditProfile extends Component {
     console.log(num)
     const fd = new FormData();
     fd.append('supporting_pic_'+num+'',this.props.store.userStore.photos[0])
+    fd.append('gay',this.props.store.userStore.gay)
     const url = `${process.env.REACT_APP_API_BASEURL}/profiles/${this.props.store.userStore.profile_id}/`;
-
     axios.put(url,fd,config)
     .then(response => {
       console.log("-- PUT PHOTO --");
@@ -81,26 +84,26 @@ class EditProfile extends Component {
     this.handleSubmitImage(1)
   }
 
-  handleImageTwo = (event) => {
-    const store = this.props.store.userStore;
+  // handleImageTwo = (event) => {
+  //   const store = this.props.store.userStore;
     
-    store.setPic(event.target.files[0])
-    this.handleSubmitImage(2)
-  }
+  //   store.setPic(event.target.files[0])
+  //   this.handleSubmitImage(2)
+  // }
 
-  handleImageThree = (event) => {
-    const store = this.props.store.userStore;
+  // handleImageThree = (event) => {
+  //   const store = this.props.store.userStore;
     
-    store.setPic(event.target.files[0])
-    this.handleSubmitImage(3)
-  }
+  //   store.setPic(event.target.files[0])
+  //   this.handleSubmitImage(3)
+  // }
 
-  handleImageFour = (event) => {
-    const store = this.props.store.userStore;
+  // handleImageFour = (event) => {
+  //   const store = this.props.store.userStore;
     
-    store.setPic(event.target.files[0])
-    this.handleSubmitImage(4)
-  }
+  //   store.setPic(event.target.files[0])
+  //   this.handleSubmitImage(4)
+  // }
 
   handleMale = (e) => {
     this.props.store.userStore.setPreference(0)
@@ -125,7 +128,7 @@ class EditProfile extends Component {
     } else {
       store.setGay(false)
     }
-    
+    console.log("GAY CHNAGED")
     this.handleSubmit(e)
   }
 
@@ -157,79 +160,80 @@ class EditProfile extends Component {
               <Tagline>Photos</Tagline>
               <ProfileImage>
                   <ProfileImageMain alt='Profile' src={this.props.store.userStore.profilePicture} />
-                  <Image 
-                    id="img1" 
-                    style={{ 
-                      backgroundImage: 'url(http://wooo.philsony.com'+ this.props.store.userStore.photo_link_1 +')',
-                      backgroundSize: "cover",
-                      backgroundRepeat: "no-repeat",
-                      backgroundPostion: "center"
+                  <ImageContainer>
+                    <Image 
+                      id="img1" 
+                      style={{ 
+                        backgroundImage: 'url(http://wooo.philsony.com'+ this.props.store.userStore.photo_link_1 +')',
+                        backgroundSize: "cover",
+                        backgroundRepeat: "no-repeat",
+                        backgroundPostion: "center"
+                      }} 
+                      onClick={(e) =>{this.refs.fileUploader1.click();}} 
+                    >
+                      <input 
+                        id="imageOne"
+                        type="file" 
+                        ref="fileUploader1" 
+                        style={{display:"none"}} 
+                        onChange={this.handleImageOne}
+                      />
+                    </Image>
+                    <Image 
+                      id="img2" 
+                      style={{ 
+                        backgroundImage: 'url(http://wooo.philsony.com'+ this.props.store.userStore.photo_link_2 +')',
+                        backgroundSize: "cover",
+                        backgroundRepeat: "no-repeat",
+                        backgroundPostion: "center"
+                      }} 
+                      onClick={(e) =>{this.refs.fileUploader2.click();}} 
+                    >
+                      <input 
+                        id="imageTwo"
+                        type="file" 
+                        ref="fileUploader2" 
+                        style={{display:"none"}} 
+                        onChange={this.handleImageTwo}
+                      />
+                    </Image>
+                    <Image 
+                      id="img3" 
+                      style={{ 
+                        backgroundImage: 'url(http://wooo.philsony.com'+ this.props.store.userStore.photo_link_3 +')',
+                        backgroundSize: "cover",
+                        backgroundRepeat: "no-repeat",
+                        backgroundPostion: "center" 
                     }} 
-                    onClick={(e) =>{this.refs.fileUploader1.click();}} 
-                  >
-                    <input 
-                      id="imageOne"
-                      type="file" 
-                      ref="fileUploader1" 
-                      value={this.props.store.userStore.photos[0]} 
-                      style={{display:"none"}} 
-                      onChange={this.handleImageOne}
-                    />
-                  </Image>
-                  <Image 
-                    id="img2" 
-                    style={{ 
-                      backgroundImage: 'url(http://wooo.philsony.com'+ this.props.store.userStore.photo_link_2 +')',
-                      backgroundSize: "cover",
-                      backgroundRepeat: "no-repeat",
-                      backgroundPostion: "center"
-                    }} 
-                    onClick={(e) =>{this.refs.fileUploader2.click();}} 
-                  >
-                    <input 
-                      id="imageTwo"
-                      type="file" 
-                      ref="fileUploader2" 
-                      style={{display:"none"}} 
-                      onChange={this.handleImageTwo}
-                    />
-                  </Image>
-                  <Image 
-                    id="img3" 
-                    style={{ 
-                      backgroundImage: 'url(http://wooo.philsony.com'+ this.props.store.userStore.photo_link_3 +')',
-                      backgroundSize: "cover",
-                      backgroundRepeat: "no-repeat",
-                      backgroundPostion: "center" 
-                  }} 
-                    onClick={(e) =>{this.refs.fileUploader3.click();}} 
-                  >
-                    <input 
-                      id="imageThree"
-                      type="file" 
-                      ref="fileUploader3" 
-                      style={{display:"none"}} 
-                      onChange={this.handleImageThree}
-                    />
-                  </Image>
-                  <Image 
-                    id="img4" 
-                    style={{ 
-                      backgroundImage: 'url(http://wooo.philsony.com'+ this.props.store.userStore.photo_link_4 +')',
-                      backgroundSize: "cover",
-                      backgroundRepeat: "no-repeat",
-                      backgroundPostion: "center" 
-                    }} 
-                    onClick={(e) =>{this.refs.fileUploader4.click();}} 
-                  >
-                    <input 
-                      id="imageFour"
-                      type="file" 
-                      ref="fileUploader4"  
-                      style={{display:"none"}} 
-                      onChange={this.handleImageFour}
-                    />
-                  </Image>
+                      onClick={(e) =>{this.refs.fileUploader3.click();}} 
+                    >
+                      <input 
+                        id="imageThree"
+                        type="file" 
+                        ref="fileUploader3" 
+                        style={{display:"none"}} 
+                        onChange={this.handleImageThree}
+                      />
+                    </Image>
+                    <Image 
+                      id="img4" 
+                      style={{ 
+                        backgroundImage: 'url(http://wooo.philsony.com'+ this.props.store.userStore.photo_link_4 +')',
+                        backgroundSize: "cover",
+                        backgroundRepeat: "no-repeat",
+                        backgroundPostion: "center" 
+                      }} 
+                      onClick={(e) =>{this.refs.fileUploader4.click();}} 
+                    >
+                      <input 
+                        id="imageFour"
+                        type="file" 
+                        ref="fileUploader4"  
+                        style={{display:"none"}} 
+                        onChange={this.handleImageFour}
+                      />
+                    </Image>
+                  </ImageContainer>
               </ProfileImage>
               <Tagline>Bio</Tagline>
               <BioText
@@ -240,44 +244,43 @@ class EditProfile extends Component {
                 onBlur={this.handleSubmit}
               />
               <Tagline>Preference</Tagline>
-              <PrefButtonMale id="male"
-                  aria-label="Male"
-                  value= "0"
-                  onClick={this.handleMale}
-                  active = {this.props.store.userStore.preference === 0}
-              >
-                Male</PrefButtonMale>
-              <PrefButtonFemale id="female"
-                aria-label="Female"
-                value= "1"
-                onClick={this.handleFemale}
-                active = {this.props.store.userStore.preference === 1}
-              >
-                Female</PrefButtonFemale>
-              <PrefButtonOthers id="other"
-                  aria-label="Others"
-                  value="2"
-                  onClick={this.handleOthers}
-                  active = {this.props.store.userStore.preference === 2}
-              >Others</PrefButtonOthers>
-              <label htmlFor="normal-switch">
-                  <span style={{
-                                marginRight: "10px"
-                  }}>Gay</span>
-                  <Toggle className="gayToggle"
+              <PreferenceContainer>
+                <PrefButtonMale id="male"
+                    aria-label="Male"
+                    value= "0"
+                    onClick={this.handleMale}
+                    active = {this.props.store.userStore.preference === 0}
+                >
+                  Male</PrefButtonMale>
+                <PrefButtonFemale id="female"
+                  aria-label="Female"
+                  value= "1"
+                  onClick={this.handleFemale}
+                  active = {this.props.store.userStore.preference === 1}
+                >
+                  Female</PrefButtonFemale>
+                <PrefButtonOthers id="other"
+                    aria-label="Others"
+                    value="2"
+                    onClick={this.handleOthers}
+                    active = {this.props.store.userStore.preference === 2}
+                >Others</PrefButtonOthers>
+
+                <label htmlFor="normal-switch">
+                    <span style={{marginRight: "10px"}}>Gay</span>
+                    <Toggle 
+                      className="gayToggle"
                       id="normal-switch"
                       aria-label="gay"
                       onColor="#f51a63"
                       offColor="#191919"
                       uncheckedIcon={false}
                       checkedIcon={true}
-                      bottom= "-10px"
-                      checked={this.props.store.userStore.gay === true}
+                      checked={this.props.store.userStore.gay}
                       onChange={this.handleGay}
-
-                  />
-                <label style={{paddingLeft:"10px"}}>Gay</label>
-              </label>
+                    />
+                </label>
+              </PreferenceContainer>
               <Tagline>Radius</Tagline>
               <RadiusNum>{this.props.store.userStore.radius} Km</RadiusNum>
               <br/>
@@ -350,47 +353,40 @@ const ProfileImage = styled.div`
   display: flex;
 `;
 const ProfileImageMain = styled.img`
-  height: 100%;
-  max-height: 200px;
-  width: 100%;
-  max-width: 200px;
-  border-radius: 15px;
+  max-height: 150px;
+  max-width: 150px;
+  border-radius: 5px;
   border: none;
-  margin: auto;
+`;
+
+const ImageContainer = styled.div`
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-column-gap: 2px; 
+  grid-row-gap: 2px;
+`;
+
+const PreferenceContainer = styled.div`
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-row-gap: 20px;
 `;
 
 const Image = styled.div`
-
-  width: 77px;
-  height: 77px;
+  width: 73px;
+  height: 73px;
   background-color: #191919
   border-color: #191919
-  border-radius: 5px;
+  border-radius: 2px;
   border: none;
-  margin: auto;
   margin-left: 2.7%;
   float: right;
 
   &:hover {
     cursor: pointer;
-    background-position: 300px;
-    background-color:  #191919;
-    border: 1px solid #f51a63;
   }
   &:focus {
     outline: none !important;
-    border: 1px solid #f51a63 !important;
-  }
-
-  &#img3 {
-    margin-top: 2.5%;
-  }
-  &#img4 {
-    margin-top: 2.5%;
-    margin-left: 2.5%;
-  }
-  &#img2 {
-    margin-left: 2.5%;
   }
 `;
 
@@ -426,9 +422,6 @@ const PrefButtonMale = styled.button`
   border: 0;
   padding: 12px;
   width: 90px;
-  margin: auto;
-  margin-bottom: 5px;
-  margin-right: 15px;
   transition: 0.5s all ease;
   cursor: pointer;
 
@@ -437,7 +430,6 @@ const PrefButtonMale = styled.button`
         css`
           background-position: 300px;
           background-color:  #f51a63;
-          border: 1px solid #f51a63;
         `
   }
 `;
@@ -452,9 +444,6 @@ const PrefButtonFemale = styled.button`
   border: 0;
   padding: 12px;
   width: 90px;
-  margin: auto;
-  margin-bottom: 5px;
-  margin-right: 15px;
   transition: 0.5s all ease;
   box-sizing: border-box;
   cursor: pointer;
@@ -464,7 +453,6 @@ const PrefButtonFemale = styled.button`
         css`
           background-position: 300px;
           background-color:  #f51a63;
-          border: 1px solid #f51a63;
         `
   }
 `;
@@ -479,9 +467,6 @@ const PrefButtonOthers = styled.button`
   border: 0;
   padding: 12px;
   width: 90px;
-  margin: auto;
-  margin-bottom: 5px;
-  margin-right: 15px;
   transition: 0.5s all ease;
   box-sizing: border-box;
   cursor: pointer;
@@ -491,7 +476,6 @@ const PrefButtonOthers = styled.button`
         css`
           background-position: 300px;
           background-color:  #f51a63;
-          border: 1px solid #f51a63;
         `
   }
 `;
