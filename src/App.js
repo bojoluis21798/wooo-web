@@ -35,6 +35,7 @@ class App extends Component {
               <Route exact path="/login" component={Login} />
               <Route path="/edit-profile" component={EditProfile} />
               <Route path="/matching" component={Matching} />
+              <Route path="/dashboard" component={Dashboard} />
               <Route path="/messages" exact component={Messages} />
               <Route path="/dashboard" component={Dashboard} />
               <Route exact path="/messages/:id" component={MessageThread} />

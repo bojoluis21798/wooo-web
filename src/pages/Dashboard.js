@@ -7,11 +7,12 @@ import dog from '../assets/images/dog.jpeg';
 import dog2 from '../assets/images/dog2.jpg';
 import dog3 from '../assets/images/dog3.jpg';
 import MatchList from '../components/MatchList';
+import NoMatchYet from '../components/NoMatchYet';
 
 @observer
 @inject('store')
 export default class Dashboard extends Component{
-    
+
     constructor(props){
         super(props)
 
@@ -40,43 +41,39 @@ export default class Dashboard extends Component{
                 }
             ]
         }
-        
+
     }
     componentDidMount(){
         axios.get(`${process.env.REACT_APP_API_BASEURL}/profiles/${this.props.store.userStore.profile_id}/matches`).then((res)=>{
-            console.log(res);
+            console.log("List of matches");
+            console.log(res.data);
             this.props.store.userStore.setMatches(res.data);
         })
     }
     render(){
         return (
-            <AuthorizedLayout 
+            <AuthorizedLayout
                 noheaders={false}
                 noPad={false}
             >
                 <Header>
                         <HeaderStyle>Matches</HeaderStyle>
                 </Header>
-                <Container>
                     <MatchList></MatchList>
-                </Container>
             </AuthorizedLayout>
         );
     }
 
-   
+
 }
 
-const Container=styled.div`
-    display:grid
-    grid-template-columns:[first-line] 50% [second-line] 50% [second-line]
-`
+
 
 const Header = styled.div`
     display:grid
     grid-template-columns:100%
-
 `
+
 const HeaderStyle = styled.div`
     text-align:center;
     font-size:3.5vh;

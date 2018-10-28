@@ -10,11 +10,11 @@ export default class Messages extends Component {
   render() {
     return this.props.userData.pairedId === this.props.userId? 
       <SenderMessage>
-        <MessageContent>{this.props.message.content}</MessageContent>
+        <MessageContent>{this.props.content}</MessageContent>
         <Img src={this.props.userData.pairedImage} alt={this.props.profile_id}/>
       </SenderMessage> : 
       <MyMessage>
-        <MessageContent selfsent={true}>You: {this.props.message.content}</MessageContent>
+        <MessageContent selfsent={true}>You: {this.props.content}</MessageContent>
       </MyMessage>
       
   }

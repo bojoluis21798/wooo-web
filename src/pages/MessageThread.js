@@ -8,8 +8,9 @@ import { inject, observer } from 'mobx-react'
 import firebase from 'firebase'
 import AuthorizedLayout from '../layouts/AuthorizedLayout'
 import Messages from '../components/Messages'
+import Rebase from 're-base'
 
-const config =  {
+const config = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
     authDomain: process.env.REACT_APP_FIREBASE_AUTHDOMAIN,
     databaseURL: process.env.REACT_APP_FIREBASE_DBURL,
@@ -17,54 +18,94 @@ const config =  {
     storageBucket: process.env.REACT_APP_FIREBASE_STORAGEBUCKET,
     messagingSenderId: process.env.REACT_APP_FIREBASE_SENDERID
 };
-  
-firebase.initializeApp(config);
+
+const app = firebase.initializeApp(config);
+const base = Rebase.createClass(app.database());
 
 @inject('store') @observer
 export default class MessageThread extends Component {
   state = {
-    message: '',
-    loading: true  
+    messageDetail: { },
+    message: "", 
+    userId: this.props.store.userStore.profile_id,
+    status: ""
   }
 
   componentDidMount() {
-    this.messageRef = firebase.database().ref().child('roomData/'+this.props.location.state.roomId);
-    this.setState({ loading: false })
-    this.subscribeToMessages()
+    this.messageReff = firebase.database().ref().child('roomData/'+this.props.location.state.roomId);
+    this.messageRef = base.syncState('roomData/'+this.props.location.state.roomId,{
+      context: this,
+      state:'messageDetail'
+    });
+    this.setState({userId: this.props.store.userStore.profile_id});
+    this.handleMessageListen();
+    this.userStatus();
+  }
+
+  componentWillUnmount() {
+    base.removeBinding(this.messageRef);
+    this.handleMessageListen = null;
+    this.userStatus = null;
   }
 
   static getDerivedStateFromProps(nextProps) {
     return nextProps.user? ({ userId: nextProps.user.displayId }): nextProps;
   }
   
+  handleChange = event => {
+    this.setState({message:event.target.value});
+  }
+
   handleSend = () => {
-    var newmessage = {
-      userId: this.props.store.userStore.profile_id,
-      message: {
-        type: "String",
-        content: this.state.message
+    if (this.state.message) { 
+      let messageDet = Object.assign({}, this.state.messageDetail);
+      const id = Date.now() + "" + this.state.userId;
+      messageDet[id] = {
+        content: this.state.message,
+        messageType: "String",
+        userId: this.state.userId
       }
+      this.setState({messageDetail:messageDet});
+      this.setState({message:""})
     }
-    this.messageRef.push(newmessage);
-    this.setState({ message: '' });
+    this.handleMessageListen();
   }
 
   handleKeyPress = event => {
     if (event.key === 'Enter') this.handleSend();
   }
-  
-  handleChange = event => this.setState({message: event.target.value});
 
-  subscribeToMessages = () => {
-      this.messageRef
-      .limitToLast(9)
-      .on('value', message => {
-          if(!this.state.loading) 
-            this.setState({
-              list: Object.values(message.val()),
-            });
-      });
+  handleMessageListen = () => {
+    var messg = null;
+    this.messageReff
+    .limitToLast(10)
+    .on('value', message => {
+        messg = message.val()
+    });
+    if(messg !== null){
+        this.listenMessages()
     }
+  }
+
+  listenMessages = () => {
+    this.messageReff
+    .limitToLast(100)
+    .on('value', message => {
+        this.setState({
+            list: Object.values(message.val()),
+        });
+    });
+  }
+
+  userStatus = () => {
+    this.userStatusRef = firebase.database().ref().child('users/'+this.props.location.state.pairedId).limitToLast(1).on('value', message => {
+      if(message.val()){
+        this.setState({status:"Active"})
+      }else{
+        this.setState({status:"Offline"})
+      }
+    });
+  }
 
   render() {
     return (
@@ -85,13 +126,16 @@ export default class MessageThread extends Component {
                     {this.props.location && this.props.location.state && this.props.location.state.pairedName}
                 </Name>
                 <LastMessage>
-                    Active Now
+                    {this.state.status != "Active" && ("Offline")}
+                    {this.state.status == "Active" && ("Active Now")}
                 </LastMessage>
                 </Ree>
                 <div>
-                <Link to={`/video/${this.props.location && this.props.location.state && this.props.location.state.pairedSlug}`}>
-                    <img src={video} alt="Video Call"></img>
-                </Link>
+                  {this.state.status == "Active" && (
+                  <Link to={`/video/${this.props.location && this.props.location.state && this.props.location.state.pairedSlug}`}>
+                      <img src={video} alt="Video Call"></img>
+                  </Link>
+                  )}
                 </div>
             </Content>
             <MessageList>
@@ -138,10 +182,6 @@ const Back = styled.div`
 `;
 
 const MessageThreadBody = styled.div``
-
-const MessageList = styled.div`
-  margin-top: 20px;  
-`
 
 const Ree = styled.div`
   margin:0 auto;
@@ -199,3 +239,24 @@ const Input = styled.input`
     outline: none;
   }
 `;
+
+const MessageList = styled.div`
+  margin-top: 30px;
+  height: 72vh;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar-track  {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar{
+    width: 12px;
+  }
+
+  &::-webkit-scrollbar-thumb{
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #555;
+  }
+`

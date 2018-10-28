@@ -12,7 +12,7 @@ import MatchingHeader from '../components/MatchingHeader'
 import MatchingFooter from '../components/MatchingFooter'
 import MatchSwipe from '../components/MatchSwipe';
 import NoMatches from '../components/NoMatches';
-
+import dog from '../assets/images/dog.jpeg'
 
 @inject('store')
 @observer
@@ -38,6 +38,7 @@ export default class Matching extends Component{
              }
          }).then(
              res=>{
+                 console.log(res);
                  if(res.data.length === 0){
                     this.props.store.userStore.setNoProspects(true);
                     this.setState({hasPayload:true})//used to take away the loading screen
@@ -55,11 +56,24 @@ export default class Matching extends Component{
     }
 
     repopulatePhotos = () => {
+        let photos = []
+
+        let urls = [
+            this.props.store.userStore.currentProspect.profile_image,
+            this.props.store.userStore.currentProspect.supporting_pic_1,
+            this.props.store.userStore.currentProspect.supporting_pic_2,
+            this.props.store.userStore.currentProspect.supporting_pic_3,
+            this.props.store.userStore.currentProspect.supporting_pic_4
+        ]
+
+        for(let i = 0; i < 5; i++){
+            if(urls[i]){
+                photos.push(urls[i])
+            }
+        }
+
         this.setState({
-            photos: [
-                this.props.store.userStore.currentProspect.profile_image,
-                // supporting images here
-            ]
+            photos: photos,
         })
     }
 
@@ -158,8 +172,8 @@ export default class Matching extends Component{
              }
          }).then(
              res=>{
-                 
-                 if(res.data.length == 0){
+
+                 if(res.data.length === 0){
                     this.props.store.userStore.setNoProspects(true);
                     this.setState({hasPayload:true});//used to remove the loading
                  }else{
@@ -179,13 +193,14 @@ export default class Matching extends Component{
         if(!this.state.hasPayload){
             return <Loading message="Finding Gorls"/>
         }
+
         return (
             <AuthorizedLayout
                 noheaders={true}
                 noPad={true}
             >
                 <Container>
-                    
+
                     <MatchingHeader
                         eventHandle = {this.handleCloseProfile}
                         type = {this.state.viewProfile ? "exit" : "back"}
@@ -230,14 +245,14 @@ export default class Matching extends Component{
                                         }
                                         ,
                                         {
-                                            this.props.store.userStore.currentProspect.age?
-                                            this.props.store.userStore.currentProspect.age:this.state.people[0].age
+                                            this.props.store.userStore.currentProspect.age === " "?
+                                            this.state.people[0].age:this.props.store.userStore.currentProspect.age
                                         }
                                     </TextDiv>
-                                    <TextDiv level= "2">{this.state.people[0].location}</TextDiv>
+                                    {/* <TextDiv level= "2">{this.state.people[0].location}</TextDiv> */}
                                 </BioRow>
                                 <BioRow>
-                                    <TextDiv level = "3">{this.props.store.userStore.currentProspect.bio?this.props.store.userStore.currentProspect.bio:this.state.people[0].bio}</TextDiv>
+                                    <TextDiv level = "3">{this.props.store.userStore.currentProspect.bio === " "?this.state.people[0].bio:this.props.store.userStore.currentProspect.bio}</TextDiv>
                                 </BioRow>
                             </TextContainer>
                         </MainTextArea>
