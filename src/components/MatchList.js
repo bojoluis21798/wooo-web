@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import { inject, observer } from "mobx-react";
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
 @inject("store")
@@ -10,12 +10,12 @@ export default class MatchList extends Component{
         const store = this.props.store.userStore;
 
        console.log(store.matches);
-        if(store.matches.length != 0 && store.matches.matches_exists !== false){
+        if(store.matches.length !== 0 && store.matches.matches_exists !== false){
             return (
               <ContainerMain>
                 {
                     store.matches.map(match=>(
-              
+
                         <Person key={match.id}>
                             <Link to={`/messages/${match.id}`}>
                                 <Image src={match.profile_image} />
@@ -35,7 +35,7 @@ export default class MatchList extends Component{
             );
         }
 
-       
+
     }
 
 }
@@ -52,7 +52,7 @@ const Container = styled.div`
 const Person = styled.div`
     height:200px;
     margin: auto;
-    
+
     display:grid;
 `
 
