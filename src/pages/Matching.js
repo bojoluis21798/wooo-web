@@ -72,6 +72,10 @@ export default class Matching extends Component{
             }
         }
 
+        if(photos.length === 0) {
+            photos.push(dog)
+        }
+
         this.setState({
             photos: photos,
         })
@@ -226,7 +230,7 @@ export default class Matching extends Component{
                                 />
                             }
                             <PicArea>
-                                <ImageStyle src={this.state.photos[0]?this.state.photos[this.state.imgIdx]:this.state.people[0].img[this.state.imgIdx]} />
+                                <ImageStyle src={this.state.photos[this.state.imgIdx]} />
                             </PicArea>
                             {this.state.viewProfile &&
                                 <Arrow
@@ -241,18 +245,18 @@ export default class Matching extends Component{
                                     <TextDiv level = "1">
                                         { this.props.store.userStore.currentProspect.user.first_name?
                                             this.props.store.userStore.currentProspect.user.first_name
-                                            :this.state.people[0].name
+                                            :""
                                         }
                                         ,
                                         {
                                             this.props.store.userStore.currentProspect.age === " "?
-                                            this.state.people[0].age:this.props.store.userStore.currentProspect.age
+                                            "":this.props.store.userStore.currentProspect.age
                                         }
                                     </TextDiv>
                                     {/* <TextDiv level= "2">{this.state.people[0].location}</TextDiv> */}
                                 </BioRow>
                                 <BioRow>
-                                    <TextDiv level = "3">{this.props.store.userStore.currentProspect.bio === " "?this.state.people[0].bio:this.props.store.userStore.currentProspect.bio}</TextDiv>
+                                    <TextDiv level = "3">{this.props.store.userStore.currentProspect.bio === " "?"":this.props.store.userStore.currentProspect.bio}</TextDiv>
                                 </BioRow>
                             </TextContainer>
                         </MainTextArea>
