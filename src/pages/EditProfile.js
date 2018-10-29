@@ -262,7 +262,7 @@ class EditProfile extends Component {
               
                 <label htmlFor="normal-switch">
                   <SgContainer>
-                    <span style={{marginRight: "10px"}}>Same Gender</span>
+                    <span style={{marginRight: "10px"}}>Homosexual</span>
                     <Toggle
                       className="gayToggle"
                       id="normal-switch"
