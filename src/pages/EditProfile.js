@@ -258,8 +258,10 @@ class EditProfile extends Component {
                     active = {this.props.store.userStore.preference === 2}
                 >Others</PrefButtonOthers>*/}
               </PreferenceContainer>
-              <SgContainer>
+              <br /><br /> {/* THIS IS A TEMPORARY SOLUTION BECAUSE I CANT GET THE STYLING TO WORK - Kobe */}
+              
                 <label htmlFor="normal-switch">
+                  <SgContainer>
                     <span style={{marginRight: "10px"}}>Same Gender</span>
                     <Toggle
                       className="gayToggle"
@@ -272,8 +274,9 @@ class EditProfile extends Component {
                       checked={this.props.store.userStore.gay}
                       onChange={this.handleGay}
                     />
+                  </SgContainer>
                 </label>
-              </SgContainer>
+              
               <Tagline>Radius</Tagline>
               <RadiusNum>{this.props.store.userStore.radius} Km</RadiusNum>
               <br/>
@@ -368,7 +371,9 @@ const PreferenceContainer = styled.div`
 `;
 
 const SgContainer = styled.div`
-  display: grid;
+  display: inline-grid;
+  grid-template-columns: auto auto;
+  align-items: center;
 `;
 
 const Image = styled.div`
@@ -455,28 +460,28 @@ const PrefButtonFemale = styled.button`
         `
   }
 `;
-const PrefButtonOthers = styled.button`
-  font-weight: 100;
-  font-size: 15px;
-  color: #ffffff;
-  background-color: #191919;
-  letter-spacing: 0.01px;
-  text-align: center;
-  border-radius: 5px;
-  border: 0;
-  padding: 12px;
-  width: 90px;
-  transition: 0.5s all ease;
-  box-sizing: border-box;
-  cursor: pointer;
+// const PrefButtonOthers = styled.button`
+//   font-weight: 100;
+//   font-size: 15px;
+//   color: #ffffff;
+//   background-color: #191919;
+//   letter-spacing: 0.01px;
+//   text-align: center;
+//   border-radius: 5px;
+//   border: 0;
+//   padding: 12px;
+//   width: 90px;
+//   transition: 0.5s all ease;
+//   box-sizing: border-box;
+//   cursor: pointer;
 
-  ${
-    props => props.active &&
-        css`
-          background-position: 300px;
-          background-color:  #f51a63;
-        `
-  }
-`;
+//   ${
+//     props => props.active &&
+//         css`
+//           background-position: 300px;
+//           background-color:  #f51a63;
+//         `
+//   }
+// `;
 
 export default EditProfile
