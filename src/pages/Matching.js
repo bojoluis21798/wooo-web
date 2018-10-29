@@ -194,7 +194,6 @@ export default class Matching extends Component{
     }
 
     render() {
-        console.log(this.props.store.userStore.noProspectsValue)
         if(!this.state.hasPayload){
             return <Loading message="Finding Gorls"/>
         }
