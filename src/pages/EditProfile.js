@@ -251,16 +251,17 @@ class EditProfile extends Component {
                   active = {this.props.store.userStore.preference === 1}
                 >
                   Female</PrefButtonFemale>
-                <PrefButtonOthers id="other"
+                {/*<PrefButtonOthers id="other"
                     aria-label="Others"
                     value="2"
                     onClick={this.handleOthers}
                     active = {this.props.store.userStore.preference === 2}
-                >Others</PrefButtonOthers>
-
+                >Others</PrefButtonOthers>*/}
+              </PreferenceContainer>
+              <SgContainer>
                 <label htmlFor="normal-switch">
-                    <span style={{marginRight: "10px"}}>Gay</span>
-                    <Toggle 
+                    <span style={{marginRight: "10px"}}>Same Gender</span>
+                    <Toggle
                       className="gayToggle"
                       id="normal-switch"
                       aria-label="gay"
@@ -272,7 +273,7 @@ class EditProfile extends Component {
                       onChange={this.handleGay}
                     />
                 </label>
-              </PreferenceContainer>
+              </SgContainer>
               <Tagline>Radius</Tagline>
               <RadiusNum>{this.props.store.userStore.radius} Km</RadiusNum>
               <br/>
@@ -360,9 +361,14 @@ const ImageContainer = styled.div`
 `;
 
 const PreferenceContainer = styled.div`
-  display: grid;
-  grid-template-columns: auto auto auto;
+  display: inline-grid;
+  grid-template-columns: auto auto;
+  grid-column-gap: 5px;
   grid-row-gap: 20px;
+`;
+
+const SgContainer = styled.div`
+  display: grid;
 `;
 
 const Image = styled.div`
