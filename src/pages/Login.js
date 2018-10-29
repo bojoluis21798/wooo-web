@@ -70,7 +70,7 @@ export default class Login extends Component {
             />
             <TermsNotice>
               <label className="form-check-label" htmlFor="defaultCheck1">
-                I hereby agree to the <LoginLink to='/privacy-policy'>privacy policy</LoginLink> of the company.
+                I hereby agree to the <LoginLink to='/privacy-terms'>privacy policy</LoginLink> of the company.
               </label>
             </TermsNotice>
           </LoginActionSection>
