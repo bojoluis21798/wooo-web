@@ -194,6 +194,7 @@ export default class Matching extends Component{
     }
 
     render() {
+        console.log(this.props.store.userStore.noProspectsValue)
         if(!this.state.hasPayload){
             return <Loading message="Finding Gorls"/>
         }
@@ -209,11 +210,9 @@ export default class Matching extends Component{
                         eventHandle = {this.handleCloseProfile}
                         type = {this.state.viewProfile ? "exit" : "back"}
                     />
-
-                        <NoMatches noProspects={this.props.store.userStore.noProspectsValue}>
-
-                        </NoMatches>
-
+                        { this.props.store.userStore.noProspectsValue &&
+                            <NoMatches/>
+                        }
                         <MatchSwipe
                             show={this.props.store.userStore.isMatchedValue}
                             id={this.props.store.userStore.currentProspect.id}
