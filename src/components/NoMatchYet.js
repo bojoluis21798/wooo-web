@@ -1,7 +1,6 @@
 import React,{Component} from 'react';
 import { inject, observer } from "mobx-react";
-import styled, { css } from 'styled-components'
-import { Link } from 'react-router-dom'
+import styled from 'styled-components'
 
 @inject("store")
 @observer

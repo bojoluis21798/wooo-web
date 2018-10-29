@@ -25,7 +25,7 @@ class UserStore {
         {
           user:{
             first_name: "Rico",
-            
+
           },
             age: 16,
             img: [dog, dog2, dog3],
@@ -41,7 +41,7 @@ class UserStore {
 
     @action
     setIsMatched(bool){
-        
+
         this.isMatched = bool;
     }
 
@@ -49,7 +49,7 @@ class UserStore {
     setNoProspects(bool){
         this.noProspects = bool
     }
-    
+
     @action
     async authenticateUser(authObj) {
         console.log(authObj)
@@ -57,14 +57,13 @@ class UserStore {
         try {
             //PAY ATTENTION TO THIS
             this.getLocation()
-            console.log(this.location);
             let response = await axios.post(`${process.env.REACT_APP_API_BASEURL}/login/`, {
                 accessToken: authObj.accessToken,
                 lng:this.location.lng,
                 lat:this.location.lat
             })
+            console.log(response);
             console.log("GOT IN");
-            console.log(response.data)
             this.populateUser(response.data)
             this.insertToken(authObj)
             return true
@@ -109,7 +108,7 @@ class UserStore {
     setLocation(location){
         this.location.lat = location.lat;
         this.location.lng = location.lng
-        
+
     }
 
     @action
@@ -139,17 +138,25 @@ class UserStore {
 
     @action
     async getLocation(){
+       
         try{
            let response = await navigator.geolocation.getCurrentPosition((position) => {
+           
               this.setLocation( {
                     lat: position.coords.latitude,
                     lng: position.coords.longitude
                 });
 
-            })
+            }, err => {
+                this.ipToLocation()
+              }
+              , {enableHighAccuracy: false, timeout: 20000, maximumAge: 0})
+            
         } catch (err){
-
-        }
+            console.log(err)
+            this.ipToLocation()
+        } 
+       
     }
 
     @action insertToken(authObj){
@@ -163,6 +170,22 @@ class UserStore {
     }
 
     @action
+    async ipToLocation(){
+        try{
+        let response = await fetch("https://freegeoip.app/json/");
+        let body = await response.json(); 
+      
+        this.setLocation( {
+            lat: body.latitude,
+            lng: body.longitude
+        });
+         } catch (err){
+            console.log(err)
+        } 
+
+    }
+    
+    @action
     nextProspect(){
         if(this.prospects.length > 1){
             this.prospects.splice(0,1)
@@ -173,6 +196,7 @@ class UserStore {
         return this.isMatched
     }
     @computed get currentProspect(){
+
         if(this.prospects[0].age ==null){
             this.prospects[0].age = "";
         }
@@ -187,7 +211,7 @@ class UserStore {
     }
 
     @computed get prospectLength(){
-        
+
         // return this.prospects.length?this.prospects.length:null;
         return this.prospects.length;
     }

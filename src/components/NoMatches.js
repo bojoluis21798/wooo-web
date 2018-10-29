@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import { inject, observer } from 'mobx-react'
 import brokenHeart from '../assets/icons/brokenHeart.svg'
 
@@ -24,7 +24,7 @@ export default class NoMatches extends Component{
         }
     }
 
-    
+
 }
 
 
@@ -33,7 +33,7 @@ const Container = styled.div`
     display:grid; /* Hidden by default */
     width: 100%; /* Full width (cover the whole page) */
     height: 100%; /* Full height (cover the whole page) */
-    top: 0; 
+    top: 0;
     left: 0;
     right: 0;
     bottom: 0;
@@ -44,12 +44,7 @@ const Container = styled.div`
     grid-template-columns: 40px 50px auto 50px 40px;
     grid-template-rows: 25% 100px auto;
 `
-const NoMatch = styled.p`
-    font-size: 9vh
-    font-family: Apercu
-    font-weight: 700
-    z-index:10;
-`
+
 const BrokenHeart = styled.object`
     width: 50vw;
     grid-column-start: 3;
