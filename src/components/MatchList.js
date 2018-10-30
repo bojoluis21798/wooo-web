@@ -28,8 +28,8 @@ export default class MatchList extends Component{
         }else{
             return (
                 <Container>
-                    <Text>You haven't found a match yet,would you like to find one?</Text>
-                    <Link to='/matching'><Button>Start Swiping ></Button></Link>
+                    <Text>You haven't found a match yet, would you like to find one?</Text>
+                    <Link to='/matching'><Button>Start Swiping</Button></Link>
                 </Container>
             );
         }
@@ -76,19 +76,16 @@ const Text = styled.div `
 `
 
 const Button = styled.button`
-    background-color:#F11A61; /* Green */
+    background-color:#F11A61; 
     border: none;
     color: white;
     text-align: center;
     text-decoration: none;
-    font-size: 20px;
+    font-size: 18px;
     cursor: pointer;
-    border-radius:12px;
+    border-radius:5px;
     margin:auto;
-    padding-top:20px;
-    padding-bottom:20px;
-    padding-left:50px;
-    padding-right:50px;
+    padding: 15px 25px;
 `
 
 const Image = styled.img `

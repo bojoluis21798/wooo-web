@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Redirect, Link } from 'react-router-dom'
 import styled from 'styled-components'
 import back from '../assets/icons/circled-back.svg'
-import close from '../assets/images/close-button.png'
+import close from '../assets/icons/close-button.svg'
 
 export default class HeaderArea extends Component {
     goBack = () =>{
@@ -60,7 +60,4 @@ const TopButton = styled.button`
     padding: 0vh;
 `;
 
-const Icon = styled.img`
-    width:5vh;
-    height:5vh;
-`;
+const Icon = styled.img``
