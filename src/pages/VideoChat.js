@@ -6,6 +6,7 @@ import AuthorizedLayout from '../layouts/AuthorizedLayout'
 import axios from 'axios'
 import '../assets/styles/css/opentok.css'
 import SmallLoading from '../components/SmallLoading'
+import firebase from 'firebase'
 
 @inject('store')
 @observer
@@ -24,14 +25,13 @@ export default class VideoChat extends Component {
 
     async componentDidMount() {
         this.props.store.appStore.startLoading()
-        const response = await axios.get(`${process.env.REACT_APP_OPENTOK_SERVER}/get_token/6/5`)
+        const response = await axios.get(`${process.env.REACT_APP_OPENTOK_SERVER}/get_token/${this.props.match.params.slug}/${this.props.store.userStore.user_slug}`)
         const data = response.data
         const { token, session } = data
         this.setState({ token, session })
         this.props.store.appStore.doneLoading()
     }
 
-    
     render() {
         return (
             <AuthorizedLayout noheaders={true} noPad={true} className={`key-is-${process.env.REACT_APP_OPENTOK_KEY}`}>

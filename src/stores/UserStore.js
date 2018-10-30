@@ -93,7 +93,7 @@ class UserStore {
         this.preference = userAuth.user_profile.sexual_preference
         this.profile_id = userAuth.user_profile.id
         this.gay = userAuth.user_profile.gay
-        this.user_slug = userAuth.user_profile.user.slug
+        this.user_slug = userAuth.user_profile.slug
     }
 
     @action
