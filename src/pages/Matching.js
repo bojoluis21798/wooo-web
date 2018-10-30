@@ -200,6 +200,7 @@ export default class Matching extends Component{
             <AuthorizedLayout
                 noheaders={true}
                 noPad={true}
+                black={true}
             >
                 <Container>
 

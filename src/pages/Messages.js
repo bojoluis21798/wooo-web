@@ -80,7 +80,7 @@ export default class Messages extends Component {
               <MessageItems pairedUser={this.state.pairedUser} />
             </Fragment>
             : <EmphasizedTextContent>
-              <p>You haven't found a match yet, start looking:</p>
+              <p>You haven't found a match yet, start looking</p>
               <Link to='/matching'>
                 <LookForOneButton>Start Swiping</LookForOneButton>
               </Link>
@@ -132,11 +132,6 @@ const LookForOneButton = styled.button`
   font-size: 18px;
   border-radius: 5px;
   cursor: pointer;
-  transition: 500ms all;
-
-  &:hover {
-    width: 170px;
-  }
 `
 
 const Input = styled.input`
