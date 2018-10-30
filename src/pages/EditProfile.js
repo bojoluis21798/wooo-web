@@ -42,58 +42,66 @@ class EditProfile extends Component {
               <ProfileImage>
                   <ProfileImageMain alt='Profile' src={this.props.store.userStore.profilePicture} />
                   <ImageContainer>
-                    <Image
-                      id="img1"
-                      bgImage = {this.props.store.userStore.photo_link_1}
-                      onClick={(e) =>{this.refs.fileUploader1.click()}}
-                    >
-                      <input
-                        id="imageOne"
-                        type="file"
-                        ref="fileUploader1"
-                        style={{display:"none"}}
-                        onChange={e => this.props.store.userStore.handleSubmitImage(e, 1)}
-                      />
-                    </Image>
-                    <Image
-                      id="img2"
-                      bgImage = {this.props.store.userStore.photo_link_2}
-                      onClick={(e) =>{this.refs.fileUploader2.click();}}
-                    >
-                      <input
-                        id="imageTwo"
-                        type="file"
-                        ref="fileUploader2"
-                        style={{display:"none"}}
-                        onChange={e => this.props.store.userStore.handleSubmitImage(e, 2)}
-                      />
-                    </Image>
-                    <Image
-                      id="img3"
-                      bgImage = {this.props.store.userStore.photo_link_3}
-                      onClick={(e) =>{this.refs.fileUploader3.click();}}
-                    >
-                      <input
-                        id="imageThree"
-                        type="file"
-                        ref="fileUploader3"
-                        style={{display:"none"}}
-                        onChange={e => this.props.store.userStore.handleSubmitImage(e, 3)}
-                      />
-                    </Image>
-                    <Image
-                      id="img4"
-                      bgImage = {this.props.store.userStore.photo_link_4}
-                      onClick={(e) =>{this.refs.fileUploader4.click();}}
-                    >
-                      <input
-                        id="imageFour"
-                        type="file"
-                        ref="fileUploader4"
-                        style={{display:"none"}}
-                        onChange={e => this.props.store.userStore.handleSubmitImage(e, 4)}
-                      />
-                    </Image>
+                    <PhotosDivider>
+                      <Image
+                        id="img1"
+                        bgImage = {this.props.store.userStore.photo_link_1}
+                        onClick={(e) =>{this.refs.fileUploader1.click()}}
+                      >
+                        <UserPhoto shown={!this.props.store.userStore.photo_link_1} src={addPhoto} alt='Add Profile Pic' />
+                        <input
+                          id="imageOne"
+                          type="file"
+                          ref="fileUploader1"
+                          style={{display:"none"}}
+                          onChange={e => this.handleSubmitImage(e, 1)}
+                        />
+                      </Image>
+                      <Image
+                        id="img2"
+                        bgImage = {this.props.store.userStore.photo_link_2}
+                        onClick={(e) =>{this.refs.fileUploader2.click();}}
+                      >
+                        <UserPhoto shown={!this.props.store.userStore.photo_link_2} src={addPhoto} alt='Add Profile Pic' />
+                        <input
+                          id="imageTwo"
+                          type="file"
+                          ref="fileUploader2"
+                          style={{display:"none"}}
+                          onChange={e => this.handleSubmitImage(e, 2)}
+                        />
+                      </Image>
+                    </PhotosDivider>
+                    <PhotosDivider>
+                      <Image
+                        id="img3"
+                        bgImage = {this.props.store.userStore.photo_link_3}
+                        onClick={(e) =>{this.refs.fileUploader3.click();}}
+                        >
+                        <UserPhoto shown={!this.props.store.userStore.photo_link_3} src={addPhoto} alt='Add Profile Pic' />
+                        <input
+                          id="imageThree"
+                          type="file"
+                          ref="fileUploader3"
+                          style={{display:"none"}}
+                          onChange={e => this.handleSubmitImage(e, 3)}
+                          />
+                      </Image>
+                      <Image
+                        id="img4"
+                        bgImage = {this.props.store.userStore.photo_link_4}
+                        onClick={(e) =>{this.refs.fileUploader4.click();}}
+                        >
+                        <UserPhoto shown={!this.props.store.userStore.photo_link_4} src={addPhoto} alt='Add Profile Pic' />
+                        <input
+                          id="imageFour"
+                          type="file"
+                          ref="fileUploader4"
+                          style={{display:"none"}}
+                          onChange={e => this.handleSubmitImage(e, 4)}
+                          />
+                      </Image>
+                    </PhotosDivider>
                   </ImageContainer>
               </ProfileImage>
               <Tagline>Bio</Tagline>
@@ -107,15 +115,13 @@ class EditProfile extends Component {
               />
               <Tagline>Preference</Tagline>
               <PreferenceContainer>
-                <PreferenceButton 
-                    id="Opposite"
+                <PreferenceButton id="Opposite"
                     aria-label="Opposite"
                     value= "1"
                     onClick={this.handleOpposite}
                     active = {this.props.store.userStore.preference === 1}
-                >Straight</PreferenceButton>
-                <PreferenceButton 
-                    id="same"
+                  >Straight</PreferenceButton>
+                <PreferenceButton id="same"
                     aria-label="Same"
                     value= "1"
                     onClick={this.handleSame}
