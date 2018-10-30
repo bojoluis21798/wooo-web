@@ -40,15 +40,19 @@ export default class Matching extends Component{
 
         let urls = [
             this.props.store.userStore.currentProspect.profile_image,
-            process.env.REACT_APP_MEDIA_BASEURL + this.props.store.userStore.currentProspect.supporting_pic_1,
-            process.env.REACT_APP_MEDIA_BASEURL + this.props.store.userStore.currentProspect.supporting_pic_2,
-            process.env.REACT_APP_MEDIA_BASEURL + this.props.store.userStore.currentProspect.supporting_pic_3,
-            process.env.REACT_APP_MEDIA_BASEURL + this.props.store.userStore.currentProspect.supporting_pic_4
+            this.props.store.userStore.currentProspect.supporting_pic_1,
+            this.props.store.userStore.currentProspect.supporting_pic_2,
+            this.props.store.userStore.currentProspect.supporting_pic_3,
+            this.props.store.userStore.currentProspect.supporting_pic_4
         ]
 
-        for(let i = 0; i < 5; i++){
+        if(urls[0]){
+            photos.push(urls[0])
+        }
+
+        for(let i = 1; i < 5; i++){
             if(urls[i]){
-                photos.push(urls[i])
+                photos.push(process.env.REACT_APP_MEDIA_BASEURL + urls[i])
             }
         }
 
@@ -221,9 +225,9 @@ export default class Matching extends Component{
                             <TextContainer>
                                 <BioRow>
                                     <TextDiv level = "1">
-                                        { 
+                                        {
                                             this.props.store.userStore.currentProspect &&
-                                            this.props.store.userStore.currentProspect.user && 
+                                            this.props.store.userStore.currentProspect.user &&
                                             this.props.store.userStore.currentProspect.user.first_name?
                                             this.props.store.userStore.currentProspect.user.first_name
                                             :""
