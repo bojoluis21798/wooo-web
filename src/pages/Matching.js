@@ -239,12 +239,16 @@ export default class Matching extends Component{
                             <TextContainer>
                                 <BioRow>
                                     <TextDiv level = "1">
-                                        { this.props.store.userStore.currentProspect.user.first_name?
+                                        { 
+                                            this.props.store.userStore.currentProspect &&
+                                            this.props.store.userStore.currentProspect.user && 
+                                            this.props.store.userStore.currentProspect.user.first_name?
                                             this.props.store.userStore.currentProspect.user.first_name
                                             :""
                                         }
                                         ,
                                         {
+                                            this.props.store.userStore.currentProspect &&
                                             this.props.store.userStore.currentProspect.age?
                                             this.props.store.userStore.currentProspect.age:""
                                         }
@@ -252,7 +256,7 @@ export default class Matching extends Component{
                                     {/* <TextDiv level= "2">{this.state.people[0].location}</TextDiv> */}
                                 </BioRow>
                                 <BioRow>
-                                    <TextDiv level = "3">{this.props.store.userStore.currentProspect.bio?this.props.store.userStore.currentProspect.bio:""}</TextDiv>
+                                    <TextDiv level = "3">{this.props.store.userStore.currentProspect && this.props.store.userStore.currentProspect.bio?this.props.store.userStore.currentProspect.bio:""}</TextDiv>
                                 </BioRow>
                             </TextContainer>
                         </MainTextArea>

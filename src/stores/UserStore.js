@@ -186,14 +186,15 @@ class UserStore {
         return this.isMatched
     }
     @computed get currentProspect(){
-
-        if(this.prospects[0].age ==null){
-            this.prospects[0].age = "";
-        }
-        if(this.prospects[0].bio == null){
-            this.prospects[0].bio = "";
-        }
-        return this.prospects[0]
+        if(this.prospects && this.prospects.length) {
+            if(this.prospects[0].age ==null){
+                this.prospects[0].age = "";
+            }
+            if(this.prospects[0].bio == null){
+                this.prospects[0].bio = "";
+            }
+            return this.prospects[0]
+        } else return -1
     }
 
     @computed get noProspectsValue(){

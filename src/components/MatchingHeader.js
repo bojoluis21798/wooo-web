@@ -60,7 +60,4 @@ const TopButton = styled.button`
     padding: 0vh;
 `;
 
-const Icon = styled.img`
-    width:5vh;
-    height:5vh;
-`;
+const Icon = styled.img``

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import dislike from '../assets/images/dislike.png'
-import heart from '../assets/images/heart-outline.png'
+import dislike from '../assets/icons/dislike.svg'
+import heart from '../assets/icons/heart-control.svg'
 import styled from 'styled-components'
 
 export default class FooterArea extends Component {
@@ -23,12 +23,7 @@ export default class FooterArea extends Component {
 }
 
 const ButtonActions = styled.button`
-    border-radius: 100%
-    background-color: #212020
-    border: none
-    color: white
-    padding: 3vh
-    margin: 3.5vh
+    display: grid;
     text-decoration: none
     display: inline-block
     font-size: 16px
@@ -45,10 +40,13 @@ const ButtonArea = styled.div`
 `
 
 const Item = styled.div`
-    align-self: center
+    align-self: center;
+    grid-template-columns: 1fr 1fr 
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    grid-column-gap: 50px;
 `
 
 const Icon = styled.img`
-    width:4vh;
-    height:4vh;
 `;

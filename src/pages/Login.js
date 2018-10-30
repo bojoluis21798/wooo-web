@@ -56,15 +56,16 @@ export default class Login extends Component {
               callback={this.responseFacebook}
               redirectUri={`${process.env.REACT_APP_SITE}/login`}
               onClick={this.onLoginButtonClick}
-              isProcessing={this.prepareLoginButton}
-              render={renderProps => (
-                <LoginButton
-                  onClick={renderProps.onClick}
-                  isProcessing={renderProps.isProcessing}
-                >
-                  Login with Facebook
-                </LoginButton>
-              )}
+              cookie={true}
+              autoLoad={true}
+              readyLoginButton={this.readyLoginButton}
+              render={renderProps => {
+                  return renderProps.isSdkLoaded && !renderProps.isProcessing? (<LoginButton
+                  >
+                    Login with Facebook
+                  </LoginButton>): ''
+                }
+              }
             />
             <TermsNotice>
               <label className="form-check-label" htmlFor="defaultCheck1">

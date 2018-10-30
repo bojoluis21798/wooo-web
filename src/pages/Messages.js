@@ -61,7 +61,7 @@ export default class Messages extends Component {
           loading: false
         })
       }
-    });
+    }).catch(err => this.setState({ loading: false }));
   }
 
   render() {
@@ -126,13 +126,12 @@ const EmphasizedTextContent = styled.div`
 
 const LookForOneButton = styled.button`
   background-color: #F11A61;
-  padding: 16px 18px;
+  padding: 15px 25px;
   color: #fff;
   border: 0;
-  font-size: 17px;
+  font-size: 18px;
   border-radius: 5px;
   cursor: pointer;
-  width: 150px;
   transition: 500ms all;
 
   &:hover {
