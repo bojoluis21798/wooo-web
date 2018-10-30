@@ -57,15 +57,21 @@ class UserStore {
     @action
     async authenticateUser(authObj) {
         try {
-            this.getLocation()
-            let response = await axios.post(`${process.env.REACT_APP_API_BASEURL}/login/`, {
-                accessToken: authObj.accessToken,
-                lng:this.location.lng,
-                lat:this.location.lat
+            return this.getLocation(() => {
+                axios.post(`${process.env.REACT_APP_API_BASEURL}/login/`, {
+                    accessToken: authObj.accessToken,
+                    lng:this.location.lng,
+                    lat:this.location.lat
+                }).then(response=> {
+                    console.log(response.data)
+                    this.populateUser(response.data)
+                    this.insertToken(authObj)
+                    return true
+                }).catch(error => {
+                    console.log(error)
+                    return false
+                })
             })
-            this.populateUser(response.data)
-            this.insertToken(authObj)
-            return true
         } catch(err) {
             return false
         }
@@ -149,6 +155,71 @@ class UserStore {
         }
     }
 
+    @action
+    handleSubmit(){
+
+        const fd = new FormData()
+        const url = `${process.env.REACT_APP_API_BASEURL}/profiles/${this.profile_id}/`;
+        const config = {
+            headers: {
+                'Authorization': 'Token ' + this.token,
+            }
+        }
+        fd.append('bio',this.biography)
+        fd.append('sexual_preference',this.preference)
+        fd.append('gay',this.gay)
+        fd.append('search_radius',this.radius)
+
+        axios.put(url,fd,config)
+        .then(response => {
+
+        })
+        .catch(error => {
+            console.log(error)
+        })
+    }
+
+    @action
+    handleSubmitImage(e, num){
+        this.setPic(num,null)
+        const fd = new FormData()
+        const url = `${process.env.REACT_APP_API_BASEURL}/profiles/${this.profile_id}/`;
+        const config = {
+            headers: {
+                'Authorization': 'Token ' + this.token,
+                'content-type': 'multipart/form-data'
+            }
+        }
+        fd.append('supporting_pic_'+num+'',e.target.files[0])
+        fd.append('gay',this.gay)
+
+        axios.put(url,fd,config)
+        .then(response => {
+            let photo;
+
+            switch(num){
+                case 1:
+                    photo = response.data.supporting_pic_1
+                    break;
+                case 2:
+                    photo = response.data.supporting_pic_2
+                    break;
+                case 3:
+                    photo = response.data.supporting_pic_3
+                    break;
+                case 4:
+                    photo = response.data.supporting_pic_4
+                    break;
+                default:
+                    photo = null;
+            }
+            photo = photo.slice(photo.indexOf("/media"))
+            this.setPic(num, photo)
+        })
+        .catch(error => {
+            console.log(error)
+        })
+    }
 
     @action
     setMatches(matches){
@@ -156,23 +227,25 @@ class UserStore {
     }
 
     @action
-    async getLocation(){
-
+    async getLocation(callback){
         try{
-           await navigator.geolocation.getCurrentPosition((position) => {
+            navigator.geolocation.getCurrentPosition((position) => {
+              let coords = {
+                lat: parseFloat(position.coords.latitude),
+                lng: parseFloat(position.coords.longitude)
+            }
+              this.setLocation(coords);
 
-              this.setLocation( {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude
-                });
-
+              return callback()
             }, err => {
                 this.ipToLocation()
+                return callback()
               }
               , {enableHighAccuracy: false, timeout: 20000, maximumAge: 0})
 
         } catch (err){
             this.ipToLocation()
+            return callback()
         }
 
     }

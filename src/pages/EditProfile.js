@@ -4,7 +4,6 @@ import { inject, observer } from 'mobx-react'
 import { ToastContainer } from "react-toastify"
 import Slider from "rc-slider"
 import "rc-slider/assets/index.css"
-import axios from 'axios'
 import AuthorizedLayout from '../layouts/AuthorizedLayout'
 import addPhoto from '../assets/icons/addphoto.svg'
 
@@ -12,77 +11,19 @@ import addPhoto from '../assets/icons/addphoto.svg'
 @observer
 class EditProfile extends Component {
 
-  handleSubmit = (e = null) => {
-    const token = this.props.store.userStore.token;
-    const config = {
-        headers: {
-            'Authorization': 'Token ' + token,
-        }
-    }
-    axios.put(`${process.env.REACT_APP_API_BASEURL}/profiles/${this.props.store.userStore.profile_id}/`, {
-      bio:this.props.store.userStore.biography,
-      sexual_preference:this.props.store.userStore.preference,
-      gay:this.props.store.userStore.gay,
-      search_radius:this.props.store.userStore.radius,
-    },config)
-    .then(response => {})
-    .catch(error => {})
-  }
-
-
-  handleSubmitImage = (e, num) => {
-    this.props.store.userStore.setPic(num, null);
-    const token = this.props.store.userStore.token;
-    const config = {
-        headers: {
-            'Authorization': 'Token ' + token,
-            'content-type': 'multipart/form-data'
-
-        }
-    }
-    const fd = new FormData();
-    fd.append('supporting_pic_'+num+'',e.target.files[0])
-    fd.append('gay',this.props.store.userStore.gay)
-    const url = `${process.env.REACT_APP_API_BASEURL}/profiles/${this.props.store.userStore.profile_id}/`;
-    axios.put(url,fd,config)
-    .then(response => {
-      let photo;
-
-      switch(num){
-        case 1:
-          photo = response.data.supporting_pic_1
-          break;
-        case 2:
-          photo = response.data.supporting_pic_2
-          break;
-        case 3:
-          photo = response.data.supporting_pic_3
-          break;
-        case 4:
-          photo = response.data.supporting_pic_4
-          break;
-        default:
-          photo = null;
-      }
-      photo = photo.slice(photo.indexOf("/media"))
-      this.props.store.userStore.setPic(num, photo)
-    })
-    .catch(error => {})
-  }
-
   handleSame = (e) => {
-    this.props.store.userStore.setPreference(0)
-    this.handleSubmit(e)
+    this.props.store.userStore.setPreference(1)
+    this.props.store.userStore.handleSubmit()
   }
 
   handleOpposite = (e) => {
-    this.props.store.userStore.setPreference(1)
-    this.handleSubmit(e)
+    this.props.store.userStore.setPreference(0)
+    this.props.store.userStore.handleSubmit()
   }
 
   handleSlider = (radius) => {
     this.props.store.userStore.setRadius(radius);
-    this.handleSubmit(null)
+    this.props.store.userStore.handleSubmit(null)
   }
 
   handleChangeBio = (e) => {
@@ -170,7 +111,7 @@ class EditProfile extends Component {
                 value={this.props.store.userStore.biography}
                 placeholder="Tell us about yourself!"
                 onChange={this.handleChangeBio}
-                onBlur={this.handleSubmit}
+                onBlur={this.props.store.userStore.handleSubmit()}
               />
               <Tagline>Preference</Tagline>
               <PreferenceContainer>
@@ -182,7 +123,7 @@ class EditProfile extends Component {
                   >Straight</PreferenceButton>
                 <PreferenceButton id="same"
                     aria-label="Same"
-                    value= "0"
+                    value= "1"
                     onClick={this.handleSame}
                     active = {this.props.store.userStore.preference === 0}
                 >Gay</PreferenceButton>
@@ -376,6 +317,5 @@ const PreferenceButton = styled.button`
         `
   }
 `;
-
 
 export default EditProfile
