@@ -23,7 +23,7 @@ export default class NoMatches extends Component{
 const Container = styled.div`
     position: absolute; /* Sit on top of the page content */
     width: 100%; /* Full width (cover the whole page) */
-    height: 100%; /* Full height (cover the whole page) */
+    height: auto; /* Full height (cover the whole page) */
     top: 0;
     left: 0;
     right: 0;
