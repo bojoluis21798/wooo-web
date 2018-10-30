@@ -39,7 +39,7 @@ class UserStore {
         }
     }
 
-    @action 
+    @action
     populateUser(userAuth) {
         console.log(userAuth)
         this.token = userAuth.auth_token
@@ -93,15 +93,30 @@ class UserStore {
     }
 
     @action
-    setPic(pic){
-        this.photos[0] = pic;
+    setPic(num, pic){
+        switch(num){
+            case 1:
+                this.photo_link_1 = pic;
+                break;
+            case 2:
+                this.photo_link_2 = pic;
+                break;
+            case 3:
+                this.photo_link_3 = pic;
+                break;
+            case 4:
+                this.photo_link_4 = pic;
+                break;
+            default:
+                break;
+        }
     }
-    
+
 
     @action insertToken(authObj){
         this.accessToken = authObj.auth_token
     }
-    
+
     @action
     setProspects(prospects){
         this.prospects = prospects
