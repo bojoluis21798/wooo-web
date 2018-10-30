@@ -61,7 +61,7 @@ export default class Login extends Component {
               readyLoginButton={this.readyLoginButton}
               render={renderProps => {
                   return renderProps.isSdkLoaded && !renderProps.isProcessing? (<LoginButton
-                  >
+                  onClick={renderProps.onClick}>
                     Login with Facebook
                   </LoginButton>): ''
                 }
