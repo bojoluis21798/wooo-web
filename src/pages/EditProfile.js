@@ -8,11 +8,11 @@ import "rc-slider/assets/index.css"
 import axios from 'axios'
 import AuthorizedLayout from '../layouts/AuthorizedLayout'
 
-@inject('store') 
+@inject('store')
 @observer
 class EditProfile extends Component {
   // onFormSubmit = (e) =>{
-  //   e.preventDefault() 
+  //   e.preventDefault()
   //   this.fileUpload(this.state.file).then((response)=>{
   //   })
   // }
@@ -53,7 +53,7 @@ class EditProfile extends Component {
         headers: {
             'Authorization': 'Token ' + token,
             'content-type': 'multipart/form-data'
-            
+
         }
     }
     const fd = new FormData();
@@ -71,30 +71,22 @@ class EditProfile extends Component {
   }
 
   handleImageOne = (event) => {
-    const store = this.props.store.userStore;
-    
-    store.setPic(event.target.files[0])
+    this.props.store.userStore.setPic(event.target.files[0])
     this.handleSubmitImage(1)
   }
 
   handleImageTwo = (event) => {
-    const store = this.props.store.userStore;
-    
-    store.setPic(event.target.files[0])
+    this.props.store.userStore.setPic(event.target.files[0])
     this.handleSubmitImage(2)
   }
 
   handleImageThree = (event) => {
-    const store = this.props.store.userStore;
-    
-    store.setPic(event.target.files[0])
+    this.props.store.userStore.setPic(event.target.files[0])
     this.handleSubmitImage(3)
   }
 
   handleImageFour = (event) => {
-    const store = this.props.store.userStore;
-    
-    store.setPic(event.target.files[0])
+    this.props.store.userStore.setPic(event.target.files[0])
     this.handleSubmitImage(4)
   }
 
@@ -114,19 +106,16 @@ class EditProfile extends Component {
   }
 
   handleGay = (e) => {
-    const store = this.props.store.userStore;
-
-    if(store.gay === false) {
-      store.setGay(true)
+    if(this.props.store.userStore.gay === false) {
+      this.props.store.userStore.setGay(true)
     } else {
-      store.setGay(false)
+      this.props.store.userStore.setGay(false)
     }
     this.handleSubmit(e)
   }
 
   handleSlider = (radius) => {
-    const store = this.props.store.userStore;
-    store.setRadius(radius);
+    this.props.store.userStore.setRadius(radius);
     this.handleSubmit(null)
   }
 
@@ -153,75 +142,75 @@ class EditProfile extends Component {
               <ProfileImage>
                   <ProfileImageMain alt='Profile' src={this.props.store.userStore.profilePicture} />
                   <ImageContainer>
-                    <Image 
-                      id="img1" 
-                      style={{ 
+                    <Image
+                      id="img1"
+                      style={{
                         backgroundImage: 'url(https://wooo.philsony.com'+ this.props.store.userStore.photo_link_1 +')',
                         backgroundSize: "cover",
                         backgroundRepeat: "no-repeat",
                         backgroundPostion: "center"
-                      }} 
-                      onClick={(e) =>{this.refs.fileUploader1.click();}} 
+                      }}
+                      onClick={(e) =>{this.refs.fileUploader1.click();}}
                     >
-                      <input 
+                      <input
                         id="imageOne"
-                        type="file" 
-                        ref="fileUploader1" 
-                        style={{display:"none"}} 
+                        type="file"
+                        ref="fileUploader1"
+                        style={{display:"none"}}
                         onChange={this.handleImageOne}
                       />
                     </Image>
-                    <Image 
-                      id="img2" 
-                      style={{ 
+                    <Image
+                      id="img2"
+                      style={{
                         backgroundImage: 'url(https://wooo.philsony.com'+ this.props.store.userStore.photo_link_2 +')',
                         backgroundSize: "cover",
                         backgroundRepeat: "no-repeat",
                         backgroundPostion: "center"
-                      }} 
-                      onClick={(e) =>{this.refs.fileUploader2.click();}} 
+                      }}
+                      onClick={(e) =>{this.refs.fileUploader2.click();}}
                     >
-                      <input 
+                      <input
                         id="imageTwo"
-                        type="file" 
-                        ref="fileUploader2" 
-                        style={{display:"none"}} 
+                        type="file"
+                        ref="fileUploader2"
+                        style={{display:"none"}}
                         onChange={this.handleImageTwo}
                       />
                     </Image>
-                    <Image 
-                      id="img3" 
-                      style={{ 
+                    <Image
+                      id="img3"
+                      style={{
                         backgroundImage: 'url(https://wooo.philsony.com'+ this.props.store.userStore.photo_link_3 +')',
                         backgroundSize: "cover",
                         backgroundRepeat: "no-repeat",
-                        backgroundPostion: "center" 
-                    }} 
-                      onClick={(e) =>{this.refs.fileUploader3.click();}} 
+                        backgroundPostion: "center"
+                    }}
+                      onClick={(e) =>{this.refs.fileUploader3.click();}}
                     >
-                      <input 
+                      <input
                         id="imageThree"
-                        type="file" 
-                        ref="fileUploader3" 
-                        style={{display:"none"}} 
+                        type="file"
+                        ref="fileUploader3"
+                        style={{display:"none"}}
                         onChange={this.handleImageThree}
                       />
                     </Image>
-                    <Image 
-                      id="img4" 
-                      style={{ 
+                    <Image
+                      id="img4"
+                      style={{
                         backgroundImage: 'url(https://wooo.philsony.com'+ this.props.store.userStore.photo_link_4 +')',
                         backgroundSize: "cover",
                         backgroundRepeat: "no-repeat",
-                        backgroundPostion: "center" 
-                      }} 
-                      onClick={(e) =>{this.refs.fileUploader4.click();}} 
+                        backgroundPostion: "center"
+                      }}
+                      onClick={(e) =>{this.refs.fileUploader4.click();}}
                     >
-                      <input 
+                      <input
                         id="imageFour"
-                        type="file" 
-                        ref="fileUploader4"  
-                        style={{display:"none"}} 
+                        type="file"
+                        ref="fileUploader4"
+                        style={{display:"none"}}
                         onChange={this.handleImageFour}
                       />
                     </Image>
@@ -259,7 +248,7 @@ class EditProfile extends Component {
                 >Others</PrefButtonOthers>*/}
               </PreferenceContainer>
               <br /><br /> {/* THIS IS A TEMPORARY SOLUTION BECAUSE I CANT GET THE STYLING TO WORK - Kobe */}
-              
+
                 <label htmlFor="normal-switch">
                   <SgContainer>
                     <span style={{marginRight: "10px"}}>Same Gender</span>
@@ -276,7 +265,7 @@ class EditProfile extends Component {
                     />
                   </SgContainer>
                 </label>
-              
+
               <Tagline>Radius</Tagline>
               <RadiusNum>{this.props.store.userStore.radius} Km</RadiusNum>
               <br/>
@@ -359,7 +348,7 @@ const ProfileImageMain = styled.img`
 const ImageContainer = styled.div`
   display: grid;
   grid-template-columns: auto auto;
-  grid-column-gap: 2px; 
+  grid-column-gap: 2px;
   grid-row-gap: 2px;
 `;
 
