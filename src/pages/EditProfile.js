@@ -12,12 +12,12 @@ class EditProfile extends Component {
 
 
   handleSame = (e) => {
-    this.props.store.userStore.setPreference(0)
+    this.props.store.userStore.setPreference(1)
     this.props.store.userStore.handleSubmit()
   }
 
   handleOpposite = (e) => {
-    this.props.store.userStore.setPreference(1)
+    this.props.store.userStore.setPreference(0)
     this.props.store.userStore.handleSubmit()
   }
 
@@ -109,16 +109,16 @@ class EditProfile extends Component {
               <PreferenceContainer>
                 <PrefButtonSame id="same"
                     aria-label="Same"
-                    value= "0"
+                    value= "1"
                     onClick={this.handleSame}
-                    active = {this.props.store.userStore.preference === 0}
+                    active = {this.props.store.userStore.preference === 1}
                 >
                   Same</PrefButtonSame>
                 <PrefButtonOpposite id="Opposite"
                   aria-label="Opposite"
-                  value= "1"
+                  value= "0"
                   onClick={this.handleOpposite}
-                  active = {this.props.store.userStore.preference === 1}
+                  active = {this.props.store.userStore.preference === 0}
                 >
                   Opposite</PrefButtonOpposite>
               </PreferenceContainer>
