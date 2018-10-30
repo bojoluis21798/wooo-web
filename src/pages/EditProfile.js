@@ -11,18 +11,6 @@ import AuthorizedLayout from '../layouts/AuthorizedLayout'
 @inject('store')
 @observer
 class EditProfile extends Component {
-  // onFormSubmit = (e) =>{
-  //   e.preventDefault()
-  //   this.fileUpload(this.state.file).then((response)=>{
-  //   })
-  // }
-
-  // onChange = (e) => {
-  //   this.setState({file:e.target.files[0]})
-  // }
-  componentDidMount(){
-    console.log("This is Profile")
-  }
 
   handleSubmit = (e = null) => {
     const token = this.props.store.userStore.token;
@@ -90,18 +78,13 @@ class EditProfile extends Component {
 
   }
 
-  handleMale = (e) => {
+  handleSame = (e) => {
     this.props.store.userStore.setPreference(0)
     this.handleSubmit(e)
   }
 
-  handleFemale = (e) => {
+  handleOpposite = (e) => {
     this.props.store.userStore.setPreference(1)
-    this.handleSubmit(e)
-  }
-
-  handleOthers = (e) => {
-    this.props.store.userStore.setPreference(2)
     this.handleSubmit(e)
   }
 
@@ -206,26 +189,20 @@ class EditProfile extends Component {
               />
               <Tagline>Preference</Tagline>
               <PreferenceContainer>
-                <PrefButtonMale id="male"
-                    aria-label="Male"
+                <PrefButtonSame id="same"
+                    aria-label="Same"
                     value= "0"
-                    onClick={this.handleMale}
+                    onClick={this.handleSame}
                     active = {this.props.store.userStore.preference === 0}
                 >
-                  Male</PrefButtonMale>
-                <PrefButtonFemale id="female"
-                  aria-label="Female"
+                  Same</PrefButtonSame>
+                <PrefButtonOpposite id="Opposite"
+                  aria-label="Opposite"
                   value= "1"
-                  onClick={this.handleFemale}
+                  onClick={this.handleOpposite}
                   active = {this.props.store.userStore.preference === 1}
                 >
-                  Female</PrefButtonFemale>
-                {/*<PrefButtonOthers id="other"
-                    aria-label="Others"
-                    value="2"
-                    onClick={this.handleOthers}
-                    active = {this.props.store.userStore.preference === 2}
-                >Others</PrefButtonOthers>*/}
+                  Opposite</PrefButtonOpposite>
               </PreferenceContainer>
               <br /><br /> {/* THIS IS A TEMPORARY SOLUTION BECAUSE I CANT GET THE STYLING TO WORK - Kobe */}
 
@@ -396,7 +373,7 @@ const BioText = styled.textarea`
     outline: none !important;
   }
 `;
-const PrefButtonMale = styled.button`
+const PrefButtonSame = styled.button`
   font-weight: 100;
   font-size: 15px;
   color: #ffffff;
@@ -418,7 +395,7 @@ const PrefButtonMale = styled.button`
         `
   }
 `;
-const PrefButtonFemale = styled.button`
+const PrefButtonOpposite = styled.button`
   font-weight: 100;
   font-size: 15px;
   color: #ffffff;
@@ -441,28 +418,6 @@ const PrefButtonFemale = styled.button`
         `
   }
 `;
-// const PrefButtonOthers = styled.button`
-//   font-weight: 100;
-//   font-size: 15px;
-//   color: #ffffff;
-//   background-color: #191919;
-//   letter-spacing: 0.01px;
-//   text-align: center;
-//   border-radius: 5px;
-//   border: 0;
-//   padding: 12px;
-//   width: 90px;
-//   transition: 0.5s all ease;
-//   box-sizing: border-box;
-//   cursor: pointer;
 
-//   ${
-//     props => props.active &&
-//         css`
-//           background-position: 300px;
-//           background-color:  #f51a63;
-//         `
-//   }
-// `;
 
 export default EditProfile
