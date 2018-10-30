@@ -14,6 +14,7 @@ export default class Messages extends Component {
   state = {
     currentUser: this.props.store.userStore.profile_id,
     pairedUser: [],
+    loading: true
   };
 
   componentDidMount() {
@@ -47,6 +48,7 @@ export default class Messages extends Component {
             if(message.val() != null){
               var lastmessage = Object.values(message.val());
               pairedInfo.message = lastmessage[0].content;
+              this.setState({ pairedInfo })
             }else{
               pairedInfo.message = "";
             } 
@@ -55,10 +57,11 @@ export default class Messages extends Component {
           
         });
         this.setState({
-          pairedUser
+          pairedUser,
+          loading: false
         })
       }
-    });
+    }).catch(err => this.setState({ loading: false }));
   }
 
   render() {
@@ -77,7 +80,7 @@ export default class Messages extends Component {
               <MessageItems pairedUser={this.state.pairedUser} />
             </Fragment>
             : <EmphasizedTextContent>
-              <p>You haven't found a match yet, start looking:</p>
+              <p>You haven't found a match yet, start looking</p>
               <Link to='/matching'>
                 <LookForOneButton>Start Swiping</LookForOneButton>
               </Link>
@@ -90,9 +93,8 @@ export default class Messages extends Component {
 }
 
 const PageTitle = styled.div`
-  font-size: 28px;
+  font-size: 25px;
   color: #fff;
-  font-weight: bold;
   margin-bottom: 20px;
 `
 
@@ -124,18 +126,12 @@ const EmphasizedTextContent = styled.div`
 
 const LookForOneButton = styled.button`
   background-color: #F11A61;
-  padding: 16px 18px;
+  padding: 15px 25px;
   color: #fff;
   border: 0;
-  font-size: 17px;
+  font-size: 18px;
   border-radius: 5px;
   cursor: pointer;
-  width: 150px;
-  transition: 500ms all;
-
-  &:hover {
-    width: 170px;
-  }
 `
 
 const Input = styled.input`

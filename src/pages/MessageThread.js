@@ -4,6 +4,7 @@ import styled from "styled-components"
 import back from '../assets/icons/back.svg'
 import video from '../assets/icons/videocall.svg'
 import send from '../assets/icons/send.svg'
+import online from '../assets/icons/online.svg'
 import { inject, observer } from 'mobx-react'
 import firebase from 'firebase'
 import AuthorizedLayout from '../layouts/AuthorizedLayout'
@@ -31,6 +32,8 @@ export default class MessageThread extends Component {
     status: ""
   }
 
+  messageList = React.createRef()
+
   componentDidMount() {
     this.messageReff = firebase.database().ref().child('roomData/'+this.props.location.state.roomId);
     this.messageRef = base.syncState('roomData/'+this.props.location.state.roomId,{
@@ -38,13 +41,13 @@ export default class MessageThread extends Component {
       state:'messageDetail'
     });
     this.setState({userId: this.props.store.userStore.profile_id});
-    this.handleMessageListen();
+    this.subscribeToMessages();
     this.userStatus();
   }
 
   componentWillUnmount() {
     base.removeBinding(this.messageRef);
-    this.handleMessageListen = null;
+    this.subscribeToMessages = null;
     this.userStatus = null;
   }
 
@@ -56,7 +59,7 @@ export default class MessageThread extends Component {
     this.setState({message:event.target.value});
   }
 
-  handleSend = () => {
+  handleSend = (message) => {
     if (this.state.message) { 
       let messageDet = Object.assign({}, this.state.messageDetail);
       const id = Date.now() + "" + this.state.userId;
@@ -68,33 +71,47 @@ export default class MessageThread extends Component {
       this.setState({messageDetail:messageDet});
       this.setState({message:""})
     }
-    this.handleMessageListen();
+    this.subscribeToMessages();
   }
 
   handleKeyPress = event => {
     if (event.key === 'Enter') this.handleSend();
   }
-
-  handleMessageListen = () => {
-    var messg = null;
-    this.messageReff
-    .limitToLast(10)
-    .on('value', message => {
-        messg = message.val()
-    });
-    if(messg !== null){
-        this.listenMessages()
+  
+  handleVideo = () => {
+    var videoURL = this.props.location.state.pairedName + " is calling you! Click here " + window.location.origin + "/video/" + this.props.location.state.pairedSlug +" to answer.";
+    let messageDet = Object.assign({}, this.state.messageDetail);
+    const id = Date.now() + "" + this.state.userId;
+    messageDet[id] = {
+      content: videoURL,
+      messageType: "Link",
+      userId: this.state.userId
     }
+    this.setState({messageDetail:messageDet});
   }
-
-  listenMessages = () => {
+  subscribeToMessages = () => {
     this.messageReff
     .limitToLast(100)
     .on('value', message => {
         this.setState({
             list: Object.values(message.val()),
         });
+        this.messageListScrollToBottom()
     });
+  }
+
+  handleScrolling = el => {
+    this.messageList = el
+    this.messageListScrollToBottom()
+  }
+
+  componentDidUpdate() {
+    this.messageListScrollToBottom();
+  }
+  
+  messageListScrollToBottom = () => {
+    if(this.messageList && this.messageList.current)
+      this.messageList.current.scrollIntoView({ behavior: 'smooth' })
   }
 
   userStatus = () => {
@@ -126,19 +143,24 @@ export default class MessageThread extends Component {
                     {this.props.location && this.props.location.state && this.props.location.state.pairedName}
                 </Name>
                 <LastMessage>
-                    {this.state.status != "Active" && ("Offline")}
-                    {this.state.status == "Active" && ("Active Now")}
+                    {this.state.status !== "Active" && ("Offline")}
+                    {this.state.status === "Active" && (
+                      <OnlineIndicator>
+                        <img src={online} alt='Online Indicator'/>
+                        <span>Active Now</span>
+                      </OnlineIndicator>
+                    )}
                 </LastMessage>
                 </Ree>
                 <div>
-                  {this.state.status == "Active" && (
+                  {this.state.status === "Active" && (
                   <Link to={`/video/${this.props.location && this.props.location.state && this.props.location.state.pairedSlug}`}>
                       <img src={video} alt="Video Call"></img>
                   </Link>
                   )}
                 </div>
             </Content>
-            <MessageList>
+            <MessageList innerRef={this.messageList}>
               { this.state.list && this.state.list.map((message, index) => (
                   <Messages 
                   key={index}
@@ -174,6 +196,7 @@ const Content = styled.div`
   margin-bottom: 30px;
   padding-top: 10px;
   padding-bottom: 10px;
+  height: 50px;
 `;
 
 const Back = styled.div`
@@ -246,17 +269,23 @@ const MessageList = styled.div`
   overflow-y: scroll;
 
   &::-webkit-scrollbar-track  {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
     border-radius: 10px;
   }
 
   &::-webkit-scrollbar{
-    width: 12px;
+    width: 4px;
   }
 
   &::-webkit-scrollbar-thumb{
     border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,.3);
     background-color: #555;
   }
+`
+
+const OnlineIndicator = styled.div`
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  align-items: center;
 `

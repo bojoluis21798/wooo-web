@@ -1,20 +1,17 @@
 import React, { Component } from "react"
 import styled from "styled-components"
-import logo from "../assets/images/logo.svg"
-import couple from "../assets/images/couple.svg"
-import circlecenter from "../assets/images/circlecenterbg.svg"
+import logo from "../assets/icons/logo.svg"
+import couple from "../assets/icons/couple.svg"
+import circlecenter from "../assets/icons/circlecenterbg.svg"
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props"
 import { inject, observer } from "mobx-react"
 import { ToastContainer } from "react-toastify"
-import { Redirect, Link } from "react-router-dom"
+import { Redirect } from "react-router-dom"
 import LoaderWrapper from "../layouts/LoaderWrapper";
 
 @inject("store")
 @observer
 export default class Login extends Component {
-  state = {
-    checked: false,
-  }
   constructor(props) {
     super(props)
     this.props.store.appStore.startLoading()
@@ -25,7 +22,7 @@ export default class Login extends Component {
   }
 
   componentDidMount() {
-    this.props.store.appStore.doneLoading()
+    setTimeout(() => this.props.store.appStore.doneLoading(), 1500)
   }
 
   onLoginButtonClick = () => {
@@ -35,13 +32,6 @@ export default class Login extends Component {
   componentWillUnmount() {
     this.props.store.appStore.doneLoading()
   }
-
-  handleCheck = (e) => {
-    this.setState({
-        checked: e.target.checked,
-    })
-  }
-
 
   render() {
     return this.props.store.userStore.token ? (
@@ -66,27 +56,20 @@ export default class Login extends Component {
               callback={this.responseFacebook}
               redirectUri={`${process.env.REACT_APP_SITE}/login`}
               onClick={this.onLoginButtonClick}
-              isProcessing={this.prepareLoginButton}
-              render={renderProps => (
-                <LoginButton
-                  onClick={renderProps.onClick}
-                  isProcessing={renderProps.isProcessing}
-                >
-                  Login with Facebook
-                </LoginButton>
-              )}
+              cookie={true}
+              autoLoad={true}
+              readyLoginButton={this.readyLoginButton}
+              render={renderProps => {
+                  return renderProps.isSdkLoaded && !renderProps.isProcessing? (<LoginButton
+                  onClick={renderProps.onClick}>
+                    Login with Facebook
+                  </LoginButton>): ''
+                }
+              }
             />
             <TermsNotice>
-              <Link to="/policy-terms">See our privacy policy</Link>
-              <br/>
-              <input
-                className="form-check-input"
-                type="checkbox"
-                checked={this.state.checked}
-                onChange = {this.handleCheck}
-              />
               <label className="form-check-label" htmlFor="defaultCheck1">
-                I hereby agree to the privacy policy of the company.
+                I hereby agree to the <a href="/privacy-terms">privacy policy</a> of the company.
               </label>
             </TermsNotice>
           </LoginActionSection>
@@ -95,7 +78,6 @@ export default class Login extends Component {
     </LoaderWrapper>
   }
 }
-
 
 const LoginScreen = styled.div`
   position: relative;

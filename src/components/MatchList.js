@@ -11,23 +11,27 @@ export default class MatchList extends Component{
             return (
               <ContainerMain>
                 {
-                    this.props.store.userStore.matches.map(match=>(
+                    this.props.store.userStore.matches.map(match=>{
+                        let lower = Math.min(match.id, this.props.store.userStore.profile_id)
+                        let higher = Math.max(match.id, this.props.store.userStore.profile_id)
 
-                        <Person key={match.id}>
-                            <Link to={`/messages/${match.id}`}>
-                                <Image src={match.profile_image} />
-                            </Link>
-                            <Name>{match.user.first_name}</Name>
-                        </Person>
-                    ))
+                        return (
+                            <Person key={match.id}>
+                                <Link to={`/messages/${lower}R${higher}`}>
+                                    <Image src={match.profile_image} />
+                                </Link>
+                                <Name>{match.user.first_name}</Name>
+                            </Person>
+                        )
+                    })
                 }
               </ContainerMain>
             );
         }else{
             return (
                 <Container>
-                    <Text>You haven't found a match yet,would you like to find one?</Text>
-                    <Link to='/matching'><Button>Start Swiping ></Button></Link>
+                    <Text>You haven't found a match yet, would you like to find one?</Text>
+                    <Link to='/matching'><Button>Start Swiping</Button></Link>
                 </Container>
             );
         }
@@ -55,7 +59,7 @@ const Person = styled.div`
 
 const Name = styled.div `
     text-align:center;
-    font-size:2vh;
+    font-size: 18;
     font-color:white;
 `
 
@@ -63,7 +67,9 @@ const Text = styled.div `
     padding-top: 3vh;
     padding-bottom: 5vh;
     text-align:center;
-    font-size:3vh;
+    font-size: 20px;
+    line-height: 30px;
+    max-width: 300px;
     font-color:white;
     grid-column-start: 1
     grid-column-end: 2
@@ -72,19 +78,16 @@ const Text = styled.div `
 `
 
 const Button = styled.button`
-    background-color:#F11A61; /* Green */
+    background-color:#F11A61;
     border: none;
     color: white;
     text-align: center;
     text-decoration: none;
-    font-size: 2.5vh;
+    font-size: 18px;
     cursor: pointer;
-    border-radius:12px;
+    border-radius:5px;
     margin:auto;
-    padding-top:20px;
-    padding-bottom:20px;
-    padding-left:50px;
-    padding-right:50px;
+    padding: 15px 25px;
 `
 
 const Image = styled.img `

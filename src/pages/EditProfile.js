@@ -7,66 +7,93 @@ import "rc-slider/assets/index.css"
 import axios from 'axios'
 import AuthorizedLayout from '../layouts/AuthorizedLayout'
 
-@inject('store') 
+@inject('store')
 @observer
 class EditProfile extends Component {
-  onFormSubmit = (e) =>{
-    e.preventDefault() 
-    this.fileUpload(this.state.file).then((response)=>{
-    })
-  }
-
-  onChange = (e) => {
-    this.setState({file:e.target.files[0]})
-  }
 
   handleSubmit = (e = null) => {
-    if (e !== null){
-      e.preventDefault();
-    }
+    const token = this.props.store.userStore.token;
     const config = {
         headers: {
-            Authorization: 'Token ' + this.props.store.userStore.token
+            'Authorization': 'Token ' + token,
         }
     }
-
     axios.put(`${process.env.REACT_APP_API_BASEURL}/profiles/${this.props.store.userStore.profile_id}/`, {
       bio:this.props.store.userStore.biography,
       sexual_preference:this.props.store.userStore.preference,
-      search_radius:this.props.store.userStore.radius
-    }, config)
+      gay:this.props.store.userStore.gay,
+      search_radius:this.props.store.userStore.radius,
+    },config)
+    .then(response => {
+      console.log(response);
+
+    })
+    .catch(error => {
+      console.log(error);
+    })
   }
 
-  handleMale = (e) => {
+
+  handleSubmitImage = (e, num) => {
+    this.props.store.userStore.setPic(num, null);
+    const token = this.props.store.userStore.token;
+    const config = {
+        headers: {
+            'Authorization': 'Token ' + token,
+            'content-type': 'multipart/form-data'
+
+        }
+    }
+    const fd = new FormData();
+    fd.append('supporting_pic_'+num+'',e.target.files[0])
+    fd.append('gay',this.props.store.userStore.gay)
+    const url = `${process.env.REACT_APP_API_BASEURL}/profiles/${this.props.store.userStore.profile_id}/`;
+    axios.put(url,fd,config)
+    .then(response => {
+      let photo;
+
+      switch(num){
+        case 1:
+          photo = response.data.supporting_pic_1
+          break;
+        case 2:
+          photo = response.data.supporting_pic_2
+          break;
+        case 3:
+          photo = response.data.supporting_pic_3
+          break;
+        case 4:
+          photo = response.data.supporting_pic_4
+          break;
+        default:
+          photo = null;
+      }
+      photo = photo.slice(photo.indexOf("/media"))
+      this.props.store.userStore.setPic(num, photo)
+    })
+    .catch(error => {
+      console.log(error);
+    })
+
+  }
+
+  handleSame = (e) => {
     this.props.store.userStore.setPreference(0)
     this.handleSubmit(e)
   }
 
-  handleFemale = (e) => {
+  handleOpposite = (e) => {
     this.props.store.userStore.setPreference(1)
     this.handleSubmit(e)
   }
 
-  handleOthers = (e) => {
-    this.props.store.userStore.setPreference(2)
-    this.handleSubmit(e)
-  }
-
   handleSlider = (radius) => {
-    const store = this.props.store.userStore;
-    store.setRadius(radius);
+    this.props.store.userStore.setRadius(radius);
     this.handleSubmit(null)
   }
 
-
   handleChangeBio = (e) => {
     this.props.store.userStore.setBio(e.target.value);
-  }
-
-  onDrop = (photo) => {
-    this.setState({
-      photos: this.state.photos.concat(photo)
-    })
   }
 
   myfunction = ()=>{
@@ -80,48 +107,94 @@ class EditProfile extends Component {
               <Tagline>Photos</Tagline>
               <ProfileImage>
                   <ProfileImageMain alt='Profile' src={this.props.store.userStore.profilePicture} />
+                  <ImageContainer>
+                    <Image
+                      id="img1"
+                      bgImage = {this.props.store.userStore.photo_link_1}
+                      onClick={(e) =>{this.refs.fileUploader1.click()}}
+                    >
+                      <input
+                        id="imageOne"
+                        type="file"
+                        ref="fileUploader1"
+                        style={{display:"none"}}
+                        onChange={e => this.handleSubmitImage(e, 1)}
+                      />
+                    </Image>
+                    <Image
+                      id="img2"
+                      bgImage = {this.props.store.userStore.photo_link_2}
+                      onClick={(e) =>{this.refs.fileUploader2.click();}}
+                    >
+                      <input
+                        id="imageTwo"
+                        type="file"
+                        ref="fileUploader2"
+                        style={{display:"none"}}
+                        onChange={e => this.handleSubmitImage(e, 2)}
+                      />
+                    </Image>
+                    <Image
+                      id="img3"
+                      bgImage = {this.props.store.userStore.photo_link_3}
+                      onClick={(e) =>{this.refs.fileUploader3.click();}}
+                    >
+                      <input
+                        id="imageThree"
+                        type="file"
+                        ref="fileUploader3"
+                        style={{display:"none"}}
+                        onChange={e => this.handleSubmitImage(e, 3)}
+                      />
+                    </Image>
+                    <Image
+                      id="img4"
+                      bgImage = {this.props.store.userStore.photo_link_4}
+                      onClick={(e) =>{this.refs.fileUploader4.click();}}
+                    >
+                      <input
+                        id="imageFour"
+                        type="file"
+                        ref="fileUploader4"
+                        style={{display:"none"}}
+                        onChange={e => this.handleSubmitImage(e, 4)}
+                      />
+                    </Image>
+                  </ImageContainer>
               </ProfileImage>
               <Tagline>Bio</Tagline>
               <BioText
                 id="bio"
                 name="bio"
                 value={this.props.store.userStore.biography}
+                placeholder="Tell us about yourself!"
                 onChange={this.handleChangeBio}
                 onBlur={this.handleSubmit}
               />
               <Tagline>Preference</Tagline>
-              <PreferencesPanel>
-                <PrefButtonMale id="male"
-                    aria-label="Male"
+              <PreferenceContainer>
+                <PrefButtonSame id="same"
+                    aria-label="Same"
                     value= "0"
-                    onClick={this.handleMale}
+                    onClick={this.handleSame}
                     active = {this.props.store.userStore.preference === 0}
-                    >
-                  Male
-                </PrefButtonMale>
-                <PrefButtonFemale id="female"
-                  aria-label="Female"
+                >
+                  Same</PrefButtonSame>
+                <PrefButtonOpposite id="Opposite"
+                  aria-label="Opposite"
                   value= "1"
-                  onClick={this.handleFemale}
+                  onClick={this.handleOpposite}
                   active = {this.props.store.userStore.preference === 1}
-                  >
-                  Female
-                </PrefButtonFemale>
-                <PrefButtonOthers id="other"
-                    aria-label="Others"
-                    value="2"
-                    onClick={this.handleOthers}
-                    active = {this.props.store.userStore.preference === 2}
-                    >Others
-                </PrefButtonOthers>
-              </PreferencesPanel>
+                >
+                  Opposite</PrefButtonOpposite>
+              </PreferenceContainer>
               <Tagline>Radius</Tagline>
               <RadiusNum>{this.props.store.userStore.radius} Km</RadiusNum>
               <br/>
               <Slider
                 id="radius"
                 min={1}
-                max={10}
+                max={100}
                 trackStyle={{
                   height: 2,
                   borderRadius: 6,
@@ -171,11 +244,15 @@ const Tagline = styled.div`
   width: 100%;
   font-weight: 500;
   color: #f3f3f3;
-  font-size: 18px;
+  font-size: 19px;
   max-width: 250px;
   display: block;
   margin-bottom: 20px;
-  margin-top: 20px;
+  margin-top: 30px;
+
+  &:first-child {
+    margin-top: 0px;
+  }
 `;
 const RadiusNum = styled.div`
   color: #f3f3f3;
@@ -187,19 +264,57 @@ const ProfileImage = styled.div`
   display: flex;
 `;
 const ProfileImageMain = styled.img`
-  height: 100%;
-  max-height: 200px;
-  width: 100%;
-  max-width: 200px;
-  border-radius: 15px;
+  max-height: 165px;
+  max-width: 165px;
+  border-radius: 2px;
   border: none;
-  margin: auto;
+  border-left: 5px;
 `;
 
-const PreferencesPanel = styled.div`
+const ImageContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-`
+  grid-template-columns: auto auto;
+  grid-column-gap: 2px;
+  grid-row-gap: 2px;
+  margin:auto
+`;
+
+const PreferenceContainer = styled.div`
+  display: inline-grid;
+  grid-template-columns: auto auto;
+  grid-column-gap: 5px;
+  grid-row-gap: 20px;
+`;
+
+const Image = styled.div`
+  width: 80px;
+  height: 80px;
+  background-color: #191919
+  border-color: #191919
+  border-radius: 2px;
+  border: none;
+  margin-left: 2.7%;
+  float: right;
+
+  &:hover {
+    cursor: pointer;
+  }
+  &:focus {
+    outline: none !important;
+  }
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  ${
+    props => {
+      if(props.bgImage) {
+        return css`
+          background-image: url('https://wooo.philsony.com${props.bgImage}');
+        `
+      }
+    }
+  }
+`;
 
 const BioText = styled.textarea`
   height: 90px;
@@ -215,13 +330,13 @@ const BioText = styled.textarea`
   border: none;
   justify-items: center;
   overflow: hidden;
-  resize: hidden;
+  resize: none;
 
   &:focus {
     outline: none !important;
   }
 `;
-const PrefButtonMale = styled.button`
+const PrefButtonSame = styled.button`
   font-weight: 100;
   font-size: 15px;
   color: #ffffff;
@@ -232,9 +347,6 @@ const PrefButtonMale = styled.button`
   border: 0;
   padding: 12px;
   width: 90px;
-  margin: auto;
-  margin-bottom: 5px;
-  margin-right: 15px;
   transition: 0.5s all ease;
   cursor: pointer;
 
@@ -242,11 +354,10 @@ const PrefButtonMale = styled.button`
     props => props.active &&
         css`
           background-color:  #f51a63;
-          border: 1px solid #f51a63;
         `
   }
 `;
-const PrefButtonFemale = styled.button`
+const PrefButtonOpposite = styled.button`
   font-weight: 100;
   font-size: 15px;
   color: #ffffff;
@@ -257,9 +368,6 @@ const PrefButtonFemale = styled.button`
   border: 0;
   padding: 12px;
   width: 90px;
-  margin: auto;
-  margin-bottom: 5px;
-  margin-right: 15px;
   transition: 0.5s all ease;
   box-sizing: border-box;
   cursor: pointer;
@@ -268,35 +376,9 @@ const PrefButtonFemale = styled.button`
     props => props.active &&
         css`
           background-color:  #f51a63;
-          border: 1px solid #f51a63;
         `
   }
 `;
-const PrefButtonOthers = styled.button`
-  font-weight: 100;
-  font-size: 15px;
-  color: #ffffff;
-  background-color: #191919;
-  letter-spacing: 0.01px;
-  text-align: center;
-  border-radius: 5px;
-  border: 0;
-  padding: 12px;
-  width: 90px;
-  margin: auto;
-  margin-bottom: 5px;
-  margin-right: 15px;
-  transition: 0.5s all ease;
-  box-sizing: border-box;
-  cursor: pointer;
 
-  ${
-    props => props.active &&
-        css`
-          background-color:  #f51a63;
-          border: 1px solid #f51a63;
-        `
-  }
-`;
 
 export default EditProfile

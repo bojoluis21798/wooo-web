@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
 
 import styled, { css } from 'styled-components'
-import left from '../assets/images/left.png'
-import right from '../assets/images/right.png'
+import left from '../assets/icons/left.svg'
+import right from '../assets/icons/right.svg'
 import Loading from './Loading'
 import axios from 'axios'
 import AuthorizedLayout from '../layouts/AuthorizedLayout'
@@ -38,13 +38,11 @@ export default class Matching extends Component{
              }
          }).then(
              res=>{
-                 console.log(res);
                  if(res.data.length === 0){
                     this.props.store.userStore.setNoProspects(true);
                     this.setState({hasPayload:true})//used to take away the loading screen
 
                  }else{
-                    console.log(res.data)
                     this.props.store.userStore.setProspects(res.data)
                     this.repopulatePhotos()
                     this.setState({hasPayload:true})
@@ -70,6 +68,10 @@ export default class Matching extends Component{
             if(urls[i]){
                 photos.push(urls[i])
             }
+        }
+
+        if(photos.length === 0) {
+            photos.push(dog)
         }
 
         this.setState({
@@ -198,6 +200,7 @@ export default class Matching extends Component{
             <AuthorizedLayout
                 noheaders={true}
                 noPad={true}
+                black={true}
             >
                 <Container>
 
@@ -205,11 +208,9 @@ export default class Matching extends Component{
                         eventHandle = {this.handleCloseProfile}
                         type = {this.state.viewProfile ? "exit" : "back"}
                     />
-
-                        <NoMatches noProspects={this.props.store.userStore.noProspectsValue}>
-
-                        </NoMatches>
-
+                        { this.props.store.userStore.noProspectsValue &&
+                            <NoMatches/>
+                        }
                         <MatchSwipe
                             show={this.props.store.userStore.isMatchedValue}
                             id={this.props.store.userStore.currentProspect.id}
@@ -226,7 +227,7 @@ export default class Matching extends Component{
                                 />
                             }
                             <PicArea>
-                                <ImageStyle src={this.state.photos[0]?this.state.photos[this.state.imgIdx]:this.state.people[0].img[this.state.imgIdx]} />
+                                <ImageStyle src={this.state.photos[this.state.imgIdx]} />
                             </PicArea>
                             {this.state.viewProfile &&
                                 <Arrow
@@ -239,20 +240,24 @@ export default class Matching extends Component{
                             <TextContainer>
                                 <BioRow>
                                     <TextDiv level = "1">
-                                        { this.props.store.userStore.currentProspect.user.first_name?
+                                        { 
+                                            this.props.store.userStore.currentProspect &&
+                                            this.props.store.userStore.currentProspect.user && 
+                                            this.props.store.userStore.currentProspect.user.first_name?
                                             this.props.store.userStore.currentProspect.user.first_name
-                                            :this.state.people[0].name
+                                            :""
                                         }
                                         ,
                                         {
-                                            this.props.store.userStore.currentProspect.age === " "?
-                                            this.state.people[0].age:this.props.store.userStore.currentProspect.age
+                                            this.props.store.userStore.currentProspect &&
+                                            this.props.store.userStore.currentProspect.age?
+                                            this.props.store.userStore.currentProspect.age:""
                                         }
                                     </TextDiv>
                                     {/* <TextDiv level= "2">{this.state.people[0].location}</TextDiv> */}
                                 </BioRow>
                                 <BioRow>
-                                    <TextDiv level = "3">{this.props.store.userStore.currentProspect.bio === " "?this.state.people[0].bio:this.props.store.userStore.currentProspect.bio}</TextDiv>
+                                    <TextDiv level = "3">{this.props.store.userStore.currentProspect && this.props.store.userStore.currentProspect.bio?this.props.store.userStore.currentProspect.bio:""}</TextDiv>
                                 </BioRow>
                             </TextContainer>
                         </MainTextArea>
@@ -270,18 +275,6 @@ export default class Matching extends Component{
         )
     }
 }
-
-const customStyles = {
-    content : {
-      top                   : '50%',
-      left                  : '50%',
-      right                 : 'auto',
-      bottom                : 'auto',
-      marginRight           : '-50%',
-      transform             : 'translate(-50%, -50%)',
-      backgroundColor       :'transparent'
-    }
-  };
 
 const Container = styled.div`
     display: flex
@@ -307,6 +300,7 @@ const PicArea = styled.div`
     flex-direction: row
     align-items: center
     justify-content: center
+    margin-bottom: 12px
 `
 
 const ImageStyle = styled.img`
@@ -349,10 +343,9 @@ const TextDiv = styled.div`
                     return(
                         css`
                             font-size:3.5vh
-                            font-weight: 500
+                            font-weight: 300
                         `
                     )
-                    break;
                 case "2":
                     return(
                         css`
@@ -360,7 +353,6 @@ const TextDiv = styled.div`
                             font-weight: 300
                         `
                     )
-                    break;
                 case "3":
                     return(
                         css`
@@ -368,7 +360,6 @@ const TextDiv = styled.div`
                             font-weight: 300
                         `
                     )
-                    break;
                 default:
                     return(
                         css`
@@ -376,7 +367,6 @@ const TextDiv = styled.div`
                             font-weight: 300
                         `
                     )
-                    break;
             }
         }
     }
@@ -397,14 +387,15 @@ const Arrow = styled.button`
                 left: right
     }) no-repeat scroll 0 0 transparent
     background-size: contain
-    width: 6vh
-    height: 6vh
-    color: #000000
-    border-width: 0px
-`
+    height: 6vh;
+    width: 100%;
+    color: #000000;
+    border-width: 0px;
 
-const NoMatch = styled.p`
-    font-size: 9vh
-    font-family: Apercu
-    font-weight: 700
+    &:first-child {
+        margin-right: 25px;
+    }
+    &:nth-child(3) {
+        margin-left: 25px;
+    }
 `
