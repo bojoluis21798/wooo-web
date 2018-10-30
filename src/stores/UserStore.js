@@ -7,7 +7,7 @@ import dog3 from '../assets/images/dog3.jpg';
 class UserStore {
     @observable username = null
     @observable name = null
-    @observable biography = null
+    @observable biography = ''
     @observable gay = null
     @observable preference = null
     @observable radius = null
@@ -18,6 +18,10 @@ class UserStore {
     @observable state = null
     @observable profilePicture = null
     @observable photos = []
+    @observable photo_link_1 = null
+    @observable photo_link_2 = null
+    @observable photo_link_3 = null
+    @observable photo_link_4 = null
     @observable token = null
     @observable accessToken = null
     @observable profile_id = null
@@ -75,10 +79,16 @@ class UserStore {
 
     @action
     populateUser(userAuth) {
+        console.log(userAuth)
         this.token = userAuth.auth_token
         this.name = userAuth.user_profile.user.full_name
+        this.email = true
         this.profilePicture = userAuth.user_profile.profile_image
-        this.biography = userAuth.user_profile.biography
+        this.photo_link_1 = userAuth.user_profile.supporting_pic_1
+        this.photo_link_2 = userAuth.user_profile.supporting_pic_2
+        this.photo_link_3 = userAuth.user_profile.supporting_pic_3
+        this.photo_link_4 = userAuth.user_profile.supporting_pic_4
+        this.biography = userAuth.user_profile.bio
         this.radius = userAuth.user_profile.search_radius
         this.preference = userAuth.user_profile.sexual_preference
         this.profile_id = userAuth.user_profile.id
@@ -126,8 +136,89 @@ class UserStore {
     }
 
     @action
-    setPicOne(p1){
-        this.photos[0] = p1;
+    setPic(num, pic){
+        switch(num){
+            case 1:
+                this.photo_link_1 = pic;
+                break;
+            case 2:
+                this.photo_link_2 = pic;
+                break;
+            case 3:
+                this.photo_link_3 = pic;
+                break;
+            case 4:
+                this.photo_link_4 = pic;
+                break;
+            default:
+                break;
+        }
+    }
+
+    @action
+    handleSubmit(){
+
+        const fd = new FormData()
+        const url = `${process.env.REACT_APP_API_BASEURL}/profiles/${this.profile_id}/`;
+        const config = {
+            headers: {
+                'Authorization': 'Token ' + this.token,
+            }
+        }
+        fd.append('bio',this.biography)
+        fd.append('sexual_preference',this.preference)
+        fd.append('gay',this.gay)
+        fd.append('search_radius',this.radius)
+
+        axios.put(url,fd,config)
+        .then(response => {
+            
+        })
+        .catch(error => {
+            console.log(error)
+        })
+    }
+
+    @action
+    handleSubmitImage(e, num){
+        this.setPic(num,null)
+        const fd = new FormData()
+        const url = `${process.env.REACT_APP_API_BASEURL}/profiles/${this.profile_id}/`;
+        const config = {
+            headers: {
+                'Authorization': 'Token ' + this.token,
+                'content-type': 'multipart/form-data'
+            }
+        }
+        fd.append('supporting_pic_'+num+'',e.target.files[0])
+        fd.append('gay',this.gay)
+
+        axios.put(url,fd,config)
+        .then(response => {
+            let photo;
+
+            switch(num){
+                case 1:
+                    photo = response.data.supporting_pic_1
+                    break;
+                case 2:
+                    photo = response.data.supporting_pic_2
+                    break;
+                case 3:
+                    photo = response.data.supporting_pic_3
+                    break;
+                case 4:
+                    photo = response.data.supporting_pic_4
+                    break;
+                default:
+                    photo = null;
+            }
+            photo = photo.slice(photo.indexOf("/media"))
+            this.setPic(num, photo)
+        })
+        .catch(error => {
+            console.log(error)
+        })   
     }
 
     @action
@@ -194,14 +285,15 @@ class UserStore {
         return this.isMatched
     }
     @computed get currentProspect(){
-
-        if(this.prospects[0].age ==null){
-            this.prospects[0].age = "";
-        }
-        if(this.prospects[0].bio == null){
-            this.prospects[0].bio = "";
-        }
-        return this.prospects[0]
+        if(this.prospects && this.prospects.length) {
+            if(this.prospects[0].age ==null){
+                this.prospects[0].age = "";
+            }
+            if(this.prospects[0].bio == null){
+                this.prospects[0].bio = "";
+            }
+            return this.prospects[0]
+        } else return -1
     }
 
     @computed get noProspectsValue(){

@@ -29,7 +29,7 @@ export default class MatchList extends Component{
             return (
                 <Container>
                     <Text>You haven't found a match yet, would you like to find one?</Text>
-                    <Link to='/matching'><Button>Start Swiping ></Button></Link>
+                    <Link to='/matching'><Button>Start Swiping</Button></Link>
                 </Container>
             );
         }
@@ -81,7 +81,7 @@ const Button = styled.button`
     color: white;
     text-align: center;
     text-decoration: none;
-    font-size: 20px;
+    font-size: 18px;
     cursor: pointer;
     border-radius:5px;
     margin:auto;

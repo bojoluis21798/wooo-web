@@ -40,10 +40,10 @@ export default class Matching extends Component{
 
         let urls = [
             this.props.store.userStore.currentProspect.profile_image,
-            this.props.store.userStore.currentProspect.supporting_pic_1,
-            this.props.store.userStore.currentProspect.supporting_pic_2,
-            this.props.store.userStore.currentProspect.supporting_pic_3,
-            this.props.store.userStore.currentProspect.supporting_pic_4
+            process.env.REACT_APP_MEDIA_BASEURL + this.props.store.userStore.currentProspect.supporting_pic_1,
+            process.env.REACT_APP_MEDIA_BASEURL + this.props.store.userStore.currentProspect.supporting_pic_2,
+            process.env.REACT_APP_MEDIA_BASEURL + this.props.store.userStore.currentProspect.supporting_pic_3,
+            process.env.REACT_APP_MEDIA_BASEURL + this.props.store.userStore.currentProspect.supporting_pic_4
         ]
 
         for(let i = 0; i < 5; i++){
@@ -98,7 +98,7 @@ export default class Matching extends Component{
                 status: 1
         }, config).then(res=>{
             if(res.data.match_exists){
-                this.props.store.userStore.getLocation();
+
                 this.props.store.userStore.setIsMatched(true);
                 this.setState({show:this.props.store.userStore.isMatched});
             }else{
@@ -181,6 +181,7 @@ export default class Matching extends Component{
             <AuthorizedLayout
                 noheaders={true}
                 noPad={true}
+                black={true}
             >
                 <Container>
 
@@ -220,12 +221,16 @@ export default class Matching extends Component{
                             <TextContainer>
                                 <BioRow>
                                     <TextDiv level = "1">
-                                        { this.props.store.userStore.currentProspect.user.first_name?
+                                        { 
+                                            this.props.store.userStore.currentProspect &&
+                                            this.props.store.userStore.currentProspect.user && 
+                                            this.props.store.userStore.currentProspect.user.first_name?
                                             this.props.store.userStore.currentProspect.user.first_name
                                             :""
                                         }
                                         ,
                                         {
+                                            this.props.store.userStore.currentProspect &&
                                             this.props.store.userStore.currentProspect.age?
                                             this.props.store.userStore.currentProspect.age:""
                                         }
@@ -233,7 +238,7 @@ export default class Matching extends Component{
                                     {/* <TextDiv level= "2">{this.state.people[0].location}</TextDiv> */}
                                 </BioRow>
                                 <BioRow>
-                                    <TextDiv level = "3">{this.props.store.userStore.currentProspect.bio?this.props.store.userStore.currentProspect.bio:""}</TextDiv>
+                                    <TextDiv level = "3">{this.props.store.userStore.currentProspect && this.props.store.userStore.currentProspect.bio?this.props.store.userStore.currentProspect.bio:""}</TextDiv>
                                 </BioRow>
                             </TextContainer>
                         </MainTextArea>
@@ -276,6 +281,7 @@ const PicArea = styled.div`
     flex-direction: row
     align-items: center
     justify-content: center
+    margin-bottom: 12px
 `
 
 const ImageStyle = styled.img`
@@ -318,7 +324,7 @@ const TextDiv = styled.div`
                     return(
                         css`
                             font-size:3.5vh
-                            font-weight: 500
+                            font-weight: 300
                         `
                     )
                 case "2":
@@ -362,8 +368,15 @@ const Arrow = styled.button`
                 left: right
     }) no-repeat scroll 0 0 transparent
     background-size: contain
-    width: 6vh
-    height: 6vh
-    color: #000000
-    border-width: 0px
+    height: 6vh;
+    width: 100%;
+    color: #000000;
+    border-width: 0px;
+
+    &:first-child {
+        margin-right: 25px;
+    }
+    &:nth-child(3) {
+        margin-left: 25px;
+    }
 `

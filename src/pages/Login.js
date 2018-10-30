@@ -1,8 +1,8 @@
 import React, { Component } from "react"
 import styled from "styled-components"
-import logo from "../assets/images/logo.svg"
-import couple from "../assets/images/couple.svg"
-import circlecenter from "../assets/images/circlecenterbg.svg"
+import logo from "../assets/icons/logo.svg"
+import couple from "../assets/icons/couple.svg"
+import circlecenter from "../assets/icons/circlecenterbg.svg"
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props"
 import { inject, observer } from "mobx-react"
 import { ToastContainer } from "react-toastify"
@@ -52,19 +52,20 @@ export default class Login extends Component {
             <FacebookLogin
               appId={process.env.REACT_APP_FB_APPID}
               fields="name,email,picture"
-              scope="public_profile,email"
+              scope="public_profile,email,user_gender"
               callback={this.responseFacebook}
               redirectUri={`${process.env.REACT_APP_SITE}/login`}
               onClick={this.onLoginButtonClick}
-              isProcessing={this.prepareLoginButton}
-              render={renderProps => (
-                <LoginButton
-                  onClick={renderProps.onClick}
-                  isProcessing={renderProps.isProcessing}
-                >
-                  Login with Facebook
-                </LoginButton>
-              )}
+              cookie={true}
+              autoLoad={true}
+              readyLoginButton={this.readyLoginButton}
+              render={renderProps => {
+                  return renderProps.isSdkLoaded && !renderProps.isProcessing? (<LoginButton
+                  onClick={renderProps.onClick}>
+                    Login with Facebook
+                  </LoginButton>): ''
+                }
+              }
             />
             <TermsNotice>
               <label className="form-check-label" htmlFor="defaultCheck1">
