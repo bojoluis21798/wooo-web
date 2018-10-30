@@ -12,12 +12,12 @@ import addPhoto from '../assets/icons/addphoto.svg'
 class EditProfile extends Component {
 
   handleSame = (e) => {
-    this.props.store.userStore.setPreference(1)
+    this.props.store.userStore.setPreference(0)
     this.props.store.userStore.handleSubmit()
   }
 
   handleOpposite = (e) => {
-    this.props.store.userStore.setPreference(0)
+    this.props.store.userStore.setPreference(1)
     this.props.store.userStore.handleSubmit()
   }
 
