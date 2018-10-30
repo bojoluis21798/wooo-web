@@ -392,9 +392,9 @@ const Arrow = styled.button`
     border-width: 0px;
 
     &:first-child {
-        margin-right: 12px;
+        margin-right: 25px;
     }
     &:nth-child(3) {
-        margin-left: 12px;
+        margin-left: 25px;
     }
 `

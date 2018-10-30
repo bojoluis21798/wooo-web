@@ -4,7 +4,7 @@
         <g id="Match-Making" transform="translate(-89.000000, -682.000000)">
             <g id="Controls" transform="translate(89.000000, 681.000000)">
                 <g id="cross-symbol" transform="translate(0.000000, 1.000000)">
-                    <circle id="Oval-3" fill="#222222" fill-rule="nonzero" cx="34.5" cy="34.5" r="34.5"></circle>
+                    <circle id="Oval-3" fill="#212121" fill-rule="nonzero" cx="34.5" cy="34.5" r="34.5"></circle>
                     <polygon id="X" fill="#FFFFFF" points="24.902832 47.4138186 33.2144606 33.335664 26.469049 21.8916016 28.9785557 21.8916016 34.460315 31.1999136 39.9242764 21.8916016 42.4337831 21.8916016 35.6883714 33.335664 44 47.4138186 41.4904933 47.4138186 34.460315 35.4536165 27.4123387 47.4138186"></polygon>
                 </g>
             </g>
