@@ -116,7 +116,7 @@ export default class Matching extends Component{
                 status: 1
         }, config).then(res=>{
             if(res.data.match_exists){
-                this.props.store.userStore.getLocation();
+
                 this.props.store.userStore.setIsMatched(true);
                 this.setState({show:this.props.store.userStore.isMatched});
             }else{
@@ -200,6 +200,7 @@ export default class Matching extends Component{
             <AuthorizedLayout
                 noheaders={true}
                 noPad={true}
+                black={true}
             >
                 <Container>
 
@@ -299,6 +300,7 @@ const PicArea = styled.div`
     flex-direction: row
     align-items: center
     justify-content: center
+    margin-bottom: 12px
 `
 
 const ImageStyle = styled.img`
@@ -341,7 +343,7 @@ const TextDiv = styled.div`
                     return(
                         css`
                             font-size:3.5vh
-                            font-weight: 500
+                            font-weight: 300
                         `
                     )
                 case "2":
@@ -385,8 +387,15 @@ const Arrow = styled.button`
                 left: right
     }) no-repeat scroll 0 0 transparent
     background-size: contain
-    width: 6vh
-    height: 6vh
-    color: #000000
-    border-width: 0px
+    height: 6vh;
+    width: 100%;
+    color: #000000;
+    border-width: 0px;
+
+    &:first-child {
+        margin-right: 25px;
+    }
+    &:nth-child(3) {
+        margin-left: 25px;
+    }
 `

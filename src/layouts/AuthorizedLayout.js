@@ -26,7 +26,7 @@ class AuthorizedLayout extends Component {
         return !this.isAuthorized()?
             <Redirect to='/login'></Redirect>
             : <LoaderWrapper>
-                <AuthorizedContent>
+                <AuthorizedContent {...this.props}>
                     { !this.props.noheaders? (<Header />): <div></div> }
                     <ContentContainer noPad = {this.props.noPad}>
                         { this.props.children }
@@ -39,7 +39,7 @@ class AuthorizedLayout extends Component {
 export default withRouter(AuthorizedLayout)
 
 const AuthorizedContent = styled.div`
-    background-color: #111111;
+    ${props => props.black? css`background-color: #000000`: css`background-color: #111111`}
     min-height: 100vh;
     color: #ffffff;
     margin-left: auto;

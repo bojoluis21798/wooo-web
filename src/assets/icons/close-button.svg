@@ -1,8 +1,10 @@
-<svg width="17px" height="23px" viewBox="0 0 17 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <defs></defs>
+<svg width="47px" height="47px" viewBox="0 0 47 47" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <g id="Phone-Screen" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="View-User-Profile" transform="translate(-325.000000, -42.000000)" fill="#FFFFFF">
-            <polygon id="X" points="325 64.7194781 332.398882 52.1873253 326.394222 42 328.628145 42 333.507922 50.2861137 338.371855 42 340.605778 42 334.601118 52.1873253 342 64.7194781 339.766076 64.7194781 333.507922 54.0726934 327.233924 64.7194781"></polygon>
+        <g id="View-User-Profile" transform="translate(-295.000000, -28.000000)">
+            <g id="Close-Button" transform="translate(295.000000, 28.000000)">
+                <circle id="Oval-3" fill="#232323" fill-rule="nonzero" cx="23.5" cy="23.5" r="23.5"></circle>
+                <polygon id="X" fill="#FFFFFF" points="17 32 22.6579683 22.6227336 18.0661696 15 19.7744641 15 23.5060578 21.2001395 27.2255359 15 28.9338304 15 24.3420317 22.6227336 30 32 28.2917055 32 23.5060578 24.0334728 18.7082945 32"></polygon>
+            </g>
         </g>
     </g>
 </svg>

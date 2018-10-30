@@ -109,7 +109,6 @@ class UserStore {
 
     @action
     setLocation(location){
-        console.log("Postion updated: "+location.lat+" "+location.lang)
         this.location.lat = location.lat;
         this.location.lng = location.lng
 

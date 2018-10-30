@@ -52,7 +52,7 @@ const BackArea = styled.div`
 const TopButton = styled.button`
     border: none;
     text-align: center;
-    background-color:#111111;
+    background-color: transparent;
     text-decoration: none;
     display: inline-block;
     cursor: pointer;
