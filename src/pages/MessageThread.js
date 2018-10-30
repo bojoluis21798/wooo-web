@@ -10,6 +10,7 @@ import firebase from 'firebase'
 import AuthorizedLayout from '../layouts/AuthorizedLayout'
 import Messages from '../components/Messages'
 import Rebase from 're-base'
+import { animateScroll } from 'react-scroll'
 
 const config = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -32,8 +33,6 @@ export default class MessageThread extends Component {
     status: "",
     list: []
   }
-
-  messageList = React.createRef()
 
   componentDidMount() {
     this.messageReff = firebase.database().ref().child('roomData/'+this.props.location.state.roomId);
@@ -98,24 +97,18 @@ export default class MessageThread extends Component {
           this.setState({
             list: Object.values(message.val()),
           });
-        this.messageListScrollToBottom()
+        this.scrollToBottom()
     });
   }
 
-  handleScrolling = el => {
-    this.messageList = el
-    this.messageListScrollToBottom()
+  scrollToBottom = () => {
+    animateScroll.scrollToBottom()
   }
 
   componentDidUpdate() {
-    this.messageListScrollToBottom();
+    this.scrollToBottom()
   }
   
-  messageListScrollToBottom = () => {
-    if(this.messageList && this.messageList.current)
-      this.messageList.current.scrollIntoView({ behavior: 'smooth' })
-  }
-
   userStatus = () => {
     this.userStatusRef = firebase.database().ref().child('users/'+this.props.location.state.pairedId).limitToLast(1).on('value', message => {
       if(message.val()){
@@ -162,7 +155,7 @@ export default class MessageThread extends Component {
                   )}
                 </div>
             </Content>
-            <MessageList innerRef={this.messageList}>
+            <MessageList>
               { this.state.list && this.state.list.length? this.state.list.map((message, index) => (
                   <Messages 
                   key={index}
@@ -240,8 +233,8 @@ const Chat = styled.div`
   color: #ffffff;
   background-color: #191919;
   border-radius: 5px;
-  position: absolute;
-  bottom: 20px;
+  position: fixed;
+  bottom: 10px;
   left: -12px
   margin-left: 5%;
   margin-right: 5%;
@@ -267,7 +260,7 @@ const Input = styled.input`
 
 const MessageList = styled.div`
   margin-top: 30px;
-  height: 72vh;
+  margin-bottom: 40px;
   overflow-y: scroll;
 
   &::-webkit-scrollbar-track  {
