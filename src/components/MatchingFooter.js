@@ -28,6 +28,8 @@ const ButtonActions = styled.button`
     display: inline-block
     font-size: 16px
     cursor: pointer
+    background-color: transparent;
+    border: 0;
 `
 
 const ButtonArea = styled.div`
@@ -35,8 +37,10 @@ const ButtonArea = styled.div`
     position: fixed
     bottom: 5%
     justify-content: center
-    display:flex
-    flex-direction:row
+    display: grid;
+    grid-template-columns: 100px 100px;
+    margin-left: auto;
+    margin-right: auto;
 `
 
 const Item = styled.div`

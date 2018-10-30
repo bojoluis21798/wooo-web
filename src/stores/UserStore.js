@@ -72,7 +72,7 @@ class UserStore {
         this.token = userAuth.auth_token
         this.name = userAuth.user_profile.user.full_name
         this.profilePicture = userAuth.user_profile.profile_image
-        this.biography = userAuth.user_profile.biography
+        this.biography = userAuth.user_profile.bio
         this.radius = userAuth.user_profile.search_radius
         this.preference = userAuth.user_profile.sexual_preference
         this.profile_id = userAuth.user_profile.id
