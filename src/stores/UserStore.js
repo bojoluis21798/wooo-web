@@ -172,7 +172,7 @@ class UserStore {
 
         axios.put(url,fd,config)
         .then(response => {
-            
+
         })
         .catch(error => {
             console.log(error)
@@ -218,7 +218,7 @@ class UserStore {
         })
         .catch(error => {
             console.log(error)
-        })   
+        })
     }
 
     @action
@@ -231,8 +231,8 @@ class UserStore {
         try{
             navigator.geolocation.getCurrentPosition((position) => {
               let coords = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
+                lat: parseFloat(position.coords.latitude),
+                lng: parseFloat(position.coords.longitude)
             }
               this.setLocation(coords);
 
