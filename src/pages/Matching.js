@@ -322,7 +322,7 @@ const TextDiv = styled.div`
                     return(
                         css`
                             font-size:3.5vh
-                            font-weight: 300
+                            font-weight: 500
                         `
                     )
                 case "2":
