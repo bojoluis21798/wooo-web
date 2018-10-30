@@ -4,10 +4,10 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
 // Icons
-import heartSvg from '../assets/images/heart.svg'
-import messageSvg from '../assets/images/message.svg'
-import userSvg from '../assets/images/user.svg'
-import bellSvg from '../assets/images/bell.svg'
+import heartSvg from '../assets/icons/heart-2.svg'
+import messageSvg from '../assets/icons/message.svg'
+import userSvg from '../assets/icons/user-2.svg'
+import bellSvg from '../assets/icons/bell.svg'
 
 export default class Header extends Component {
   render() {
