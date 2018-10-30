@@ -3,7 +3,6 @@ import styled, {css} from "styled-components"
 import { inject, observer } from 'mobx-react'
 import { ToastContainer } from "react-toastify"
 import Slider from "rc-slider"
-import Toggle from 'react-switch'
 import "rc-slider/assets/index.css"
 import axios from 'axios'
 import AuthorizedLayout from '../layouts/AuthorizedLayout'
@@ -88,29 +87,13 @@ class EditProfile extends Component {
     this.handleSubmit(e)
   }
 
-  handleGay = (e) => {
-    if(this.props.store.userStore.gay === false) {
-      this.props.store.userStore.setGay(true)
-    } else {
-      this.props.store.userStore.setGay(false)
-    }
-    this.handleSubmit(e)
-  }
-
   handleSlider = (radius) => {
     this.props.store.userStore.setRadius(radius);
     this.handleSubmit(null)
   }
 
-
   handleChangeBio = (e) => {
     this.props.store.userStore.setBio(e.target.value);
-  }
-
-  onDrop = (photo) => {
-    this.setState({
-      photos: this.state.photos.concat(photo)
-    })
   }
 
   myfunction = ()=>{
@@ -184,6 +167,7 @@ class EditProfile extends Component {
                 id="bio"
                 name="bio"
                 value={this.props.store.userStore.biography}
+                placeholder="Tell us about yourself!"
                 onChange={this.handleChangeBio}
                 onBlur={this.handleSubmit}
               />
@@ -204,31 +188,13 @@ class EditProfile extends Component {
                 >
                   Opposite</PrefButtonOpposite>
               </PreferenceContainer>
-              <br /><br /> {/* THIS IS A TEMPORARY SOLUTION BECAUSE I CANT GET THE STYLING TO WORK - Kobe */}
-
-                <label htmlFor="normal-switch">
-                  <SgContainer>
-                    <span style={{marginRight: "10px"}}>Homosexual</span>
-                    <Toggle
-                      className="gayToggle"
-                      id="normal-switch"
-                      aria-label="gay"
-                      onColor="#f51a63"
-                      offColor="#191919"
-                      uncheckedIcon={false}
-                      checkedIcon={true}
-                      checked={this.props.store.userStore.gay}
-                      onChange={this.handleGay}
-                    />
-                  </SgContainer>
-                </label>
               <Tagline>Radius</Tagline>
               <RadiusNum>{this.props.store.userStore.radius} Km</RadiusNum>
               <br/>
               <Slider
                 id="radius"
                 min={1}
-                max={10}
+                max={100}
                 trackStyle={{
                   height: 2,
                   borderRadius: 6,
@@ -317,12 +283,6 @@ const PreferenceContainer = styled.div`
   grid-template-columns: auto auto;
   grid-column-gap: 5px;
   grid-row-gap: 20px;
-`;
-
-const SgContainer = styled.div`
-  display: inline-grid;
-  grid-template-columns: auto auto;
-  align-items: center;
 `;
 
 const Image = styled.div`
