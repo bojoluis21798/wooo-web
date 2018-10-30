@@ -29,7 +29,8 @@ export default class MessageThread extends Component {
     messageDetail: { },
     message: "", 
     userId: this.props.store.userStore.profile_id,
-    status: ""
+    status: "",
+    list: []
   }
 
   messageList = React.createRef()
@@ -79,7 +80,7 @@ export default class MessageThread extends Component {
   }
   
   handleVideo = () => {
-    var videoURL = this.props.location.state.pairedName + " is calling you! Click here " + window.location.origin + "/video/" + this.props.location.state.pairedSlug +" to answer.";
+    var videoURL = this.props.location.state.pairedName + " called you " + window.location.origin + "/video/" + this.props.location.state.pairedSlug +" to answer.";
     let messageDet = Object.assign({}, this.state.messageDetail);
     const id = Date.now() + "" + this.state.userId;
     messageDet[id] = {
@@ -91,11 +92,12 @@ export default class MessageThread extends Component {
   }
   subscribeToMessages = () => {
     this.messageReff
-    .limitToLast(100)
-    .on('value', message => {
-        this.setState({
+      .limitToLast(100)
+      .on('value', message => {
+        if(message && message.val()) 
+          this.setState({
             list: Object.values(message.val()),
-        });
+          });
         this.messageListScrollToBottom()
     });
   }
@@ -161,7 +163,7 @@ export default class MessageThread extends Component {
                 </div>
             </Content>
             <MessageList innerRef={this.messageList}>
-              { this.state.list && this.state.list.map((message, index) => (
+              { this.state.list && this.state.list.length? this.state.list.map((message, index) => (
                   <Messages 
                   key={index}
                   {...message}
@@ -170,7 +172,7 @@ export default class MessageThread extends Component {
                   user1={this.props.store.userStore.profile_id}
                   user2={this.props.location.state.pairedId}
                   />
-                ))
+                )): ''
               }
             </MessageList>
             <Chat>
