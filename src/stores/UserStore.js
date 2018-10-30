@@ -169,7 +169,9 @@ class UserStore {
         fd.append('sexual_preference',this.preference)
         fd.append('gay',this.gay)
         fd.append('search_radius',this.radius)
-
+        fd.append('location', this.location)
+        fd.append('slug', this.user_slug)
+        fd.append('token', this.accessToken)
         axios.put(url,fd,config)
         .then(response => {
 
@@ -192,9 +194,13 @@ class UserStore {
         }
         fd.append('supporting_pic_'+num+'',e.target.files[0])
         fd.append('gay',this.gay)
+        fd.append('location', this.location)
+        fd.append('slug', this.user_slug)
+        fd.append('token', this.accessToken)
 
         axios.put(url,fd,config)
         .then(response => {
+            console.log(response.data)
             let photo;
 
             switch(num){
