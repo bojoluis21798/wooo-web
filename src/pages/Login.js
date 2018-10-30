@@ -17,38 +17,25 @@ export default class Login extends Component {
     this.props.store.appStore.startLoading()
   }
 
-  responseFacebook = response => this.props.store.userStore.authenticateUser(response)
+  responseFacebook = (response) => {
+    this.props.store.userStore.authenticateUser(response)
+  }
 
   componentDidMount() {
-    setTimeout(() => { 
-      this.setState({ loading: null });
-      this.props.store.userStore.purgeRedirect()
-      this.props.store.appStore.doneLoading()
-    }, 1500)
+    setTimeout(() => this.props.store.appStore.doneLoading(), 1500)
+  }
+
+  onLoginButtonClick = () => {
+    this.props.store.appStore.startLoading()
   }
 
   componentWillUnmount() {
     this.props.store.appStore.doneLoading()
   }
 
-  onLoginButtonClick = () => this.props.store.appStore.startLoading()
-  
-  locateUser(){
-    if (
-        navigator.geolocation
-    ) {
-        navigator.geolocation.getCurrentPosition((position) => {
-          this.props.store.userStore.setLocation( {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-            });
-        })
-    }
-  }
-
   render() {
     return this.props.store.userStore.token ? (
-      <Redirect to={`${this.props.store.userStore.redirect_to || '/edit-profile'}`} />
+      <Redirect to={`${this.props.store.userStore.getRedirectTo() || '/dashboard'}`} />
     ) : <LoaderWrapper>
       <LoginScreen>
         <ToastContainer />
@@ -64,16 +51,15 @@ export default class Login extends Component {
           <LoginActionSection>
             <FacebookLogin
               appId={process.env.REACT_APP_FB_APPID}
-              fields="name,email,picture,gender"
-              scope="public_profile,user_friends"
-              autoLoad={true}
+              fields="name,email,picture"
+              scope="public_profile,email"
               callback={this.responseFacebook}
               redirectUri={`${process.env.REACT_APP_SITE}/login`}
               onClick={this.onLoginButtonClick}
               isProcessing={this.prepareLoginButton}
               render={renderProps => (
-                <LoginButton 
-                  onClick={renderProps.onClick} 
+                <LoginButton
+                  onClick={renderProps.onClick}
                   isProcessing={renderProps.isProcessing}
                 >
                   Login with Facebook
@@ -81,7 +67,9 @@ export default class Login extends Component {
               )}
             />
             <TermsNotice>
-              Upon logging in, you agree to our terms and conditions.
+              <label className="form-check-label" htmlFor="defaultCheck1">
+                I hereby agree to the <a href="/privacy-terms">privacy policy</a> of the company.
+              </label>
             </TermsNotice>
           </LoginActionSection>
         </LoginContent>
@@ -89,7 +77,6 @@ export default class Login extends Component {
     </LoaderWrapper>
   }
 }
-
 
 const LoginScreen = styled.div`
   position: relative;
@@ -171,7 +158,7 @@ const LoginButton = styled.button`
   }
 `
 
-const TermsNotice = styled.p`
+const TermsNotice = styled.div`
   margin: auto;
   font-size: 12px;
   color: "#969696";

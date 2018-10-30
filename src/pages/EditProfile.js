@@ -222,7 +222,6 @@ class EditProfile extends Component {
                     />
                   </SgContainer>
                 </label>
-
               <Tagline>Radius</Tagline>
               <RadiusNum>{this.props.store.userStore.radius} Km</RadiusNum>
               <br/>
@@ -279,11 +278,15 @@ const Tagline = styled.div`
   width: 100%;
   font-weight: 500;
   color: #f3f3f3;
-  font-size: 18px;
+  font-size: 19px;
   max-width: 250px;
   display: block;
   margin-bottom: 20px;
-  margin-top: 20px;
+  margin-top: 30px;
+
+  &:first-child {
+    margin-top: 0px;
+  }
 `;
 const RadiusNum = styled.div`
   color: #f3f3f3;
@@ -352,7 +355,6 @@ const Image = styled.div`
   }
 `;
 
-
 const BioText = styled.textarea`
   height: 90px;
   max-height: 150px;
@@ -390,7 +392,6 @@ const PrefButtonSame = styled.button`
   ${
     props => props.active &&
         css`
-          background-position: 300px;
           background-color:  #f51a63;
         `
   }
@@ -413,7 +414,6 @@ const PrefButtonOpposite = styled.button`
   ${
     props => props.active &&
         css`
-          background-position: 300px;
           background-color:  #f51a63;
         `
   }

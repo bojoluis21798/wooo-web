@@ -1,8 +1,7 @@
-
 <svg width="12px" height="25px" viewBox="0 0 12 25" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <g id="Phone-Screen" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="Message-Thread" transform="translate(-67.000000, -121.000000)" fill="#FBFBFB" fill-rule="nonzero">
-            <g id="Previous-Photo" transform="translate(73.000000, 133.500000) scale(-1, 1) translate(-73.000000, -133.500000) translate(67.000000, 121.000000)">
+            <g id="Previous-Photo" transform="translate(67.000000, 121.000000)">
                 <g id="right-arrow">
                     <path d="M1.77813726,0.405557552 L0,2 L9,12.6931258 L0,23 L1.7690333,24.9806941 C8.52310394,17.0341051 11.8999013,12.9367011 11.8994252,12.688482 C11.8999013,12.4392998 8.5261386,8.3449916 1.77813726,0.405557552 Z" id="Shape"></path>
                 </g>

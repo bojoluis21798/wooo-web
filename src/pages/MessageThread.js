@@ -4,12 +4,14 @@ import styled from "styled-components"
 import back from '../assets/icons/back.svg'
 import video from '../assets/icons/videocall.svg'
 import send from '../assets/icons/send.svg'
+import online from '../assets/icons/online.svg'
 import { inject, observer } from 'mobx-react'
 import firebase from 'firebase'
 import AuthorizedLayout from '../layouts/AuthorizedLayout'
 import Messages from '../components/Messages'
+import Rebase from 're-base'
 
-const config =  {
+const config = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
     authDomain: process.env.REACT_APP_FIREBASE_AUTHDOMAIN,
     databaseURL: process.env.REACT_APP_FIREBASE_DBURL,
@@ -17,21 +19,36 @@ const config =  {
     storageBucket: process.env.REACT_APP_FIREBASE_STORAGEBUCKET,
     messagingSenderId: process.env.REACT_APP_FIREBASE_SENDERID
 };
-  
-firebase.initializeApp(config);
+
+const app = firebase.initializeApp(config);
+const base = Rebase.createClass(app.database());
 
 @inject('store') @observer
 export default class MessageThread extends Component {
   state = {
-    message: '',
-    userId: this.props.store.userStore.profile_id
+    messageDetail: { },
+    message: "", 
+    userId: this.props.store.userStore.profile_id,
+    status: ""
   }
 
+  messageList = React.createRef()
+
   componentDidMount() {
-    this.messageRef = firebase.database().ref().child('roomData/'+this.props.location.state.roomId);
-    this.setState({message: ""});
+    this.messageReff = firebase.database().ref().child('roomData/'+this.props.location.state.roomId);
+    this.messageRef = base.syncState('roomData/'+this.props.location.state.roomId,{
+      context: this,
+      state:'messageDetail'
+    });
     this.setState({userId: this.props.store.userStore.profile_id});
-    this.handleMessageListen();
+    this.subscribeToMessages();
+    this.userStatus();
+  }
+
+  componentWillUnmount() {
+    base.removeBinding(this.messageRef);
+    this.subscribeToMessages = null;
+    this.userStatus = null;
   }
 
   static getDerivedStateFromProps(nextProps) {
@@ -39,112 +56,147 @@ export default class MessageThread extends Component {
   }
   
   handleChange = event => {
-    this.setState({message: event.target.value});
+    this.setState({message:event.target.value});
   }
 
-  handleSend = () => {
-    if (this.state.message) {
-      var newmessage = {
-        userId: this.state.userId,
-        message: {
-          type: "String",
-          content: this.state.message
-        }
+  handleSend = (message) => {
+    if (this.state.message) { 
+      let messageDet = Object.assign({}, this.state.messageDetail);
+      const id = Date.now() + "" + this.state.userId;
+      messageDet[id] = {
+        content: this.state.message,
+        messageType: "String",
+        userId: this.state.userId
       }
-      this.messageRef.push(newmessage);
-      this.setState({ message: '' });
-      this.handleMessageListen();
+      this.setState({messageDetail:messageDet});
+      this.setState({message:""})
     }
+    this.subscribeToMessages();
   }
 
   handleKeyPress = event => {
-    if (event.key !== 'Enter') return;
-    this.handleSend();
+    if (event.key === 'Enter') this.handleSend();
   }
-
-  handleMessageListen = () => {
-    var messg = null;
-    this.messageRef
-    .limitToLast(10)
-    .on('value', message => {
-        messg = message.val()
-    });
-    if(messg !== null){
-        this.listenMessages()
+  
+  handleVideo = () => {
+    var videoURL = this.props.location.state.pairedName + " is calling you! Click here " + window.location.origin + "/video/" + this.props.location.state.pairedSlug +" to answer.";
+    let messageDet = Object.assign({}, this.state.messageDetail);
+    const id = Date.now() + "" + this.state.userId;
+    messageDet[id] = {
+      content: videoURL,
+      messageType: "Link",
+      userId: this.state.userId
     }
+    this.setState({messageDetail:messageDet});
   }
-
-  listenMessages = () => {
-    this.messageRef
-    .limitToLast(10)
+  subscribeToMessages = () => {
+    this.messageReff
+    .limitToLast(100)
     .on('value', message => {
         this.setState({
             list: Object.values(message.val()),
         });
+        this.messageListScrollToBottom()
+    });
+  }
+
+  handleScrolling = el => {
+    this.messageList = el
+    this.messageListScrollToBottom()
+  }
+
+  componentDidUpdate() {
+    this.messageListScrollToBottom();
+  }
+  
+  messageListScrollToBottom = () => {
+    if(this.messageList && this.messageList.current)
+      this.messageList.current.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  userStatus = () => {
+    this.userStatusRef = firebase.database().ref().child('users/'+this.props.location.state.pairedId).limitToLast(1).on('value', message => {
+      if(message.val()){
+        this.setState({status:"Active"})
+      }else{
+        this.setState({status:"Offline"})
+      }
     });
   }
 
   render() {
     return (
-      <AuthorizedLayout noverflow={true} redirectTo='/messages'>
-        <Content>
-          <Back>
-            <Link to='/messsages'>
-              <img src={back} alt="Back"></img>
-            </Link>
-          </Back>
-          <Ree>
-            <Name>
-              {this.props.location && this.props.location.state.pairedName}
-            </Name>
-            <LastMessage>
-              Active Now
-            </LastMessage>
-          </Ree>
-          <div>
-            <Link to={`/video/${this.props.location.state.pairedSlug}`}>
-                <img src={video} alt="Video Call"></img>
-            </Link>
-          </div>
-        </Content>
-        <MessageList>
-          {
-            this.props.location
-            && this.state.userId
-            && this.state.list 
-            && this.state.list.map((message, index) => (
-              <Messages 
-                key={index}
-                {...message}
-                id={index}
-                userData={this.props.location.state}
-                user1={this.state.userId}
-                user2={this.props.location.state.pairedId}
+      <AuthorizedLayout noverflow={true} redirectTo='messages'>
+        { this.state && 
+          this.props.location && 
+          this.props.location.state && 
+          this.props.location.state.pairedName &&
+          (<MessageThreadBody>
+            <Content>
+                <Back>
+                <Link to='/messsages'>
+                    <img src={back} alt="Back"></img>
+                </Link>
+                </Back>
+                <Ree>
+                <Name>
+                    {this.props.location && this.props.location.state && this.props.location.state.pairedName}
+                </Name>
+                <LastMessage>
+                    {this.state.status !== "Active" && ("Offline")}
+                    {this.state.status === "Active" && (
+                      <OnlineIndicator>
+                        <img src={online} alt='Online Indicator'/>
+                        <span>Active Now</span>
+                      </OnlineIndicator>
+                    )}
+                </LastMessage>
+                </Ree>
+                <div>
+                  {this.state.status === "Active" && (
+                  <Link to={`/video/${this.props.location && this.props.location.state && this.props.location.state.pairedSlug}`}>
+                      <img src={video} alt="Video Call"></img>
+                  </Link>
+                  )}
+                </div>
+            </Content>
+            <MessageList innerRef={this.messageList}>
+              { this.state.list && this.state.list.map((message, index) => (
+                  <Messages 
+                  key={index}
+                  {...message}
+                  id={index}
+                  userData={this.props.location.state}
+                  user1={this.props.store.userStore.profile_id}
+                  user2={this.props.location.state.pairedId}
+                  />
+                ))
+              }
+            </MessageList>
+            <Chat>
+              <Input type="text" id="usr" placeholder="Send a Message" 
+                onKeyPress={this.handleKeyPress}
+                onChange={this.handleChange}
+                value={this.state.message}
               />
-            ))
-          }
-        </MessageList>
-        <Chat>
-          <Input type="text" id="usr" placeholder="Send a Message" 
-          onChange={this.handleChange}
-          onKeyPress={this.handleKeyPress}
-          value={this.state.message}
-          />
-          <ButtonA
-            onClick={this.handleSend}
-          >
-            <img src={send} alt="Send Icon" />
-          </ButtonA>
-        </Chat>
+              <ButtonA onClick={this.handleSend}>
+                <img src={send} alt="Send Icon" />
+              </ButtonA>
+            </Chat>
+          </MessageThreadBody>)
+        }
       </AuthorizedLayout>
-    );
+    )
+    }
   }
-}
 
 const Content = styled.div`
   display: grid;
   grid-template-columns: 1fr 9fr 1fr;
   margin-bottom: 30px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  height: 50px;
 `;
 
 const Back = styled.div`
@@ -152,9 +204,7 @@ const Back = styled.div`
   color: white;
 `;
 
-const MessageList = styled.div`
-  margin-top: 20px;  
-`
+const MessageThreadBody = styled.div``
 
 const Ree = styled.div`
   margin:0 auto;
@@ -181,7 +231,6 @@ const LastMessage = styled.div`
 `;
 
 const Chat = styled.div`
-  margin-top: 10px;
   display: grid;
   grid-template-columns: 9fr 1fr;
   font-size: 18px;
@@ -189,10 +238,12 @@ const Chat = styled.div`
   color: #ffffff;
   background-color: #191919;
   border-radius: 5px;
-  border: none;
-  justify-items: center;
-  overflow: hidden;
-  border: 1px solid #191919;
+  position: absolute;
+  bottom: 20px;
+  left: -12px
+  margin-left: 5%;
+  margin-right: 5%;
+  width: 90%;
 
   &:focus {
     outline: none;
@@ -211,3 +262,30 @@ const Input = styled.input`
     outline: none;
   }
 `;
+
+const MessageList = styled.div`
+  margin-top: 30px;
+  height: 72vh;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar-track  {
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar{
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb{
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,.3);
+    background-color: #555;
+  }
+`
+
+const OnlineIndicator = styled.div`
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  align-items: center;
+`

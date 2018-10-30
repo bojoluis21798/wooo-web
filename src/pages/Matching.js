@@ -2,15 +2,17 @@ import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
 
 import styled, { css } from 'styled-components'
-import left from '../assets/images/left.png'
-import right from '../assets/images/right.png'
-import Notifications, {notify} from 'react-notify-toast'
+import left from '../assets/icons/left.svg'
+import right from '../assets/icons/right.svg'
 import Loading from './Loading'
 import axios from 'axios'
 import AuthorizedLayout from '../layouts/AuthorizedLayout'
 import matchingData from '../assets/data/matching.data'
 import MatchingHeader from '../components/MatchingHeader'
 import MatchingFooter from '../components/MatchingFooter'
+import MatchSwipe from '../components/MatchSwipe';
+import NoMatches from '../components/NoMatches';
+import dog from '../assets/images/dog.jpeg'
 
 @inject('store')
 @observer
@@ -23,10 +25,13 @@ export default class Matching extends Component{
             viewProfile: false,
             imgIdx: 0,
             noProspects: false,
+            modalIsOpen: false,
+            photos: [],
+            show:this.props.store.userStore.isMatched
         }
     }
 
-    componentDidMount = () => {
+    componentDidMount() {
          axios.get(`${process.env.REACT_APP_API_BASEURL}/matching`,{
              params:{
                  profile_id:this.props.store.userStore.profile_id
@@ -34,18 +39,54 @@ export default class Matching extends Component{
          }).then(
              res=>{
                  if(res.data.length === 0){
-                    this.setState({noProspects: true})
+                    this.props.store.userStore.setNoProspects(true);
+                    this.setState({hasPayload:true})//used to take away the loading screen
+
                  }else{
                     this.props.store.userStore.setProspects(res.data)
+                    this.repopulatePhotos()
+                    this.setState({hasPayload:true})
                  }
-                 this.setState({hasPayload:true})
+
 
              }
          )
     }
 
+    repopulatePhotos = () => {
+        let photos = []
+
+        let urls = [
+            this.props.store.userStore.currentProspect.profile_image,
+            this.props.store.userStore.currentProspect.supporting_pic_1,
+            this.props.store.userStore.currentProspect.supporting_pic_2,
+            this.props.store.userStore.currentProspect.supporting_pic_3,
+            this.props.store.userStore.currentProspect.supporting_pic_4
+        ]
+
+        for(let i = 0; i < 5; i++){
+            if(urls[i]){
+                photos.push(urls[i])
+            }
+        }
+
+        if(photos.length === 0) {
+            photos.push(dog)
+        }
+
+        this.setState({
+            photos: photos,
+        })
+    }
+
     nextPerson = () => {
-        this.props.store.userStore.nextProspect()
+        if(this.props.store.userStore.prospectLength > 1){
+            this.props.store.userStore.nextProspect()
+        }else{
+            this.setState({hasPayload:false});
+            this.getProspects();
+        }
+        this.repopulatePhotos()
     }
 
     handleDislike = () => {
@@ -58,8 +99,9 @@ export default class Matching extends Component{
                 profile_id:this.props.store.userStore.profile_id,
                 match_id:this.props.store.userStore.currentProspect.id,
                 status:0
-        }, config)
-        this.nextPerson()
+        }, config).then(res=>{
+            this.nextPerson();
+        });
     }
 
     handleLike = () => {
@@ -69,16 +111,20 @@ export default class Matching extends Component{
             }
         }
         axios.post(`${process.env.REACT_APP_API_BASEURL}/matching/`, {
-                profile_id: this.props.store.userStore.token.profile_id,
-                match_id: this.props.store.userStore.token.currentProspect.id,
+                profile_id: this.props.store.userStore.profile_id,
+                match_id:this.props.store.userStore.currentProspect.id,
                 status: 1
         }, config).then(res=>{
-            let matchExists = res.match_exists !== undefined
-            if(matchExists){
-                notify.show("You matched!", "success", 4000)
+            if(res.data.match_exists){
+
+                this.props.store.userStore.setIsMatched(true);
+                this.setState({show:this.props.store.userStore.isMatched});
+            }else{
+                this.nextPerson();
             }
+
+
         })
-        this.nextPerson()
     }
 
     handleViewProfile = () => {
@@ -94,54 +140,97 @@ export default class Matching extends Component{
             })
     }
 
-    handleNextPic = imgLength => {
+    handleNextPic = () => {
         this.setState({
-            imgIdx: (this.state.imgIdx+1)%imgLength,
+            imgIdx: (this.state.imgIdx+1)%this.state.photos.length,
         })
     }
 
-    handlePreviousPic = imgLength => {
-        let imgIdx = this.state.imgIdx
+    handlePreviousPic = () => {
         this.setState({
-            imgIdx: (imgIdx-1 === -1) ? imgLength-1: imgIdx-1,
+            imgIdx: (this.state.imgIdx-1 === -1) ? this.state.photos.length-1: this.state.imgIdx-1,
         })
+    }
+
+    openModal = () =>{
+        this.setState({modalIsOpen: true});
+    }
+
+    afterOpenModal = ()=>{
+        setTimeout(() => {
+            this.closeModal();
+            this.nextPerson();
+        }, 2000);
+    }
+
+    closeModal = () =>{
+        this.setState({modalIsOpen: false});
+    }
+
+    getProspects = ()=>{
+         axios.get(`${process.env.REACT_APP_API_BASEURL}/matching`,{
+             params:{
+                 profile_id:this.props.store.userStore.profile_id
+             }
+         }).then(
+             res=>{
+
+                 if(res.data.length === 0){
+                    this.props.store.userStore.setNoProspects(true);
+                    this.setState({hasPayload:true});//used to remove the loading
+                 }else{
+
+                    this.props.store.userStore.setProspects(res.data);
+                    this.setState({hasPayload:true});
+                    this.props.store.userStore.setNoProspects(false);
+                 }
+
+
+
+             }
+         );
     }
 
     render() {
-        let state = this.state
-        let currentPerson = state.people[0]
-        let imgIdx = state.imgIdx
-
         if(!this.state.hasPayload){
             return <Loading message="Finding Gorls"/>
         }
+
         return (
-            <AuthorizedLayout noheaders={true}>
+            <AuthorizedLayout
+                noheaders={true}
+                noPad={true}
+            >
                 <Container>
-                    <Notifications/>
+
                     <MatchingHeader
                         eventHandle = {this.handleCloseProfile}
-                        type = {state.viewProfile ? "exit" : "back"}
+                        type = {this.state.viewProfile ? "exit" : "back"}
                     />
-                    {this.state.noProspects ?
-                        <NoMatch>
-                            No Match
-                        </NoMatch>
-                        :
+                        { this.props.store.userStore.noProspectsValue &&
+                            <NoMatches/>
+                        }
+                        <MatchSwipe
+                            show={this.props.store.userStore.isMatchedValue}
+                            id={this.props.store.userStore.currentProspect.id}
+                            eventHandle={this.nextPerson}
+                        />
+
                         <Profile onClick = {this.handleViewProfile}>
+
                         <PicSlide>
-                            {state.viewProfile &&
+                            {this.state.viewProfile &&
                                 <Arrow
-                                    onClick = {e => this.handlePreviousPic(currentPerson.img.length, e)}
+                                    onClick = {this.handlePreviousPic}
                                     direction = "left"
                                 />
                             }
                             <PicArea>
-                                <ImageStyle src={this.props.store.userStore.currentProspect.profile_image?this.props.store.userStore.currentProspect.profile_image:currentPerson.img[imgIdx]} />
+                                <ImageStyle src={this.state.photos[this.state.imgIdx]} />
                             </PicArea>
-                            {state.viewProfile &&
+                            {this.state.viewProfile &&
                                 <Arrow
-                                    onClick = {e => this.handleNextPic(currentPerson.img.length, e)}
+                                    onClick = {this.handleNextPic}
                                     direction = "right"
                                 />
                             }
@@ -152,25 +241,25 @@ export default class Matching extends Component{
                                     <TextDiv level = "1">
                                         { this.props.store.userStore.currentProspect.user.first_name?
                                             this.props.store.userStore.currentProspect.user.first_name
-                                            :currentPerson.name
+                                            :""
                                         }
-                                        , 
+                                        ,
                                         {
                                             this.props.store.userStore.currentProspect.age?
-                                            this.props.store.userStore.currentProspect.age:currentPerson.age
+                                            this.props.store.userStore.currentProspect.age:""
                                         }
                                     </TextDiv>
-                                    <TextDiv level= "2">{currentPerson.location}</TextDiv>
+                                    {/* <TextDiv level= "2">{this.state.people[0].location}</TextDiv> */}
                                 </BioRow>
                                 <BioRow>
-                                    <TextDiv level = "3">{this.props.store.userStore.currentProspect.bio?this.props.store.userStore.currentProspect.bio:currentPerson.bio}</TextDiv>
+                                    <TextDiv level = "3">{this.props.store.userStore.currentProspect.bio?this.props.store.userStore.currentProspect.bio:""}</TextDiv>
                                 </BioRow>
                             </TextContainer>
                         </MainTextArea>
                         </Profile>
-                    }
+
                     {
-                        !state.noProspects &&
+                        !this.state.viewProfile &&
                         <MatchingFooter
                             handleLike = {this.handleLike}
                             handleDislike = {this.handleDislike}
@@ -189,7 +278,6 @@ const Container = styled.div`
     width: 100%
     flex-direction: column
     align-items:center
-    background-color: black
 `
 
 const Profile = styled.div`
@@ -239,16 +327,16 @@ const BioRow = styled.div`
 `
 
 const TextDiv = styled.div`
-    text-align:center
-    color: white
-    font-family: 'Apercu', sans-serif
+    text-align:center;
+    color: white;
+    font-family: 'Apercu', sans-serif;
     ${
         props => {
             switch(props.level){
                 case "1":
                     return(
                         css`
-                            font-size:4vh
+                            font-size:3.5vh
                             font-weight: 500
                         `
                     )
@@ -297,10 +385,4 @@ const Arrow = styled.button`
     height: 6vh
     color: #000000
     border-width: 0px
-`
-
-const NoMatch = styled.p`
-    font-size: 9vh
-    font-family: Apercu
-    font-weight: 700
 `

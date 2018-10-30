@@ -2,6 +2,7 @@
 import React, { Component } from 'react'
 import styled, { css } from 'styled-components'
 import { observer, inject } from 'mobx-react';
+import  Linkify  from 'react-linkify';
 
 @inject('store')
 @observer
@@ -9,14 +10,21 @@ export default class Messages extends Component {
 
   render() {
     return this.props.userData.pairedId === this.props.userId? 
+      <Linkify>
       <SenderMessage>
-        <MessageContent>{this.props.message.content}</MessageContent>
+        <MessageContent> 
+          {this.props.content}
+        </MessageContent>
         <Img src={this.props.userData.pairedImage} alt={this.props.profile_id}/>
-      </SenderMessage> : 
+      </SenderMessage>
+      </Linkify> :
+      <Linkify> 
       <MyMessage>
-        <MessageContent selfsent={true}>You: {this.props.message.content}</MessageContent>
+        <MessageContent selfsent={true}>
+          You: {this.props.content}
+        </MessageContent>
       </MyMessage>
-      
+      </Linkify>
   }
 }
 
@@ -50,6 +58,7 @@ const MessageContent = styled.span`
     margin-bottom: 2px;
     max-width: 250px;
     line-height: 22px;
+    word-break: break-word;
 
     ${
       props => props.selfsent && css`

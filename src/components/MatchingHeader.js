@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Redirect, Link } from 'react-router-dom'
 import styled from 'styled-components'
-import back from '../assets/images/back-button.png'
+import back from '../assets/icons/circled-back.svg'
 import close from '../assets/images/close-button.png'
 
 export default class HeaderArea extends Component {
@@ -13,8 +13,8 @@ export default class HeaderArea extends Component {
         if(this.props.type === 'back') {
             return(
                 <BackArea type = {this.props.type} >
-                 <Link to='/edit-profile'>
-                    <TopButton onClick = {this.props.eventHandle}>
+                 <Link to='/dashboard'>
+                    <TopButton>
                         <Icon src={this.props.type === "back" ? back : close}/>
                     </TopButton>
                  </Link>
@@ -52,7 +52,7 @@ const BackArea = styled.div`
 const TopButton = styled.button`
     border: none;
     text-align: center;
-    background-color:black;
+    background-color:#111111;
     text-decoration: none;
     display: inline-block;
     cursor: pointer;
