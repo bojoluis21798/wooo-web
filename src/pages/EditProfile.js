@@ -264,9 +264,9 @@ const ProfileImage = styled.div`
   display: flex;
 `;
 const ProfileImageMain = styled.img`
-  max-height: 150px;
-  max-width: 150px;
-  border-radius: 5px;
+  max-height: 165px;
+  max-width: 165px;
+  border-radius: 2px;
   border: none;
   border-left: 5px;
 `;
@@ -276,6 +276,7 @@ const ImageContainer = styled.div`
   grid-template-columns: auto auto;
   grid-column-gap: 2px;
   grid-row-gap: 2px;
+  margin:auto
 `;
 
 const PreferenceContainer = styled.div`
@@ -286,8 +287,8 @@ const PreferenceContainer = styled.div`
 `;
 
 const Image = styled.div`
-  width: 73px;
-  height: 73px;
+  width: 80px;
+  height: 80px;
   background-color: #191919
   border-color: #191919
   border-radius: 2px;
