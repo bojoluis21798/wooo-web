@@ -99,6 +99,7 @@ class UserStore {
 
     @action
     setLocation(location){
+        console.log("Postion updated: "+location.lat+" "+location.lang)
         this.location.lat = location.lat;
         this.location.lng = location.lng
 
@@ -131,10 +132,10 @@ class UserStore {
 
     @action
     async getLocation(){
-       
+
         try{
            await navigator.geolocation.getCurrentPosition((position) => {
-           
+
               this.setLocation( {
                     lat: position.coords.latitude,
                     lng: position.coords.longitude
@@ -144,11 +145,11 @@ class UserStore {
                 this.ipToLocation()
               }
               , {enableHighAccuracy: false, timeout: 20000, maximumAge: 0})
-            
+
         } catch (err){
             this.ipToLocation()
-        } 
-       
+        }
+
     }
 
     @action insertToken(authObj){
@@ -164,17 +165,17 @@ class UserStore {
     async ipToLocation(){
         try{
         let response = await fetch("https://freegeoip.app/json/");
-        let body = await response.json(); 
-      
+        let body = await response.json();
+
         this.setLocation( {
             lat: body.latitude,
             lng: body.longitude
         });
          } catch (err){
-        } 
+        }
 
     }
-    
+
     @action
     nextProspect(){
         if(this.prospects.length > 1){
