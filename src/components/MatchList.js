@@ -7,14 +7,11 @@ import { Link } from 'react-router-dom'
 @observer
 export default class MatchList extends Component{
     render(){
-        const store = this.props.store.userStore;
-
-       console.log(store.matches);
-        if(store.matches.length !== 0 && store.matches.matches_exists !== false){
+        if(this.props.store.userStore.matches.length !== 0 && this.props.store.userStore.matches.matches_exists !== false){
             return (
               <ContainerMain>
                 {
-                    store.matches.map(match=>(
+                    this.props.store.userStore.matches.map(match=>(
 
                         <Person key={match.id}>
                             <Link to={`/messages/${match.id}`}>
