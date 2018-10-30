@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
 
 import styled, { css } from 'styled-components'
-import left from '../assets/images/left.png'
-import right from '../assets/images/right.png'
+import left from '../assets/icons/left.svg'
+import right from '../assets/icons/right.svg'
 import Loading from './Loading'
 import axios from 'axios'
 import AuthorizedLayout from '../layouts/AuthorizedLayout'
@@ -38,13 +38,11 @@ export default class Matching extends Component{
              }
          }).then(
              res=>{
-                 console.log(res);
                  if(res.data.length === 0){
                     this.props.store.userStore.setNoProspects(true);
                     this.setState({hasPayload:true})//used to take away the loading screen
 
                  }else{
-                    console.log(res.data)
                     this.props.store.userStore.setProspects(res.data)
                     this.repopulatePhotos()
                     this.setState({hasPayload:true})
@@ -273,18 +271,6 @@ export default class Matching extends Component{
     }
 }
 
-const customStyles = {
-    content : {
-      top                   : '50%',
-      left                  : '50%',
-      right                 : 'auto',
-      bottom                : 'auto',
-      marginRight           : '-50%',
-      transform             : 'translate(-50%, -50%)',
-      backgroundColor       :'transparent'
-    }
-  };
-
 const Container = styled.div`
     display: flex
     float: left
@@ -354,7 +340,6 @@ const TextDiv = styled.div`
                             font-weight: 500
                         `
                     )
-                    break;
                 case "2":
                     return(
                         css`
@@ -362,7 +347,6 @@ const TextDiv = styled.div`
                             font-weight: 300
                         `
                     )
-                    break;
                 case "3":
                     return(
                         css`
@@ -370,7 +354,6 @@ const TextDiv = styled.div`
                             font-weight: 300
                         `
                     )
-                    break;
                 default:
                     return(
                         css`
@@ -378,7 +361,6 @@ const TextDiv = styled.div`
                             font-weight: 300
                         `
                     )
-                    break;
             }
         }
     }
@@ -403,10 +385,4 @@ const Arrow = styled.button`
     height: 6vh
     color: #000000
     border-width: 0px
-`
-
-const NoMatch = styled.p`
-    font-size: 9vh
-    font-family: Apercu
-    font-weight: 700
 `

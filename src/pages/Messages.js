@@ -93,9 +93,8 @@ export default class Messages extends Component {
 }
 
 const PageTitle = styled.div`
-  font-size: 28px;
+  font-size: 25px;
   color: #fff;
-  font-weight: bold;
   margin-bottom: 20px;
 `
 

@@ -10,7 +10,6 @@ export default class MatchSwipe extends Component{
 
     render(){
         if(this.props.show){
-            console.log("got in MatchSwipe");
             return (
                 <Container>
                    <LargeText>{this.props.store.userStore.currentProspect.user.first_name} likes you too!</LargeText>

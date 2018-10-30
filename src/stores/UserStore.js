@@ -52,23 +52,17 @@ class UserStore {
 
     @action
     async authenticateUser(authObj) {
-        console.log(authObj)
-        console.log(this.location)
         try {
-            //PAY ATTENTION TO THIS
             this.getLocation()
             let response = await axios.post(`${process.env.REACT_APP_API_BASEURL}/login/`, {
                 accessToken: authObj.accessToken,
                 lng:this.location.lng,
                 lat:this.location.lat
             })
-            console.log(response);
-            console.log("GOT IN");
             this.populateUser(response.data)
             this.insertToken(authObj)
             return true
         } catch(err) {
-            console.log(err)
             return false
         }
     }
@@ -88,7 +82,6 @@ class UserStore {
 
     @action
     setRedirectTo(link) {
-        console.log("Redirect to: " + link)
         this.redirect_to = link
     }
 
@@ -140,7 +133,7 @@ class UserStore {
     async getLocation(){
        
         try{
-           let response = await navigator.geolocation.getCurrentPosition((position) => {
+           await navigator.geolocation.getCurrentPosition((position) => {
            
               this.setLocation( {
                     lat: position.coords.latitude,
@@ -153,7 +146,6 @@ class UserStore {
               , {enableHighAccuracy: false, timeout: 20000, maximumAge: 0})
             
         } catch (err){
-            console.log(err)
             this.ipToLocation()
         } 
        
@@ -166,7 +158,6 @@ class UserStore {
     @action
     setProspects(prospects){
         this.prospects = prospects
-        console.log(this.prospects)
     }
 
     @action
@@ -180,7 +171,6 @@ class UserStore {
             lng: body.longitude
         });
          } catch (err){
-            console.log(err)
         } 
 
     }

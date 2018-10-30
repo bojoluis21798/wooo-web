@@ -12,8 +12,6 @@ import LoaderWrapper from "../layouts/LoaderWrapper";
 @inject("store")
 @observer
 export default class Login extends Component {
-  state = {
-  }
   constructor(props) {
     super(props)
     this.props.store.appStore.startLoading()
@@ -70,7 +68,7 @@ export default class Login extends Component {
             />
             <TermsNotice>
               <label className="form-check-label" htmlFor="defaultCheck1">
-                I hereby agree to the <LoginLink to='/privacy-terms'>privacy policy</LoginLink> of the company.
+                I hereby agree to the <a href="/privacy-terms">privacy policy</a> of the company.
               </label>
             </TermsNotice>
           </LoginActionSection>
@@ -79,10 +77,6 @@ export default class Login extends Component {
     </LoaderWrapper>
   }
 }
-
-const LoginLink = styled(Link)`
-  color: inherit;
-`
 
 const LoginScreen = styled.div`
   position: relative;

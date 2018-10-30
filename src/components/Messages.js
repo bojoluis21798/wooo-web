@@ -58,6 +58,7 @@ const MessageContent = styled.span`
     margin-bottom: 2px;
     max-width: 250px;
     line-height: 22px;
+    word-break: break-word;
 
     ${
       props => props.selfsent && css`

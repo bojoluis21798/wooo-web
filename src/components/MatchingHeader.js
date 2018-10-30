@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Redirect, Link } from 'react-router-dom'
 import styled from 'styled-components'
-import back from '../assets/images/back-button.png'
+import back from '../assets/icons/circled-back.svg'
 import close from '../assets/images/close-button.png'
 
 export default class HeaderArea extends Component {

@@ -4,6 +4,7 @@ import styled from "styled-components"
 import back from '../assets/icons/back.svg'
 import video from '../assets/icons/videocall.svg'
 import send from '../assets/icons/send.svg'
+import online from '../assets/icons/online.svg'
 import { inject, observer } from 'mobx-react'
 import firebase from 'firebase'
 import AuthorizedLayout from '../layouts/AuthorizedLayout'
@@ -92,7 +93,6 @@ export default class MessageThread extends Component {
     this.messageReff
     .limitToLast(100)
     .on('value', message => {
-      console.log(message.val())
         this.setState({
             list: Object.values(message.val()),
         });
@@ -143,12 +143,17 @@ export default class MessageThread extends Component {
                     {this.props.location && this.props.location.state && this.props.location.state.pairedName}
                 </Name>
                 <LastMessage>
-                    {this.state.status != "Active" && ("Offline")}
-                    {this.state.status == "Active" && ("Active Now")}
+                    {this.state.status !== "Active" && ("Offline")}
+                    {this.state.status === "Active" && (
+                      <OnlineIndicator>
+                        <img src={online} alt='Online Indicator'/>
+                        <span>Active Now</span>
+                      </OnlineIndicator>
+                    )}
                 </LastMessage>
                 </Ree>
                 <div>
-                  {this.state.status == "Active" && (
+                  {this.state.status === "Active" && (
                   <Link to={`/video/${this.props.location && this.props.location.state && this.props.location.state.pairedSlug}`}>
                       <img src={video} alt="Video Call"></img>
                   </Link>
@@ -276,4 +281,10 @@ const MessageList = styled.div`
     -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,.3);
     background-color: #555;
   }
+`
+
+const OnlineIndicator = styled.div`
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  align-items: center;
 `

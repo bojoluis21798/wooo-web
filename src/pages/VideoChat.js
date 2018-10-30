@@ -23,7 +23,6 @@ export default class VideoChat extends Component {
     }
 
     async componentDidMount() {
-        console.log(process.env.REACT_APP_OPENTOK_KEY)
         this.props.store.appStore.startLoading()
         const response = await axios.get(`${process.env.REACT_APP_OPENTOK_SERVER}/get_token/6/5`)
         const data = response.data

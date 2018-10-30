@@ -9,7 +9,6 @@ export default class MatchList extends Component{
     render(){
         const store = this.props.store.userStore;
 
-       console.log(store.matches);
         if(store.matches.length !== 0 && store.matches.matches_exists !== false){
             return (
               <ContainerMain>
@@ -58,7 +57,7 @@ const Person = styled.div`
 
 const Name = styled.div `
     text-align:center;
-    font-size:2vh;
+    font-size: 18;
     font-color:white;
 `
 
@@ -66,7 +65,9 @@ const Text = styled.div `
     padding-top: 3vh;
     padding-bottom: 5vh;
     text-align:center;
-    font-size:3vh;
+    font-size: 20px;
+    line-height: 30px;
+    max-width: 300px;
     font-color:white;
     grid-column-start: 1
     grid-column-end: 2
@@ -80,7 +81,7 @@ const Button = styled.button`
     color: white;
     text-align: center;
     text-decoration: none;
-    font-size: 2.5vh;
+    font-size: 20px;
     cursor: pointer;
     border-radius:12px;
     margin:auto;

@@ -41,13 +41,14 @@ const Container = styled.div`
 `
 
 const BrokenHeart = styled.object`
-    width: 20vw;
     align-self: end;
 `
 
 const LargeText = styled.div`
     color:white;
-    font-size:3vh;
+    font-size: 20px;
+    line-height: 30px;
+    max-width: 300px;
     text-align:center;
     margin: 2vh;
     align-self:start;

@@ -171,11 +171,15 @@ const Tagline = styled.div`
   width: 100%;
   font-weight: 500;
   color: #f3f3f3;
-  font-size: 18px;
+  font-size: 19px;
   max-width: 250px;
   display: block;
   margin-bottom: 20px;
-  margin-top: 20px;
+  margin-top: 30px;
+
+  &:first-child {
+    margin-top: 0px;
+  }
 `;
 const RadiusNum = styled.div`
   color: #f3f3f3;

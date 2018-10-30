@@ -20,8 +20,6 @@ class App extends Component {
   state = { loading: true };
 
   componentDidMount() {
-    console.log('ENV Variables:')
-    console.log(process.env)
     this.setState({ loading: false });
   }
 
