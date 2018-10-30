@@ -7,7 +7,7 @@ import dog3 from '../assets/images/dog3.jpg';
 class UserStore {
     @observable username = null
     @observable name = null
-    @observable biography = null
+    @observable biography = ''
     @observable gay = null
     @observable preference = null
     @observable radius = null
@@ -18,6 +18,10 @@ class UserStore {
     @observable state = null
     @observable profilePicture = null
     @observable photos = []
+    @observable photo_link_1 = null
+    @observable photo_link_2 = null
+    @observable photo_link_3 = null
+    @observable photo_link_4 = null
     @observable token = null
     @observable accessToken = null
     @observable profile_id = null
@@ -69,9 +73,15 @@ class UserStore {
 
     @action
     populateUser(userAuth) {
+        console.log(userAuth)
         this.token = userAuth.auth_token
         this.name = userAuth.user_profile.user.full_name
+        this.email = true
         this.profilePicture = userAuth.user_profile.profile_image
+        this.photo_link_1 = userAuth.user_profile.supporting_pic_1
+        this.photo_link_2 = userAuth.user_profile.supporting_pic_2
+        this.photo_link_3 = userAuth.user_profile.supporting_pic_3
+        this.photo_link_4 = userAuth.user_profile.supporting_pic_4
         this.biography = userAuth.user_profile.bio
         this.radius = userAuth.user_profile.search_radius
         this.preference = userAuth.user_profile.sexual_preference
@@ -120,9 +130,25 @@ class UserStore {
     }
 
     @action
-    setPicOne(p1){
-        this.photos[0] = p1;
+    setPic(num, pic){
+        switch(num){
+            case 1:
+                this.photo_link_1 = pic;
+                break;
+            case 2:
+                this.photo_link_2 = pic;
+                break;
+            case 3:
+                this.photo_link_3 = pic;
+                break;
+            case 4:
+                this.photo_link_4 = pic;
+                break;
+            default:
+                break;
+        }
     }
+
 
     @action
     setMatches(matches){
