@@ -17,7 +17,10 @@ export default `
     button, input, textarea {
         box-sizing: border-box;
     }
-    input, textarea, button, select, a {
-        -webkit-tap-highlight-color: rgba(0,0,0,0);
+    * {
+        -webkit-tap-highlight-color: rgba(0,0,0,0) !important;
+    }
+    ::selection {
+        background-color: transparent;
     }
 `

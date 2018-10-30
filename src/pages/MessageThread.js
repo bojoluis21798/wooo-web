@@ -196,6 +196,7 @@ const Content = styled.div`
   margin-bottom: 30px;
   padding-top: 10px;
   padding-bottom: 10px;
+  height: 50px;
 `;
 
 const Back = styled.div`

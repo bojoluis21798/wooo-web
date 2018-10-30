@@ -6,7 +6,7 @@ import circlecenter from "../assets/images/circlecenterbg.svg"
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props"
 import { inject, observer } from "mobx-react"
 import { ToastContainer } from "react-toastify"
-import { Redirect, Link } from "react-router-dom"
+import { Redirect } from "react-router-dom"
 import LoaderWrapper from "../layouts/LoaderWrapper";
 
 @inject("store")
@@ -52,7 +52,7 @@ export default class Login extends Component {
             <FacebookLogin
               appId={process.env.REACT_APP_FB_APPID}
               fields="name,email,picture"
-              scope="public_profile,email,user_gender"
+              scope="public_profile,email"
               callback={this.responseFacebook}
               redirectUri={`${process.env.REACT_APP_SITE}/login`}
               onClick={this.onLoginButtonClick}

@@ -37,8 +37,8 @@ const ButtonActions = styled.button`
 
 const ButtonArea = styled.div`
     width: 100%
-    position: absolute
-    bottom: 0
+    position: fixed
+    bottom: 5%
     justify-content: center
     display:flex
     flex-direction:row
