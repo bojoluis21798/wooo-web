@@ -42,7 +42,6 @@ export default class Messages extends Component {
             roomId: this.state.currentUser+'R'+element.id,
             message: ""
           }
-          console.log(pairedInfo)
           pairedInfo.roomId = (element.id < this.state.currentUser) ? element.id+'R'+this.state.currentUser : this.state.currentUser+'R'+element.id
 
           firebase.database().ref().child('roomData/'+pairedInfo.roomId).limitToLast(1).on('value', message => {

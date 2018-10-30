@@ -7,6 +7,8 @@ import axios from 'axios'
 import '../assets/styles/css/opentok.css'
 import SmallLoading from '../components/SmallLoading'
 import firebase from 'firebase'
+import endCall from '../assets/icons/endcall.svg'
+import { Link } from 'react-router-dom'
 
 @inject('store')
 @observer
@@ -52,6 +54,9 @@ export default class VideoChat extends Component {
                         </OTSession>): <SmallLoading /> 
                     }
                 </VideoContent>
+                <div className='video__button'>
+                    <img onClick={this.props.history.goBack} src={endCall} alt='End call' className='video__button--end_call' />
+                </div>
             </AuthorizedLayout>
         )
     }
