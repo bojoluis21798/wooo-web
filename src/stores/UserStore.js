@@ -53,15 +53,21 @@ class UserStore {
     @action
     async authenticateUser(authObj) {
         try {
-            this.getLocation()
-            let response = await axios.post(`${process.env.REACT_APP_API_BASEURL}/login/`, {
-                accessToken: authObj.accessToken,
-                lng:this.location.lng,
-                lat:this.location.lat
+            return this.getLocation(() => {
+                axios.post(`${process.env.REACT_APP_API_BASEURL}/login/`, {
+                    accessToken: authObj.accessToken,
+                    lng:this.location.lng,
+                    lat:this.location.lat
+                }).then(response=> {
+                    console.log(response.data)
+                    this.populateUser(response.data)
+                    this.insertToken(authObj)
+                    return true
+                }).catch(error => {
+                    console.log(error)
+                    return false
+                })
             })
-            this.populateUser(response.data)
-            this.insertToken(authObj)
-            return true
         } catch(err) {
             return false
         }
@@ -99,7 +105,6 @@ class UserStore {
 
     @action
     setLocation(location){
-        console.log("Postion updated: "+location.lat+" "+location.lang)
         this.location.lat = location.lat;
         this.location.lng = location.lng
 
@@ -131,23 +136,25 @@ class UserStore {
     }
 
     @action
-    async getLocation(){
-
+    async getLocation(callback){
         try{
-           await navigator.geolocation.getCurrentPosition((position) => {
+            navigator.geolocation.getCurrentPosition((position) => {
+              let coords = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            }
+              this.setLocation(coords);
 
-              this.setLocation( {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude
-                });
-
+              return callback()
             }, err => {
                 this.ipToLocation()
+                return callback()
               }
               , {enableHighAccuracy: false, timeout: 20000, maximumAge: 0})
 
         } catch (err){
             this.ipToLocation()
+            return callback()
         }
 
     }
