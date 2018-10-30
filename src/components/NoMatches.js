@@ -32,7 +32,7 @@ const Container = styled.div`
     grid-template-columns: 100%;
     grid-template-rows: 40% 50%;
     grid-row-gap: 2vh;
-    background-color: rgba(17,17,17,1); /* Black background with opacity */
+    background-color: #000000; /* Black background with opacity */
     z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
     cursor: pointer; /* Add a pointer on hover */
     margin-top:10vh;

@@ -1,0 +1,30 @@
+
+<svg width="81px" height="80px" viewBox="0 0 81 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <rect id="path-1" x="0" y="0" width="80" height="80" rx="6"></rect>
+        <text id="text-3" font-family="Apercu-Bold, Apercu" font-size="24" font-weight="bold" letter-spacing="-0.6666665" fill="#FFFFFF">
+            <tspan x="32.8060402" y="47.461039">+</tspan>
+        </text>
+        <filter x="-24.1%" y="-8.6%" width="148.1%" height="124.1%" filterUnits="objectBoundingBox" id="filter-4">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="1" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Phone-Screen" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Edit-Profile" transform="translate(-271.000000, -272.000000)">
+            <g id="Photo-Section" transform="translate(30.000000, 143.000000)">
+                <g id="Photo-4" transform="translate(241.276596, 129.000000)">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <use id="Rectangle-3" fill="#191919" fill-rule="nonzero" xlink:href="#path-1"></use>
+                    <g id="+" mask="url(#mask-2)" fill="#FFFFFF" fill-opacity="1">
+                        <use filter="url(#filter-4)" xlink:href="#text-3"></use>
+                        <use xlink:href="#text-3"></use>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
