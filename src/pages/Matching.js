@@ -32,25 +32,7 @@ export default class Matching extends Component{
     }
 
     componentDidMount() {
-         axios.get(`${process.env.REACT_APP_API_BASEURL}/matching`,{
-             params:{
-                 profile_id:this.props.store.userStore.profile_id
-             }
-         }).then(
-             res=>{
-                 if(res.data.length === 0){
-                    this.props.store.userStore.setNoProspects(true);
-                    this.setState({hasPayload:true})//used to take away the loading screen
-
-                 }else{
-                    this.props.store.userStore.setProspects(res.data)
-                    this.repopulatePhotos()
-                    this.setState({hasPayload:true})
-                 }
-
-
-             }
-         )
+        this.getProspects()
     }
 
     repopulatePhotos = () => {
@@ -168,27 +150,26 @@ export default class Matching extends Component{
     }
 
     getProspects = ()=>{
-         axios.get(`${process.env.REACT_APP_API_BASEURL}/matching`,{
-             params:{
-                 profile_id:this.props.store.userStore.profile_id
-             }
-         }).then(
-             res=>{
-
-                 if(res.data.length === 0){
-                    this.props.store.userStore.setNoProspects(true);
-                    this.setState({hasPayload:true});//used to remove the loading
-                 }else{
-
-                    this.props.store.userStore.setProspects(res.data);
-                    this.setState({hasPayload:true});
-                    this.props.store.userStore.setNoProspects(false);
+         this.props.store.userStore.getLocation(() => {
+            axios.get(`${process.env.REACT_APP_API_BASEURL}/matching`,{
+                 params:{
+                    profile_id:this.props.store.userStore.profile_id,
+                    lat: this.props.store.userStore.location.lat,
+                    lng: this.props.store.userStore.location.lng,
                  }
+            }).then(
+                 res=>{
+                     if(res.data.length === 0){
+                        this.props.store.userStore.setNoProspects(true);
+                        this.setState({hasPayload:true})//used to take away the loading screen
 
-
-
-             }
-         );
+                     }else{
+                        this.props.store.userStore.setProspects(res.data)
+                        this.repopulatePhotos()
+                        this.setState({hasPayload:true})
+                     }
+             })
+        })
     }
 
     render() {
