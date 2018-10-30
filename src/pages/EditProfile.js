@@ -54,7 +54,7 @@ class EditProfile extends Component {
                           type="file"
                           ref="fileUploader1"
                           style={{display:"none"}}
-                          onChange={e => this.handleSubmitImage(e, 1)}
+                          onChange={e => this.props.store.userStore.handleSubmitImage(e, 1)}
                         />
                       </Image>
                       <Image
@@ -68,7 +68,7 @@ class EditProfile extends Component {
                           type="file"
                           ref="fileUploader2"
                           style={{display:"none"}}
-                          onChange={e => this.handleSubmitImage(e, 2)}
+                          onChange={e => this.props.store.userStore.handleSubmitImage(e, 2)}
                         />
                       </Image>
                     </PhotosDivider>
@@ -84,7 +84,7 @@ class EditProfile extends Component {
                           type="file"
                           ref="fileUploader3"
                           style={{display:"none"}}
-                          onChange={e => this.handleSubmitImage(e, 3)}
+                          onChange={e => this.props.store.userStore.handleSubmitImage(e, 3)}
                           />
                       </Image>
                       <Image
@@ -98,7 +98,7 @@ class EditProfile extends Component {
                           type="file"
                           ref="fileUploader4"
                           style={{display:"none"}}
-                          onChange={e => this.handleSubmitImage(e, 4)}
+                          onChange={e => this.props.store.userStore.handleSubmitImage(e, 4)}
                           />
                       </Image>
                     </PhotosDivider>
