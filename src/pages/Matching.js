@@ -116,7 +116,7 @@ export default class Matching extends Component{
                 status: 1
         }, config).then(res=>{
             if(res.data.match_exists){
-
+                this.props.store.userStore.getLocation();
                 this.props.store.userStore.setIsMatched(true);
                 this.setState({show:this.props.store.userStore.isMatched});
             }else{
