@@ -25,13 +25,8 @@ class EditProfile extends Component {
       gay:this.props.store.userStore.gay,
       search_radius:this.props.store.userStore.radius,
     },config)
-    .then(response => {
-      console.log(response);
-
-    })
-    .catch(error => {
-      console.log(error);
-    })
+    .then(response => {})
+    .catch(error => {})
   }
 
 
@@ -72,10 +67,7 @@ class EditProfile extends Component {
       photo = photo.slice(photo.indexOf("/media"))
       this.props.store.userStore.setPic(num, photo)
     })
-    .catch(error => {
-      console.log(error);
-    })
-
+    .catch(error => {})
   }
 
   handleSame = (e) => {
@@ -115,7 +107,7 @@ class EditProfile extends Component {
                         bgImage = {this.props.store.userStore.photo_link_1}
                         onClick={(e) =>{this.refs.fileUploader1.click()}}
                       >
-                        <img shown={this.props.store.userStore.photo_link_1} src={addPhoto} alt='Add Profile Pic' />
+                        <UserPhoto shown={!this.props.store.userStore.photo_link_1} src={addPhoto} alt='Add Profile Pic' />
                         <input
                           id="imageOne"
                           type="file"
@@ -129,7 +121,7 @@ class EditProfile extends Component {
                         bgImage = {this.props.store.userStore.photo_link_2}
                         onClick={(e) =>{this.refs.fileUploader2.click();}}
                       >
-                        <img shown={this.props.store.userStore.photo_link_2} src={addPhoto} alt='Add Profile Pic' />
+                        <UserPhoto shown={!this.props.store.userStore.photo_link_2} src={addPhoto} alt='Add Profile Pic' />
                         <input
                           id="imageTwo"
                           type="file"
@@ -145,7 +137,7 @@ class EditProfile extends Component {
                         bgImage = {this.props.store.userStore.photo_link_3}
                         onClick={(e) =>{this.refs.fileUploader3.click();}}
                         >
-                        <img shown={this.props.store.userStore.photo_link_3} src={addPhoto} alt='Add Profile Pic' />
+                        <UserPhoto shown={!this.props.store.userStore.photo_link_3} src={addPhoto} alt='Add Profile Pic' />
                         <input
                           id="imageThree"
                           type="file"
@@ -159,7 +151,7 @@ class EditProfile extends Component {
                         bgImage = {this.props.store.userStore.photo_link_4}
                         onClick={(e) =>{this.refs.fileUploader4.click();}}
                         >
-                        <img shown={this.props.store.userStore.photo_link_4} src={addPhoto} alt='Add Profile Pic' />
+                        <UserPhoto shown={!this.props.store.userStore.photo_link_4} src={addPhoto} alt='Add Profile Pic' />
                         <input
                           id="imageFour"
                           type="file"
@@ -271,6 +263,11 @@ const ProfileImage = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
 `;
+
+const UserPhoto = styled.img`
+  ${props => !props.shown? css`display: none`: ''}
+`
+
 const ProfileImageMain = styled.img`
   max-height: 165px;
   max-width: 165px;

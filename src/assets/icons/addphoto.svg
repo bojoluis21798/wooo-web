@@ -1,10 +1,11 @@
-<svg width="74px" height="77px" viewBox="0 0 74 77" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+<svg width="81px" height="80px" viewBox="0 0 81 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <defs>
-        <rect id="path-1" x="0" y="0" width="73.7234043" height="77" rx="6"></rect>
+        <rect id="path-1" x="0" y="0" width="80" height="80" rx="6"></rect>
         <text id="text-3" font-family="Apercu-Bold, Apercu" font-size="24" font-weight="bold" letter-spacing="-0.6666665" fill="#FFFFFF">
-            <tspan x="29.7084995" y="46">+</tspan>
+            <tspan x="32.8060402" y="47.461039">+</tspan>
         </text>
-        <filter x="-26.1%" y="-8.6%" width="152.2%" height="124.1%" filterUnits="objectBoundingBox" id="filter-4">
+        <filter x="-24.1%" y="-8.6%" width="148.1%" height="124.1%" filterUnits="objectBoundingBox" id="filter-4">
             <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
             <feGaussianBlur stdDeviation="1" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
             <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>

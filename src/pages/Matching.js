@@ -58,10 +58,10 @@ export default class Matching extends Component{
 
         let urls = [
             this.props.store.userStore.currentProspect.profile_image,
-            this.props.store.userStore.currentProspect.supporting_pic_1,
-            this.props.store.userStore.currentProspect.supporting_pic_2,
-            this.props.store.userStore.currentProspect.supporting_pic_3,
-            this.props.store.userStore.currentProspect.supporting_pic_4
+            process.env.REACT_APP_MEDIA_BASEURL + this.props.store.userStore.currentProspect.supporting_pic_1,
+            process.env.REACT_APP_MEDIA_BASEURL + this.props.store.userStore.currentProspect.supporting_pic_2,
+            process.env.REACT_APP_MEDIA_BASEURL + this.props.store.userStore.currentProspect.supporting_pic_3,
+            process.env.REACT_APP_MEDIA_BASEURL + this.props.store.userStore.currentProspect.supporting_pic_4
         ]
 
         for(let i = 0; i < 5; i++){
