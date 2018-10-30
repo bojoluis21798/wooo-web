@@ -13,7 +13,7 @@ export default class HeaderArea extends Component {
         if(this.props.type === 'back') {
             return(
                 <BackArea type = {this.props.type} >
-                 <Link to='/edit-profile'>
+                 <Link to='/dashboard'>
                     <TopButton>
                         <Icon src={this.props.type === "back" ? back : close}/>
                     </TopButton>
