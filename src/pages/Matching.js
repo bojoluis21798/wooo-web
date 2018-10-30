@@ -232,14 +232,8 @@ export default class Matching extends Component{
                                             this.props.store.userStore.currentProspect.user.first_name
                                             :""
                                         }
-                                        ,
-                                        {
-                                            this.props.store.userStore.currentProspect &&
-                                            this.props.store.userStore.currentProspect.age?
-                                            this.props.store.userStore.currentProspect.age:""
-                                        }
                                     </TextDiv>
-                                    {/* <TextDiv level= "2">{this.state.people[0].location}</TextDiv> */}
+                                    <TextDiv level= "2">{this.props.store.userStore.currentProspect.location}</TextDiv>
                                 </BioRow>
                                 <BioRow>
                                     <TextDiv level = "3">{this.props.store.userStore.currentProspect && this.props.store.userStore.currentProspect.bio?this.props.store.userStore.currentProspect.bio:""}</TextDiv>
