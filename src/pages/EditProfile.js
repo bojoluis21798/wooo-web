@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import styled, {css} from "styled-components"
 import { inject, observer } from 'mobx-react'
 import { ToastContainer } from "react-toastify"
-import axios from "axios"
 import Slider from "rc-slider"
 import "rc-slider/assets/index.css"
 import axios from "axios"
