@@ -12,17 +12,7 @@ import Messages from '../components/Messages'
 import Rebase from 're-base'
 import { animateScroll } from 'react-scroll'
 
-const config = {
-    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-    authDomain: process.env.REACT_APP_FIREBASE_AUTHDOMAIN,
-    databaseURL: process.env.REACT_APP_FIREBASE_DBURL,
-    projectId: process.env.REACT_APP_FIREBASE_PROJECTID,
-    storageBucket: process.env.REACT_APP_FIREBASE_STORAGEBUCKET,
-    messagingSenderId: process.env.REACT_APP_FIREBASE_SENDERID
-};
-
-const app = firebase.initializeApp(config);
-const base = Rebase.createClass(app.database());
+const base = Rebase.createClass(firebase.database());
 
 @inject('store') @observer
 export default class MessageThread extends Component {
