@@ -1,4 +1,3 @@
-
 import { observable, action,computed } from 'mobx'
 import axios from 'axios'
 import dog from '../assets/images/dog.jpeg';
@@ -57,15 +56,21 @@ class UserStore {
     @action
     async authenticateUser(authObj) {
         try {
-            this.getLocation()
-            let response = await axios.post(`${process.env.REACT_APP_API_BASEURL}/login/`, {
-                accessToken: authObj.accessToken,
-                lng:this.location.lng,
-                lat:this.location.lat
+            return this.getLocation(() => {
+                axios.post(`${process.env.REACT_APP_API_BASEURL}/login/`, {
+                    accessToken: authObj.accessToken,
+                    lng:this.location.lng,
+                    lat:this.location.lat
+                }).then(response=> {
+                    console.log(response.data)
+                    this.populateUser(response.data)
+                    this.insertToken(authObj)
+                    return true
+                }).catch(error => {
+                    console.log(error)
+                    return false
+                })
             })
-            this.populateUser(response.data)
-            this.insertToken(authObj)
-            return true
         } catch(err) {
             return false
         }
@@ -87,7 +92,7 @@ class UserStore {
         this.preference = userAuth.user_profile.sexual_preference
         this.profile_id = userAuth.user_profile.id
         this.gay = userAuth.user_profile.gay
-        this.user_slug = userAuth.user_profile.user.slug
+        this.user_slug = userAuth.user_profile.slug
     }
 
     @action
@@ -102,10 +107,7 @@ class UserStore {
         return redirectLink
     }
 
-    @action
-    setBio(bio){
-        this.biography = bio
-    }
+    
 
     @action
     setLocation(location){
@@ -151,7 +153,6 @@ class UserStore {
 
     @action
     handleSubmit(){
-
         const fd = new FormData()
         const url = `${process.env.REACT_APP_API_BASEURL}/profiles/${this.profile_id}/`;
         const config = {
@@ -159,14 +160,15 @@ class UserStore {
                 'Authorization': 'Token ' + this.token,
             }
         }
-        fd.append('bio',this.biography)
         fd.append('sexual_preference',this.preference)
         fd.append('gay',this.gay)
         fd.append('search_radius',this.radius)
-
+        fd.append('location', this.location)
+        fd.append('slug', this.user_slug)
+        fd.append('token', this.accessToken)
         axios.put(url,fd,config)
         .then(response => {
-            
+            console.log(response)
         })
         .catch(error => {
             console.log(error)
@@ -186,9 +188,13 @@ class UserStore {
         }
         fd.append('supporting_pic_'+num+'',e.target.files[0])
         fd.append('gay',this.gay)
+        fd.append('location', this.location)
+        fd.append('slug', this.user_slug)
+        fd.append('token', this.accessToken)
 
         axios.put(url,fd,config)
         .then(response => {
+            console.log(response.data)
             let photo;
 
             switch(num){
@@ -212,7 +218,12 @@ class UserStore {
         })
         .catch(error => {
             console.log(error)
-        })   
+        })
+    }
+
+    @action
+    setBio(bio){
+        this.biography = bio
     }
 
     @action
@@ -221,23 +232,25 @@ class UserStore {
     }
 
     @action
-    async getLocation(){
-
+    async getLocation(callback){
         try{
-           await navigator.geolocation.getCurrentPosition((position) => {
+            navigator.geolocation.getCurrentPosition((position) => {
+              let coords = {
+                lat: parseFloat(position.coords.latitude),
+                lng: parseFloat(position.coords.longitude)
+            }
+              this.setLocation(coords);
 
-              this.setLocation( {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude
-                });
-
+              return callback()
             }, err => {
                 this.ipToLocation()
+                return callback()
               }
               , {enableHighAccuracy: false, timeout: 20000, maximumAge: 0})
 
         } catch (err){
             this.ipToLocation()
+            return callback()
         }
 
     }

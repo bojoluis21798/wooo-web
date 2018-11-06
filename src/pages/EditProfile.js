@@ -4,20 +4,38 @@ import { inject, observer } from 'mobx-react'
 import { ToastContainer } from "react-toastify"
 import Slider from "rc-slider"
 import "rc-slider/assets/index.css"
+import axios from "axios"
 import AuthorizedLayout from '../layouts/AuthorizedLayout'
 import addPhoto from '../assets/icons/addphoto.svg'
 
 @inject('store')
 @observer
 class EditProfile extends Component {
+  
+  handleSubmitBio = (e) => {
+    const fd = new FormData()
+        const url = `${process.env.REACT_APP_API_BASEURL}/profiles/${this.props.store.userStore.profile_id}/`;
+        const config = {
+            headers: {
+                'Authorization': 'Token ' + this.props.store.userStore.token,
+            }
+        }
+        fd.append('bio',this.props.store.userStore.biography)
+        fd.append('location', this.props.store.userStore.location)
+        fd.append('slug', this.props.store.userStore.user_slug)
+        axios.put(url,fd,config)
+        .then(response => {
+            console.log(response)
+        })
+  }
 
   handleSame = (e) => {
-    this.props.store.userStore.setPreference(1)
+    this.props.store.userStore.setPreference(0)
     this.props.store.userStore.handleSubmit()
   }
 
   handleOpposite = (e) => {
-    this.props.store.userStore.setPreference(0)
+    this.props.store.userStore.setPreference(1)
     this.props.store.userStore.handleSubmit()
   }
 
@@ -33,6 +51,7 @@ class EditProfile extends Component {
   myfunction = ()=>{
     this.props.history.push('/matching');
   }
+
     render(){
         return (
           <AuthorizedLayout>
@@ -111,7 +130,7 @@ class EditProfile extends Component {
                 value={this.props.store.userStore.biography}
                 placeholder="Tell us about yourself!"
                 onChange={this.handleChangeBio}
-                onBlur={this.props.store.userStore.handleSubmit()}
+                onBlur={this.handleSubmitBio}
               />
               <Tagline>Preference</Tagline>
               <PreferenceContainer>
