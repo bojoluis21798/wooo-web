@@ -32,25 +32,7 @@ export default class Matching extends Component{
     }
 
     componentDidMount() {
-         axios.get(`${process.env.REACT_APP_API_BASEURL}/matching`,{
-             params:{
-                 profile_id:this.props.store.userStore.profile_id
-             }
-         }).then(
-             res=>{
-                 if(res.data.length === 0){
-                    this.props.store.userStore.setNoProspects(true);
-                    this.setState({hasPayload:true})//used to take away the loading screen
-
-                 }else{
-                    this.props.store.userStore.setProspects(res.data)
-                    this.repopulatePhotos()
-                    this.setState({hasPayload:true})
-                 }
-
-
-             }
-         )
+        this.getProspects()
     }
 
     repopulatePhotos = () => {
@@ -58,15 +40,19 @@ export default class Matching extends Component{
 
         let urls = [
             this.props.store.userStore.currentProspect.profile_image,
-            process.env.REACT_APP_MEDIA_BASEURL + this.props.store.userStore.currentProspect.supporting_pic_1,
-            process.env.REACT_APP_MEDIA_BASEURL + this.props.store.userStore.currentProspect.supporting_pic_2,
-            process.env.REACT_APP_MEDIA_BASEURL + this.props.store.userStore.currentProspect.supporting_pic_3,
-            process.env.REACT_APP_MEDIA_BASEURL + this.props.store.userStore.currentProspect.supporting_pic_4
+            this.props.store.userStore.currentProspect.supporting_pic_1,
+            this.props.store.userStore.currentProspect.supporting_pic_2,
+            this.props.store.userStore.currentProspect.supporting_pic_3,
+            this.props.store.userStore.currentProspect.supporting_pic_4
         ]
 
-        for(let i = 0; i < 5; i++){
+        if(urls[0]){
+            photos.push(urls[0])
+        }
+
+        for(let i = 1; i < 5; i++){
             if(urls[i]){
-                photos.push(urls[i])
+                photos.push(process.env.REACT_APP_MEDIA_BASEURL + urls[i])
             }
         }
 
@@ -168,27 +154,26 @@ export default class Matching extends Component{
     }
 
     getProspects = ()=>{
-         axios.get(`${process.env.REACT_APP_API_BASEURL}/matching`,{
-             params:{
-                 profile_id:this.props.store.userStore.profile_id
-             }
-         }).then(
-             res=>{
-
-                 if(res.data.length === 0){
-                    this.props.store.userStore.setNoProspects(true);
-                    this.setState({hasPayload:true});//used to remove the loading
-                 }else{
-
-                    this.props.store.userStore.setProspects(res.data);
-                    this.setState({hasPayload:true});
-                    this.props.store.userStore.setNoProspects(false);
+         this.props.store.userStore.getLocation(() => {
+            axios.get(`${process.env.REACT_APP_API_BASEURL}/matching`,{
+                 params:{
+                    profile_id:this.props.store.userStore.profile_id,
+                    lat: this.props.store.userStore.location.lat,
+                    lng: this.props.store.userStore.location.lng,
                  }
+            }).then(
+                 res=>{
+                     if(res.data.length === 0){
+                        this.props.store.userStore.setNoProspects(true);
+                        this.setState({hasPayload:true})//used to take away the loading screen
 
-
-
-             }
-         );
+                     }else{
+                        this.props.store.userStore.setProspects(res.data)
+                        this.repopulatePhotos()
+                        this.setState({hasPayload:true})
+                     }
+             })
+        })
     }
 
     render() {
@@ -240,21 +225,15 @@ export default class Matching extends Component{
                             <TextContainer>
                                 <BioRow>
                                     <TextDiv level = "1">
-                                        { 
+                                        {
                                             this.props.store.userStore.currentProspect &&
-                                            this.props.store.userStore.currentProspect.user && 
+                                            this.props.store.userStore.currentProspect.user &&
                                             this.props.store.userStore.currentProspect.user.first_name?
                                             this.props.store.userStore.currentProspect.user.first_name
                                             :""
                                         }
-                                        ,
-                                        {
-                                            this.props.store.userStore.currentProspect &&
-                                            this.props.store.userStore.currentProspect.age?
-                                            this.props.store.userStore.currentProspect.age:""
-                                        }
                                     </TextDiv>
-                                    {/* <TextDiv level= "2">{this.state.people[0].location}</TextDiv> */}
+                                    <TextDiv level= "2">{this.props.store.userStore.currentProspect.location}</TextDiv>
                                 </BioRow>
                                 <BioRow>
                                     <TextDiv level = "3">{this.props.store.userStore.currentProspect && this.props.store.userStore.currentProspect.bio?this.props.store.userStore.currentProspect.bio:""}</TextDiv>
@@ -343,7 +322,7 @@ const TextDiv = styled.div`
                     return(
                         css`
                             font-size:3.5vh
-                            font-weight: 300
+                            font-weight: 500
                         `
                     )
                 case "2":

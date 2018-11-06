@@ -36,7 +36,7 @@ export default class Messages extends Component {
           var pairedInfo = {
             pairedId: element.id,
             pairedName: element.user.first_name,
-            pairedSlug: element.user.slug,
+            pairedSlug: element.slug,
             pairedBio: element.bio,
             pairedImage: element.profile_image,
             roomId: this.state.currentUser+'R'+element.id,

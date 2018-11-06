@@ -35,6 +35,7 @@ class EditProfile extends Component {
 
   handleGay = (e) => {
     this.props.store.userStore.setPreference(0)
+
     this.props.store.userStore.handleSubmit()
   }
 

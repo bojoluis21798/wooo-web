@@ -10,6 +10,7 @@ import firebase from 'firebase'
 import AuthorizedLayout from '../layouts/AuthorizedLayout'
 import Messages from '../components/Messages'
 import Rebase from 're-base'
+import { animateScroll } from 'react-scroll'
 
 const config = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -29,10 +30,9 @@ export default class MessageThread extends Component {
     messageDetail: { },
     message: "", 
     userId: this.props.store.userStore.profile_id,
-    status: ""
+    status: "",
+    list: []
   }
-
-  messageList = React.createRef()
 
   componentDidMount() {
     this.messageReff = firebase.database().ref().child('roomData/'+this.props.location.state.roomId);
@@ -79,7 +79,7 @@ export default class MessageThread extends Component {
   }
   
   handleVideo = () => {
-    var videoURL = this.props.location.state.pairedName + " is calling you! Click here " + window.location.origin + "/video/" + this.props.location.state.pairedSlug +" to answer.";
+    var videoURL = this.props.location.state.pairedName + " called you " + window.location.origin + "/video/" + this.props.location.state.pairedSlug +" to answer.";
     let messageDet = Object.assign({}, this.state.messageDetail);
     const id = Date.now() + "" + this.state.userId;
     messageDet[id] = {
@@ -91,29 +91,24 @@ export default class MessageThread extends Component {
   }
   subscribeToMessages = () => {
     this.messageReff
-    .limitToLast(100)
-    .on('value', message => {
-        this.setState({
+      .limitToLast(100)
+      .on('value', message => {
+        if(message && message.val()) 
+          this.setState({
             list: Object.values(message.val()),
-        });
-        this.messageListScrollToBottom()
+          });
+        this.scrollToBottom()
     });
   }
 
-  handleScrolling = el => {
-    this.messageList = el
-    this.messageListScrollToBottom()
+  scrollToBottom = () => {
+    animateScroll.scrollToBottom()
   }
 
   componentDidUpdate() {
-    this.messageListScrollToBottom();
+    this.scrollToBottom()
   }
   
-  messageListScrollToBottom = () => {
-    if(this.messageList && this.messageList.current)
-      this.messageList.current.scrollIntoView({ behavior: 'smooth' })
-  }
-
   userStatus = () => {
     this.userStatusRef = firebase.database().ref().child('users/'+this.props.location.state.pairedId).limitToLast(1).on('value', message => {
       if(message.val()){
@@ -160,8 +155,8 @@ export default class MessageThread extends Component {
                   )}
                 </div>
             </Content>
-            <MessageList innerRef={this.messageList}>
-              { this.state.list && this.state.list.map((message, index) => (
+            <MessageList>
+              { this.state.list && this.state.list.length? this.state.list.map((message, index) => (
                   <Messages 
                   key={index}
                   {...message}
@@ -170,7 +165,7 @@ export default class MessageThread extends Component {
                   user1={this.props.store.userStore.profile_id}
                   user2={this.props.location.state.pairedId}
                   />
-                ))
+                )): ''
               }
             </MessageList>
             <Chat>
@@ -238,8 +233,8 @@ const Chat = styled.div`
   color: #ffffff;
   background-color: #191919;
   border-radius: 5px;
-  position: absolute;
-  bottom: 20px;
+  position: fixed;
+  bottom: 10px;
   left: -12px
   margin-left: 5%;
   margin-right: 5%;
@@ -265,7 +260,7 @@ const Input = styled.input`
 
 const MessageList = styled.div`
   margin-top: 30px;
-  height: 72vh;
+  margin-bottom: 40px;
   overflow-y: scroll;
 
   &::-webkit-scrollbar-track  {
