@@ -1,5 +1,5 @@
-import React,{Component} from 'react';
-import { inject, observer } from "mobx-react";
+import React,{Component} from 'react'
+import { inject, observer } from "mobx-react"
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
@@ -10,21 +10,14 @@ export default class MatchList extends Component{
         if(this.props.store.userStore.matches.length !== 0 && this.props.store.userStore.matches.matches_exists !== false){
             return (
               <ContainerMain>
-                {
-                    this.props.store.userStore.matches.map(match=>{
-                        let lower = Math.min(match.id, this.props.store.userStore.profile_id)
-                        let higher = Math.max(match.id, this.props.store.userStore.profile_id)
-
-                        return (
-                            <Person key={match.id}>
-                                <Link to={`/messages/${lower}R${higher}`}>
-                                    <Image src={match.profile_image} />
-                                </Link>
-                                <Name>{match.user.first_name}</Name>
-                            </Person>
-                        )
-                    })
-                }
+                { this.props.pairedUser.length && this.props.pairedUser.map((match, index) => (
+                    <Person key={index}>
+                        <Link to={{pathname: `/messages/${match.roomId}`, state: match }}>
+                            <Image src={match.pairedImage} />
+                        </Link>
+                    <Name>{match.pairedName}</Name>
+                </Person>
+                )) }
               </ContainerMain>
             );
         }else{
@@ -35,12 +28,8 @@ export default class MatchList extends Component{
                 </Container>
             );
         }
-
-
     }
-
 }
-
 const ContainerMain=styled.div`
     margin-top: 5vh;
     display:grid
