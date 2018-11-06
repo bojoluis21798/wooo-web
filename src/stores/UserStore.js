@@ -108,10 +108,7 @@ class UserStore {
         return redirectLink
     }
 
-    @action
-    setBio(bio){
-        this.biography = bio
-    }
+    
 
     @action
     setLocation(location){
@@ -157,7 +154,6 @@ class UserStore {
 
     @action
     handleSubmit(){
-
         const fd = new FormData()
         const url = `${process.env.REACT_APP_API_BASEURL}/profiles/${this.profile_id}/`;
         const config = {
@@ -165,7 +161,6 @@ class UserStore {
                 'Authorization': 'Token ' + this.token,
             }
         }
-        fd.append('bio',this.biography)
         fd.append('sexual_preference',this.preference)
         fd.append('gay',this.gay)
         fd.append('search_radius',this.radius)
@@ -174,7 +169,7 @@ class UserStore {
         fd.append('token', this.accessToken)
         axios.put(url,fd,config)
         .then(response => {
-
+            console.log(response)
         })
         .catch(error => {
             console.log(error)
@@ -225,6 +220,11 @@ class UserStore {
         .catch(error => {
             console.log(error)
         })
+    }
+
+    @action
+    setBio(bio){
+        this.biography = bio
     }
 
     @action
