@@ -3,7 +3,9 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import RootStore from "./stores/RootStore";
 import { Provider } from "mobx-react";
 import { hot } from 'react-hot-loader';
-import firebase from 'firebase'
+
+// Helpers
+import './helpers/firebase'
 
 // Pages
 import Login from "./pages/Login";
@@ -16,17 +18,6 @@ import EditProfile from './pages/EditProfile'
 import VideoChat from './pages/VideoChat'
 import ErrorPage from './pages/ErrorPage'
 import Dashboard from './pages/Dashboard'; 
-
-const config = {
-  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-  authDomain: process.env.REACT_APP_FIREBASE_AUTHDOMAIN,
-  databaseURL: process.env.REACT_APP_FIREBASE_DBURL,
-  projectId: process.env.REACT_APP_FIREBASE_PROJECTID,
-  storageBucket: process.env.REACT_APP_FIREBASE_STORAGEBUCKET,
-  messagingSenderId: process.env.REACT_APP_FIREBASE_SENDERID
-};
-
-firebase.initializeApp(config)
 
 class App extends Component {
   state = { loading: true };

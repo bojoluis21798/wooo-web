@@ -140,7 +140,7 @@ export default class MessageThread extends Component {
                 </Ree>
                 <div>
                   {this.state.status === "Active" && (
-                  <Link to={`/video/${this.props.location && this.props.location.state && this.props.location.state.pairedSlug}`}>
+                  <Link to={`/calling/${this.props.location && this.props.location.state && this.props.location.state.pairedSlug}`}>
                       <img src={video} alt="Video Call"></img>
                   </Link>
                   )}
