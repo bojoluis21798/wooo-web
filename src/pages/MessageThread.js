@@ -35,6 +35,7 @@ export default class MessageThread extends Component {
   }
 
   componentDidMount() {
+    console.log(this.props.location.test) 
     this.messageReff = firebase.database().ref().child('roomData/'+this.props.location.state.roomId);
     this.messageRef = base.syncState('roomData/'+this.props.location.state.roomId,{
       context: this,
