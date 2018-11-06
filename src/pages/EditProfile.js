@@ -2,16 +2,20 @@ import React, {Component} from 'react'
 import styled, {css} from "styled-components"
 import { inject, observer } from 'mobx-react'
 import { ToastContainer } from "react-toastify"
+import axios from "axios"
 import Slider from "rc-slider"
 import "rc-slider/assets/index.css"
-import axios from "axios"
 import AuthorizedLayout from '../layouts/AuthorizedLayout'
 import addPhoto from '../assets/icons/addphoto.svg'
 
 @inject('store')
 @observer
 class EditProfile extends Component {
-  
+  // constructor(props){
+  //   super(props)
+  //   this.delayedCallback = _.debounce(this.props.store.userStore.setBio, 1000)
+  // }
+
   handleSubmitBio = (e) => {
     const fd = new FormData()
         const url = `${process.env.REACT_APP_API_BASEURL}/profiles/${this.props.store.userStore.profile_id}/`;
@@ -29,12 +33,12 @@ class EditProfile extends Component {
         })
   }
 
-  handleSame = (e) => {
+  handleGay = (e) => {
     this.props.store.userStore.setPreference(0)
     this.props.store.userStore.handleSubmit()
   }
 
-  handleOpposite = (e) => {
+  handleStraight = (e) => {
     this.props.store.userStore.setPreference(1)
     this.props.store.userStore.handleSubmit()
   }
@@ -45,6 +49,8 @@ class EditProfile extends Component {
   }
 
   handleChangeBio = (e) => {
+    // e.persist()
+    // this.delayedCallback(e)
     this.props.store.userStore.setBio(e.target.value);
   }
 
@@ -134,16 +140,16 @@ class EditProfile extends Component {
               />
               <Tagline>Preference</Tagline>
               <PreferenceContainer>
-                <PreferenceButton id="Opposite"
-                    aria-label="Opposite"
+                <PreferenceButton id="Straight"
+                    aria-label="Straight"
                     value= "1"
-                    onClick={this.handleOpposite}
+                    onClick={this.handleStraight}
                     active = {this.props.store.userStore.preference === 1}
                   >Straight</PreferenceButton>
-                <PreferenceButton id="same"
-                    aria-label="Same"
+                <PreferenceButton id="Gay"
+                    aria-label="Gay"
                     value= "1"
-                    onClick={this.handleSame}
+                    onClick={this.handleGay}
                     active = {this.props.store.userStore.preference === 0}
                 >Gay</PreferenceButton>
               </PreferenceContainer>
