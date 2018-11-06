@@ -54,7 +54,7 @@ export default class Login extends Component {
               fields="name,email,picture"
               scope="public_profile,email,user_gender"
               callback={this.responseFacebook}
-              redirectUri={`${process.env.REACT_APP_SITE}/login`}
+              redirectUri={`${process.env.REACT_APP_SITE}/login?loggedin=true`}
               onClick={this.onLoginButtonClick}
               cookie={true}
               autoLoad={true}
