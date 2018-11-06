@@ -8,7 +8,11 @@ import '../assets/styles/css/opentok.css'
 import SmallLoading from '../components/SmallLoading'
 import firebase from 'firebase'
 import endCall from '../assets/icons/endcall.svg'
-import { Link } from 'react-router-dom'
+import Rebase from 're-base'
+import _ from 'lodash'
+import { Redirect } from 'react-router-dom'
+
+const base = Rebase.createClass(firebase.database())
 
 @inject('store')
 @observer
@@ -25,19 +29,28 @@ export default class VideoChat extends Component {
         showControls: true
     }
 
-    async componentDidMount() {
-        this.props.store.appStore.startLoading()
+    componentDidMount() {
+        base.syncState(`/call/${this.props.store.messageStore.currentThread}`, {
+            context: this,
+            state: 'call'
+        })
+    }
+    
+    async componentWillMount() {
         const response = await axios.get(`${process.env.REACT_APP_OPENTOK_SERVER}/get_token/${this.props.match.params.slug}/${this.props.store.userStore.user_slug}`)
-        const data = response.data
-        const { token, session } = data
+        const { token, session } = response.data
         this.setState({ token, session })
-        this.props.store.appStore.doneLoading()
+    }
+    
+    endCall = () => {
+        this.setState({ call: null })
+        this.props.history.goBack()
     }
 
     render() {
         return (
             <AuthorizedLayout noheaders={true} noPad={true} className={`key-is-${process.env.REACT_APP_OPENTOK_KEY}`}>
-                <VideoContent>
+                { Object.keys(this.state.call || {}).length >= 2? <VideoContent>
                     { this.state.session && this.state.token? (
                         <OTSession 
                             apiKey={process.env.REACT_APP_OPENTOK_KEY}
@@ -53,9 +66,9 @@ export default class VideoChat extends Component {
                             </OTStreams>
                         </OTSession>): <SmallLoading /> 
                     }
-                </VideoContent>
+                </VideoContent>: <AuthorizedLayout noheaders={true}><EmphasizedText>{ Object.keys(this.state.call || {}).length === 1? 'Waiting for a response.': 'This call session has ended.' } </EmphasizedText></AuthorizedLayout> }
                 <div className='video__button'>
-                    <img onClick={this.props.history.goBack} src={endCall} alt='End call' className='video__button--end_call' />
+                    <img onClick={this.endCall} src={endCall} alt='End call' className='video__button--end_call' />
                 </div>
             </AuthorizedLayout>
         )
@@ -65,4 +78,13 @@ export default class VideoChat extends Component {
 const VideoContent = styled.div`
     width: 100vw;
     height: 100vh;
+`
+
+const EmphasizedText = styled.div`
+    height: 100vh;
+    font-size: 25px;
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    justify-content: center;
 `
