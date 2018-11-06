@@ -65,6 +65,7 @@ class EditProfile extends Component {
           <AuthorizedLayout>
           <ToastContainer />
             <ProfileContent>
+            <GenderModal/>
               <Tagline>Photos</Tagline>
               <ProfileImage>
                   <ProfileImageMain alt='Profile' src={this.props.store.userStore.profilePicture} />
