@@ -4,6 +4,9 @@ import RootStore from "./stores/RootStore";
 import { Provider } from "mobx-react";
 import { hot } from 'react-hot-loader';
 
+// Helpers
+import './helpers/firebase'
+
 // Pages
 import Login from "./pages/Login";
 import Loading from "./pages/Loading";

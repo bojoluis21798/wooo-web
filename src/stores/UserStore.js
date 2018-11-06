@@ -243,6 +243,7 @@ class UserStore {
     @action
     setMatches(matches){
         this.matches = matches;
+        console.log(this.matches)
     }
 
     @action
