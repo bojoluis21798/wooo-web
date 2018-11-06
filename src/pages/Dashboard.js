@@ -5,6 +5,7 @@ import AuthorizedLayout from '../layouts/AuthorizedLayout'
 import axios from 'axios'
 import MatchList from '../components/MatchList';
 import SmallLoading from '../components/SmallLoading'
+import Gender from '../components/GenderModal'
 
 @observer
 @inject('store')
@@ -34,6 +35,9 @@ export default class Dashboard extends Component{
                     <Header>
                             <HeaderStyle>Matches</HeaderStyle>
                     </Header>
+                }
+                {
+                    (this.props.store.userStore.gender === -1) &&  <Gender/>
                 }
                     { !this.state.loading? <MatchList></MatchList>: <SmallLoading /> }
             </AuthorizedLayout>
