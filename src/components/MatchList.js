@@ -7,21 +7,23 @@ import { Link } from 'react-router-dom'
 @observer
 export default class MatchList extends Component{
     render(){
-        const store = this.props.store.userStore;
-
-        if(store.matches.length !== 0 && store.matches.matches_exists !== false){
+        if(this.props.store.userStore.matches.length !== 0 && this.props.store.userStore.matches.matches_exists !== false){
             return (
               <ContainerMain>
                 {
-                    store.matches.map(match=>(
+                    this.props.store.userStore.matches.map(match=>{
+                        let lower = Math.min(match.id, this.props.store.userStore.profile_id)
+                        let higher = Math.max(match.id, this.props.store.userStore.profile_id)
 
-                        <Person key={match.id}>
-                            <Link to={`/messages/${match.id}`}>
-                                <Image src={match.profile_image} />
-                            </Link>
-                            <Name>{match.user.first_name}</Name>
-                        </Person>
-                    ))
+                        return (
+                            <Person key={match.id}>
+                                <Link to={`/messages/${lower}R${higher}`}>
+                                    <Image src={match.profile_image} />
+                                </Link>
+                                <Name>{match.user.first_name}</Name>
+                            </Person>
+                        )
+                    })
                 }
               </ContainerMain>
             );
@@ -76,7 +78,7 @@ const Text = styled.div `
 `
 
 const Button = styled.button`
-    background-color:#F11A61; 
+    background-color:#F11A61;
     border: none;
     color: white;
     text-align: center;
