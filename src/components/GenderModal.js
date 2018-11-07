@@ -62,35 +62,42 @@ const Male = styled.input`
     font-weight: 500;
     text-transform: uppercase;
     font-size: 17px;
-    color: #ffffff;
+    color: #f51a63;
     letter-spacing: 0.01px;
     text-align: center;
-    background-color: blue;
     border-radius: 29px;
-    border: 0;
-    padding: 12px;
-    width: 300px;
+    border-style:solid;
+    border-weight:1px;
+    border-color:black;
+    padding-left:7vh;
+    padding-right:7vh;
+    padding-top:3vh;
+    padding-bottom:3vh;
     margin: auto;
-    display: block;
     margin-bottom: 5px;
+    background-color:white;
 `;
 
 const Female = styled.input`
+    padding-left:7vh;
+    padding-right:7vh;
+    padding-top:3vh;
+    padding-bottom:3vh;
     font-family: 'Apercu';;
     font-weight: 500;
     text-transform: uppercase;
     font-size: 17px;
-    color: black;
+    color:white;
     letter-spacing: 0.01px;
     text-align: center;
-    background-color: pink;
+    background-color: #f51a63;
     border-radius: 29px;
-    border: 0;
-    padding: 12px;
-    width: 300px;
+    padding-left:7vh;
+    padding-right:7vh;
+    padding-top:3vh;
+    padding-bottom:3vh;
     margin: auto;
     display: block;
     margin-bottom: 5px;
+    border:0;
 `;
-
-
