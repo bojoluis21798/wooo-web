@@ -1,6 +1,6 @@
-
 import { observable, action,computed } from 'mobx'
 import axios from 'axios'
+import _ from "lodash"
 import dog from '../assets/images/dog.jpeg';
 import dog2 from '../assets/images/dog2.jpg';
 import dog3 from '../assets/images/dog3.jpg';
@@ -80,7 +80,6 @@ class UserStore {
 
     @action
     populateUser(userAuth) {
-        console.log(userAuth)
         this.token = userAuth.auth_token
         this.name = userAuth.user_profile.user.full_name
         this.email = true
@@ -110,16 +109,13 @@ class UserStore {
         return redirectLink
     }
 
-    @action
-    setBio(bio){
-        this.biography = bio
-    }
+
+    
 
     @action
     setLocation(location){
-        this.location.lat = location.lat;
+        this.location.lat = location.lat
         this.location.lng = location.lng
-
     }
 
     @action
@@ -164,7 +160,6 @@ class UserStore {
 
     @action
     handleSubmit(){
-
         const fd = new FormData()
         const url = `${process.env.REACT_APP_API_BASEURL}/profiles/${this.profile_id}/`;
         const config = {
@@ -172,17 +167,15 @@ class UserStore {
                 'Authorization': 'Token ' + this.token,
             }
         }
-        fd.append('bio',this.biography)
         fd.append('sexual_preference',this.preference)
-        fd.append('gay',this.gay)
+        fd.append('bio',this.biography)
         fd.append('search_radius',this.radius)
-        fd.append('location', this.location)
         fd.append('slug', this.user_slug)
         fd.append('gender', this.gender)
         fd.append('token', this.accessToken)
         axios.put(url,fd,config)
         .then(response => {
-
+            console.log(response)
         })
         .catch(error => {
             console.log(error)
@@ -201,8 +194,6 @@ class UserStore {
             }
         }
         fd.append('supporting_pic_'+num+'',e.target.files[0])
-        fd.append('gay',this.gay)
-        fd.append('location', this.location)
         fd.append('slug', this.user_slug)
         fd.append('token', this.accessToken)
 
@@ -236,8 +227,14 @@ class UserStore {
     }
 
     @action
+    setBio(bio){
+        this.biography = bio
+    }
+
+    @action
     setMatches(matches){
         this.matches = matches;
+        console.log(this.matches)
     }
 
     @action

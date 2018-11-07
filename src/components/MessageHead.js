@@ -1,12 +1,23 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import { inject, observer } from 'mobx-react';
 
+@inject('store')
+@observer
 export default class MessageHead extends Component {
-  render() {
+    informStore = () => {
+        this.props.store.messageStore.setCurrentThread(this.props.roomId)
+        this.props.store.messageStore.setPairName(this.props.pairedName)
+        this.props.store.messageStore.setPairSlug(this.props.pairedSlug)
+        this.props.store.messageStore.setPairImage(this.props.pairedImage)
+        this.props.store.messageStore.setThreadPageState(this.props)
+    }
+  
+    render() {
     return (
         <Item>
-            <Linked to={{ pathname: `/messages/${(this.props.roomId || '') }`, state: this.props }}>
+            <Linked onClick={this.informStore} to={{ pathname: `/messages/${(this.props.roomId || '') }`}}>
                 <Content>
                     {this.props.roomId && <Image src={this.props.pairedImage} alt={this.props.name}/> } 
                     <MessageTease>

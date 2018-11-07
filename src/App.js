@@ -4,6 +4,9 @@ import RootStore from "./stores/RootStore";
 import { Provider } from "mobx-react";
 import { hot } from 'react-hot-loader';
 
+// Helpers
+import './helpers/firebase'
+
 // Pages
 import Login from "./pages/Login";
 import Loading from "./pages/Loading";
@@ -15,6 +18,7 @@ import EditProfile from './pages/EditProfile'
 import VideoChat from './pages/VideoChat'
 import ErrorPage from './pages/ErrorPage'
 import Dashboard from './pages/Dashboard'; 
+import Calling from './components/Calling'
 
 class App extends Component {
   state = { loading: true };
@@ -40,6 +44,7 @@ class App extends Component {
               <Route path="/video/:slug" component={VideoChat} />
               <Route path='/error' component={ErrorPage} />
               <Route path='/policy-terms' component={PolicyTerms} />
+              <Route path='/calling' component={Calling} />
               <Route path="*" component={Login} />
             </Switch>
           </Router>

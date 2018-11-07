@@ -4,6 +4,7 @@ import { inject, observer } from 'mobx-react'
 import { ToastContainer } from "react-toastify"
 import Slider from "rc-slider"
 import "rc-slider/assets/index.css"
+import axios from "axios"
 import AuthorizedLayout from '../layouts/AuthorizedLayout'
 import addPhoto from '../assets/icons/addphoto.svg'
 
@@ -11,12 +12,34 @@ import addPhoto from '../assets/icons/addphoto.svg'
 @observer
 class EditProfile extends Component {
 
-  handleSame = (e) => {
+  // constructor(props){
+  //   super(props)
+  //   this.delayedCallback = _.debounce(this.props.store.userStore.setBio, 1000)
+  // }
+
+  handleSubmitBio = (e) => {
+    const fd = new FormData()
+        const url = `${process.env.REACT_APP_API_BASEURL}/profiles/${this.props.store.userStore.profile_id}/`;
+        const config = {
+            headers: {
+                'Authorization': 'Token ' + this.props.store.userStore.token,
+            }
+        }
+        fd.append('bio',this.props.store.userStore.biography)
+        fd.append('location', this.props.store.userStore.location)
+        fd.append('slug', this.props.store.userStore.user_slug)
+        axios.put(url,fd,config)
+        .then(response => {
+            console.log(response)
+        })
+  }
+
+  handleGay = (e) => {
     this.props.store.userStore.setPreference(0)
     this.props.store.userStore.handleSubmit()
   }
 
-  handleOpposite = (e) => {
+  handleStraight = (e) => {
     this.props.store.userStore.setPreference(1)
     this.props.store.userStore.handleSubmit()
   }
@@ -27,12 +50,15 @@ class EditProfile extends Component {
   }
 
   handleChangeBio = (e) => {
+    // e.persist()
+    // this.delayedCallback(e)
     this.props.store.userStore.setBio(e.target.value);
   }
 
   myfunction = ()=>{
     this.props.history.push('/matching');
   }
+
     render(){
         return (
           <AuthorizedLayout>
@@ -111,20 +137,20 @@ class EditProfile extends Component {
                 value={this.props.store.userStore.biography}
                 placeholder="Tell us about yourself!"
                 onChange={this.handleChangeBio}
-                onBlur={this.props.store.userStore.handleSubmit()}
+                onBlur={this.handleSubmitBio}
               />
               <Tagline>Preference</Tagline>
               <PreferenceContainer>
-                <PreferenceButton id="Opposite"
-                    aria-label="Opposite"
+                <PreferenceButton id="Straight"
+                    aria-label="Straight"
                     value= "1"
-                    onClick={this.handleOpposite}
+                    onClick={this.handleStraight}
                     active = {this.props.store.userStore.preference === 1}
                   >Straight</PreferenceButton>
-                <PreferenceButton id="same"
-                    aria-label="Same"
+                <PreferenceButton id="Gay"
+                    aria-label="Gay"
                     value= "1"
-                    onClick={this.handleSame}
+                    onClick={this.handleGay}
                     active = {this.props.store.userStore.preference === 0}
                 >Gay</PreferenceButton>
               </PreferenceContainer>

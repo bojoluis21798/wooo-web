@@ -12,17 +12,7 @@ import Messages from '../components/Messages'
 import Rebase from 're-base'
 import { animateScroll } from 'react-scroll'
 
-const config = {
-    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-    authDomain: process.env.REACT_APP_FIREBASE_AUTHDOMAIN,
-    databaseURL: process.env.REACT_APP_FIREBASE_DBURL,
-    projectId: process.env.REACT_APP_FIREBASE_PROJECTID,
-    storageBucket: process.env.REACT_APP_FIREBASE_STORAGEBUCKET,
-    messagingSenderId: process.env.REACT_APP_FIREBASE_SENDERID
-};
-
-const app = firebase.initializeApp(config);
-const base = Rebase.createClass(app.database());
+const base = Rebase.createClass(firebase.database());
 
 @inject('store') @observer
 export default class MessageThread extends Component {
@@ -35,8 +25,8 @@ export default class MessageThread extends Component {
   }
 
   componentDidMount() {
-    this.messageReff = firebase.database().ref().child('roomData/'+this.props.location.state.roomId);
-    this.messageRef = base.syncState('roomData/'+this.props.location.state.roomId,{
+    this.messageReff = firebase.database().ref().child('roomData/'+this.props.store.messageStore.threadPageState.roomId);
+    this.messageRef = base.syncState('roomData/'+this.props.store.messageStore.threadPageState.roomId,{
       context: this,
       state:'messageDetail'
     });
@@ -79,7 +69,7 @@ export default class MessageThread extends Component {
   }
   
   handleVideo = () => {
-    var videoURL = this.props.location.state.pairedName + " called you " + window.location.origin + "/video/" + this.props.location.state.pairedSlug +" to answer.";
+    var videoURL = this.props.store.messageStore.threadPageState.pairedName + " called you " + window.location.origin + "/video/" + this.props.store.messageStore.threadPageState.pairedSlug +" to answer.";
     let messageDet = Object.assign({}, this.state.messageDetail);
     const id = Date.now() + "" + this.state.userId;
     messageDet[id] = {
@@ -110,7 +100,7 @@ export default class MessageThread extends Component {
   }
   
   userStatus = () => {
-    this.userStatusRef = firebase.database().ref().child('users/'+this.props.location.state.pairedId).limitToLast(1).on('value', message => {
+    this.userStatusRef = firebase.database().ref().child('users/'+this.props.store.messageStore.threadPageState.pairedId).limitToLast(1).on('value', message => {
       if(message.val()){
         this.setState({status:"Active"})
       }else{
@@ -123,9 +113,8 @@ export default class MessageThread extends Component {
     return (
       <AuthorizedLayout noverflow={true} redirectTo='messages'>
         { this.state && 
-          this.props.location && 
-          this.props.location.state && 
-          this.props.location.state.pairedName &&
+          this.props.store.messageStore.threadPageState &&
+          this.props.store.messageStore.threadPageState.pairedName &&
           (<MessageThreadBody>
             <Content>
                 <Back>
@@ -135,7 +124,7 @@ export default class MessageThread extends Component {
                 </Back>
                 <Ree>
                 <Name>
-                    {this.props.location && this.props.location.state && this.props.location.state.pairedName}
+                    {this.props.store.messageStore.threadPageState && this.props.store.messageStore.threadPageState.pairedName}
                 </Name>
                 <LastMessage>
                     {this.state.status !== "Active" && ("Offline")}
@@ -149,7 +138,7 @@ export default class MessageThread extends Component {
                 </Ree>
                 <div>
                   {this.state.status === "Active" && (
-                  <Link to={`/video/${this.props.location && this.props.location.state && this.props.location.state.pairedSlug}`}>
+                  <Link to={`/calling/${this.props.store.messageStore.threadPageState && this.props.store.messageStore.threadPageState.pairedSlug}`}>
                       <img src={video} alt="Video Call"></img>
                   </Link>
                   )}
@@ -161,9 +150,9 @@ export default class MessageThread extends Component {
                   key={index}
                   {...message}
                   id={index}
-                  userData={this.props.location.state}
+                  userData={this.props.store.messageStore.threadPageState}
                   user1={this.props.store.userStore.profile_id}
-                  user2={this.props.location.state.pairedId}
+                  user2={this.props.store.messageStore.threadPageState.pairedId}
                   />
                 )): ''
               }

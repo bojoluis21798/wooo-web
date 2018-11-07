@@ -4,7 +4,7 @@ import { inject, observer } from 'mobx-react'
 import { Redirect } from 'react-router-dom'
 import styled, {css} from 'styled-components'
 import Header from '../components/Header'
-import LoaderWrapper from './LoaderWrapper'
+import AppWrapper from './AppWrapper'
 import { withRouter } from 'react-router-dom'
 
 @inject('store') @observer
@@ -25,14 +25,14 @@ class AuthorizedLayout extends Component {
     render() {
         return !this.isAuthorized()?
             <Redirect to='/login'></Redirect>
-            : <LoaderWrapper>
+            : this.props.authGuardOnly? this.props.children: <AppWrapper>
                 <AuthorizedContent {...this.props}>
                     { !this.props.noheaders? (<Header />): <div></div> }
                     <ContentContainer noPad = {this.props.noPad}>
                         { this.props.children }
                     </ContentContainer>
                 </AuthorizedContent>
-            </LoaderWrapper>
+            </AppWrapper>
     }
 }
 
