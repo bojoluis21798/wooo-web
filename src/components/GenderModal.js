@@ -1,13 +1,6 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/* global styled */
-
 import React, {Component} from "react";
 import Popup from "reactjs-popup";
-import styled from 'styled-components';
+import styled from 'styled-components'
 import { inject, observer } from 'mobx-react';
 
 @observer

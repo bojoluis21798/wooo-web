@@ -106,11 +106,6 @@ const Tag = styled.div`
   text-align: left;
 `;
 
-const Search = styled.div`
-  margin-top: 10px;
-  margin-bottom: 10px;
-`;
-
 const EmphasizedTextContent = styled.div`
   font-size: 22px;
   line-height: 31px;
@@ -133,23 +128,3 @@ const LookForOneButton = styled.button`
   border-radius: 5px;
   cursor: pointer;
 `
-
-const Input = styled.input`
-  height: 45px;
-  min-height: 45px;
-  width: 100%;
-  font-size: 16px;
-  color: #ffffff;
-  padding: 25px 15px;
-  background-color: #191919;
-  border-radius: 5px;
-  border: none;
-  justify-items: center;
-  overflow: hidden;
-  resize: hidden;
-  border: 1px solid #191919;
-  
-  &:focus {
-    outline: none !important;
-  }
-`;
