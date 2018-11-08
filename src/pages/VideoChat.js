@@ -9,6 +9,7 @@ import SmallLoading from '../components/SmallLoading'
 import firebase from 'firebase'
 import endCall from '../assets/icons/endcall.svg'
 import Rebase from 're-base'
+import { Redirect } from 'react-router-dom'
 
 const base = Rebase.createClass(firebase.database())
 
@@ -45,10 +46,14 @@ export default class VideoChat extends Component {
         this.props.history.goBack()
     }
 
+    componentDidUpdate() {
+        console.log(this.state.call)
+    }
+
     render() {
         return (
             <AuthorizedLayout noheaders={true} noPad={true} className={`key-is-${process.env.REACT_APP_OPENTOK_KEY}`}>
-                { Object.keys(this.state.call || {}).length >= 2? <VideoContent>
+                { this.state.call && Object.keys(this.state.call).length >= 2? <VideoContent>
                     { this.state.session && this.state.token? (
                         <OTSession 
                             apiKey={process.env.REACT_APP_OPENTOK_KEY}
@@ -64,7 +69,16 @@ export default class VideoChat extends Component {
                             </OTStreams>
                         </OTSession>): <SmallLoading /> 
                     }
-                </VideoContent>: <AuthorizedLayout noheaders={true}><EmphasizedText>{ this.state.call && this.state.call.length === 1? 'Waiting for a response': Object.keys(this.state.call || {}).length === 1? 'Waiting for a response.': 'This call session has ended.' } </EmphasizedText></AuthorizedLayout> }
+                </VideoContent>
+                : (<AuthorizedLayout noheaders={true}>
+                    <EmphasizedText>
+                        { this.state.call?
+                            this.state.call.length === 1? 'Waiting for a response'
+                            : <Redirect to={`/messages/${this.props.store.messageStore.currentThread}`} />
+                          : ''
+                        }
+                    </EmphasizedText>
+                </AuthorizedLayout>) }
                 <div className='video__button'>
                     <img onClick={this.endCall} src={endCall} alt='End call' className='video__button--end_call' />
                 </div>
