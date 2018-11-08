@@ -34,7 +34,7 @@
     z-index: 11;
     position: fixed;
     bottom: 5%;
-    margin-left: auto;
-    margin-right: auto;
     cursor: pointer;
+    left: 50%;
+    transform: translateX(-50%);
 }
