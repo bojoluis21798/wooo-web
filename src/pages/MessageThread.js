@@ -13,7 +13,6 @@ import Rebase from 're-base'
 import { animateScroll } from 'react-scroll'
 
 const base = Rebase.createClass(firebase.database());
-
 @inject('store') @observer
 export default class MessageThread extends Component {
   state = {
@@ -23,8 +22,24 @@ export default class MessageThread extends Component {
     status: "",
     list: []
   }
+  informStore = () => {
+    this.props.store.messageStore.setCurrentThread(this.props.location.state.roomId)
+    this.props.store.messageStore.setPairName(this.props.location.state.pairedName)
+    this.props.store.messageStore.setPairSlug(this.props.location.state.pairedSlug)
+    this.props.store.messageStore.setPairImage(this.props.location.state.pairedImage)
+    this.props.store.messageStore.setThreadPageState(this.props.location.state)
+    
+    console.log("REEEE: ", this.props.location.state);
+  }
 
   componentDidMount() {
+    if(this.props.location.state){
+      this.informStore();
+    }
+    this.initialize();
+  }
+
+  initialize = () => {
     this.messageReff = firebase.database().ref().child('roomData/'+this.props.store.messageStore.threadPageState.roomId);
     this.messageRef = base.syncState('roomData/'+this.props.store.messageStore.threadPageState.roomId,{
       context: this,
@@ -112,8 +127,7 @@ export default class MessageThread extends Component {
   render() {
     return (
       <AuthorizedLayout noverflow={true} redirectTo='messages'>
-        { this.state && 
-          this.props.store.messageStore.threadPageState &&
+        { this.state &&
           this.props.store.messageStore.threadPageState.pairedName &&
           (<MessageThreadBody>
             <Content>
