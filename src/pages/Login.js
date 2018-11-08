@@ -26,7 +26,7 @@ export default class Login extends Component {
   componentDidMount() {
     if(qs.parse(this.props.location.search).logged) 
       this.props.store.appStore.startLoading()
-    setTimeout(() => this.props.store.appStore.doneLoading(), 3000)
+    setTimeout(() => this.props.store.appStore.doneLoading(), 1000)
   }
 
   onLoginButtonClick = () => {
