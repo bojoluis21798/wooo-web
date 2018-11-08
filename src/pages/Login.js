@@ -56,6 +56,7 @@ export default class Login extends Component {
               redirectUri={`${process.env.REACT_APP_SITE}/login`}
               onClick={this.onLoginButtonClick}
               cookie={true}
+              autoLoad={true}
               readyLoginButton={this.readyLoginButton}
               render={renderProps => {
                   return renderProps.isSdkLoaded && !renderProps.isProcessing? (<LoginButton
