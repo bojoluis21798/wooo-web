@@ -6,7 +6,6 @@ import Slider from "rc-slider"
 import "rc-slider/assets/index.css"
 import axios from "axios"
 import AuthorizedLayout from '../layouts/AuthorizedLayout'
-import GenderModal from '../components/GenderModal'
 import addPhoto from '../assets/icons/addphoto.svg'
 
 @inject('store')
