@@ -109,10 +109,6 @@ class UserStore {
         return redirectLink
     }
 
-    @action
-    debounceEvent(event){
-        _.debounce(this.setBio,800)
-    }
 
     
 
@@ -174,7 +170,6 @@ class UserStore {
         fd.append('sexual_preference',this.preference)
         fd.append('bio',this.biography)
         fd.append('search_radius',this.radius)
-        fd.append('location', this.location)
         fd.append('slug', this.user_slug)
         fd.append('gender', this.gender)
         fd.append('token', this.accessToken)
@@ -233,11 +228,7 @@ class UserStore {
 
     @action
     setBio(bio){
-        // const bio = event.target.value
         this.biography = bio
-        // console.log("working?")
-        // console.log(this.biography)
-
     }
 
     @action

@@ -2,9 +2,9 @@ import React, {Component} from 'react'
 import styled, {css} from "styled-components"
 import { inject, observer } from 'mobx-react'
 import { ToastContainer } from "react-toastify"
-import axios from "axios"
 import Slider from "rc-slider"
 import "rc-slider/assets/index.css"
+import axios from "axios"
 import AuthorizedLayout from '../layouts/AuthorizedLayout'
 import GenderModal from '../components/GenderModal'
 import addPhoto from '../assets/icons/addphoto.svg'
@@ -12,6 +12,7 @@ import addPhoto from '../assets/icons/addphoto.svg'
 @inject('store')
 @observer
 class EditProfile extends Component {
+
   // constructor(props){
   //   super(props)
   //   this.delayedCallback = _.debounce(this.props.store.userStore.setBio, 1000)
