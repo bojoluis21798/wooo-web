@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { inject, observer } from 'mobx-react';
 import acceptCall from '../assets/icons/acceptcall.svg'
+import endCall from '../assets/icons/endcall.svg'
 import { Link } from 'react-router-dom'
 import firebase from 'firebase'
 import Rebase from 're-base'
@@ -28,6 +29,11 @@ export default class AcceptCall extends Component {
         base.remove(`/called/${this.props.store.userStore.user_slug}`)
     }
 
+    stopCall = () => {
+        base.remove(`/call/${this.props.caller.thread}`)
+        base.remove(`/called/${this.props.store.userStore.user_slug}`)
+    }
+
     componentDidMount() {
         console.log(this.props)
     }
@@ -37,13 +43,29 @@ export default class AcceptCall extends Component {
             <Content>
                 <Img src={this.props.caller.image} alt='Recipient Main Pic' />
                 <Description>{this.props.caller.name} is calling you..</Description>
-                <Link to={`/video/${this.props.caller.slug}`} onClick={this.answerCall}>
-                    <img src={acceptCall} alt='Accept call' />
-                </Link>
+                <Options>
+                    <ButtonIcon src={endCall} alt='End Call' onClick={this.stopCall} />
+                    <span></span>
+                    <Link to={`/video/${this.props.caller.slug}`} onClick={this.answerCall}>
+                        <img src={acceptCall} alt='Accept call' />
+                    </Link>
+                </Options>
             </Content>   
         )
     }
 }
+
+const ButtonIcon = styled.img`
+    cursor: pointer;
+`
+
+const Options = styled.div`
+    display: grid;
+    grid-template-columns: 65px auto 65px;
+    margin-left: auto;
+    margin-right: auto;
+    grid-column-gap: 50px;
+`
 
 const Content = styled.div`
     display: grid;
