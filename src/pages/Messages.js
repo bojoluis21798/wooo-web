@@ -74,9 +74,9 @@ export default class Messages extends Component {
               <Tag>
                 <PageTitle>Messages</PageTitle>
               </Tag>
-              <Search>
+              {/* <Search>
                 <Input type="text" id="usr" placeholder="Search for a message"/>
-              </Search>
+              </Search> */}
               <MessageItems pairedUser={this.state.pairedUser} />
             </Fragment>
             : <EmphasizedTextContent>
