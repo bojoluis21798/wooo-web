@@ -64,7 +64,7 @@ export default class VideoChat extends Component {
                             </OTStreams>
                         </OTSession>): <SmallLoading /> 
                     }
-                </VideoContent>: <AuthorizedLayout noheaders={true}><EmphasizedText>{ Object.keys(this.state.call || {}).length === 1? 'Waiting for a response.': 'This call session has ended.' } </EmphasizedText></AuthorizedLayout> }
+                </VideoContent>: <AuthorizedLayout noheaders={true}><EmphasizedText>{ this.state.call && this.state.call.length === 1? 'Waiting for a response': Object.keys(this.state.call || {}).length === 1? 'Waiting for a response.': 'This call session has ended.' } </EmphasizedText></AuthorizedLayout> }
                 <div className='video__button'>
                     <img onClick={this.endCall} src={endCall} alt='End call' className='video__button--end_call' />
                 </div>
@@ -80,7 +80,7 @@ const VideoContent = styled.div`
 
 const EmphasizedText = styled.div`
     height: 100vh;
-    font-size: 25px;
+    font-size: 22px;
     display: grid;
     align-items: center;
     justify-items: center;
