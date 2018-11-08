@@ -7,6 +7,7 @@ import { inject, observer } from "mobx-react"
 import { ToastContainer } from "react-toastify"
 import { Redirect } from "react-router-dom"
 import LoaderWrapper from "../layouts/LoaderWrapper";
+import qs from 'query-string'
 
 @inject("store")
 @observer
@@ -16,12 +17,16 @@ export default class Login extends Component {
     this.props.store.appStore.startLoading()
   }
 
-  responseFacebook = (response) => {
-    this.props.store.userStore.authenticateUser(response)
+  responseFacebook = async response => { 
+    this.props.store.appStore.startLoading()
+    await this.props.store.userStore.authenticateUser(response)
+    this.props.store.appStore.doneLoading()
   }
 
   componentDidMount() {
-    setTimeout(() => this.props.store.appStore.doneLoading(), 1500)
+    if(qs.parse(this.props.location.search).logged) 
+      this.props.store.appStore.startLoading()
+    setTimeout(() => this.props.store.appStore.doneLoading(), 3000)
   }
 
   onLoginButtonClick = () => {
@@ -53,7 +58,7 @@ export default class Login extends Component {
               fields="name,email,picture"
               scope="public_profile,email"
               callback={this.responseFacebook}
-              redirectUri={`${process.env.REACT_APP_SITE}/login`}
+              redirectUri={`${process.env.REACT_APP_SITE}/login?loggedin=true`}
               onClick={this.onLoginButtonClick}
               cookie={true}
               autoLoad={true}
