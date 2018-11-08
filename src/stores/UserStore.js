@@ -10,6 +10,7 @@ class UserStore {
     @observable biography = ''
     @observable gay = null
     @observable preference = null
+    @observable gender = null
     @observable radius = null
     @observable location = {
         lat:0,
@@ -92,6 +93,7 @@ class UserStore {
         this.preference = userAuth.user_profile.sexual_preference
         this.profile_id = userAuth.user_profile.id
         this.gay = userAuth.user_profile.gay
+        this.gender = userAuth.user_profile.gender
         this.user_slug = userAuth.user_profile.slug
     }
 
@@ -132,6 +134,11 @@ class UserStore {
     }
 
     @action
+    setGender(gen){
+        this.gender = gen
+    }
+
+    @action
     setPic(num, pic){
         switch(num){
             case 1:
@@ -164,10 +171,11 @@ class UserStore {
         fd.append('bio',this.biography)
         fd.append('search_radius',this.radius)
         fd.append('slug', this.user_slug)
+        fd.append('gender', this.gender)
         fd.append('token', this.accessToken)
         axios.put(url,fd,config)
         .then(response => {
-            console.log(response)
+
         })
         .catch(error => {
             console.log(error)

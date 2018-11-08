@@ -6,6 +6,7 @@ import Slider from "rc-slider"
 import "rc-slider/assets/index.css"
 import axios from "axios"
 import AuthorizedLayout from '../layouts/AuthorizedLayout'
+import GenderModal from '../components/GenderModal'
 import addPhoto from '../assets/icons/addphoto.svg'
 
 @inject('store')
@@ -35,12 +36,12 @@ class EditProfile extends Component {
   }
 
   handleGay = (e) => {
-    this.props.store.userStore.setPreference(0)
+    this.props.store.userStore.setPreference(1)
     this.props.store.userStore.handleSubmit()
   }
 
   handleStraight = (e) => {
-    this.props.store.userStore.setPreference(1)
+    this.props.store.userStore.setPreference(0)
     this.props.store.userStore.handleSubmit()
   }
 
@@ -143,15 +144,15 @@ class EditProfile extends Component {
               <PreferenceContainer>
                 <PreferenceButton id="Straight"
                     aria-label="Straight"
-                    value= "1"
+                    value= "0"
                     onClick={this.handleStraight}
-                    active = {this.props.store.userStore.preference === 1}
+                    active = {this.props.store.userStore.preference === 0}
                   >Straight</PreferenceButton>
                 <PreferenceButton id="Gay"
                     aria-label="Gay"
                     value= "1"
                     onClick={this.handleGay}
-                    active = {this.props.store.userStore.preference === 0}
+                    active = {this.props.store.userStore.preference === 1}
                 >Gay</PreferenceButton>
               </PreferenceContainer>
               <Tagline>Radius</Tagline>
