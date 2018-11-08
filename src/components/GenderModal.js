@@ -46,7 +46,7 @@ class Gender extends Component {
 };
 
 export default Gender;
->>>>>>> aa55f51e2d6767b7810b2cc6846692c4336407ee
+
 
 const ModalContent = styled.div`
     width: 100%;
