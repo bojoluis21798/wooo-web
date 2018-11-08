@@ -17,6 +17,13 @@ injectGlobal`
     ${globalStyling}
 `
 
+console.log = function() {}
+console.warn = function() {}
+console.error = function() {}
+console.info = function() {}
+console.disableYellowBox = true; 
+console.ignoredYellowBox = ['Warning:', 'Mobx observer:'];
+
 ReactDOM.render(<Provider store={RootStore}>
         <App />
     </Provider>, 

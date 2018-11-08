@@ -1,7 +1,6 @@
 import React, { Component } from "react"
 import styled from "styled-components"
 import logo from "../assets/icons/logo.svg"
-import couple from "../assets/icons/couple.svg"
 import circlecenter from "../assets/icons/circlecenterbg.svg"
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props"
 import { inject, observer } from "mobx-react"
@@ -47,7 +46,7 @@ export default class Login extends Component {
             <Logo aria-label="Logo" data={logo} />
             <Tagline>Same ol' online dating but the cooler way!</Tagline>
           </Header>
-          <Couple className={styled.couple} aria-label="Couple" data={couple} />
+          <Couple alt="Couple" src='/assets/couple.svg' />
           <LoginActionSection>
             <FacebookLogin
               appId={process.env.REACT_APP_FB_APPID}
@@ -128,7 +127,7 @@ const Tagline = styled.div`
   text-align: center;
 `
 
-const Couple = styled.object`
+const Couple = styled.img`
   width: 100vw;
   max-width: 400px;
 `
