@@ -23,10 +23,48 @@
     -->
     <title>Wooo</title>
   </head>
-  <body>
+  <body style="background-color: #e9f1fc;">
     <noscript>
       You need to enable JavaScript to run this app.
     </noscript>
+    <div id="splashscreen" style="display: grid; align-content: center; justify-content: center; align-items: center; justify-items: center; background-color: #e9f1fc; height: 100vh; width: 100vw; text-align: center;">
+      <div class="content">
+        <img src="./assets/couple.svg" alt="couple loading" style="max-width: 500px; width: 90vw;" /><br /><br />
+        <svg width="60px" height="60px" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient x1="8.042%" y1="0%" x2="65.682%" y2="23.865%" id="a">
+              <stop stopColor="f71b64" stopOpacity="0" offset="0%" />
+              <stop stopColor="f71b64" stopOpacity=".631" offset="63.146%" />
+              <stop stopColor="f71b64" offset="100%" />
+            </linearGradient>
+          </defs>
+          <g fill="none" fillRule="evenodd">
+            <g transform="translate(1 1)">
+              <path d="M36 18c0-9.94-8.06-18-18-18" id="Oval-2" stroke="#f71b64" stroke-width="2">
+                <animateTransform
+                  attributeName="transform"
+                  type="rotate"
+                  from="0 18 18"
+                  to="360 18 18"
+                  dur="0.9s"
+                  repeatCount="indefinite"
+                />
+              </path>
+              <circle fill={svg.tailColor} cx="36" cy="18" r="1">
+                <animateTransform
+                  attributeName="transform"
+                  type="rotate"
+                  from="0 18 18"
+                  to="360 18 18"
+                  dur="0.9s"
+                  repeatCount="indefinite"
+                />
+              </circle>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </div>
     <div id="root"></div>
     <!--
       This HTML file is a template.
@@ -40,6 +78,12 @@
     -->
   </body>
   <script>
+    var tid = setInterval(function () {
+      if (document.readyState !== 'complete') return;
+      
+      clearInterval( tid );
+      document.querySelector("#splashscreen").style.display = "none";
+    }, 100 );
     var OneSignal = window.OneSignal || [];
     OneSignal.push(function() {
       OneSignal.init({
