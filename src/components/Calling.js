@@ -5,7 +5,6 @@ import endCall from '../assets/icons/endcall.svg'
 import firebase from 'firebase'
 import Rebase from 're-base'
 import AuthorizedLayout from '../layouts/AuthorizedLayout'
-import { values } from 'lodash'
 import { Redirect } from 'react-router-dom'
 
 const db = firebase.database()
@@ -64,7 +63,7 @@ export default class Calling extends Component {
     render() {
         return (
             <AuthorizedLayout noheaders={true}>
-                { this.state.call && (Array.isArray(this.state.call) && this.state.call.length < 2) || (typeof this.state.call === Object && Object.keys(this.state.call).length < 2)? <Content>
+                { (!this.state.call || (Array.isArray(this.state.call) && this.state.call.length < 2) || (typeof this.state.call === Object && Object.keys(this.state.call).length < 2))? <Content>
                     <Img src={this.props.store.messageStore.pairImage || ''} alt='Recipient Main Pic' />
                     <Description>Calling {this.props.store.messageStore.pairName }..</Description>
                     <img onClick={this.stopCall} src={endCall} alt='End call' />

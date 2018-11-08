@@ -5,7 +5,6 @@ import acceptCall from '../assets/icons/acceptcall.svg'
 import { Link } from 'react-router-dom'
 import firebase from 'firebase'
 import Rebase from 're-base'
-import AuthorizedLayout from '../layouts/AuthorizedLayout'
 
 const base = Rebase.createClass(firebase.database())
 

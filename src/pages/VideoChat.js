@@ -9,8 +9,6 @@ import SmallLoading from '../components/SmallLoading'
 import firebase from 'firebase'
 import endCall from '../assets/icons/endcall.svg'
 import Rebase from 're-base'
-import _ from 'lodash'
-import { Redirect } from 'react-router-dom'
 
 const base = Rebase.createClass(firebase.database())
 

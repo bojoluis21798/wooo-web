@@ -1,6 +1,5 @@
 import { observable, action,computed } from 'mobx'
 import axios from 'axios'
-import _ from "lodash"
 import dog from '../assets/images/dog.jpeg';
 import dog2 from '../assets/images/dog2.jpg';
 import dog3 from '../assets/images/dog3.jpg';
