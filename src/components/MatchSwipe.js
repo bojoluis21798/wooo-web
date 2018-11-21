@@ -2,11 +2,55 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { inject, observer } from 'mobx-react'
 import { Link } from 'react-router-dom'
+import firebase from 'firebase'
+import axios from 'axios'
 
 @observer
 @inject('store')
 export default class MatchSwipe extends Component{
 
+    state = {
+        currentUser: this.props.store.userStore.profile_id,
+        pairedUser: [],
+        loading: true
+    }
+
+    componentDidMount(){
+        axios.get(`${process.env.REACT_APP_API_BASEURL}/profiles/${this.props.id}/matches`).then((res)=>{
+            this.props.store.userStore.setMatches(res.data);
+            if(res.data){
+                var pairedUser = [];
+                res.data.forEach(element => {
+                    var pairedInfo = {
+                    pairedId: element.id,
+                    pairedName: element.user.first_name,
+                    pairedSlug: element.slug,
+                    pairedBio: element.bio,
+                    pairedImage: element.profile_image,
+                    roomId: this.state.currentUser+'R'+element.id,
+                    message: ""
+                    }
+                    pairedInfo.roomId = (element.id < this.state.currentUser) ? element.id+'R'+this.state.currentUser : this.state.currentUser+'R'+element.id
+        
+                    firebase.database().ref().child('roomData/'+pairedInfo.roomId).limitToLast(1).on('value', message => {
+                    if(message.val() != null){
+                        var lastmessage = Object.values(message.val());
+                        pairedInfo.message = lastmessage[0].content;
+                        this.setState({ pairedInfo })
+                    }else{
+                        pairedInfo.message = "";
+                    } 
+                    });
+                    pairedUser.push(pairedInfo);
+                    
+                });
+                this.setState({
+                    pairedUser,
+                    loading: false
+                })
+            }
+        })
+    }
 
     render(){
         if(this.props.show){
@@ -15,7 +59,7 @@ export default class MatchSwipe extends Component{
                    <LargeText>{this.props.store.userStore.currentProspect.user.first_name} likes you too!</LargeText>
                    <ButtonArea>
                      <SubContainer>
-                        <Link onClick={this.toggle} to={`/messages/${this.props.id}`}>
+                        <Link onClick={this.showProps} to={{pathname: `/messages/${this.state.pairedUser.roomId}`, state: this.state.pairedUser }}>
                             <Button>
                                 Say Hi!
                             </Button>
